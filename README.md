@@ -49,4 +49,4 @@ hex - значение цвета в RGB Hex формате
 
 # [Web-интерфейс](/web.md).
  
-# [FAQ](/faq.md).
+# [FAQ](/faq.md)
