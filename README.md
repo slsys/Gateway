@@ -1,7 +1,9 @@
-# Gateway
-Smart Logic System
-Описание.
-Этот проект предназначен для получения данных и управления ZigBee-устройствами при помощи связки ESP32 в роли шлюза и CC2538(CC2530, CC2530+2592) в роли координатора и передачи этих данных по MQTT в систему УД, а также, управление устройствами Zigbee напрямую, без участия сервера УД, если это поддерживают устройства.
+# Smart Logic System
+# Zigbee + BLE шлюз
+
+Этот продукт  предназначен для работы с распространенными устройствами ZigBee, BLE.  В основе шлюза лежит контроллер ESP32 от Espressif https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf. В качестве связущего звена протокола Zigbee  выступает тандем чипа от Texas Instruments CC2538 https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds c усилителя  2592 https://www.ti.com/product/CC2592?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUv-CIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds, либо 
+
+в роли координатора и передачи этих данных по MQTT в систему УД, а также, управление устройствами Zigbee напрямую, без участия сервера УД, если это поддерживают устройства.
 Возможности.
 1.	Подключение к шлюзу различных устройств ZigBee и передача данных на MQTT сервер в json-формате.
 2.	Наличие web-интерфейса для настройки шлюза.
