@@ -35,7 +35,7 @@ hex - значение цвета в RGB Hex формате
 Устройство можно [собрать самостоятельно](https://modkam.ru/?p=1342), или приобрести на сайте [Smart Logic System](slsys.io)
 
 # Прошивка устройства
-[Постоянная ссылка на прошивку устроуства](https://github.com/slsys/Gateway/raw/master/rom/zigbee_gw_full.7zz)
+[Постоянная ссылка на прошивку устроуства](https://github.com/slsys/Gateway/raw/master/rom/zigbee_gw_full.7z)
 
 
 [История изменений прошивки](/rom/history_ru.md)
