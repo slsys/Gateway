@@ -22,7 +22,9 @@
 
 Для прошивки через CC Debugger:
 [Прошивка для модуля CC2530 без усилителя](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_20190523.zip)
+
 [Прошивка для модуля CC2530 с усилителем СС2591](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2591_20190523.zip)
+
 [Прошивка для модуля CC2530 с усилителем СС2592](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2592_20190523.zip)
 
 Для прошивки через J-Link:
