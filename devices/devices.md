@@ -1,7 +1,7 @@
 # Список поддерживаемых устройств:
 ## Xiaomi 
-
-[MiJia temperature & humidity sensor WSDCGQ01LM](/WSDCGQ01LM.md)
+| Фото        | Описание                | Модель |
+|MiJia temperature & humidity sensor | [WSDCGQ01LM](/WSDCGQ01LM.md)
 
 [MiJia wireless switch (WXKG01LM)](/WXKG01LM.md)
 
