@@ -5,72 +5,35 @@
 | Фото  | Описание  | Модель |
 |:------------- |:---------------:| -------------:|
 | фото      | MiJia temperature & humidity sensor |     [WSDCGQ01LM](/WSDCGQ01LM.md) |
-| col 2 is      | centered        |         $12   |
-| zebra stripes | are neat        |        ~~$1~~ |
-
-
-
-| Фото        | Описание                | Модель |
-
-|12 |MiJia temperature & humidity sensor | [WSDCGQ01LM](/WSDCGQ01LM.md)
-
-[MiJia wireless switch (WXKG01LM)](/WXKG01LM.md)
-
-[MiJia door & window contact sensor (MCCGQ01LM)](/MCCGQ01LM.md)
-
-[MiJia human body movement sensor (RTCGQ01LM)](/RTCGQ01LM.md)
-
-[MiJia Honeywell smoke detector (JTYJ-GD-01LM/BW)](/JTYJ-GD-01LM_BW.md)
-
-[MiJia gas leak detector (JTQJ-BF-01LM/BW)](/JTQJ-BF-01LM_BW.md)
-
-[Mi power plug ZigBee (ZNCZ02LM)](/ZNCZ02LM.md)
-
-[Mi/Aqara smart home cube (MFKZQ01LM)](/MFKZQ01LM.md])
-
-[Mi power plug ZigBee EU (ZNCZ04LM)](/ZNCZ04LM.md)
-
-[Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)](/WSDCGQ11LM.md)
-
-[Aqara wireless switch (WXKG11LM)](/WXKG11LM.md)
-
-[Aqara double key wireless wall switch (WXKG02LM)](/WXKG02LM.md)
-
-[Aqara water leak sensor (SJCGQ11LM)](/SJCGQ11LM.md)
-
-[Aqara door & window contact sensor (MCCGQ11LM)](/MCCGQ11LM.md)
-
-[Aqara human body movement and illuminance sensor (RTCGQ11LM)](/RTCGQ11LM.md)
-
-[Aqara vibration sensor (DJT11LM)](/DJT11LM.md)
-
-[Aqara smart LED bulb (ZNLDP12LM)](/ZNLDP12LM.md)
-
-[Aqara curtain motor (ZNCLDJ11LM)](/ZNCLDJ11LM.md)
-
-[Aqara B1 curtain motor (ZNCLDJ12LM)](/ZNCLDJ12LM.md)
-
-[Aqara double key wired wall switch (QBKG12LM)](/QBKG12LM.md)
-
-[Aqara wireless switch with gyroscope (WXKG12LM)](/WXKG12LM.md)
-
-[Aqara single key wireless wall switch (WXKG03LM)](/WXKG03LM.md)
-
-[Aqara single key wired wall switch (QBKG11LM)](/QBKG11LM.md)
-
-[Aqara single key wired wall switch without neutral wire (QBKG04LM)](/QBKG04LM.md)
-
-[Aqara double key wired wall switch without neutral wire (QBKG03LM)](/QBKG03LM.md)
-
-[Aqara wireless relay controller (LLKZMK11LM)](/LLKZMK11LM.md)
-
-[Aqara socket Zigbee (QBCZ11LM)](/QBCZ11LM.md)
-
-[Aqara S2 Lock (ZNMS12LM)](/ZNMS12LM.md)
-
-[Aqara S2 Lock Pro (ZNMS13LM)](/ZNMS13LM.md)
-
-[Vima Smart Lock (A6121)](/A6121.md)
+| фото      | [MiJia wireless switch (WXKG01LM)](/WXKG01LM.md)
+| фото      | [MiJia door & window contact sensor (MCCGQ01LM)](/MCCGQ01LM.md)
+| фото      | [MiJia human body movement sensor (RTCGQ01LM)](/RTCGQ01LM.md)
+| фото      | [MiJia Honeywell smoke detector (JTYJ-GD-01LM/BW)](/JTYJ-GD-01LM_BW.md)
+| фото      | [MiJia gas leak detector (JTQJ-BF-01LM/BW)](/JTQJ-BF-01LM_BW.md)
+| фото      | [Mi power plug ZigBee (ZNCZ02LM)](/ZNCZ02LM.md)
+| фото      | [Mi/Aqara smart home cube (MFKZQ01LM)](/MFKZQ01LM.md])
+| фото      | [Mi power plug ZigBee EU (ZNCZ04LM)](/ZNCZ04LM.md)
+| фото      | [Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)](/WSDCGQ11LM.md)
+| фото      | [Aqara wireless switch (WXKG11LM)](/WXKG11LM.md)
+| фото      | [Aqara double key wireless wall switch (WXKG02LM)](/WXKG02LM.md)
+| фото      | [Aqara water leak sensor (SJCGQ11LM)](/SJCGQ11LM.md)
+| фото      | [Aqara door & window contact sensor (MCCGQ11LM)](/MCCGQ11LM.md)
+| фото      | [Aqara human body movement and illuminance sensor (RTCGQ11LM)](/RTCGQ11LM.md)
+| фото      | [Aqara vibration sensor (DJT11LM)](/DJT11LM.md)
+| фото      | [Aqara smart LED bulb (ZNLDP12LM)](/ZNLDP12LM.md)
+| фото      | [Aqara curtain motor (ZNCLDJ11LM)](/ZNCLDJ11LM.md)
+| фото      | [Aqara B1 curtain motor (ZNCLDJ12LM)](/ZNCLDJ12LM.md)
+| фото      | [Aqara double key wired wall switch (QBKG12LM)](/QBKG12LM.md)
+| фото      | [Aqara wireless switch with gyroscope (WXKG12LM)](/WXKG12LM.md)
+| фото      | [Aqara single key wireless wall switch (WXKG03LM)](/WXKG03LM.md)
+| фото      | [Aqara single key wired wall switch (QBKG11LM)](/QBKG11LM.md)
+| фото      | [Aqara single key wired wall switch without neutral wire (QBKG04LM)](/QBKG04LM.md)
+| фото      | [Aqara double key wired wall switch without neutral wire (QBKG03LM)](/QBKG03LM.md)
+| фото      | [Aqara wireless relay controller (LLKZMK11LM)](/LLKZMK11LM.md)
+| фото      | [Aqara socket Zigbee (QBCZ11LM)](/QBCZ11LM.md)
+| фото      | [Aqara S2 Lock (ZNMS12LM)](/ZNMS12LM.md)
+| фото      | [Aqara S2 Lock Pro (ZNMS13LM)](/ZNMS13LM.md)
+| фото      | [Vima Smart Lock (A6121)](/A6121.md)
 
 # IKEA 
 TRADFRI remote control (E1524)
