@@ -4,7 +4,7 @@
 
 | Фото  | Описание  | Модель |
 |:------------- |:---------------:| -------------:|
-| фото      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
+| ![](/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
 | фото      | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
 | фото      | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
 | фото      | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
