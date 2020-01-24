@@ -4,10 +4,10 @@
 
 | Фото  | Описание  | Модель |
 |:------------- |:---------------:| -------------:|
-| ![1](/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
-| ![2](/img/WXKG01LM.jpg)       | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
-| ![3](/img/MCCGQ01LM.jpg)       | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
-| ![4](/img/RTCGQ01LM.jpg)       | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
+| ![1](/devices/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
+| ![2](/devices/img/WXKG01LM.jpg)       | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
+| ![3](/devices/img/MCCGQ01LM.jpg)       | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
+| ![4](/devices/img/RTCGQ01LM.jpg)       | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
 | фото      | MiJia Honeywell smoke detector |[JTYJ-GD-01LM/BW](/JTYJ-GD-01LM_BW.md)
 | фото      | MiJia gas leak detector |[JTQJ-BF-01LM/BW](/JTQJ-BF-01LM_BW.md)
 | фото      | Mi power plug ZigBee |[ZNCZ02LM](/ZNCZ02LM.md)
