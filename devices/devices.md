@@ -36,12 +36,21 @@
 | ![](/devices/img/A6121.jpg)      | Vima Smart Lock |[A6121](/A6121.md)
 
 # IKEA 
-TRADFRI remote control (E1524)
-TRADFRI wireless dimmer (ICTC-G-1)
-TRADFRI motion sensor (E1525)
-TRADFRI signal repeater (E1746)
-TRADFRI LED bulb E27 1000 lumen, dimmable, opal white (LED1623G12)
-TRADFRI LED bulb E14/E26/E27 600 lumen, dimmable, color, opal white (LED1624G9)         
+
+| Фото  | Описание  | Модель |
+|:------------- |:---------------:| -------------:|
+| ![1](/devices/img/E1524.jpg)      | TRADFRI remote control|[E1524](/E1524.md) |
+| ![1](/devices/img/E1524.jpg)      | TRADFRI wireless dimmer|[E1524](/E1524.md) |
+| ![1](/devices/img/ICTC-G-1.jpg)      | TRADFRI wireless dimmer |[ICTC-G-1](/ICTC-G-1.md) |
+| ![1](/devices/img/E1525.jpg)      | TRADFRI motion sensor|[E1525](/E1525.md) |
+| ![1](/devices/img/E1746.jpg)      | TRADFRI signal repeater|[E1746](/E1746.md) |
+| ![1](/devices/img/LED1623G12.jpg)      | TRADFRI LED bulb E27 1000 lumen, dimmable, opal white|[LED1623G12](/LED1623G12.md) |
+| ![1](/devices/img/LED1624G9.jpg)      | TRADFRI LED bulb E14/E26/E27 600 lumen, dimmable, color, opal white|[LED1624G9](/LED1624G9.md) |
+| ![1](/devices/img/LED1649C5.jpg)      |TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal|[LED1649C5](/LED1649C5.md) |
+| ![1](/devices/img/LED1545G12.jpg)      | TRADFRI LED bulb E26/E27 980 lumen, dimmable, white spectrum, opal white|[LED1545G12](/LED1545G12.md) |
+
+
+        
 TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)
 TRADFRI LED bulb E26/E27 980 lumen, dimmable, white spectrum, opal white (LED1545G12)
 
