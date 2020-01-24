@@ -1,5 +1,5 @@
-== Xiaomi ==
-MiJia temperature & humidity sensor (WSDCGQ01LM)
+# Xiaomi 
+[MiJia temperature & humidity sensor (WSDCGQ01LM))[]
 MiJia wireless switch (WXKG01LM)
 MiJia door & window contact sensor (MCCGQ01LM)
 MiJia human body movement sensor (RTCGQ01LM)
@@ -30,7 +30,7 @@ Aqara S2 Lock (ZNMS12LM)
 Aqara S2 Lock Pro (ZNMS13LM)
 Vima Smart Lock (A6121)
 
-== IKEA ==
+# IKEA 
 TRADFRI remote control (E1524)
 TRADFRI wireless dimmer (ICTC-G-1)
 TRADFRI motion sensor (E1525)
@@ -40,41 +40,41 @@ TRADFRI LED bulb E14/E26/E27 600 lumen, dimmable, color, opal white (LED1624G9)
 TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)
 TRADFRI LED bulb E26/E27 980 lumen, dimmable, white spectrum, opal white (LED1545G12)
 
-== Nue / 3A ==
+# Nue / 3A
 Smart light controller (LXZB-02A)
 
-== Trust ==
+# Trust 
 Smart Dimmable LED Bulb (ZLED-2709)
 RGB Tunable LED Bulb (ZLED-RGB9)
 Smart tunable LED bulb (ZLED-TUNE9)
 
-== Terncy ==
+# Terncy 
 Awareness switch (TERNCY-PP01)
 
-== Danalock ==
+# Danalock 
 BT/ZB smartlock (V3-BTZB)
 
-== Sparx ==
+#  Sparx 
 Single-channel relay switch (X2RM01)
 Double-channel relay switch (X2RM02)
 Triple-channel relay switch (X2RM03)
 
-== eWeLink ==
+# eWeLink 
 Zigbee OnOff Controller (DZ4743-00B)
 
-== Konke ==
+# Konke 
 Motion Sensor (2AJZ4KPBS)
 
-== Itead ==
+# Itead 
 Sonoff Zigbee DIY Smart Switch (BASICZBR3)
 
-== LifeControl ==
+#  LifeControl 
 Temperature, Humidity, eCO2, VOC sensor (MCLH-08)
 
-== Ksentry ==
+#  Ksentry 
 Zigbee OnOff Controller (KS-SM001)
 
-== DiY ==
+#  DiY 
 DIYRuZ 4 Relays + 4 switches + 1 buzzer (DIYRuZ_R4_5)
 DIYRuZ 20 button keypad (DIYRuZ_KEYPAD20)
 DIYRuZ door/window open sensor (DIYRuZ_magnet)
