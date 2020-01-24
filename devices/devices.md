@@ -5,9 +5,9 @@
 | Фото  | Описание  | Модель |
 |:------------- |:---------------:| -------------:|
 | ![](/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
-| фото      | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
-| фото      | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
-| фото      | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
+| ![](/img/WXKG01LM.jpg)       | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
+| ![](/img/MCCGQ01LM.jpg)       | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
+| ![](/img/RTCGQ01LM.jpg)       | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
 | фото      | MiJia Honeywell smoke detector |[JTYJ-GD-01LM/BW](/JTYJ-GD-01LM_BW.md)
 | фото      | MiJia gas leak detector |[JTQJ-BF-01LM/BW](/JTQJ-BF-01LM_BW.md)
 | фото      | Mi power plug ZigBee |[ZNCZ02LM](/ZNCZ02LM.md)
