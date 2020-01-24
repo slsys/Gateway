@@ -4,15 +4,15 @@
 
 | Фото  | Описание  | Модель |
 |:------------- |:---------------:| -------------:|
-| ![](/devices/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
-| ![](/devices/img/WXKG01LM.jpg)       | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
-| ![](/devices/img/MCCGQ01LM.jpg)       | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
-| ![](/devices/img/RTCGQ01LM.jpg)       | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
-| ![](/devices/img/JTYJ-GD-01LM_BW.jpg)        | MiJia Honeywell smoke detector |[JTYJ-GD-01LM/BW](/JTYJ-GD-01LM_BW.md)
-| ![](/devices/img/JTQJ-BF-01LM_BW.jpg)      | MiJia gas leak detector |[JTQJ-BF-01LM/BW](/JTQJ-BF-01LM_BW.md)
-| ![](/devices/img/ZNCZ02LM.jpg)      | Mi power plug ZigBee |[ZNCZ02LM](/ZNCZ02LM.md)
-| ![](/devices/img/MFKZQ01LM.jpg)      | Mi/Aqara smart home cube|[MFKZQ01LM](/MFKZQ01LM.md])
-| ![](/devices/img/ZNCZ04LM.jpg)      | Mi power plug ZigBee EU |[ZNCZ04LM](/ZNCZ04LM.md)
+| ![1](/devices/img/WSDCGQ01LM.jpg)      | MiJia temperature & humidity sensor|[WSDCGQ01LM](/WSDCGQ01LM.md) |
+| ![2](/devices/img/WXKG01LM.jpg)       | MiJia wireless switch |[WXKG01LM](/WXKG01LM.md)
+| ![3](/devices/img/MCCGQ01LM.jpg)       | MiJia door & window contact sensor |[MCCGQ01LM](/MCCGQ01LM.md)
+| ![4](/devices/img/RTCGQ01LM.jpg)       | MiJia human body movement sensor |[RTCGQ01LM](/RTCGQ01LM.md)
+| ![5](/devices/img/JTYJ-GD-01LM_BW.jpg)        | MiJia Honeywell smoke detector |[JTYJ-GD-01LM/BW](/JTYJ-GD-01LM_BW.md)
+| ![6](/devices/img/JTQJ-BF-01LM_BW.jpg)      | MiJia gas leak detector |[JTQJ-BF-01LM/BW](/JTQJ-BF-01LM_BW.md)
+| ![7](/devices/img/ZNCZ02LM.jpg)      | Mi power plug ZigBee |[ZNCZ02LM](/ZNCZ02LM.md)
+| ![8](/devices/img/MFKZQ01LM.jpg)      | Mi/Aqara smart home cube|[MFKZQ01LM](/MFKZQ01LM.md])
+| ![9](/devices/img/ZNCZ04LM.jpg)      | Mi power plug ZigBee EU |[ZNCZ04LM](/ZNCZ04LM.md)
 | ![](/devices/img/WSDCGQ11LM.jpg)      | Aqara temperature, humidity and pressure sensor |[WSDCGQ11LM](/WSDCGQ11LM.md)
 | ![](/devices/img/WXKG11LM.jpg)      | Aqara wireless switch|[WXKG11LM](/WXKG11LM.md)
 | ![](/devices/img/WXKG02LM.jpg)      | Aqara double key wireless wall switch |[WXKG02LM](/WXKG02LM.md)
