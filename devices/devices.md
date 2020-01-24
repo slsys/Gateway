@@ -14,7 +14,7 @@
 
 [Mi power plug ZigBee (ZNCZ02LM)](/ZNCZ02LM.md)
 
-[Mi/Aqara smart home cube (MFKZQ01LM)](/MFKZQ01LM.md])](/WSDCGQ01LM.md)
+[Mi/Aqara smart home cube (MFKZQ01LM)](/MFKZQ01LM.md])
 
 [Mi power plug ZigBee EU (ZNCZ04LM)](/ZNCZ04LM.md)
 
