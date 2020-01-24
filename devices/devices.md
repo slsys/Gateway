@@ -1,6 +1,6 @@
 # Xiaomi 
 
-[MiJia temperature & humidity sensor (WSDCGQ01LM))[/WSDCGQ01LM.md]
+(MiJia temperature & humidity sensor (WSDCGQ01LM))[/WSDCGQ01LM.md]
 
 MiJia wireless switch (WXKG01LM)
 MiJia door & window contact sensor (MCCGQ01LM)
