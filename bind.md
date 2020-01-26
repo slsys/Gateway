@@ -20,10 +20,17 @@
 
 Структура топиков полностью повторяет проект zigbee2mqtt https://www.zigbee2mqtt.io/information/binding.html
 
-Необходимо в топик zigbee2mqtt/bridge/bind/SOURCE_DEVICE_FRIENDLY_NAME отправить значение TARGET_DEVICE_FRIENDLY_NAME. 
+Необходимо в топик 
+'''
+zigbee2mqtt/bridge/bind/SOURCE_DEVICE_FRIENDLY_NAME
+''' отправить значение TARGET_DEVICE_FRIENDLY_NAME, где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
+
 В результате  исходное устройство привяжется с целевым.  
 
-Для отвязки устрйоств необходимо отправить zigbee2mqtt/bridge/unbind/SOURCE_DEVICE_FRIENDLY_NAME с параметров TARGET_DEVICE_FRIENDLY_NAME.
+Для отвязки устройств необходимо отправить 
+'''
+zigbee2mqtt/bridge/unbind/SOURCE_DEVICE_FRIENDLY_NAME
+''' с параметром TARGET_DEVICE_FRIENDLY_NAME,  где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
 
 # Настройка через Web 
 
