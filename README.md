@@ -81,16 +81,16 @@ hex - значение цвета в RGB Hex формате
 
 # Интеграции
 
-# [Интеграция с Majordomo](/int_majordomo.md)
+## [Интеграция с Majordomo](/int_majordomo.md)
 
-# [Интеграция с HomeAssistant](/int_has.md)
+## [Интеграция с HomeAssistant](/int_has.md)  (в разработке)
 
-# [Интеграция с Node-Red](/int_nodered.md) 
+## [Интеграция с Node-Red](/int_nodered.md)   (в разработке)
 
-# [Интеграция с IObroker](/int_iob.md)
+## [Интеграция с IObroker](/int_iob.md)  (в разработке)
 
-# [Интеграция с Алисой Яндекс](/int_yandex.md)
+## [Интеграция с Алисой Яндекс](/int_yandex.md)  (в разработке)
 
-# [Интеграция с Google Home](/int_google.md)
+## [Интеграция с Google Home](/int_google.md)  (в разработке)
 
-# [Интеграция с HomeKit](/int_homekit.md)
+## [Интеграция с HomeKit](/int_homekit.md)  (в разработке)
