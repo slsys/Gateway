@@ -77,4 +77,4 @@ hex - значение цвета в RGB Hex формате
 ## [Binding](/bind.md)
 
 
-# [FAQ](/faq.md)
+# [Faq (часто задаваемые вопросы](/faq.md)
