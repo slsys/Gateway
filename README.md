@@ -78,3 +78,19 @@ hex - значение цвета в RGB Hex формате
 
 
 # [FAQ (часто задаваемые вопросы)](/faq.md)
+
+# Интеграции
+
+# [Интеграция с Majordomo](/int_majordomo.md)
+
+# [Интеграция с HomeAssistant](/int_has.md)
+
+# [Интеграция с Node-Red](/int_nodered.md) 
+
+# [Интеграция с IObroker](/int_iob.md)
+
+# [Интеграция с Алисой Яндекс](/int_yandex.md)
+
+# [Интеграция с Google Home](/int_google.md)
+
+# [Интеграция с HomeKit](/int_homekit.md)
