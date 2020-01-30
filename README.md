@@ -47,6 +47,8 @@
 # Аппаратная часть
 Устройство можно [собрать самостоятельно](https://modkam.ru/?p=1342), или приобрести на сайте [Smart Logic System](slsys.io)
 
+![home](/img/Mi_Gateway_Shield12.jpg)
+
 
 
 # Прошивка устройства
