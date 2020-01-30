@@ -9,10 +9,10 @@
 
 Модуль работает через MQTT. 
 Установка mosqutto на raspberry или linnux
-https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi
-https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/
+[ссылка 1](https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi)
+[ссылка 2](https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/)
 
-Mosqutto для windows можно скачать тут https://mosquitto.org/download/
+Mosqutto для windows можно скачать [тут](https://mosquitto.org/download/)
 
 Для корректной работы с MajorDoMo необходимо через маркет дополнений установить  модуль [zigbee2mqtt](https://connect.smartliving.ru/tasks/355.html).
 
