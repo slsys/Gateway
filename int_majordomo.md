@@ -8,15 +8,19 @@
 # Подготовительные меропрития
 
 Модуль работает через MQTT. 
-Установка mosqutto на raspberry или linux
+Установка mosqutto на raspberry или linux:
+
 [ссылка 1](https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi)
+
 [ссылка 2](https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/)
 
 Mosqutto для windows можно скачать [тут](https://mosquitto.org/download/)
 
+
 Для корректной работы с MajorDoMo необходимо через маркет дополнений установить  модуль [zigbee2mqtt](https://connect.smartliving.ru/tasks/355.html).
 
 После установки mqtt брокера и дополнения для MajorDomo, необходимо на вкладке Сервис прописать нужные настройки:
+
 1) адрес mqtt сервера
 
 2) порт mqtt
@@ -33,7 +37,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 ![settings](/img/settings.jpg)
 
-После нажатия кнопки сохранить, происходит перезапуск цикла zigbee2mqtt. Его статус можно посмотреть в XREY на вкладке Services. При необходимости, там же его можно перезапустить или остановить.
+После нажатия кнопки сохранить, происходит перезапуск цикла zigbee2mqtt. Его статус можно посмотреть в XRAY на вкладке Services. При необходимости, там же его можно перезапустить или остановить.
 
 **Для корректной работы модуля, необходимо на вкладке Сервис нажать кнопку Disable strict mode  - это выключит строгий режим MySQL сервера.
 
@@ -77,12 +81,5 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 Топики для управления  шлюзом через mqtt https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttbridgelog
 
 
-Драйвера для smartRF04EB начинаются на swrc* есть в репозитории Кирова Ильи https://github.com/kirovilya/files
-Огромная благодарность  Илье @goofyk за помощь в освоении материала )
-
-Последние версии прошивок можно взять тут https://github.com/Koenkk/Z-Stack-firmware/tree/dev/coordinator/
-
-Обсуждение умных ламп http://majordomo.smartliving.ru/forum/viewtopic.php?f=8&t=6016&p=95733#p95733
 
 
-# Более подробная информация содержится на форуме  https://mjdm.ru/forum/viewtopic.php?f=5&t=6011 
