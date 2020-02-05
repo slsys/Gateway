@@ -35,7 +35,13 @@ Start Join – запуск режима спаривания устройств
 
 # Settings -> Link Setup
 
-![zigbee](/img/slslink.png)
+slssetuplink.png
+![zigbee](/img/slssetupmqtt.png)
+![zigbee](/img/slssetupnapive.png)
+
+
+
+
 
 Настройки сервера MQTT,NativeApi и  RestApi.
 
