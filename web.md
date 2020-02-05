@@ -35,6 +35,12 @@ Start Join – запуск режима спаривания устройств
 
 ![zigbee](/img/slszigbee.png)
 
+Страница настроек zigbee
+![zigbee](/img/slszigeesetup.png)
+
+
+
+
 
 # Log
 
