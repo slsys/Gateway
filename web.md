@@ -35,7 +35,8 @@ Start Join – запуск режима спаривания устройств
 
 # Settings -> Link Setup
 
-slssetuplink.png
+
+![zigbee](/img/slssetuplink.png)
 ![zigbee](/img/slssetupmqtt.png)
 ![zigbee](/img/slssetupnapive.png)
 
