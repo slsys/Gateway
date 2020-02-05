@@ -7,3 +7,8 @@
 ```
 ZigBeeXXXX/reboot {}
 ```
+
+## Управление подстветкой шлюза
+```
+ZigBeeXXXX/led {“mode”:”manual”,”hex”:”#FFFFFF”}
+```
