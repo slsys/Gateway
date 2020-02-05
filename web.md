@@ -95,6 +95,7 @@ Start Join – запуск режима спаривания устройств
 
 
 
+
 # Action  -> Update
 Обновление прошивки шлюза по ОТА.
 ![update](/img/slsupdate.png)
