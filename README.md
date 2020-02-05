@@ -74,6 +74,7 @@
 
 ## [Simplelink](/simplelink.md)
 
+## [Touchlink](/touchlink.md)
 
 ## [Binding](/bind.md)
 
