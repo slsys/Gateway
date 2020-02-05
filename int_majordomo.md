@@ -72,7 +72,7 @@ ZigBeeCA20/#,zigbee2mqtt/#
 ![majordroid1](/img/majordroid1.jpeg)
 ![majordroid2](/img/majordroid2.jpeg)
 
-Также постоянную странциу дополнения http:/ipaddr/module/zigbee2mqtt.html можно прописать в ибзранном или домашней странций  браузера.
+Также постоянную странциу дополнения [http:/ipaddr/module/zigbee2mqtt.html](http:/192.168.1.39/module/zigbee2mqtt.html) можно прописать в ибзранном или домашней странций  браузера.
 
 ![app](/img/app.png)
 
