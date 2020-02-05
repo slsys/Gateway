@@ -84,6 +84,10 @@
 
 ## [FAQ (часто задаваемые вопросы)](/faq.md)
 
+## [Структура сообщений zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (поддерживается большинство комманд)
+
+## [Структура сообщений SLS zigbee2mqtt](/slscommand.md)
+
 
 
 # Интеграции
