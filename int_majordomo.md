@@ -69,8 +69,8 @@ ZigBeeCA20/#,zigbee2mqtt/#
 
 Интерфейс управления модулем доступен из приложений. Так, установив приложение для телефонов Majordroid, через приложения будет доступен режим простотра и управления устройстами. 
 
-![majordroid1](/img/majordroid1.png)
-![majordroid2](/img/majordroid2.png)
+![majordroid1](/img/majordroid1.jpeg)
+![majordroid2](/img/majordroid2.jpeg)
 
 Также постоянную странциу дополнения http:/ipaddr/module/zigbee2mqtt.html можно прописать в ибзранном или домашней странций  браузера.
 
