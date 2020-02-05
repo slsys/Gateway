@@ -108,3 +108,5 @@
 ## [Интеграция с Google Home](/int_google.md)  (в разработке)
 
 ## [Интеграция с HomeKit](/int_homekit.md)  (в разработке)
+
+## [Интеграция с Domoticz](/int_domoticz.md)  (в разработке)
