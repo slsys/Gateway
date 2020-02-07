@@ -4,7 +4,7 @@
 
 Answer: A selection from Aliexpress for assembling a gateway without soldering:
 1. [ESP32 module 16Mb Flash 8Mb SRAM for firmware via OTA or ESP32 module with 4Mb flash for firmware without OTA](http://ali.pub/3sy77r)
-2. [CC2530 module without an amplifier but with an external antenna] (http://ali.pub/3sy5g6)
+2. [CC2530 module without an amplifier but with an external antenna](http://ali.pub/3sy5g6)
 3. [Debugger CC debugger for CC2530 module firmware](http://ali.pub/3sy6nx)
 4. [A set of wires](http://ali.pub/3sy6y1)
 
