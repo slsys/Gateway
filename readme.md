@@ -69,26 +69,26 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 # Useful links:
 
 
-## [First run] (/firststart_eng.md)
+## [First run](/firststart_eng.md)
 
-## [Web interface] (/web_eng.md)
-
-
-## [SimpleBind] (/simplebind_eng.md)
-
-## [Touchlink] (/touchlink_eng.md)
-
-## [Binding] (/bind_eng.md)
+## [Web interface](/web_eng.md)
 
 
-## [Support for Lua scripts] (/lua_eng.md)
+## [SimpleBind](/simplebind_eng.md)
+
+## [Touchlink](/touchlink_eng.md)
+
+## [Binding](/bind_eng.md)
 
 
-## [FAQ (Frequently Asked Questions)] (/faq_eng.md)
+## [Support for Lua scripts](/lua_eng.md)
 
-## [zigbee2mqtt message structure] (https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (most commands supported)
 
-## [SLS zigbee2mqtt message structure] (/slscommand_eng.md)
+## [FAQ (Frequently Asked Questions)](/faq_eng.md)
+
+## [zigbee2mqtt message structure](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (most commands supported)
+
+## [SLS zigbee2mqtt message structure](/slscommand_eng.md)
 
 
 
