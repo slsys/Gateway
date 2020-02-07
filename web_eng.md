@@ -113,3 +113,7 @@ Reset - reset to the initial state.
 
 # Action -> Reboot
 Reboot - reboot the gateway.
+
+
+
+[Перейти на русскую версию страницы](/web_rus.md)
