@@ -1,4 +1,4 @@
-FAQ
+# FAQ
 
 ## Question: What equipment is needed for the 2530 gateway
 
@@ -121,4 +121,51 @@ It is necessary to send an object containing one of the options for setting the 
 6. Saturation: {"saturation": 220}
 
 Example:
-Sending to the topic ZigBeeGW / 0x00158D00011D8CB1 / set values: {"color": {"r": 0, "g": 255, "b": 0}}
+Sending to the topic ZigBeeGW/0x00158D00011D8CB1/set values: {"color": {"r": 0, "g": 255, "b": 0}}
+
+## Question: How to set the color temperature of a light bulb
+
+Answer:
+You must send the value in Mired units to the color_temp state.
+The formula for the conversion: M = 1,000,000 / K where K is the temperature in Kelvin.
+
+Example:
+Color temperature 4000K, set the value ZigBeeGW / lamp_1 / set / color_temp to 250
+
+## Question: How to control hardware LEDs?
+Answer:
+It is necessary to send the following content to the ZigBeeGW / led topic in JSON:
+{"mode": "manual", "hex": "# FFFFFF"}
+
+mode - sets the mode; valid values ​​are off, manual and auto
+hex - color value in RGB Hex format.
+
+
+## Question: What do the numbers in the pairing stages mean?
+Answer:
+
+0 - announcement received, interview starts
+
+1 - received device description
+
+2 - the number of active endpoints is received
+
+3 - received device clusters
+
+4- received model
+
+
+Many Xiaomi devices will report the model themselves, so they work without completing the entire interview cycle.
+
+## Question: How to add a new unsupported Zigbee device?
+
+Answer: Many devices can be added remotely by the developers of the SLS ZGW project. The likelihood of adding new devices increases if there is a converter in [zigbee2mqtt] (https://github.com/Koenkk/zigbee-herdsman-converters/blob/master/converters/fromZigbee.js)
+
+Also an indisputable advantage for adding a new device is the interaction protocol in z2m. It can be obtained from zigbee2mqtt in zigbee debug mode with the following combination:
+
+```
+cd / opt / zigbee2mqtt
+DEBUG = zigbee-herdsman: zStack: * npm start
+```
+
+Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue] (https://github.com/slsys/Gateway/issues) or using the [pastebin] service (https://pastebin.com)
