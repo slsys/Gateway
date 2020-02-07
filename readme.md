@@ -9,19 +9,19 @@ Support for BLE and the NXP JN5168 / JN5169 module is currently undergoing testi
 # General information
 The gateway acts as the coordinator of Zigbee and allows you to:
 
-1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link] (/ devices / devices.md). New equipment may be added after discussion with us.
+1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](/devices/devices.md). New equipment may be added after discussion with us.
 
-2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System] (https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
+2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
 
-3) Use common local automation systems, such as [MajorDomo] (https://mjdm.ru/), [ioBroker Smarthome] (https://www.iobroker.net), [HomeAssisiant] (https: // www. home-assistant.io), [Node-Red] (https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt] project (https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
+3) Use common local automation systems, such as [MajorDomo](https://majordomohome.com/), [ioBroker Smarthome](https://www.iobroker.net), [HomeAssisiant](https:/ www.home-assistant.io), [Node-Red](https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt project](https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
 
 
 # Additional gateway features via the web interface
-1. Management and viewing of device information through the Web interface of the gateway at http: // ipadress (port 80). The ability to display the power source, battery level, available [EndPoint devices] (https://community.nxp.com/thread/332332) in the web interface.
+1. Management and viewing of device information through the Web interface of the gateway at http://ipadress (port 80). The ability to display the power source, battery level, available [EndPoint devices](https://community.nxp.com/thread/332332) in the web interface.
 
-2. Creation of local automation within the gateway [Simplelink] (/ simplelink.md).
+2. Creation of local automation within the gateway [SimpleBind](/simpleBind_eng.md).
 
-3. The ability to write scripts in [Lua] (https://ru.wikipedia.org/wiki/Lua) [Book on Lua in Russian] (https://www.htbook.ru/kompjutery_i_seti/programmirovanie/programmirovanie- na-yazyke-lua).
+3. The ability to write scripts in [Lua](https://ru.wikipedia.org/wiki/Lua). 
 
 4. The ability to create groups to manage multiple devices at the same time (in development).
 
@@ -31,11 +31,11 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 
 6. The ability to display routes in the web-interface (in development).
 
-8. The ability to establish direct connections [Bind] (/ bind_rus.md) between ZigBee devices without the participation of a coordinator to manage end devices.
+8. The ability to establish direct connections [Bind](/bind_eng.md) between ZigBee devices without the participation of a coordinator to manage end devices.
 
-9. Ability to control hardware [LEDs (address or RGB)] (/ faq_rus.md).
+9. Ability to control hardware [LEDs (address or RGB)] (/faq_eng.md).
 
-10. The ability to control sound (in the presence of a soldered amplifier) ​​(in development)
+10. The ability to control sound (in the presence of a soldered amplifier) (in development)
 
 11. Ability to change PanId and channel number.
 
@@ -48,16 +48,16 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 
 
 # Hardware
-The device can be [assembled independently] (https://modkam.ru/?p=1342), or purchased on the site [Smart Logic System] (slsys.io)
+The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the site [Smart Logic System](slsys.io)
 
 ![home](/img/Mi_Gateway_Shield12.jpg)
 
 
 
 # Device firmware
-[Permanent link to device firmware] (https://github.com/slsys/Gateway/tree/master/rom)
+[Permanent link to device firmware](https://github.com/slsys/Gateway/tree/master/rom)
 
-[History of firmware changes] (/rom/history.md)
+[History of firmware changes](/rom/history.md)
 
 For firmware, run the appropriate batch file from the archive.
 At the first start, an access point is created with a name of the form zgwABCD, without a password.
