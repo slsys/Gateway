@@ -30,9 +30,9 @@
 
 6.	Возможность отображения маршрутов в web-интерфейсе (в разработке).
 
-8.	Возможность установить прямые связи [Bind](/bind.md) между устройствами ZigBee без участия координатора для управления конечными устройствами.
+8.	Возможность установить прямые связи [Bind](/bind_rus.md) между устройствами ZigBee без участия координатора для управления конечными устройствами.
 
-9.	Возможность управлять аппаратными [светодиодами (адресными или RGB)](/faq.md). 
+9.	Возможность управлять аппаратными [светодиодами (адресными или RGB)](/faq_rus.md). 
 
 10.	Возможность управлять звуком (при наличии распаянного усилителя) (в разработке)
 
@@ -69,26 +69,26 @@
 # Полезные ссылки:
 
 
-## [Первый запуск](/firststart.md)
+## [Первый запуск](/firststart_rus.md)
 
-## [Web-интерфейс](/web.md)
-
-
-## [Simplelink](/simplelink.md)
-
-## [Touchlink](/touchlink.md)
-
-## [Binding](/bind.md)
+## [Web-интерфейс](/web_rus.md)
 
 
-## [Поддержка Lua-скриптов](/lua.md)
+## [SimpleBind](/simplebind_rus.md)
+
+## [Touchlink](/touchlink_rus.md)
+
+## [Binding](/bind_rus.md)
 
 
-## [FAQ (часто задаваемые вопросы)](/faq.md)
+## [Поддержка Lua-скриптов](/lua_rus.md)
+
+
+## [FAQ (часто задаваемые вопросы)](/faq_rus.md)
 
 ## [Структура сообщений zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (поддерживается большинство комманд)
 
-## [Структура сообщений SLS zigbee2mqtt](/slscommand.md)
+## [Структура сообщений SLS zigbee2mqtt](/slscommand_rus.md)
 
 
 
@@ -97,18 +97,18 @@
 Благодаря использованию протокола MQTT, шлюз SLS ZG может быть интегрирован с любой локальной или облачной  системой автоматизации. Структура топиков почти полностью повторяет [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). Для удобства  использования ко многим системам были  разработаны дополнительные драйверы или модули  интеграции.
 
 
-## [Интеграция с Majordomo](/int_majordomo.md)
+## [Интеграция с Majordomo](/int_majordomo_rus.md)
 
-## [Интеграция с HomeAssistant](/int_has.md)  (в разработке)
+## [Интеграция с HomeAssistant](/int_has_rus.md)  (в разработке)
 
-## [Интеграция с Node-Red](/int_nodered.md)   (в разработке)
+## [Интеграция с Node-Red](/int_nodered_rus.md)   (в разработке)
 
-## [Интеграция с IObroker](/int_iob.md)  (в разработке)
+## [Интеграция с IObroker](/int_iob_rus.md)  (в разработке)
 
-## [Интеграция с Алисой Яндекс](/int_yandex.md)  (в разработке)
+## [Интеграция с Алисой Яндекс](/int_yandex_rus.md)  (в разработке)
 
-## [Интеграция с Google Home](/int_google.md)  (в разработке)
+## [Интеграция с Google Home](/int_google_rus.md)  (в разработке)
 
-## [Интеграция с HomeKit](/int_homekit.md)  (в разработке)
+## [Интеграция с HomeKit](/int_homekit_rus.md)  (в разработке)
 
-## [Интеграция с Domoticz](/int_domoticz.md)  (в разработке)
+## [Интеграция с Domoticz](/int_domoticz_rus.md)  (в разработке)
