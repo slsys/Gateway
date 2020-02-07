@@ -1,3 +1,5 @@
+[Перейти на русскую версию сайта](/bind_rus.md)
+
 # Binding
 
 The Zigbee protocol supports direct binding of Endpoint devices, which allows you to directly manage each other without the intervention of a coordinator or any home automation software.
