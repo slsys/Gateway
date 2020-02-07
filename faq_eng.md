@@ -159,13 +159,13 @@ Many Xiaomi devices will report the model themselves, so they work without compl
 
 ## Question: How to add a new unsupported Zigbee device?
 
-Answer: Many devices can be added remotely by the developers of the SLS ZGW project. The likelihood of adding new devices increases if there is a converter in [zigbee2mqtt] (https://github.com/Koenkk/zigbee-herdsman-converters/blob/master/converters/fromZigbee.js)
+Answer: Many devices can be added remotely by the developers of the SLS ZGW project. The likelihood of adding new devices increases if there is a converter in [zigbee2mqtt](https://github.com/Koenkk/zigbee-herdsman-converters/blob/master/converters/fromZigbee.js)
 
 Also an indisputable advantage for adding a new device is the interaction protocol in z2m. It can be obtained from zigbee2mqtt in zigbee debug mode with the following combination:
 
 ```
-cd / opt / zigbee2mqtt
+cd/opt/zigbee2mqtt
 DEBUG = zigbee-herdsman: zStack: * npm start
 ```
 
-Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue] (https://github.com/slsys/Gateway/issues) or using the [pastebin] service (https://pastebin.com)
+Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue](https://github.com/slsys/Gateway/issues) or using the [pastebin] service (https://pastebin.com)
