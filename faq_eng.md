@@ -169,3 +169,5 @@ DEBUG = zigbee-herdsman: zStack: * npm start
 ```
 
 Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue](https://github.com/slsys/Gateway/issues) or using the [pastebin service](https://pastebin.com)
+
+[Перейти на русскую версию страницы](/faq_rus.md)
