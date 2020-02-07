@@ -1,116 +1,114 @@
 [Перейти на русскую версию сайта](/README_rus.md)
 
-# Zigbee + BLE шлюз
+# Zigbee + BLE Gateway
 
-Этот продукт  предназначен для работы с распространенными устройствами ZigBee, BLE.  В основе шлюза лежит контроллер [ESP32 от Espressif ](https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). В качестве связущего звена протокола Zigbee  выступает тандем чипов от Texas Instruments [ZIgbee CC2538](https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds) и  усилителя  [сс2592](https://www.ti.com/product/CC2592?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUv-CIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds), либо готовый чип от [NXP JN5168](https://www.nxp.com/products/wireless/zigbee/zigbee-and-ieee802.15.4-wireless-microcontroller-with-256-kb-flash-32-kb-ram:JN5168). Для связи с устройствами по протоколу BLE используются встроенные возможности ESP32.
+This product is designed to work with common ZigBee, BLE devices. The gateway is based on the controller [ESP32 from Espressif] (https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). The tandem of chips from Texas Instruments [ZIgbee CC2538] (https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pfgo -wwe & utm_content = CC2538 & ds_k =% 7b_dssearchterm% 7d & DCM = yes & gclid = CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE & gclsrc = aw.ds) and amplifier [ss2592] (https://www.ti.com/product/CC2592?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null- GPN_EN-cpc-pf-google-wwe & utm_content = CC2592 & ds_k =% 7b_dssearchterm% 7d & DCM = yes & gclid = CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUv-CIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE & gclsrc = aw.ds), either ready chip [NXP JN5168] (https://www.nxp.com /products/wireless/zigbee/zigbee-and-ieee802.15.4-wireless-microcontroller-with-256-kb-flash-32-kb-ram:JN5168). To communicate with devices using the BLE protocol, the built-in capabilities of ESP32 are used.
 
-Поддержка BLE и модуля NXP JN5168/JN5169 в настоящее время проходит тестирование  и  ожидается в ближайшее время. 
+Support for BLE and the NXP JN5168 / JN5169 module is currently undergoing testing and is expected soon.
 
+# General information
+The gateway acts as the coordinator of Zigbee and allows you to:
 
-# Общие сведения
-Шлюз выполняет роль координатора Zigbee и позволяет:
+1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link] (/ devices / devices.md). New equipment may be added after discussion with us.
 
-1) Использовать большинство доступного Zigbee оборудования. Список поддерживаемого и протестированного обрудования доступен по [ссылке](/devices/devices.md). Новое оборудование может быть добавлено после обсуждения с нами.
+2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System] (https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
 
-2) Отказаться от необходимости использования облаков производителей устройств. В качестве альтернативы, предлагается использовать облачный сервис [Smart Logic System](https://cloud.slsys.io), либо нативные приложения для Android и Apple iPhone (в разработке). 
-
-3) Использовать распространенные  локальные системы автоматизации, такие как [MajorDomo](https://mjdm.ru/), [ioBroker Smarthome](https://www.iobroker.net), [HomeAssisiant](https://www.home-assistant.io), [Node-Red](https://nodered.org) и др. Для интеграции с этими системами используется протокол MQTT. Структура топиков протокола MQTT идентична  проекту  [zigbee2mqtt](https://www.zigbee2mqtt.io), поэтому для использования и интеграции шлюза нет необходимости изучать скриптовые языки указанных выше систем, так как протокол в основном уже доступен с помощью  модулей расширения.
-
-
-# Дополнительные возможности шлюза через Web интерфейс
-1. Управление и просмотр сведений  устройств через Web интерфейс шлюза по адресу http://ipadress (80 порт). Возможность отображения источника питания, уровня заряда батареи, доступных [EndPoint устройств](https://community.nxp.com/thread/332332)  в web-интерфейсе.
-
-2. Создание локальных автоматизаций внутри шлюза [Simplelink](/simplelink.md).
-
-3. Возможность написания сценариев на языке [Lua](https://ru.wikipedia.org/wiki/Lua) [Книга по Lua на русском языке](https://www.htbook.ru/kompjutery_i_seti/programmirovanie/programmirovanie-na-yazyke-lua).
-
-4.	Возможность создания групп для управления несколькими устройствами одновременно (в разработке).
-
-5.	Возможность задавать имя устройству. Если вы планируете использовать  шлюз с локальными системами автоматизации, рекомендуется установить галочку отправки адреса вместо устройств.
-
-5.	Возможность удаления устройства. 
-
-6.	Возможность отображения маршрутов в web-интерфейсе (в разработке).
-
-8.	Возможность установить прямые связи [Bind](/bind_rus.md) между устройствами ZigBee без участия координатора для управления конечными устройствами.
-
-9.	Возможность управлять аппаратными [светодиодами (адресными или RGB)](/faq_rus.md). 
-
-10.	Возможность управлять звуком (при наличии распаянного усилителя) (в разработке)
-
-11.	Возможность изменить PanId и номер канала.
-
-12.	Возможность задать имя шлюза в сети.
-
-13.	Возможность перехода шлюза в режим АР при нажатии аппаратной кнопки в течение 2-5 секунд после подачи питания.
-
-14.	Список поддерживаемых устройств постоянно обновляется (информация находится в файле converters.txt в архиве с прошивкой)
+3) Use common local automation systems, such as [MajorDomo] (https://mjdm.ru/), [ioBroker Smarthome] (https://www.iobroker.net), [HomeAssisiant] (https: // www. home-assistant.io), [Node-Red] (https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt] project (https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
 
 
+# Additional gateway features via the web interface
+1. Management and viewing of device information through the Web interface of the gateway at http: // ipadress (port 80). The ability to display the power source, battery level, available [EndPoint devices] (https://community.nxp.com/thread/332332) in the web interface.
 
-# Аппаратная часть
-Устройство можно [собрать самостоятельно](https://modkam.ru/?p=1342), или приобрести на сайте [Smart Logic System](slsys.io)
+2. Creation of local automation within the gateway [Simplelink] (/ simplelink.md).
+
+3. The ability to write scripts in [Lua] (https://ru.wikipedia.org/wiki/Lua) [Book on Lua in Russian] (https://www.htbook.ru/kompjutery_i_seti/programmirovanie/programmirovanie- na-yazyke-lua).
+
+4. The ability to create groups to manage multiple devices at the same time (in development).
+
+5. The ability to name the device. If you plan to use the gateway with local automation systems, it is recommended to check the box for sending addresses instead of devices.
+
+5. Ability to remove the device.
+
+6. The ability to display routes in the web-interface (in development).
+
+8. The ability to establish direct connections [Bind] (/ bind_rus.md) between ZigBee devices without the participation of a coordinator to manage end devices.
+
+9. Ability to control hardware [LEDs (address or RGB)] (/ faq_rus.md).
+
+10. The ability to control sound (in the presence of a soldered amplifier) ​​(in development)
+
+11. Ability to change PanId and channel number.
+
+12. The ability to specify the name of the gateway on the network.
+
+13. The ability to switch the gateway to the AP mode when the hardware button is pressed for 2-5 seconds after power is supplied.
+
+14. The list of supported devices is constantly updated (information is in the converters.txt file in the archive with firmware)
+
+
+
+# Hardware
+The device can be [assembled independently] (https://modkam.ru/?p=1342), or purchased on the site [Smart Logic System] (slsys.io)
 
 ![home](/img/Mi_Gateway_Shield12.jpg)
 
 
 
-# Прошивка устройства
-[Постоянная ссылка на прошивку устроуства](https://github.com/slsys/Gateway/tree/master/rom)
+# Device firmware
+[Permanent link to device firmware] (https://github.com/slsys/Gateway/tree/master/rom)
 
-[История изменений прошивки](/rom/history_ru.md)
+[History of firmware changes] (/rom/history.md)
 
-Для прошивки запустить соответствующий батник из архива.
-При первом запуске, создается точка доступа c именем вида zgwABCD, без пароля.
-После подключения к ней, автоматически открывается страница настроек (если не открылась, можно зайти по адресу 192.168.1.1) и прописываем подключение к точке доступа и к MQTT серверу (но его можно указать и позже), нажимаем перезагрузку и шлюз подключится к точке доступа и начнет слать сообщения в MQTT. В случае возникновения проблем с доступом к captive portal, рекомендуется отключать GPRS на Android смартфонах. Обновление прошивок можно производить через Web интерфейс приложения.
+For firmware, run the appropriate batch file from the archive.
+At the first start, an access point is created with a name of the form zgwABCD, without a password.
+After connecting to it, the settings page automatically opens (if it didn’t open, you can go to the address 192.168.1.1) and register the connection to the access point and to the MQTT server (but you can also specify it later), press reboot and the gateway will connect to the access point and will start sending messages to MQTT. In case of problems with access to the captive portal, it is recommended to disable GPRS on Android smartphones. Firmware update can be done through the Web interface of the application.
 
-Замечание: существует две версии прошивки, для чипов с 4мб и 16 мб FLASH RAM. Версии отличаются наличием возможности производить обновление через OTA.
-
-
-
-# Полезные ссылки:
+Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Versions are distinguished by the ability to update via OTA.
 
 
-## [Первый запуск](/firststart_rus.md)
-
-## [Web-интерфейс](/web_rus.md)
+# Useful links:
 
 
-## [SimpleBind](/simplebind_rus.md)
+## [First run] (/firststart_eng.md)
 
-## [Touchlink](/touchlink_rus.md)
-
-## [Binding](/bind_rus.md)
+## [Web interface] (/web_eng.md)
 
 
-## [Поддержка Lua-скриптов](/lua_rus.md)
+## [SimpleBind] (/simplebind_eng.md)
+
+## [Touchlink] (/touchlink_eng.md)
+
+## [Binding] (/bind_eng.md)
 
 
-## [FAQ (часто задаваемые вопросы)](/faq_rus.md)
-
-## [Структура сообщений zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (поддерживается большинство комманд)
-
-## [Структура сообщений SLS zigbee2mqtt](/slscommand_rus.md)
+## [Support for Lua scripts] (/lua_eng.md)
 
 
+## [FAQ (Frequently Asked Questions)] (/faq_eng.md)
 
-# Интеграции
+## [zigbee2mqtt message structure] (https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (most commands supported)
 
-Благодаря использованию протокола MQTT, шлюз SLS ZG может быть интегрирован с любой локальной или облачной  системой автоматизации. Структура топиков почти полностью повторяет [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). Для удобства  использования ко многим системам были  разработаны дополнительные драйверы или модули  интеграции.
+## [SLS zigbee2mqtt message structure] (/slscommand_eng.md)
 
 
-## [Интеграция с Majordomo](/int_majordomo_rus.md)
 
-## [Интеграция с HomeAssistant](/int_has_rus.md)  (в разработке)
+# Integrations
 
-## [Интеграция с Node-Red](/int_nodered_rus.md)   (в разработке)
+Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated with any local or cloud automation system. The structure of topics almost completely repeats [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). For ease of use, many drivers or integration modules have been developed for many systems.
 
-## [Интеграция с IObroker](/int_iob_rus.md)  (в разработке)
 
-## [Интеграция с Алисой Яндекс](/int_yandex_rus.md)  (в разработке)
+## [Integration with Majordomo] (/int_majordomo_eng.md)
 
-## [Интеграция с Google Home](/int_google_rus.md)  (в разработке)
+## [Integration with HomeAssistant] (/int_has_eng.md) (under development)
 
-## [Интеграция с HomeKit](/int_homekit_rus.md)  (в разработке)
+## [Integration with Node-Red] (/int_nodered_eng.md) (under development)
 
-## [Интеграция с Domoticz](/int_domoticz_rus.md)  (в разработке)
+## [Integration with IObroker] (/int_iob_eng.md) (under development)
+
+## [Integration with Alice Yandex] (/int_yandex_eng.md) (under development)
+
+## [Integration with Google Home] (/int_google_eng.md) (under construction)
+
+## [Integration with HomeKit] (/int_homekit_eng.md) (under development)
+
+## [Integration with Domoticz] (/int_domoticz_eng.md) (under development)
