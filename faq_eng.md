@@ -16,7 +16,7 @@ Answer: A selection from Aliexpress for assembling a gateway with a minimum of s
 4. [A set of wires](http://ali.pub/3sy6y1)
 
 ## Question: Why is a ss2538-based gateway better than ss2530?
-Answer: Modules based on ss2530 have a limit on the number of direct connections (up to 10pcs, depending on the firmware). The ss2530 also has a limited amount of available memory. Chika SDK is out of date. These problems are solved on the new chips [ss2538] (https://github.com/Koenkk/zigbee2mqtt/issues/1568) and [ss2652r] (https://github.com/Koenkk/zigbee2mqtt/issues/1429)
+Answer: Modules based on ss2530 have a limit on the number of direct connections (up to 10pcs, depending on the firmware). The ss2530 also has a limited amount of available memory. Chika SDK is out of date. These problems are solved on the new chips [ss2538](https://github.com/Koenkk/zigbee2mqtt/issues/1568) and [ss2652r](https://github.com/Koenkk/zigbee2mqtt/issues/1429)
 
 ## Question: Are there any differences in the operation of the gateway on chips from TI and NXP?
 Answer: The SDK is significantly different.
@@ -69,7 +69,7 @@ Answer:
 
 Answer:
 [Instruction 1](https://modkam.ru/?p=1188)
-[Instruction 2](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/ % D0% BF% D1% 80% D0% BE% D1% 88% D0% B8% D0% B2% D0% B0% D0% B5% D0% BC-% D1% 81% D1% 812538-% D1% 81 -% D0% BF% D0% BE% D0% BC% D0% BE% D1% 89% D1% 8C% D1% 8E-j-link)
+[Instruction 2](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0% B0%D0%B5%D0%BC-%D1%81%D1%812538-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-j-link)
 
 
 
@@ -81,14 +81,14 @@ Answer: There are two ways:
 
 ## Question: How to add new Zigbee devices.
 
-Answer: SLS Zigbee BLE Gateway automatically pairs with Zigbee devices. After pairing, it appears in the list of devices on the Zigbee tab. Green color indicates devices that already have a converter, and with which work has already been tested. Devices for which the converter is not yet available are marked in red. You can help with adding a device by providing screenshots of the device’s page and the pairing log on the [ISSUE] page (https://github.com/slsys/Gateway/issues) of the project. Open a new topic adding a new device with the name of the device.
+Answer: SLS Zigbee BLE Gateway automatically pairs with Zigbee devices. After pairing, it appears in the list of devices on the Zigbee tab. Green color indicates devices that already have a converter, and with which work has already been tested. Devices for which the converter is not yet available are marked in red. You can help with adding a device by providing screenshots of the device’s page and the pairing log on the [ISSUE page](https://github.com/slsys/Gateway/issues) of the project. Open a new topic adding a new device with the name of the device.
 
 ## Question: How to add new BLE devices.
 
 Answer: SLS Zigbee BLE Gateway can also work with BLE devices. Adding BLE devices requires immediate device availability. To help with the addition of new ones, you can only send the necessary equipment.
 
 
-## Question: How to set the rules [SimpleBind] (/ simplebind.md)
+## Question: How to set the rules [SimpleBind](/simplebind_eng.md)
 
 Answer: There are two recording formats:
 1. DstDeviceId
@@ -130,11 +130,11 @@ You must send the value in Mired units to the color_temp state.
 The formula for the conversion: M = 1,000,000 / K where K is the temperature in Kelvin.
 
 Example:
-Color temperature 4000K, set the value ZigBeeGW / lamp_1 / set / color_temp to 250
+Color temperature 4000K, set the value ZigBeeGW/lamp_1/set/color_temp to 250
 
 ## Question: How to control hardware LEDs?
 Answer:
-It is necessary to send the following content to the ZigBeeGW / led topic in JSON:
+It is necessary to send the following content to the ZigBeeGW/led topic in JSON:
 {"mode": "manual", "hex": "# FFFFFF"}
 
 mode - sets the mode; valid values ​​are off, manual and auto
@@ -168,4 +168,4 @@ cd/opt/zigbee2mqtt
 DEBUG = zigbee-herdsman: zStack: * npm start
 ```
 
-Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue](https://github.com/slsys/Gateway/issues) or using the [pastebin] service (https://pastebin.com)
+Next, you need to perform the necessary actions with the device and save the screen output. These messages can be added to [issue](https://github.com/slsys/Gateway/issues) or using the [pastebin service](https://pastebin.com)
