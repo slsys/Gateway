@@ -1,5 +1,3 @@
-[Перейти на русскую версию сайта](/bind_rus.md)
-
 # Binding
 
 The Zigbee protocol supports direct binding of Endpoint devices, which allows you to directly manage each other without the intervention of a coordinator or any home automation software.
@@ -44,3 +42,6 @@ with the TARGET_DEVICE_FRIENDLY_NAME parameter, where SOURCE_DEVICE_FRIENDLY_NAM
 # Setup via the Web
 
 It is necessary through the Web interface on the zigbee tab to go to the control device (remote) and specify the address and endpoint of the managed device.
+
+
+[Перейти на русскую версию страницы](/bind_rus.md)
