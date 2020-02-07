@@ -97,18 +97,18 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated with any local or cloud automation system. The structure of topics almost completely repeats [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). For ease of use, many drivers or integration modules have been developed for many systems.
 
 
-## [Integration with Majordomo] (/int_majordomo_eng.md)
+## [Integration with Majordomo](/int_majordomo_eng.md)
 
-## [Integration with HomeAssistant] (/int_has_eng.md) (under development)
+## [Integration with HomeAssistant](/int_has_eng.md) (under development)
 
-## [Integration with Node-Red] (/int_nodered_eng.md) (under development)
+## [Integration with Node-Red](/int_nodered_eng.md) (under development)
 
-## [Integration with IObroker] (/int_iob_eng.md) (under development)
+## [Integration with IObroker](/int_iob_eng.md) (under development)
 
-## [Integration with Alice Yandex] (/int_yandex_eng.md) (under development)
+## [Integration with Alice Yandex](/int_yandex_eng.md) (under development)
 
-## [Integration with Google Home] (/int_google_eng.md) (under construction)
+## [Integration with Google Home](/int_google_eng.md) (under construction)
 
-## [Integration with HomeKit] (/int_homekit_eng.md) (under development)
+## [Integration with HomeKit](/int_homekit_eng.md) (under development)
 
-## [Integration with Domoticz] (/int_domoticz_eng.md) (under development)
+## [Integration with Domoticz](/int_domoticz_eng.md) (under development)
