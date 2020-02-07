@@ -3,7 +3,7 @@ A web interface is necessary for the initial configuration of the gateway, viewi
 
 ## Home
 The Home page shows the main statuses of the controller
-! [home] (/ img / slshome.png)
+![home](/img/slshome.png)
 
 
 ## Zigbee
@@ -33,10 +33,10 @@ Setup - setting the channel number and PanId. Ability to select the format of th
 Start Join - start the pairing mode of devices within 255 seconds.
 
 
-! [zigbee] (/ img / slszigbee.png)
+![zigbee] (/img/slszigbee.png)
 
 Zigbee settings page
-! [zigbee] (/ img / slszigeesetup.png)
+![zigbee] (/img/slszigeesetup.png)
 
 
 
@@ -46,29 +46,29 @@ Zigbee settings page
 
 On the log page, you can see the latest system messages.
 
-! [zigbee] (/ img / slslog2.png)
+![zigbee](/img/slslog2.png)
 
 # Settings -> Wifi Setup
 
 On this page you can set Wi-Fi network parameters:
 
-! [zigbee] (/ img / slswifi.png)
+![zigbee](/img/slswifi.png)
 
 
 # Settings -> Time Setup
 
 On this page, you can configure the time zone and the time synchronization server.
 
-! [zigbee] (/ img / slstime.png)
+![zigbee](/img/slstime.png)
 
 
 # Settings -> Link Setup
 
 Server settings MQTT, NativeApi and RestApi.
 
-! [zigbee] (/ img / slssetuplink.png)
-! [zigbee] (/ img / slssetupmqtt.png)
-! [zigbee] (/ img / slssetupnapive.png)
+![zigbee](/img/slssetuplink.png)
+![zigbee](/img/slssetupmqtt.png)
+![zigbee](/img/slssetupnapive.png)
 
 
 
@@ -92,7 +92,7 @@ Gateway hardware settings.
 
 5) Blue LED.
 
-! [zigbee] (/ img / slssetuphw.png)
+![zigbee](/img/slssetuphw.png)
 
 
 
@@ -100,13 +100,13 @@ Gateway hardware settings.
 
 # Action -> Update
 Updating gateway firmware by OTA.
-! [update] (/ img / slsupdate.png)
+![update](/img/slsupdate.png)
 
 
 
 # Action -> Reset
 Reset - reset to the initial state.
-! [update] (/ img / slsaction.png)
+![update](/img/slsaction.png)
 
 
 
