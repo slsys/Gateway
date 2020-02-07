@@ -15,3 +15,5 @@ soon
 ```
 
 Support for lua scripts is currently undergoing testing and is expected soon.
+
+[Перейти на русскую версию страницы](/lua_rus.md)
