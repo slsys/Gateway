@@ -27,7 +27,7 @@ The topic structure completely repeats the [zigbee2mqtt project](https://www.zig
 
 Needed in topic
 ```
-zigbee2mqtt / bridge / bind / SOURCE_DEVICE_FRIENDLY_NAME
+zigbee2mqtt/bridge/bind/SOURCE_DEVICE_FRIENDLY_NAME
 ```
 send the value TARGET_DEVICE_FRIENDLY_NAME, where SOURCE_DEVICE_FRIENDLY_NAME is the address or FN of the remote, TARGET_DEVICE_FRIENDLY_NAME is the address or FN of the managed device.
 
