@@ -29,3 +29,5 @@ Example:
 ```
 left, PTVO, state_bottom_left, TOGGLE; right, PTVO, state_bottom_right, TOGGLE
 ```
+
+[Перейти на русскую версию страницы](/simplebind_rus.md)
