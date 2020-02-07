@@ -12,3 +12,5 @@ ZigBeeXXXX / reboot {}
 ```
 ZigBeeXXXX / led {“mode”: ”manual”, ”hex”: ”# FFFFFF”}
 ```
+
+[Перейти на русскую версию страницы](/slscommand_rus.md)
