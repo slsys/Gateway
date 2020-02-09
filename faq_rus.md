@@ -195,14 +195,14 @@ cat /dev/ttyUSB0 > slslog.txt
 #### Windows
 В операционной системе Windows, подключенный с распаенным ch340 шлюз при наличии установленного драйвера будет виден как последовательный COM порт. Подключившись к нему через putty, можно наблюдать за журналом работы шлюза.
 
-[Драйвер](https://github.com/HobbyComponents/CH340-Drivers)
+Возможно ваш понадобится [драйвер](https://github.com/HobbyComponents/CH340-Drivers)
 
-Выбираем Session ->Logging ставим чекпоинты:
+Выбираем Session ->Logging ставим чекпоинты как показано на рисунке (выбираем All session output):
 
-All session output
+
 ![2-putty](/img/2-putty.jpg)
 
-2. В поле «Log file name » указываем путь в папку где будут хранится файлы  и название файла пишем &H-&Y&M&D-&T.log  :
+2. В поле «Log file name » указываем путь в папку где будут хранится файлы  и название файла пишем &H-&Y&M&D-&T.log:
 
 
 ![3-putty](/img/3-putty.jpg)
