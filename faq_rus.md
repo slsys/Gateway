@@ -200,11 +200,12 @@ cat /dev/ttyUSB0 > slslog.txt
 Выбираем Session ->Logging ставим чекпоинты:
 
 All session output
-2-putty
+![2-putty](/img/2-putty.jpg)
 
 2. В поле «Log file name » указываем путь в папку где будут хранится файлы  и название файла пишем &H-&Y&M&D-&T.log  :
 
-3-putty
+
+![3-putty](/img/3-putty.jpg)
 
 &H-&Y&M&D-&T.log    —  Это :
 
