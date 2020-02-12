@@ -1,0 +1,1 @@
+# Интеграция с HomeAssistant
