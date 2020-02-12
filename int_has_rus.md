@@ -2,7 +2,7 @@
 
 Шлюз SLS Gateway может быть легко интегрирован с системой домашней автоматизации   [Home Assistant](www.home-assistant.io). Для интеграции могут быть использованы программный  продукт  [zigbee2mqtt](https://www.zigbee2mqtt.io) совместно с разлиными вариантами zigbee-донглов, либо  готовый апаратный  шлюз Smart Logic System (SLS) Zigbee BLE gateway. 
 
-![has](/img/has.png)
+![koridor](/img/koridor.png)
 
 
 # Подготовительные меропрития
@@ -22,6 +22,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 # Discovery
 Режим Discovery позволяет автоматически добавлять в систему новые устройства. В настоящее время такой функционал в шлюзе SLS в разработке. 
+
+
 
 # Ручное добавление устройств
 Устройства шлюза SLS Zigbee Gateway можно добавить в Home-Assistant вручную. Для этого в конфигурационный файл configuration.yaml нужно добавить соответсвующие типа устройств настройки. Ниже приведены протестированные примеры настроек для различных типов устройств:
@@ -99,6 +101,10 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     {% endif %}
   expire_after: 5
  ```
+Замечание по кнопке - так как это именно кнопка, а не переключатель, то binary_sensor меняет свое состояние на очень короткий срок. Для работы с ним можно использовать автоматизацию типа этой (в данном случае при нажатии включается/отключается вентилятор):
+ 
+ 
+ 
 ### Подсветка шлюза (light)
 ```
 - platform: mqtt
@@ -114,7 +120,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   on_command_type: "brightness"
   payload_off: '{"mode": "off"}'
 ```  
-### Режим спаривания ZigBee/Bluetooth шлюза (switch)
+### Режим сопряжения ZigBee/Bluetooth шлюза (switch)
 ```
 - platform: mqtt
   name: gateway_join
@@ -137,9 +143,15 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   state_topic: "/zigbee-ble/bridge/config"
   value_template: "{{ value_json.UptimeStr }}"
 ```  
-Двухканальное реле сяоми (датчик потребления энергии не заводил, так как спалил его. switch)
 
-### Газовый котел
+![permit](/img/permit.png)
+![zigbeee](/img/zigbeee.png.png)
+
+
+
+
+
+### Двухканальное реле сяоми switch
 ```
 - platform: mqtt
   name: gas_boiler
@@ -149,7 +161,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   command_topic: "/zigbee-ble/gas_heating/set/state_l1"
   ```
 
-### Насос теплого пола
+### Насос теплого пола switch
 ```
 - platform: mqtt
   name: warm_floor
@@ -159,8 +171,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   command_topic: "/zigbee-ble/gas_heating/set/state_l2"
  ```
 соответственно везде name и адреса топиков поменять на свои
-на данный момент это пока что все
-Замечание по кнопке - так как это именно кнопка, а не переключатель, то binary_sensor меняет свое состояние на очень короткий срок. Для работы с ним можно использовать автоматизацию типа этой (в данном случае при нажатии включается/отключается вентилятор):
+
 
 ### Включение/отключение вентиляции по нажатии на кнопку
 ```
@@ -174,3 +185,6 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
       entity_id: fan.bathroom
 ```      
       
+
+
+PS: раздел в разработке. 
