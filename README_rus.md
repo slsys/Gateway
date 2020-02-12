@@ -101,7 +101,7 @@
 
 ## [Интеграция с Majordomo](/int_majordomo_rus.md)
 
-## [Интеграция с HomeAssistant](/int_has_rus.md)  (в разработке)
+## [Интеграция с HomeAssistant](/int_has_rus.md) 
 
 ## [Интеграция с Node-Red](/int_nodered_rus.md)   (в разработке)
 
