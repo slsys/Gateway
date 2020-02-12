@@ -152,17 +152,19 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 
 ### Двухканальное реле сяоми switch
+
 ```
+### бойлер
 - platform: mqtt
   name: gas_boiler
   availability_topic: "/zigbee-ble/bridge/state"
   state_topic: "/zigbee-ble/gas_heating"
   value_template: "{{ value_json.state_l1 }}"
   command_topic: "/zigbee-ble/gas_heating/set/state_l1"
-  ```
+  
 
 ### Насос теплого пола switch
-```
+
 - platform: mqtt
   name: warm_floor
   availability_topic: "/zigbee-ble/bridge/state"
