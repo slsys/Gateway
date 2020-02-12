@@ -145,7 +145,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```  
 
 ![permit](/img/permit.png)
-![zigbeee](/img/zigbeee.png)
+
 
 
 
