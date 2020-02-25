@@ -252,7 +252,11 @@ cat /dev/ttyUSB0 > slslog.txt
 2) После перезагрзки найти новое устройство в сети и прописать параметры mqtt и настройки Zigbee модуля:
 Zigbee UART RX 22, Zigbee UART RX 23, Button Mode 33 +  PullUp, Led Red 4, Led Green 5, Led Blue 21
 3) В меню выбрать Zigbee reset. 
-4) После перезагрузки на главной странице можно будет увидеть Zigbee status 9 (OK).
-
+4) После перезагрузки на главной странице можно будет увидеть 
+```
+Zigbee info
+Zigbee PanId: 0x1234
+Zigbee Channel: 26
+Zigbee DeviceState: 9 [ OK ]```
 
 
