@@ -183,7 +183,7 @@ DEBUG=zigbee-herdsman:zStack:* npm start
 Для того, чтобы при чтении данных с порта не отправлять полученные с него же данные обратно в порт, необходимо отправить команду 
 
 ```
-stty -F /dev/ttyUSB0 115200 -cstopb -oddp -opost raw -echo
+stty -F /dev/ttyUSB0 921600 -cstopb -oddp -opost raw -echo
 ```
 
 Далее запускаем команду записи данных порта в файл
@@ -194,6 +194,8 @@ cat /dev/ttyUSB0 > slslog.txt
 
 #### Windows
 В операционной системе Windows, подключенный с распаенным ch340 шлюз при наличии установленного драйвера будет виден как последовательный COM порт. Подключившись к нему через [putty](https://www.putty.org), можно наблюдать за журналом работы шлюза.
+
+Используйте скорость подключения 921600.
 
 Возможно ваш понадобится [драйвер](https://github.com/HobbyComponents/CH340-Drivers).
 
@@ -250,6 +252,7 @@ cat /dev/ttyUSB0 > slslog.txt
 2) После перезагрзки найти новое устройство в сети и прописать параметры mqtt и настройки Zigbee модуля:
 Zigbee UART RX 22, Zigbee UART RX 23, Button Mode 33 +  PullUp, Led Red 4, Led Green 5, Led Blue 21
 3) В меню выбрать Zigbee reset. 
+4) После перезагрузки на главной странице можно будет увидеть Zigbee status 9 (OK).
 
 
 
