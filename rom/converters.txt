@@ -40,6 +40,7 @@ TRADFRI wireless dimmer (ICTC-G-1)
 TRADFRI motion sensor (E1525)
 TRADFRI signal repeater (E1746)
 TRADFRI ON/OFF switch (E1743)
+TRADFRI SHORTCUT Button (E1812)
 TRADFRI LED bulb E26/E27 1000 lumen, dimmable, opal white (LED1623G12)
 TRADFRI LED bulb E14/E26/E27 600 lumen, dimmable, color, opal white (LED1624G9)         
 TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)
@@ -48,6 +49,13 @@ TRADFRI LED bulb GU10 400 lumen, dimmable (LED1650R5)
 TRADFRI LED bulb GU10 400 lumen, dimmable (LED1837R5)
 TRADFRI LED bulb GU10 400 lumen, dimmable, white spectrum (LED1537R6)
 TRADFRI LED bulb E26/E27 806 lumen, dimmable, warm white (LED1836G9)
+FLOALT LED light panel, dimmable, white spectrum (30x90 cm) (L1528)
+FLOALT LED light panel, dimmable, white spectrum (60x60 cm) (L1529)
+FLOALT LED light panel, dimmable, white spectrum (30x30 cm) (L1527)
+SURTE door light panel, dimmable, white spectrum (38x64 cm) (L1531)
+
+== Philips == 
+Hue motion outdoor sensor (SML002)
 
 == Nue / 3A ==
 Smart light controller (LXZB-02A)
@@ -73,6 +81,8 @@ Zigbee OnOff Controller (DZ4743-00B)
 
 == Konke ==
 Motion Sensor (2AJZ4KPBS)
+Multi-function button (2AJZ4KPKEY)
+Temperature and humidity sensor (2AJZ4KPFT)
 
 == Itead ==
 Sonoff Zigbee DIY Smart Switch (BASICZBR3)
@@ -82,6 +92,21 @@ Temperature, Humidity, eCO2, VOC sensor (MCLH-08)
 
 == Ksentry ==
 Zigbee OnOff Controller (KS-SM001)
+
+== LifeControl ==
+Smart Lamp (MCLH-02)
+Door Sensor (MCLH-04)
+Motion Sensor (MCLH-05)
+Leak Sensor (MCLH-07)
+
+== BlitzWolf ==
+ZigBee PIR Sensor (5j6ifxj)
+
+== Wintop ==
+gHouse Single Switch (13730G-11)
+
+== GS == 
+Smart siren (SRHMP-I1) 
 
 == Yale ==
 Real living keyless push button deadbolt lock (YRD210-HA-605)

@@ -1,4 +1,39 @@
 -----------------------------------------------------------------------------
+Version: 20200227
+-----------------------------------------------------------------------------
++Extended joining, setting timing & select router for open
++Implement Zigbee map visualization (tnx nurikk)
+*Fixed rx pin 0 setting
+*Fixed clear state for action
+*Fixed manual device remove
+*mDNS temporary desabled
+*Fixed sending device request
+*Fixed initial mode for led
++Support for Konke Multi-function button (2AJZ4KPKEY)
++Support for Konke Temperature and humidity sensor (2AJZ4KPFT)
++Support for LifeControl Smart Lamp (MCLH-02)
++Support for LifeControl Door Sensor (MCLH-04)
++Support for LifeControl Motion Sensor (MCLH-05)
++Support for LifeControl Leak Sensor (MCLH-07)
++Support for BlitzWolf ZigBee PIR Sensor (5j6ifxj)
++Support for Wintop gHouse Single Switch (13730G-11)
++Support for GS Smart siren (SRHMP-I1) 
++Support for Philips Hue motion outdoor sensor (SML002)
++Support for IKEA TRADFRI SHORTCUT Button (E1812)
++Support for IKEA FLOALT LED light panel, dimmable, white spectrum (30x90 cm) (L1528)
++Support for IKEA FLOALT LED light panel, dimmable, white spectrum (60x60 cm) (L1529)
++Support for IKEA FLOALT LED light panel, dimmable, white spectrum (30x30 cm) (L1527)
++Support for IKEA SURTE door light panel, dimmable, white spectrum (38x64 cm) (L1531)
+*Fixed button & click state for Xiaomi Aqara double key wired wall switch without neutral wire (QBKG03LM)
+-----------------------------------------------------------------------------
+Version: 20200202
+-----------------------------------------------------------------------------
++Added options for enable NTP, Time Zone & NTP Server
+*Fixed OTA update when MQTT is disabled (thx Igor Khaidakin)
+*Fixed crash on write big  web log
+*Fixed do not sended empty MQTT credentials, when username is empty
++Added options for Cache states & Clear state
+-----------------------------------------------------------------------------
 Version: 20200127
 -----------------------------------------------------------------------------
 +New web interface (tnx nick7zmail)
