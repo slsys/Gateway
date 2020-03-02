@@ -13,7 +13,7 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 
 2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
 
-3) Use common local automation systems, such as [MajorDomo](https://majordomohome.com/), [ioBroker Smarthome](https://www.iobroker.net), [HomeAssisiant](https:/ www.home-assistant.io), [Node-Red](https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt project](https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
+3) Use common local automation systems, such as [MajorDomo](https://majordomohome.com/), [ioBroker Smarthome](https://www.iobroker.net), [HomeAssistant](https://www.home-assistant.io), [Node-Red](https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt project](https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
 
 
 # Additional gateway features via the web interface
