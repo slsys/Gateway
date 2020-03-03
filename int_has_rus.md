@@ -208,6 +208,46 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     command_topic: "/zigbee-ble/GardenBulbRight/set”
 ```
 
+датчик движения/освещенности Xiaomi RTCGQ11LM 
+```
+#Сенсор Движение Коридор
+  - platform: mqtt
+    name: "Motion koridor battery"
+    state_topic: "SLS/Sensor_Motion_Koridor"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.battery }}"
+  - platform: mqtt
+    name: "Motion koridor linkquality"
+    state_topic: "SLS/Sensor_Motion_Koridor"
+    value_template: "{{ value_json.linkquality }}"
+  - platform: mqtt
+    name: "Motion koridor dvigenie"
+    state_topic: "SLS/Sensor_Motion_Koridor"
+    value_template: "{{ value_json.occupancy }}"
+    expire_after: 10
+  - platform: mqtt
+    name: "Motion koridor yarkost"
+    state_topic: "SLS/Sensor_Motion_Koridor"
+    value_template: "{{ value_json.illuminance }}"
+    unit_of_measurement: 'lux'
+
+датчик открытия окна Xiaomi MCCGQ01LM
+```
+#Сенсор Дверь Улица
+  - platform: mqtt
+    name: "Door Uliza battery"
+    state_topic: "SLS/Sensor_Door_Uliza"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.battery }}"
+  - platform: mqtt
+    name: "Door Uliza linkquality"
+    state_topic: "SLS/Sensor_Door_Uliza"
+    value_template: "{{ value_json.linkquality }}"
+  - platform: mqtt
+    name: "Door Uliza"
+    state_topic: "SLS/Sensor_Door_Uliza"
+    value_template: "{{ value_json.contact }}"
+```
 
 
 
