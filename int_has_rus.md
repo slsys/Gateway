@@ -185,7 +185,32 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   action:
     - service: fan.toggle
       entity_id: fan.bathroom
-```      
+```     
+
+##  Aqara LED Light Bulb Tunable White Model ZNLDP12LM
+```
+- platform: mqtt
+    name: GardenBulbLeft
+    state_topic: "/zigbee-ble/GardenBulbLeft"
+    availability_topic: "/zigbee-ble/bridge/state"
+    brightness: true
+    color_temp: true
+    schema: json
+    command_topic: "/zigbee-ble/GardenBulbLeft/set"
+
+  - platform: mqtt
+    name: GardenBulbRight
+    state_topic: "/zigbee-ble/GardenBulbRight"
+    availability_topic: "/zigbee-ble/bridge/state"
+    brightness: true
+    color_temp: true
+    schema: json
+    command_topic: "/zigbee-ble/GardenBulbRight/set”
+```
+
+
+
+
       
 
 
