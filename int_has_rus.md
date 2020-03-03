@@ -208,7 +208,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     command_topic: "/zigbee-ble/GardenBulbRight/set”
 ```
 
-датчик движения/освещенности Xiaomi RTCGQ11LM 
+### Датчик движения/освещенности Xiaomi RTCGQ11LM 
 ```
 #Сенсор Движение Коридор
   - platform: mqtt
@@ -230,8 +230,9 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     state_topic: "SLS/Sensor_Motion_Koridor"
     value_template: "{{ value_json.illuminance }}"
     unit_of_measurement: 'lux'
+```
 
-датчик открытия окна Xiaomi MCCGQ01LM
+## Датчик открытия окна Xiaomi MCCGQ01LM
 ```
 #Сенсор Дверь Улица
   - platform: mqtt
