@@ -30,7 +30,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 
 
-### Датчик протечки (binary_sensor)
+### Датчик протечки (binary_sensor) SJCGQ11LM
 ```
 - platform: mqtt
   name: bathroom_leak
@@ -42,9 +42,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     {% else %}
       {{'OFF'}}
     {% endif %}
- ```
-### Датчик протечки №1 (уровень заряда)
-```
+
+# Датчик протечки №1 (уровень заряда) SJCGQ11LM
 - platform: mqtt
   name: bathroom_leak_1_battery
   icon: mdi:battery-high
@@ -53,7 +52,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   state_topic: "/zigbee-ble/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
   ````
-### Датчик температуры/влажности (круглый сяоми, обычный sensor)
+### Датчик температуры/влажности (круглый сяоми, обычный sensor) WSDCGQ01LM
 ````
 - platform: mqtt # Температура
   name: bathroom_temperature
@@ -77,7 +76,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   state_topic: "/zigbee-ble/bathroom_sensor"
   ````
   
-### Квадратный датчик с  давлением (в дополнение к предыдущему):
+### Квадратный датчик с  давлением (в дополнение к предыдущему) WSDCGQ11LM:
 ```
 - platform: mqtt # Давление
   name: loggia_pressure
@@ -151,7 +150,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 
 
-### Двухканальное реле сяоми switch
+### Двухканальное реле сяоми switch LLKZMK11LM
 
 ```
 ### бойлер
@@ -187,7 +186,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
       entity_id: fan.bathroom
 ```     
 
-##  Aqara LED Light Bulb Tunable White Model ZNLDP12LM
+###  Aqara LED Light Bulb Tunable White Model ZNLDP12LM
 ```
 - platform: mqtt
     name: GardenBulbLeft
@@ -232,7 +231,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     unit_of_measurement: 'lux'
 ```
 
-## Датчик открытия окна Xiaomi MCCGQ01LM
+### Датчик открытия окна Xiaomi MCCGQ01LM
 ```
 #Сенсор Дверь Улица
   - platform: mqtt
