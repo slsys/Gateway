@@ -86,7 +86,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   state_topic: "/zigbee-ble/loggia_sensor"
   value_template: "{{ (value_json.pressure | float * 7.501) | round | int }}"
  ```
-### Квадратная кнопка сяоми (binary_sensor)
+### Квадратная кнопка сяоми (binary_sensor) WXKG11LM
 ```
 - platform: mqtt
   name: bathroom_button
