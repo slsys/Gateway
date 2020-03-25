@@ -1,0 +1,116 @@
+DIYRuZ_R4_5")                 *CanSend = FZ_DIYRuZ_R4_5(zcl);   // DIYRuZ_R4_5
+DIYRuZ_KEYPAD20")             *CanSend = FZ_DIYRuZ_KEYPAD20(zcl);   // DIYRuZ_KEYPAD20    
+DIYRuZ_magnet")               *CanSend = FZ_DIYRuZ_magnet(zcl); // DIYRuZ_magnet 
+DIYRuZ_rspm")                 *CanSend = FZ_DIYRuZ_rspm(zcl); // DIYRuZ_rspm
+ptvo.switch")                 *CanSend = FZ_PtvoSwitch(zcl); // PTVO Multi-channel relay switch (ptvo.switch) 
+ZigUP")                       *CanSend = FZ_ZigUP(zcl); // CC2530 based ZigBee relais, switch, sensor and router  
+ZESP_GAS_SENSOR")             *CanSend = true; // flooder
+!TRADFRI remote control")                 *CanSend = FZ_E1524(zcl);     // E1524
+!TRADFRI wireless dimmer")                *CanSend = FZ_ICTCG1(zcl);    // ICTC-G-1
+!TRADFRI motion sensor")                  *CanSend = FZ_E1525(zcl);                  // TRADFRI motion sensor  
+!TRADFRI on/off switch")                  *CanSend = FZ_E1743(zcl);                  // TRADFRI ON/OFF switch (E1743) 
+TRADFRI SHORTCUT Button")                *CanSend = FZ_E1812(zcl);                  // TRADFRI SHORTCUT Button (E1812)   
+!TRADFRI signal repeater")                {}                                         // TRADFRI signal repeater
+!TRADFRI bulb E27 opal 1000lm") ||                       // TRADFRI LED bulb E27 1000 lumen, dimmable, opal white  
+!TRADFRI bulb E27 W opal 1000lm") ||
+!TRADFRI bulb E26 opal 1000lm") ||
+!TRADFRI bulb E26 W opal 1000lm") ||
+!TRADFRI bulb E14 W op/ch 400lm") ||
+TRADFRI bulb E12 W op/ch 400lm") ||
+TRADFRI bulb E17 W op/ch 400lm") ||   
+!TRADFRI bulb E27 WW 806lm") ||                  //
+!TRADFRI bulb E26 WW 806lm") ||                  // TRADFRI LED bulb E26/E27 806 lumen, dimmable, warm white (LED1836G9)                  
+!TRADFRI bulb GU10 W 400lm") ||                  // TRADFRI LED bulb GU10 400 lumen, dimmable (LED1650R5)     
+!TRADFRI bulb GU10 WW 400lm")                    // TRADFRI LED bulb GU10 400 lumen, dimmable (LED1837R5)  
+!TRADFRI bulb E27 WS opal 980lm") ||
+TRADFRI bulb E26 WS opal 980lm") ||
+!TRADFRI bulb E27 WS\uFFFDopal 980lm") ||
+!TRADFRI bulb GU10 WS 400lm") ||
+FLOALT panel WS 30x30") ||                      // FLOALT LED light panel, dimmable, white spectrum (30x30 cm) (L1527)
+FLOALT panel WS 30x90") ||                      // FLOALT LED light panel, dimmable, white spectrum (30x90 cm) (L1528)
+FLOALT panel WS 60x60") ||                      // FLOALT LED light panel, dimmable, white spectrum (60x60 cm) (L1529)
+SURTE door WS 38x64")                           // SURTE door light panel, dimmable, white spectrum (38x64 cm) (L1531)           
+!TRADFRI bulb E27 CWS opal 600lm") ||           // TRADFRI LED bulb E14/E26/E27 600 lumen, dimmable, color, opal white
+!TRADFRI bulb E26 CWS opal 600lm") ||           
+!TRADFRI bulb E14 CWS opal 600lm")
+3AFE28010402000D")            *CanSend = FZ_2AJZ4KPBS(zcl);              // Motion Sensor (2AJZ4KPBS)
+3AFE170100510001")            *CanSend = FZ_2AJZ4KPKEY(zcl);             // Multi-function button (2AJZ4KPKEY)
+3AFE140103020000")            *CanSend = FZ_2AJZ4KPFT(zcl);              // Temperature and humidity sensor (2AJZ4KPFT) 
+lumi.router")                 *CanSend = true;  
+!LXN56-DC27LX1.1")             *CanSend = FZ_Nue3A_LXZB_02A(zcl);    // Nue3A LXZB-02A Smart light controller    
+SA-003-Zigbee")               *CanSend = FZ_OnOff(zcl);             // eWeLink OnOff Controller
+!BASICZBR3")                   *CanSend = FZ_OnOff(zcl);             // Sonoff Zigbee DIY Smart Switch (BASICZBR3) 
+vivi ZLight")                 *CanSend = FZ_LightOnOffBrightnessColorTemp(zcl);    // LifeControl Smart Lamp (MCLH-02)      
+Door_Sensor")                 *CanSend = FZ_Nexturn_MCLH04(zcl);    // LifeControl Door Sensor (MCLH-04)    
+Motion_Sensor")               *CanSend = FZ_Nexturn_MCLH05(zcl);    // LifeControl Motion Sensor (MCLH-05)  
+Leak_Sensor")                 *CanSend = FZ_Nexturn_MCLH07(zcl);    // LifeControl Leak Sensor (MCLH-07)  
+VOC_Sensor")                  *CanSend = FZ_Nexturn_MCLH08(zcl);    // LifeControl VOC Sensor (MCLH-08)  
+!Lamp_01")                     *CanSend = FZ_OnOff(zcl);             // Ksentry On/Off relay (KS-SM001)    
+!V3-BTZB")                     *CanSend = FZ_V3BTZB(zcl);            // Danalock BT/ZB smartlock (V3-BTZB)
+YRD210 PB DB")                *CanSend = FZ_YRD210HA605(zcl);       // Yale Real living keyless push button deadbolt lock (YRD210-HA-605)    
+ISW-ZPR1-WP13")               *CanSend = FZ_ISW_ZPR1_WP13(zcl); // Bosch ( ISW-ZPR1-WP13)        
+!GL-C-007")                    *CanSend = FZ_LightOnOffBrightnessColorTemp(zcl); // Gledopto Zigbee LED controller RGBW (GL-C-007)
+!GL-C-008")                    *CanSend = FZ_LightOnOffBrightnessColorTemp(zcl); // Gledopto Zigbee LED controller RGB+CCT 1 ID (GL-C-008)
+TI0001")                      *CanSend = FZ_TI0001(zcl); // Livolo wall switch (1 and 2 gang) & plug (TI0001)  
+gq8b1uv")                     *CanSend = FZ_Tuya_gq8b1uv(zcl); // Tuya AC Dimmer (gq8b1uv)
+!TS0011")                      *CanSend = FZ_OnOff(zcl); // Tuya Smart light switch - 1 gang without neutral wire (GDKES-01TZXD)
+!TS0012")                      *CanSend = FZ_Tuya_GDKES_02TZXD(zcl); // Tuya Smart light switch - 2 gang without neutral wire (GDKES-02TZXD)
+!TS0013")                      *CanSend = FZ_Tuya_GDKES_03TZXD(zcl); // Tuya Smart light switch - 3 gang without neutral wire (GDKES-03TZXD)
+!RC_V14") ||
+!RC-EM"))                      *CanSend = FZ_Heiman_HS1RCM(zcl); // Smart remote controller (HS1RC-M)
+!SRHMP-I1")                    *CanSend = FZ_GS_SRHMP_I1(zcl); // GS Siren (SRHMP-I1)  
+5j6ifxj")                     *CanSend = FZ_BlitzWolf_5j6ifxj(zcl); // BlitzWolf ZigBee PIR Sensor (5j6ifxj)
+TS0121")                      *CanSend = FZ_OnOff(zcl);             // Wintop gHouse Single Switch (13730G-11)  
+!SML002")         *CanSend = FZ_SML002(zcl);          // Hue motion outdoor sensor (SML002)
+!Single_Relay_Module") ||
+!Double_Relay_Module") ||  
+!Triple_Relay_Module"))         *CanSend = FZ_X2RM(zcl); // X2RM01,X2RM02,X2RM03 Multi-channel relay switch
+TERNCY-PP01")             *CanSend = FZ_TERNCYPP01(zcl);    // TERNCY-PP01 Multisensor 
+!ZLL-DimmableLigh")         *CanSend = FZ_LightOnOffBrightness(zcl);          // ZLED-2709 Smart Dimmable LED Bulb
+!ZLL-ExtendedColo")         *CanSend = FZ_LightOnOffBrightnessColorTemp(zcl); // ZLED-RGB9 Zigbee RGB Tunable LED Bulb   
+!ZLL-ColorTempera")         *CanSend = FZ_LightOnOffBrightnessColorTemp(zcl); // ZLED-TUNE9     
+!lumi.weather")                *CanSend = FromZigBee_Xiaomi_WSDCGQ11LM(zcl); // WSDCGQ11LM
+!lumi.sensor_ht") ||             
+!lumi.sens"))                 *CanSend = FromZigBee_Xiaomi_WSDCGQ01LM(zcl); // WSDCGQ01LM  
+!lumi.sensor_switch.aq2") ||
+!lumi.remote.b1acn01"))       *CanSend = FromZigBee_Xiaomi_WXKG11LM(zcl);   // WXKG11LM
+!lumi.sensor_switch")          *CanSend = FromZigBee_Xiaomi_WXKG01LM(zcl);   // WXKG01LM
+!lumi.sensor_86sw2") ||
+!lumi.sensor_86sw2.es1") ||
+!lumi.remote.b286acn01"))     *CanSend = FromZigBee_Xiaomi_WXKG02LM(zcl);   // WXKG02LM
+!lumi.sensor_wleak.aq1")       *CanSend = FromZigBee_Xiaomi_SJCGQ11LM(zcl);  // SJCGQ11LM
+!lumi.sensor_magnet")          *CanSend = FromZigBee_Xiaomi_MCCGQ01LM(zcl);  // MCCGQ01LM
+!lumi.sensor_magnet.aq2")      *CanSend = FromZigBee_Xiaomi_MCCGQ11LM(zcl);  // MCCGQ11LM   
+!lumi.sensor_motion")          *CanSend = FromZigBee_Xiaomi_RTCGQ01LM(zcl);  // RTCGQ01LM
+!lumi.sensor_motion.aq2")      *CanSend = FromZigBee_Xiaomi_RTCGQ11LM(zcl);  // RTCGQ11LM
+!lumi.vibration.aq1")          *CanSend = FZ_DJT11LM(zcl);                   // Aqara vibration sensor (DJT11LM)
+!lumi.sensor_cube") ||
+!lumi.sensor_cube.aqgl01"))   *CanSend = FromZigBee_Xiaomi_MFKZQ01LM(zcl);  // Mi/Aqara smart home cube
+!lumi.light.aqcn02")          *CanSend = FZ_ZNLDP12LM(zcl);  // ZNLDP12LM
+!lumi.plug")                   *CanSend = FromZigBee_Xiaomi_ZNCZ02LM_ZNCZ04LM(zcl);   // ZNCZ02LM
+!lumi.curtain") ||     
+!lumi.curtain.hagl04") ||                                                   // ZNCLDJ12LM Aqara B1 curtain motor
+!lumi.curtain.aq2"))          *CanSend = FromZigBee_Xiaomi_ZNCLDJ11LM(zcl); // ZNCLDJ11LM Aqara curtain motor
+!lumi.ctrl_ln2.aq1")           *CanSend = FromZigBee_Xiaomi_QBKG12LM(zcl);   // QBKG12LM Aqara double key wired wall switch  
+!lumi.sensor_switch.aq3") ||
+!lumi.sensor_swit"))           *CanSend = FromZigBee_Xiaomi_WXKG12LM(zcl);   // WXKG12LM  
+!lumi.sensor_86sw1") ||
+!lumi.remote.b186acn01"))      *CanSend = FromZigBee_Xiaomi_WXKG03LM(zcl);   // WXKG03LM  
+!lumi.ctrl_ln1.aq1") ||
+!lumi.ctrl_ln1"))             *CanSend = FromZigBee_Xiaomi_QBKG11LM(zcl);   // QBKG11LM Aqara single key wired wall switch       
+!lumi.ctrl_neutral1")         *CanSend = FromZigBee_Xiaomi_QBKG04LM(zcl);   // QBKG04LM Aqara single key wired wall switch without neutral wire  
+!lumi.ctrl_neutral2")         *CanSend = FromZigBee_Xiaomi_QBKG03LM(zcl);   // QBKG03LM Aqara double key wired wall switch without neutral wire.
+lumi.lock.acn02") ||                                                                // ZNMS12LM Aqara S2 Lock 
+lumi.lock.acn03"))           *CanSend = FromZigBee_Xiaomi_ZNMS12LM_ZNMS13LM(zcl);   // ZNMS13LM Aqara S2 Lock Pro   
+lumi.lock.v1")               *CanSend = FromZigBee_Xiaomi_A6121(zcl);       // Vima Smart Lock (A6121)         
+!lumi.relay.c2acn01")         *CanSend = FZ_LLKZMK11LM(zcl);                 // Aqara wireless relay controller (LLKZMK11LM)
+!lumi.sensor_smoke")          *CanSend = FZ_JTYJGD01LMBW(zcl);               // MiJia Honeywell smoke detector (JTYJ-GD-01LM/BW)
+lumi.sensor_natgas")         *CanSend = FZ_JTQJBF01LMBW(zcl);               // MiJia gas leak detector (JTQJ-BF-01LM/BW)  
+!lumi.ctrl_86plug") ||
+!lumi.ctrl_86plug.aq1"))      *CanSend = FZ_QBCZ11LM(zcl);                   // Aqara socket Zigbee (QBCZ11LM) 
+lumi.plug.mmeu01")           *CanSend = FromZigBee_Xiaomi_ZNCZ02LM_ZNCZ04LM(zcl);    // Mi power plug ZigBee EU (ZNCZ04LM)
+lumi.plug.maeu01")           *CanSend = FZ_SP_EUC01(zcl);                   // Aqara power plug ZigBee EU (SP-EUC01)
+!lumi.sen_ill.mgl01")         *CanSend = FZ_GZCGQ01LM(zcl);                    // Mijia Light Sensor (GZCGQ01LM)
+!lumi.remote.b286opcn01") ||                                                   // Aqara Opple switch 1 bands (WXCJKG11LM)
+!lumi.remote.b486opcn01") ||                                                   // Aqara Opple switch 2 bands (WXCJKG12LM)  
+!lumi.remote.b686opcn01"))    *CanSend = FZ_WXCJKG1xLM(zcl);                   // Aqara Opple switch 3 bands (WXCJKG13LM)
