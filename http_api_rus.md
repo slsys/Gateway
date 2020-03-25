@@ -10,8 +10,9 @@
 ```/api/zigbee/join?duration=255&target=XXX```   Управление режимом сопряжения duration 0 для выключения, значения больше 0 указывают период ожидания в секундах,  target разрешает сопряжение на конктетном роутере.  все параметры не обязательны
 
 
-```/api/log?action=X``` Управление режимом логирования, где X  может принимать следующие значения
-```action=setLevel&value=1  
-  action=getBuffer
-  action=getLevel
+```/api/log?action=X``` Управление режимом логирования, где X  может принимать следующие значения.
+```
+action=setLevel&value=1  
+action=getBuffer
+action=getLevel
 ````
