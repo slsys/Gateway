@@ -145,6 +145,19 @@ ZigBeeCA20/#,zigbee2mqtt/#
 ![slslog](/img/slslog.png)
 
 
+# Пример сценария  Majoromo для перезагрузки шлюза
+```
+include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
+$z2m = new zigbee2mqtt();
+$$z2m->sendcommand('ZigBeeXXXX/reboot', '');
+```
+
+# Пример сценария  Majoromo для установки подстветки модернизированного шлюза Aqara
+```
+include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
+$z2m = new zigbee2mqtt();
+$$z2m->sendcommand('ZigBeeXXXX/led', '{“mode”:”manual”,”hex”:”#FF0000”}');
+```
 # Полезные ссылки
 
 Ссылка на интересный тематический канал в телеграм: https://t.me/zigbeer
