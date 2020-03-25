@@ -1,6 +1,7 @@
 ## Описание HTTP API команд
 
-/api/zigbee/devices - список устройств сети zigbee 
+```/api/zigbee/devices```
+Получает список устройств сети zigbee.
 
 /api/zigbee/remove?dev=XXX - удаление устройства из  сети zigbee
 
