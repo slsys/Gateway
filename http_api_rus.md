@@ -17,6 +17,8 @@
 ```/api/log?action=X``` Управление режимом логирования, где X  может принимать следующие значения:
 ```
 action=setLevel&value=1  
+
 action=getBuffer
+
 action=getLevel
 ````
