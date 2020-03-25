@@ -149,14 +149,14 @@ ZigBeeCA20/#,zigbee2mqtt/#
 ```
 include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
 $z2m = new zigbee2mqtt();
-$$z2m->sendcommand('ZigBeeXXXX/reboot', '');
+$z2m->sendcommand('ZigBeeXXXX/reboot', '');
 ```
 
 # Пример сценария  Majoromo для установки подстветки модернизированного шлюза Aqara
 ```
 include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
 $z2m = new zigbee2mqtt();
-$$z2m->sendcommand('ZigBeeXXXX/led', '{“mode”:”manual”,”hex”:”#FF0000”}');
+$z2m->sendcommand('ZigBeeXXXX/led', '{“mode”:”manual”,”hex”:”#FF0000”}');
 ```
 # Полезные ссылки
 
