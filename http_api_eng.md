@@ -9,7 +9,7 @@ Gets a list of zigbee network devices.
 
 ```/api/zigbee/remove?dev=XXX``` - Remove a XXX device from the zigbee network
 
-``` /api/zigbee/rename?old=XXX&new= YY``` Renaming a device on a zigbee network
+``` /api/zigbee/rename?old=XXX&new=YYY``` Renaming a device on a zigbee network
 
 ``` /api/zigbee/join?duration = 255 & target = XXX``` Controls the pairing mode duration 0 to turn off, values ​​greater than 0 indicate the waiting period in seconds, target allows pairing on the contact router. all parameters are optional
 
