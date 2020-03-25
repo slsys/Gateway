@@ -83,6 +83,7 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [Support for Lua scripts](/lua_eng.md)
 
+## [HTTP API description](/http_api_eng.md)
 
 ## [FAQ (Frequently Asked Questions)](/faq_eng.md)
 
