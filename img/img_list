@@ -1,6 +1,6 @@
-DIYRuZ_R4_5")                 *CanSend = FZ_DIYRuZ_R4_5(zcl);   // DIYRuZ_R4_5
-DIYRuZ_KEYPAD20")             *CanSend = FZ_DIYRuZ_KEYPAD20(zcl);   // DIYRuZ_KEYPAD20    
-DIYRuZ_magnet")               *CanSend = FZ_DIYRuZ_magnet(zcl); // DIYRuZ_magnet 
+!DIYRuZ_R4_5")                 *CanSend = FZ_DIYRuZ_R4_5(zcl);   // DIYRuZ_R4_5
+!DIYRuZ_KEYPAD20")             *CanSend = FZ_DIYRuZ_KEYPAD20(zcl);   // DIYRuZ_KEYPAD20    
+!DIYRuZ_magnet")               *CanSend = FZ_DIYRuZ_magnet(zcl); // DIYRuZ_magnet 
 DIYRuZ_rspm")                 *CanSend = FZ_DIYRuZ_rspm(zcl); // DIYRuZ_rspm
 ptvo.switch")                 *CanSend = FZ_PtvoSwitch(zcl); // PTVO Multi-channel relay switch (ptvo.switch) 
 ZigUP")                       *CanSend = FZ_ZigUP(zcl); // CC2530 based ZigBee relais, switch, sensor and router  
