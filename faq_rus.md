@@ -16,7 +16,7 @@
 4.  [Набор проводов](http://ali.pub/3sy6y1)
 
 ## Вопрос: Чем шлюз на базе сс2538 лучше сс2530?
-Ответ: Модули на базе СС2530, СС2531 имеют ограничение по количеству прямых связей (до 10-15 шт, в зависимости от прошивки) и имеют  ограниченное количество доступной памяти. SDK, поддеживаемый  данными модулям в настоящее время устарел.  Эти проблемы  решены на новых чипах [сс2538](https://github.com/Koenkk/zigbee2mqtt/issues/1568) и [сс2652r](https://github.com/Koenkk/zigbee2mqtt/issues/1429)
+Ответ: Модули TI на базе [cc2530, cc2531](https://www.ti.com/tool/CC2530-CC2592EM-RD?utm_source=google&utm_medium=cpc&utm_campaign=sys-ind-null-refdesdynamic-cpc-evm-google-wwe&utm_content=refdesdynamic&ds_k=DYNAMIC+SEARCH+ADS&DCM=yes&gclid=Cj0KCQjwpfHzBRCiARIsAHHzyZqixTp0suSknctb2E00eUvY_JkrEKgE_HUbcbD0ynD472Tn0h_SxeQaAlykEALw_wcB&gclsrc=aw.ds)   имеют ограничение по количеству прямых связей (до 10-15 шт, в зависимости от прошивки) и имеют  ограниченное количество доступной памяти. SDK, поддеживаемый  данными модулям в настоящее время устарел.  Эти проблемы  решены на новых чипах [сс2538](https://github.com/Koenkk/zigbee2mqtt/issues/1568) и [сс2652r](https://github.com/Koenkk/zigbee2mqtt/issues/1429)
 Модули на базе СС2538 могут иметь  100  прямых или 200 непрямых (через роутеры) подключений. Скорость обработки комманд на обновленных чипах существенно увеличена. 
 
 ## Вопрос: Есть ли отличия в работе шлюза на чипов от TI и NXP?
