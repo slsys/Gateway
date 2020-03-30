@@ -118,7 +118,19 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     }
   on_command_type: "brightness"
   payload_off: '{"mode": "off"}'
-```  
+``` 
+### Статус шлюза с аттрибутами (binary_sensor)
+```
+- platform: mqtt
+  name: sls_state
+  unique_id: cee1d05d-205a-4334-b257-723540c5d578
+  state_topic: "ZigBeeGW/bridge/state"
+  device_class: connectivity
+  payload_on: online
+  payload_off: offline      
+  json_attributes_topic: "ZigBeeGW/bridge/config"
+  json_attributes_template: "{{ value_json | tojson }}"
+```
 ### Режим сопряжения ZigBee/Bluetooth шлюза (switch)
 ```
 - platform: mqtt
