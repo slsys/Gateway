@@ -56,6 +56,8 @@ end
 ### Event
 Event.Name, Event.nwkAddr, Event.ieeeAddr, Event.FriendlyName, Event.State.Name, Event.State.Value)
 
+Функция Event позволяет использовать один и тот же  скрипт для разных устройств. Можно получить имя, адрес устройства, с которого произошел вызов скрипта.
+
 
 ## Полезные ссылки 
 1) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
