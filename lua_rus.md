@@ -10,9 +10,9 @@
 
 
 ## Список доступных функций
-1) [GetState]()
-2) [SetState]()
-3) [Event]() 
+1) [GetState](lua_rus.md#getstate)
+2) [SetState](lua_rus.md#setstate)
+3) [Event](lua_rus.md#events) 
 
 
 ### GetState
