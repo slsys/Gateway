@@ -35,17 +35,17 @@ print("Текущая температура: " .. temp .. " C°")
 
 
 ### SetState
-Установка значения  устройства SetState("lamp_1", "brightness", "0")
+Установка значения  устройства SetState(Ident, StateName, StateValue)
 
 Пример скрипта, который при нажатии кнопки выключателя lumi.sensor_switch включает освещение lamp_1:
 ```
 if GetState("lumi.sensor_switch", "click") == "single" then
   -- toggle lamp
   current_brightness = GetState("lamp_1", "brightness")
-  if current_brightness == "0" then
-    SetState("lamp_1", "brightness", "255")
+  if current_brightness == 0 then
+    SetState("lamp_1", "brightness", 255)
   else
-    SetState("lamp_1", "brightness", "0")
+    SetState("lamp_1", "brightness", 0)
   end
  
   -- print current temperature
@@ -54,15 +54,15 @@ if GetState("lumi.sensor_switch", "click") == "single" then
 end
 ```
 ### Event
-Структура Event позволяет использовать один и тот же  скрипт для разных устройств. Можно получить имя, адрес устройства, с которого произошел вызов скрипта.
+Структура Event например позволяет использовать один и тот же скрипт для разных состояний или устройств.
 
-Возможные выарианты использования:
-Event.Name
-Event.nwkAddr
-Event.ieeeAddr
-Event.FriendlyName
-Event.State.Name
-Event.State.Value
+Возможные варианты использования:
+Event.Name - Имя файла скрипта
+Event.nwkAddr - nwkAddr устройства, которое вызывало скрипт
+Event.ieeeAddr - ieeeAddr устройства, которое вызывало скрипт
+Event.FriendlyName - FriendlyName устройства, которое вызывало скрипт
+Event.State.Name - Имя состояния которое вызвало скрипт
+Event.State.Value - Новое значение состояния
 
 Пример скрипта для включения света:
 ```
