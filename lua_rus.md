@@ -10,6 +10,10 @@
 
 
 ## Список доступных функций
+[GetState]()
+[SetState]()
+
+
 ### GetState
 Получение параметра устройства GetState("ieeard", "temperature")
 
