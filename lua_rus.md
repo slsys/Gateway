@@ -10,8 +10,9 @@
 
 
 ## Список доступных функций
-[GetState]()
-[SetState]()
+1) [GetState]()
+2) [SetState]()
+3) [Event] 
 
 
 ### GetState
@@ -52,6 +53,9 @@ if GetState("lumi.sensor_switch", "click") == "single" then
   print("Current temperature: " .. temp)
 end
 ```
+### Event
+Event.Name, Event.nwkAddr, Event.ieeeAddr, Event.FriendlyName, Event.State.Name, Event.State.Value)
+
 
 ## Полезные ссылки 
 1) On-line учебник по lua  https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/
