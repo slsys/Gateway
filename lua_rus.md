@@ -58,6 +58,6 @@ Event.Name, Event.nwkAddr, Event.ieeeAddr, Event.FriendlyName, Event.State.Name,
 
 
 ## Полезные ссылки 
-1) On-line учебник по lua  https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/
+1) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
 
-2) Генераторы lua скриптов  на основе Blockly http://www.blockly-lua.appspot.com/static/apps/code/index.html
+2) Генераторы lua скриптов  на основе [Blockly](http://www.blockly-lua.appspot.com/static/apps/code/index.html)
