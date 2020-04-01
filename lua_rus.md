@@ -54,9 +54,15 @@ if GetState("lumi.sensor_switch", "click") == "single" then
 end
 ```
 ### Event
-Event.Name, Event.nwkAddr, Event.ieeeAddr, Event.FriendlyName, Event.State.Name, Event.State.Value)
-
 Функция Event позволяет использовать один и тот же  скрипт для разных устройств. Можно получить имя, адрес устройства, с которого произошел вызов скрипта.
+
+Возможные выарианты использования функции:
+'''Event.Name, Event.nwkAddr, Event.ieeeAddr, Event.FriendlyName, Event.State.Name, Event.State.Value)'''
+
+Пример скрипта для включения света:
+```
+
+```
 
 
 ## Полезные ссылки 
