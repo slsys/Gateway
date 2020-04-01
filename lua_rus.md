@@ -12,7 +12,7 @@
 ## Список доступных функций
 1) [GetState]()
 2) [SetState]()
-3) [Event] 
+3) [Event]() 
 
 
 ### GetState
