@@ -262,6 +262,52 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 
 
+### Cкрипт переводит статус датчиков на off через требуемый таймаут.
+Создаете файл 
+```
+#Victor Enot, [06.04.20 18:02]
+#==========================================================================================
+#  python_scripts/set_state.py 
+#==========================================================================================
+inputEntity = data.get('entity_id')
+if inputEntity is None:
+    logger.warning("===== entity_id is required if you want to set something.")
+else:    
+    inputStateObject = hass.states.get(inputEntity)
+    inputState = inputStateObject.state
+    inputAttributesObject = inputStateObject.attributes.copy()
+
+    for item in data:
+        newAttribute = data.get(item)
+        logger.debug("===== item = {0}; value = {1}".format(item,newAttribute))
+        if item == 'entity_id':
+            continue            # already handled
+        elif item == 'state':
+            inputState = newAttribute
+        else:
+            inputAttributesObject[item] = newAttribute
+        
+    hass.states.set(inputEntity, inputState, inputAttributesObject)
+```
+
+В  automations.yaml необходимо прописать следующий код
+```
+- id: '1579606187576'
+  alias: Tualet pir off
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.tualet_pir
+    for: 00:02:00
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data_template:
+      entity_id: Binary_sensor.tualet_pir
+      state: 'off'
+    service: python_script.set_state
+```
+
 
       
 
