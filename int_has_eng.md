@@ -23,6 +23,7 @@ Mosqutto for windows can be downloaded [here](https://mosquitto.org/download/)
 # Discovery
 Discovery mode allows you to automatically add new devices to the system. This functionality is in development.
 
+*The following examples show the ZigBeeCA20 starting topic - replace it with yours, which you specified in the MQTT settings of the SLS gateway. 
 
 # Manually adding devices
 SLS Zigbee Gateway devices can be manually added to the Home-Assistant. To do this, add the appropriate settings for the device type to the configuration.yaml configuration file. Below are tested examples of clippings from the configuration file:
