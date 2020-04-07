@@ -100,7 +100,7 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 
 ## [Integration with Majordomo](/int_majordomo_eng.md)
 
-## [Integration with HomeAssistant](/int_has_eng.md) (under development)
+## [Integration with HomeAssistant](/int_has_eng.md) 
 
 ## [Integration with Node-Red](/int_nodered_eng.md) (under development)
 
