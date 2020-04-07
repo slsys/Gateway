@@ -1,3 +1,160 @@
+# Интеграция с Home-Assistant
+
+Шлюз SLS Gateway может быть легко интегрирован с системой домашней автоматизации   [Home Assistant](www.home-assistant.io). Для интеграции могут быть использованы программный  продукт  [zigbee2mqtt](https://www.zigbee2mqtt.io) совместно с разлиными вариантами zigbee-донглов, либо  готовый апаратный  шлюз Smart Logic System (SLS) Zigbee BLE gateway. 
+
+![koridor](/img/koridor.png)
+
+
+# Подготовительные меропрития
+
+Модуль работает через MQTT. 
+Установка mosqutto на raspberry или linux:
+
+[ссылка 1](https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi)
+
+[ссылка 2](https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/)
+
+Mosqutto для windows можно скачать [тут](https://mosquitto.org/download/)
+
+
+
+
+
+# Discovery
+Режим Discovery позволяет автоматически добавлять в систему новые устройства. Данный функционал в разработке. 
+
+
+
+# Ручное добавление устройств
+Устройства шлюза SLS Zigbee Gateway можно добавить в Home-Assistant вручную. Для этого в конфигурационный файл configuration.yaml нужно добавить соответствующие типу устройств настройки. Ниже приведены протестированные примеры  вырезок из  конфигурационного файла:
+
+
+
+### Датчик протечки (binary_sensor) SJCGQ11LM
+```
+- platform: mqtt
+  name: bathroom_leak
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_leak_1"
+  value_template: >-
+    {% if value_json.water_leak == true %}
+      {{'ON'}}
+    {% else %}
+      {{'OFF'}}
+    {% endif %}
+
+# Датчик протечки №1 (уровень заряда) SJCGQ11LM
+- platform: mqtt
+  name: bathroom_leak_1_battery
+  icon: mdi:battery-high
+  unit_of_measurement: "%"
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_leak_1"
+  value_template: "{{ value_json.battery }}"
+  ````
+### Датчик температуры/влажности (круглый сяоми, обычный sensor) WSDCGQ01LM
+````
+- platform: mqtt # Температура
+  name: bathroom_temperature
+  icon: mdi:thermometer
+  unit_of_measurement: "°C"
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  value_template: "{{ value_json.temperature | round(2) }}"
+- platform: mqtt # Влажность
+  name: bathroom_humidity
+  icon: mdi:water-percent
+  unit_of_measurement: "%"
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  value_template: "{{ value_json.humidity | round(2) }}"
+- platform: mqtt # Уровень заряда
+  name: bathroom_sensor_battery
+  icon: mdi:battery-high
+  unit_of_measurement: "%"
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  ````
+  
+### Квадратный датчик с  давлением (в дополнение к предыдущему) WSDCGQ11LM:
+```
+- platform: mqtt # Давление
+  name: loggia_pressure
+  icon: mdi:gauge
+  unit_of_measurement: "мм рт.ст."
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/loggia_sensor"
+  value_template: "{{ (value_json.pressure | float * 7.501) | round | int }}"
+ ```
+### Квадратная кнопка сяоми (binary_sensor) WXKG11LM
+```
+- platform: mqtt
+  name: bathroom_button
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bathroom_button"
+  value_template: >-
+    {% if value_json.click == '' %}
+      {{'OFF'}}
+    {% else %}
+      {{'ON'}}
+    {% endif %}
+  expire_after: 5
+ ```
+Замечание по кнопке - так как это именно кнопка, а не переключатель, то binary_sensor меняет свое состояние на очень короткий срок. Для работы с ним можно использовать автоматизацию типа этой (в данном случае при нажатии включается/отключается вентилятор):
+ 
+ 
+ 
+### Подсветка шлюза (light)
+```
+- platform: mqtt
+  name: gateway
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  command_topic: "/ZigBeeCA20/led"
+  rgb_command_topic: "/ZigBeeCA20/led"
+  rgb_command_template: >-
+    {
+      "mode": "manual",
+      "hex": "#{{ '%02x%02x%02x' | format(red, green, blue) }}"
+    }
+  on_command_type: "brightness"
+  payload_off: '{"mode": "off"}'
+``` 
+### Статус шлюза с аттрибутами (binary_sensor)
+```
+- platform: mqtt
+  name: sls_state
+  unique_id: cee1d05d-205a-4334-b257-723540c5d578
+  state_topic: "ZigBeeGW/bridge/state"
+  device_class: connectivity
+  payload_on: online
+  payload_off: offline      
+  json_attributes_topic: "ZigBeeGW/bridge/config"
+  json_attributes_template: "{{ value_json | tojson }}"
+```
+### Режим сопряжения ZigBee/Bluetooth шлюза (switch)
+```
+- platform: mqtt
+  name: gateway_join
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bridge/config"
+  value_template: "{{ value_json.permit_join }}"
+  state_on: true
+  state_off: false
+  command_topic: "/ZigBeeCA20/bridge/config/permit_join"
+  payload_on: "true"
+  payload_off: "false"
+```  
+### Время работы шлюза (sensor)
+```
+- platform: mqtt
+  name: gateway_uptime
+  icon: mdi:timeline-clock
+  unit_of_measurement: "%"
+  availability_topic: "/ZigBeeCA20/bridge/state"
+  state_topic: "/ZigBeeCA20/bridge/config"
+  value_template: "{{ value_json.UptimeStr }}"
+```  
+
 ![permit](/img/permit.png)
 
 
