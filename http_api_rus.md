@@ -24,3 +24,9 @@ action=getBuffer
 action=getLevel
 
 ````
+
+'''/api/zigbee?dev=0x1841&action=setSimpleBind&state=click&value=test.lua''' - привязывает запуск скрипта test.lua параметре state, равном click на устройстве с адресом 0x1841. Адрес может быть в формате IEEE, либо FriendlyName.
+
+'''/api/zigbee?dev=0x2855&action=setState&state=state&value=ON''' - Устанока состояния state, равным ON для устройства с адресом 0x2855.  Адрес может быть в формате IEEE, либо FriendlyName.
+
+```/api/zigbee?dev=0xABCD&action=setInterview&state=0``` - Запуск интервью на устройстве.
