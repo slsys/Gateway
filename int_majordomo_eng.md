@@ -157,9 +157,9 @@ $ z2m-> sendcommand ('ZigBeeXXXX/reboot', '');
 
 # An example of a Majoromo script for installing the backlight of a modernized Aqara gateway
 ```
-include_once (DIR_MODULES. 'zigbee2mqtt / zigbee2mqtt.class.php');
+include_once (DIR_MODULES. 'zigbee2mqtt/zigbee2mqtt.class.php');
 $ z2m = new zigbee2mqtt ();
-$ z2m-> sendcommand ('ZigBeeXXXX / led', '{“mode”: ”manual”, ”hex”: ”# FF0000”}');
+$ z2m-> sendcommand ('ZigBeeXXXX/led', '{“mode”: ”manual”, ”hex”: ”# FF0000”}');
 ```
 # Useful links
 
