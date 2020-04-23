@@ -30,3 +30,6 @@ action=getLevel
 ```/api/zigbee?dev=0x2855&action=setState&name=state&value=ON``` - Установка состояния state, равным ON для устройства с адресом 0x2855.  Кроме того, адрес  может быть в формате IEEE, либо FriendlyName. Для state может принимать значения on, off, toggle. command может быть open, close, stop и др. в зависимости от типа устройства.
 
 ```/api/zigbee?dev=0xABCD&action=setInterview&state=0``` - Запуск интервью на устройстве.
+
+
+```/api/wifi?action=scanNetworks``` - показывает список доступных  сетей WiFi.
