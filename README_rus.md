@@ -88,6 +88,8 @@
 
 ## [Описание HTTP API комманд](/http_api_rus.md)
 
+## [Карта сети  zigbee](/map_rus.md)
+
 ## [FAQ (часто задаваемые вопросы)](/faq_rus.md)
 
 ## [Структура сообщений zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (поддерживается большинство комманд)
