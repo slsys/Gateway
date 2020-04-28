@@ -85,6 +85,8 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [HTTP API description](/http_api_eng.md)
 
+## [Map zigbee network](/map_eng.md)
+
 ## [FAQ (Frequently Asked Questions)](/faq_eng.md)
 
 ## [zigbee2mqtt message structure](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (most commands supported)
