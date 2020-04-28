@@ -2,6 +2,39 @@
 
 Протокол Zigbee поддерживает непосредственную привязку Endpoint устройств, которая позволяет  напрямую управлять друг другом без вмешательства координатора или любого программного обеспечения для домашней автоматизации.
 
+
+# Настройка через Web 
+
+Необходимо через Web интерфейс на вкладке zigbee зайти в управлящее устройство  (пульт) и указать адрес и конечный Endpoint управляемого устройства. 
+
+![](binding.jpg)
+
+
+# Настройка через MQTT (в разработке)
+
+Структура топиков полностью повторяет проект [zigbee2mqtt](https://www.zigbee2mqtt.io/information/binding.html)
+
+Необходимо в топик 
+
+```
+zigbee2mqtt/bridge/bind/SOURCE_DEVICE_FRIENDLY_NAME
+```
+отправить значение TARGET_DEVICE_FRIENDLY_NAME, где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
+
+В результате  исходное устройство привяжется с целевым.  
+
+Для отвязки устройств необходимо отправить 
+
+```
+zigbee2mqtt/bridge/unbind/SOURCE_DEVICE_FRIENDLY_NAME
+```
+с параметром TARGET_DEVICE_FRIENDLY_NAME,  где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
+
+
+
+
+
+
 # Типы устройств
 Далеко не все устройства имеют прошивки с поддержкой такой привязки. Популярный в СНГ производитель zigbee оборудования Xiaomi только с появлением устройств Zigbee 3 озаботился наличием этого функционала, хотя ранее  выпущенных протокол Zigbee 1.2 уже имел такую возможность. 
 
@@ -16,29 +49,8 @@
 
 ### DiyRUZ
 
-Пульты с прошивками от  @DJONvl  https://modkam.ru/?p=1264
+Пульты с прошивками от  [@DJONvl](https://modkam.ru/?p=1264)
 
 
-Список будет поплняться.
+Список будет пополняться.
 
-# Настройка через MQTT (в разработке)
-
-Структура топиков полностью повторяет проект zigbee2mqtt https://www.zigbee2mqtt.io/information/binding.html
-
-Необходимо в топик 
-```
-zigbee2mqtt/bridge/bind/SOURCE_DEVICE_FRIENDLY_NAME
-```
-отправить значение TARGET_DEVICE_FRIENDLY_NAME, где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
-
-В результате  исходное устройство привяжется с целевым.  
-
-Для отвязки устройств необходимо отправить 
-```
-zigbee2mqtt/bridge/unbind/SOURCE_DEVICE_FRIENDLY_NAME
-```
-с параметром TARGET_DEVICE_FRIENDLY_NAME,  где SOURCE_DEVICE_FRIENDLY_NAME - адрес или FN пульта, TARGET_DEVICE_FRIENDLY_NAME - адрес или FN управляемого устройства.
-
-# Настройка через Web 
-
-Необходимо через Web интерфейс на вкладке zigbee зайти в управлящее устройство  (пульт) и указать адрес и конечный Endpoint управляемого устройства. 
