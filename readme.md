@@ -19,7 +19,7 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 # Additional gateway features via the web interface
 1. Management and viewing of device information through the Web interface of the gateway at http://ipadress (port 80). The ability to display the power source, battery level, available [EndPoint devices](https://community.nxp.com/thread/332332) in the web interface.
 
-2. Creation of local automation within the gateway [SimpleBind](/simpleBind_eng.md).
+2. Creation of local automation within the gateway [SimpleBind](/simplebind_eng.md).
 
 3. The ability to write scripts in [Lua](https://ru.wikipedia.org/wiki/Lua). 
 
