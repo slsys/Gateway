@@ -20,7 +20,7 @@
 # Дополнительные возможности шлюза через Web интерфейс
 1. Управление и просмотр сведений  устройств через Web интерфейс шлюза по адресу http://ipadress (80 порт). Возможность отображения источника питания, уровня заряда батареи, доступных [EndPoint устройств](https://community.nxp.com/thread/332332)  в web-интерфейсе.
 
-2. Создание локальных автоматизаций внутри шлюза [SimpleBind](/simpledind_rus.md).
+2. Создание локальных автоматизаций внутри шлюза [SimpleBind](/simplebind_rus.md).
 
 3. Возможность написания сценариев на языке [Lua](https://ru.wikipedia.org/wiki/Lua) [Книга по Lua на русском языке](https://www.htbook.ru/kompjutery_i_seti/programmirovanie/programmirovanie-na-yazyke-lua).
 
