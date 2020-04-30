@@ -7,7 +7,8 @@
 ```/api/zigbee/devices```
 Получает список устройств сети zigbee.
 
-```/api/zigbee/remove?dev=XXX``` - Удаление устройства XXX из  сети zigbee
+```/api/zigbee/remove?dev=XXX``` - Запрос устройству XXX покинуть сеть Zigbee
+```/api/zigbee/remove?dev=XXX&force=true``` - Запрос устройству XXX покинуть сеть Zigbee и безусловное удаление
 
 ```/api/zigbee/rename?old=XXX&new=YYY```  Переименование  устройства в сети zigbee
 
