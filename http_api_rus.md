@@ -35,3 +35,13 @@ action=getLevel
 
 
 ```/api/wifi?action=scanNetworks``` - показывает список доступных  сетей WiFi.
+
+#### Touchlink
+
+```/api/zigbee/touchlink``` - список устройств рядом
+
+```/api/zigbee/touchlink?action=scan``` - запуск сканирования
+
+```/api/zigbee/touchlink?action=identify&dev=0x00158D00011D8CB1``` - Идентификация устройства 0x00158D00011D8CB1
+
+```/api/zigbee/touchlink?action=reset&dev=0x00158D00011D8CB1``` - Сброс устройства 0x00158D00011D8CB1
