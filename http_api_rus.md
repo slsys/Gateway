@@ -15,18 +15,6 @@
 
 ```/api/zigbee/join?duration=255&target=XXX```   Управление режимом сопряжения duration 0 для выключения, значения больше 0 указывают период ожидания в секундах,  target разрешает сопряжение на конктетном роутере.  все параметры не обязательны
 
-
-```/api/log?action=X``` Управление режимом логирования, где X  может принимать следующие значения:
-
-```
-action=setLevel&value=1  
-
-action=getBuffer
-
-action=getLevel
-
-```
-
 ```/api/zigbee?dev=0x1841&action=setSimpleBind&state=click&value=test.lua``` - привязывает запуск скрипта test.lua параметре state, равном click на устройстве с адресом 0x1841. Адрес может быть в формате IEEE, либо FriendlyName.
 
 ```/api/zigbee?dev=0x2855&action=setState&name=state&value=ON``` - Установка состояния state, равным ON для устройства с адресом 0x2855.  Кроме того, адрес  может быть в формате IEEE, либо FriendlyName. Для state может принимать значения on, off, toggle. command может быть open, close, stop и др. в зависимости от типа устройства.
@@ -35,6 +23,19 @@ action=getLevel
 
 
 ```/api/wifi?action=scanNetworks``` - показывает список доступных  сетей WiFi.
+
+#### Logs
+
+```/api/log?action=X``` Управление режимом логирования, где X  может принимать следующие значения:
+
+```
+action=getBuffer
+
+action=setLevel&value=1  
+
+action=getLevel
+
+```
 
 #### Touchlink
 
