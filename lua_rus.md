@@ -34,7 +34,7 @@ GetURL("192.168.1.34","/gpio?st=2&pin=12")
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
 ```
 if Event.State.Value == "btn_2_single"  then
-GetURL("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
+  GetURL("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
 end
 ```
 
@@ -45,11 +45,11 @@ print("My IP: " .. Response)
 ```
 
 ### GetState
-Получение параметра устройства GetState("ieeard", "temperature")
+Получение параметра устройства GetStateValue("ieeard", "temperature")
 
 ```
 -- Получаем значение температуры и округляем до целых  
-temp = GetState("0x00158D0001A2D2FE", "temperature")
+temp = GetStateValue("0x00158D0001A2D2FE", "temperature")
 temp = math.floor(temp)
 print("Текущая температура: " .. temp .. " C°")
 ```
@@ -57,7 +57,7 @@ print("Текущая температура: " .. temp .. " C°")
 Вместо адреса устройства можно испрользовать FriendlyName (в том числе кириллицу), либо текущий адрес устройства в сети (0x9EC8).
 ```
 -- Получаем значение температуры и округляем до целых  
-temp = GetState("датчик в комнате", "temperature")
+temp = GetStateValue("датчик в комнате", "temperature")
 temp = math.floor(temp)
 print("Текущая температура: " .. temp .. " C°")
 ```
@@ -68,9 +68,9 @@ print("Текущая температура: " .. temp .. " C°")
 
 Пример скрипта, который при нажатии кнопки выключателя lumi.sensor_switch включает освещение lamp_1:
 ```
-if GetState("lumi.sensor_switch", "click") == "single" then
+if GetStateValue("lumi.sensor_switch", "click") == "single" then
   -- toggle lamp
-  current_brightness = GetState("lamp_1", "brightness")
+  current_brightness = GetStateValue("lamp_1", "brightness")
   if current_brightness == 0 then
     SetState("lamp_1", "brightness", 255)
   else
@@ -78,7 +78,7 @@ if GetState("lumi.sensor_switch", "click") == "single" then
   end
  
   -- print current temperature
-  temp = GetState("lumi.weather", "temperature")
+  temp = GetStateValue("lumi.weather", "temperature")
   print("Current temperature: " .. temp)
 end
 ```
