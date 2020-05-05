@@ -95,8 +95,8 @@ GetUnixTime() возвращает  Unix время.
 ###  GetObj / SetObj()
 GetObj / SetObj() для сохранения и получения объекта для обмена данными между скриптами, 
 
-### MQTTPub(topic, payload)
-Публикует на MQTT сервер в топик topic значение payload
+### MQTTPub
+MQTTPub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
 
 
 ## Полезные ссылки 
