@@ -15,7 +15,7 @@ The latest versions of SLS firmware have added support for automation based on t
 3) [SetState](lua_rus.md#setstate)
 4) [Event](lua_rus.md#event)
 5) [GetUnixTime](lua_rus.md#GetUnixTime)
-6) [GetObj / SetObj](lua_rus.md#GetObj / SetObj)
+6) [GetObj/SetObj](lua_rus.md#GetObj/SetObj)
 7) [MQTTPub](lua_rus.md#MQTTPub)
 
 
