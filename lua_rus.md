@@ -92,8 +92,8 @@ SetState("lamp_1", "brightness", value)
 ### GetUnixTime
 GetUnixTime() возвращает  Unix время.
 
-###  GetObj / SetObj()
-GetObj / SetObj() для сохранения и получения объекта для обмена данными между скриптами, 
+###  GetObj / SetObj
+GetObj / SetObj для сохранения и получения объекта для обмена данными между скриптами, 
 
 ### MQTTPub
 MQTTPub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
