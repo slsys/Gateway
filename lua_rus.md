@@ -10,9 +10,13 @@
 
 
 ## Список доступных функций и структур
-1) [GetState](lua_rus.md#getstate)
-2) [SetState](lua_rus.md#setstate)
-3) [Event](lua_rus.md#event) 
+1) [GetURL](lua_rus.md#geturl)
+2) [GetState](lua_rus.md#getstate)
+3) [SetState](lua_rus.md#setstate)
+4) [Event](lua_rus.md#event) 
+5) [GetUnixTime](lua_rus.md#GetUnixTime) 
+6) [GetObj/SetObj](lua_rus.md#GetObj/SetObj) 
+7) [MQTTPub](lua_rus.md#MQTTPub) 
 
 
 ### GetURL 
