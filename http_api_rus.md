@@ -4,23 +4,23 @@
 
 Ниже указаны примеры доступных комманд:
 
-```/api/zigbee/devices```
+``` /api/zigbee/devices ```
 Получает список устройств сети zigbee.
 
-```/api/zigbee/remove?dev=XXX``` - Запрос устройству XXX покинуть сеть Zigbee
+``` /api/zigbee/remove?dev=XXX``` - Запрос устройству XXX покинуть сеть Zigbee
 
-```/api/zigbee/remove?dev=XXX&force=true``` - Запрос устройству XXX покинуть сеть Zigbee и безусловное удаление
+``` /api/zigbee/remove?dev=XXX&force=true``` - Запрос устройству XXX покинуть сеть Zigbee и безусловное удаление
 
-```/api/zigbee/rename?old=XXX&new=YYY```  Переименование  устройства в сети zigbee
+``` /api/zigbee/rename?old=XXX&new=YYY```  Переименование  устройства в сети zigbee
 
 ```/api/zigbee/join?duration=255&target=XXX```   Управление режимом сопряжения duration 0 для выключения, значения больше 0 указывают период ожидания в секундах,  target разрешает сопряжение на конктетном роутере.  все параметры не обязательны
 
 
 
-```/api/zigbee?dev=0xABCD&action=setInterview&state=0``` - Запуск интервью на устройстве.
+``` /api/zigbee?dev=0xABCD&action=setInterview&state=0 ``` - Запуск интервью на устройстве.
 
 
-```/api/wifi?action=scanNetworks``` - показывает список доступных  сетей WiFi.
+``` /api/wifi?action=scanNetworks ``` - показывает список доступных  сетей WiFi.
 
 #### States
 
