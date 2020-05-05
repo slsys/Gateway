@@ -95,7 +95,13 @@ Event.State.Value - Новое значение состояния
 
 Пример скрипта для включения света:
 ```
-if Event.State.Value == "single" then value = 255 elseif Event.State.Value == "double" then value = 0 else return end
+if Event.State.Value == "single" then 
+  value = 255 
+elseif Event.State.Value == "double" then 
+  value = 0 
+else 
+  return 
+end
 SetState("lamp_1", "brightness", value)
 ```
 
