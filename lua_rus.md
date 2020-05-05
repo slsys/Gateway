@@ -14,12 +14,13 @@
 
 ## Список доступных функций и структур
 1) [GetURL](lua_rus.md#geturl)
-2) [GetState](lua_rus.md#getstate)
-3) [SetState](lua_rus.md#setstate)
-4) [Event](lua_rus.md#event) 
-5) [GetUnixTime](lua_rus.md#GetUnixTime) 
-6) [GetObj/SetObj](lua_rus.md#GetObj/SetObj) 
-7) [MQTTPub](lua_rus.md#MQTTPub) 
+2) [GetStateValue](lua_rus.md#GetStateValue)
+3) [GetState](lua_rus.md#GetState)
+4) [SetState](lua_rus.md#SetState)
+5) [Event](lua_rus.md#event) 
+6) [GetUnixTime](lua_rus.md#GetUnixTime) 
+7) [GetObj/SetObj](lua_rus.md#GetObj/SetObj) 
+8) [MQTTPub](lua_rus.md#MQTTPub) 
 
 
 ### GetURL 
@@ -44,7 +45,7 @@ local Response = GetURL("wtfismyip.com", "/text")
 print("My IP: " .. Response)
 ```
 
-### GetState
+### GetStateValue
 Получение параметра устройства GetStateValue("ieeard", "temperature")
 
 ```
@@ -62,6 +63,9 @@ temp = math.floor(temp)
 print("Текущая температура: " .. temp .. " C°")
 ```
 
+### GetState
+Вызывает команду GET в ковертере. Используется для ручного чтения состояний из устройств.
+Пример: GetStateValue("lamp1", "brightness")
 
 ### SetState
 Установка значения  устройства SetState(Ident, StateName, StateValue)
