@@ -15,6 +15,21 @@
 3) [Event](lua_rus.md#event) 
 
 
+### GetURL 
+Вызов сервера host методом  GET  по адресу path GetURL(host, path)
+
+Пример переключение gpio 12 для прошивки wifi-iot
+```
+GetURL("192.168.1.34","/gpio?st=2&pin=12")
+```
+Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
+```
+if Event.State.Value == "btn_2_single"  then
+GetURL("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
+end
+```
+
+
 ### GetState
 Получение параметра устройства GetState("ieeard", "temperature")
 
@@ -69,6 +84,15 @@ Event.State.Value - Новое значение состояния
 if Event.State.Value == "single" then value = 255 elseif Event.State.Value == "double" then value = 0 else return end
 SetState("lamp_1", "brightness", value)
 ```
+
+### GetUnixTime
+GetUnixTime() возвращает  Unix время.
+
+###  GetObj / SetObj()
+GetObj / SetObj() для сохранения и получения объекта для обмена данными между скриптами, 
+
+### MQTTPub(topic, payload)
+Публикует на MQTT сервер в топик topic значение payload
 
 
 ## Полезные ссылки 
