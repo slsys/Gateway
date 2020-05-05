@@ -22,10 +22,12 @@
 ### GetURL 
 Вызов сервера host методом  GET  по адресу path GetURL(host, path)
 
+
 Пример переключение gpio 12 для прошивки wifi-iot
 ```
 GetURL("192.168.1.34","/gpio?st=2&pin=12")
 ```
+
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
 ```
 if Event.State.Value == "btn_2_single"  then
@@ -33,6 +35,11 @@ GetURL("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
 end
 ```
 
+Запрос инфомации со стороннего ресурса
+```
+local Response = GetURL("wtfismyip.com", "/text")
+print("My IP: " .. Response)
+```
 
 ### GetState
 Получение параметра устройства GetState("ieeard", "temperature")
