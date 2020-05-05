@@ -1,6 +1,8 @@
 # Support for lua scripts
 
-The latest versions of SLS firmware have added support for automation based on the scripting programming language [lua] (https://ru.wikipedia.org/wiki/Lua). The script editor is located in the menu Actions -> Scripts. Script stdout using the print command displays information on the screen of the Scripts page and in the system log of the gateway.
+The SLS gateway has automation support based on the scripting programming language [lua](https://ru.wikipedia.org/wiki/Lua). The script editor is located in the menu Actions -> Scripts. To write a script, you need to create a new file, for example, with the name script.lua and enter lua code into it.
+Script stdout using the print command displays information on the screen of the Scripts page and in the system log of the gateway. You can run the test script by pressing the RUN button.
+! [](/img/lua.png)
 
 ## Script launch options
 1) Running the script when the device state changes. On the Zigbee tab, go to the device settings and specify the script file name (prefix / optional) in the SimpleBind window.
