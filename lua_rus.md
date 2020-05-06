@@ -13,44 +13,44 @@
 
 
 ## Список доступных функций и структур
-1) [GetURL](lua_rus.md#geturl)
-2) [GetStateValue](lua_rus.md#GetStateValue)
-3) [GetState](lua_rus.md#GetState)
-4) [SetState](lua_rus.md#SetState)
+1) [http.get()](lua_rus.md#http.get())
+2) [zigbee.value()](lua_rus.md#zigbee.value())
+3) [zigbee.get()](lua_rus.md#zigbee.get())
+4) [zigbee.set()](lua_rus.md#zigbee.set())
 5) [Event](lua_rus.md#event) 
-6) [GetUnixTime](lua_rus.md#GetUnixTime) 
-7) [GetObj/SetObj](lua_rus.md#GetObj/SetObj) 
-8) [MQTTPub](lua_rus.md#MQTTPub) 
+6) [os.time()](lua_rus.md#os.time()) 
+7) [obj.get()/obj.set()](lua_rus.md#obj.get()/obj.set()) 
+8) [mqtt.pub()](lua_rus.md#mqtt.pub()) 
 
 
-### GetURL 
-Вызов сервера host методом  GET  по адресу path GetURL(host, path)
+### http.get() 
+Вызов сервера host методом GET по адресу path http.get(host, path)
 
 
 Пример переключение gpio 12 для прошивки wifi-iot
 ```
-GetURL("192.168.1.34","/gpio?st=2&pin=12")
+http.get("192.168.1.34","/gpio?st=2&pin=12")
 ```
 
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
 ```
 if Event.State.Value == "btn_2_single"  then
-  GetURL("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
+  http.get("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
 end
 ```
 
 Запрос инфомации со стороннего ресурса
 ```
-local Response = GetURL("wtfismyip.com", "/text")
+local Response = http.get("wtfismyip.com", "/text")
 print("My IP: " .. Response)
 ```
 
-### GetStateValue
-Получение параметра устройства GetStateValue("ieeard", "temperature")
+### zigbee.value()
+Получение значения состояния устройства из кэша zigbee.value("ieeard", "temperature")
 
 ```
 -- Получаем значение температуры и округляем до целых  
-temp = GetStateValue("0x00158D0001A2D2FE", "temperature")
+temp = zigbee.value("0x00158D0001A2D2FE", "temperature")
 temp = math.floor(temp)
 print("Текущая температура: " .. temp .. " C°")
 ```
@@ -58,31 +58,31 @@ print("Текущая температура: " .. temp .. " C°")
 Вместо адреса устройства можно испрользовать FriendlyName (в том числе кириллицу), либо текущий адрес устройства в сети (0x9EC8).
 ```
 -- Получаем значение температуры и округляем до целых  
-temp = GetStateValue("датчик в комнате", "temperature")
+temp = zigbee.value("датчик в комнате", "temperature")
 temp = math.floor(temp)
 print("Текущая температура: " .. temp .. " C°")
 ```
 
-### GetState
+### zigbee.get()
 Вызывает команду GET в ковертере. Используется для ручного чтения состояний из устройств.
-Пример: GetStateValue("lamp1", "brightness")
+Пример: zigbee.get("lamp1", "brightness")
 
 ### SetState
-Установка значения  устройства SetState(Ident, StateName, StateValue)
+Установка значения  устройства zigbee.set(Ident, StateName, StateValue)
 
 Пример скрипта, который при нажатии кнопки выключателя lumi.sensor_switch включает освещение lamp_1:
 ```
-if GetStateValue("lumi.sensor_switch", "click") == "single" then
+if zigbee.value("lumi.sensor_switch", "click") == "single" then
   -- toggle lamp
-  current_brightness = GetStateValue("lamp_1", "brightness")
+  current_brightness = zigbee.value("lamp_1", "brightness")
   if current_brightness == 0 then
-    SetState("lamp_1", "brightness", 255)
+    zigbee.set("lamp_1", "brightness", 255)
   else
-    SetState("lamp_1", "brightness", 0)
+    zigbee.set("lamp_1", "brightness", 0)
   end
  
   -- print current temperature
-  temp = GetStateValue("lumi.weather", "temperature")
+  temp = zigbee.value("lumi.weather", "temperature")
   print("Current temperature: " .. temp)
 end
 ```
@@ -106,17 +106,17 @@ elseif Event.State.Value == "double" then
 else 
   return 
 end
-SetState("lamp_1", "brightness", value)
+zigbee.set("lamp_1", "brightness", value)
 ```
 
-### GetUnixTime
-GetUnixTime() возвращает  Unix время.
+### os.time()
+os.time() возвращает Unix время.
 
-###  GetObj / SetObj
-GetObj / SetObj для сохранения и получения объекта для обмена данными между скриптами, 
+###  obj.get()/obj.set()
+obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранения и получения объекта для обмена данными между скриптами
 
-### MQTTPub
-MQTTPub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
+### mqtt.pub()
+mqtt.pub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
 
 
 ## Полезные ссылки 
