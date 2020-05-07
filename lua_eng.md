@@ -13,14 +13,14 @@ Script stdout using the print command displays information on the screen of the 
 
 
 ## List of available functions and structures
-1) [http.get()](lua_rus.md#http.get ())
-2) [zigbee.value()](lua_rus.md#zigbee.value ())
-3) [zigbee.get()](lua_rus.md#zigbee.get ())
-4) [zigbee.set()](lua_rus.md#zigbee.set ())
-5) [Event](lua_rus.md#event)
-6) [os.time()](lua_rus.md#os.time())
-7) [obj.get()/obj.set()](lua_rus.md#obj.get()/obj.set())
-8) [mqtt.pub()](lua_rus.md#mqtt.pub())
+1) [http.get()](lua_eng.md#http.get ())
+2) [zigbee.value()](lua_eng.md#zigbee.value ())
+3) [zigbee.get()](lua_eng.md#zigbee.get ())
+4) [zigbee.set()](lua_eng.md#zigbee.set ())
+5) [Event](lua_eng.md#event)
+6) [os.time()](lua_eng.md#os.time())
+7) [obj.get()/obj.set()](lua_eng.md#obj.get()/obj.set())
+8) [mqtt.pub()](lua_eng.md#mqtt.pub())
 
 
 ### http.get()
