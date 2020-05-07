@@ -56,7 +56,7 @@ action=getLevel
 ```/api/zigbee/touchlink?action=reset&dev=0x00158D00011D8CB1``` - Сброс устройства 0x00158D00011D8CB1
 
 #### Scripts
-```http://172.16.1.16/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua через http.
+```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua через http.
 
 Также вовзможны варианты: 
 ```
