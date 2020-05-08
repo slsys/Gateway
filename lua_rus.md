@@ -1,6 +1,7 @@
 # Поддержка lua скриптов
 
 В шлюзе SLS имеется  поддержка автоматизаций на основе скриптового языка программирования [lua](https://ru.wikipedia.org/wiki/Lua). Редактор скриптов находится в меню Actions -> Scripts.  
+
 Для написания  скрипта необходимо  создать новый файл, например  с именем script.lua и в него ввести  код на языке lua. 
 
 
@@ -30,7 +31,9 @@
 
 ### http.request 
 Вызов URL запроса http.request(url[:port], [method, headers, body])
+
 В данным момент поддерживается только 'http://' протокол.
+
 
 Пример переключение gpio 12 для прошивки wifi-iot
 ```
@@ -42,11 +45,17 @@ http.request("http://192.168.1.34/gpio?st=2&pin=12")
 http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
 ```
 
+Пример переключения реле sw1 в прошивке espHome:
+
+```
+  http.request("http://192.168.1.71/switch/sw1/toggle", "POST") 
+```
+
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
 ```
-if Event.State.Value == "btn_2_single"  then
-  http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
-end
+  if Event.State.Value == "btn_2_single"  then
+    http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
+  end
 ```
 
 Запрос инфомации со стороннего ресурса
@@ -54,6 +63,7 @@ end
 local Response = http.request("http://wtfismyip.com/text")
 print("My IP: " .. Response)
 ```
+
 
 ### zigbee.value()
 Получение значения состояния устройства из кэша zigbee.value("ieeard", "temperature")
@@ -75,17 +85,24 @@ print("Текущая температура: " .. temp .. " C°")
 
 ### zigbee.get()
 Вызывает команду GET в ковертере. Используется для ручного чтения состояний из устройств.
-Пример: zigbee.get("lamp1", "brightness")
+
+Пример: 
+```
+  zigbee.get("lamp1", "brightness")
+```
+
 
 ### zigbee.join()
 Синтаксис: zigbee.join(duration, [target])
+
 Открывает сеть для подключения новых устройств на duration секунд (макс. 255), для устройства target или для всей сети. 
 
 ```
-zigbee.join(255, "plug1")
+  zigbee.join(255, "plug1")
 ```
 
-### SetState
+
+### zigbee.set()
 Установка значения  устройства zigbee.set(Ident, StateName, StateValue)
 
 Пример скрипта, который при нажатии кнопки выключателя lumi.sensor_switch включает освещение lamp_1:
@@ -104,6 +121,7 @@ if zigbee.value("lumi.sensor_switch", "click") == "single" then
   print("Current temperature: " .. temp)
 end
 ```
+
 ### Event
 Структура Event например позволяет использовать один и тот же скрипт для разных состояний или устройств.
 
@@ -127,24 +145,32 @@ end
 zigbee.set("lamp_1", "brightness", value)
 ```
 
+
 ### os.time()
 os.time() возвращает Unix время.
 
+
 ### os.delay()
 Синтаксис: os.delay(ms)
+
 Пауза на ms миллисекунд (1сек = 1000 мс)
+
 
 ### os.millis()
 Возвращает количество миллисекунд с момента загрузки системы
 
+
 ### os.save()
 Сохраняет данные
+
 
 ### os.restart()
 Перезагружает ОС
 
+
 ###  obj.get() / obj.set()
 obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранения и получения объекта для обмена данными между скриптами
+
 
 ### mqtt.pub()
 mqtt.pub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
