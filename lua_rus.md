@@ -13,7 +13,7 @@
 
 
 ## Список доступных функций и структур
-1) [http.get()](lua_rus.md#http.get())
+1) [http.request()](lua_rus.md#http.request)
 2) [zigbee.value()](lua_rus.md#zigbee.value())
 3) [zigbee.get()](lua_rus.md#zigbee.get())
 4) [zigbee.set()](lua_rus.md#zigbee.set())
@@ -23,25 +23,30 @@
 8) [mqtt.pub()](lua_rus.md#mqtt.pub()) 
 
 
-### http.get() 
-Вызов сервера host методом GET по адресу path http.get(host, path)
-
+### http.request 
+Вызов URL запроса http.request(url[:port], [method, headers, body])
+В данным момент поддерживается только 'http://' протокол.
 
 Пример переключение gpio 12 для прошивки wifi-iot
 ```
-http.get("192.168.1.34","/gpio?st=2&pin=12")
+http.request("http://192.168.1.34/gpio?st=2&pin=12")
+```
+
+Пример отправки POST запроса:
+```
+http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
 ```
 
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
 ```
 if Event.State.Value == "btn_2_single"  then
-  http.get("192.168.2.200", "/objects/?object=MegaD1-12&op=m&m=switch")
+  http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
 end
 ```
 
 Запрос инфомации со стороннего ресурса
 ```
-local Response = http.get("wtfismyip.com", "/text")
+local Response = http.request("http://wtfismyip.com/text")
 print("My IP: " .. Response)
 ```
 
