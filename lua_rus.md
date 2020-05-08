@@ -32,7 +32,7 @@
 ### http.request 
 Вызов URL запроса http.request(url[:port], [method, headers, body])
 
-В данным момент поддерживается только 'http://' протокол.
+В данный момент поддерживается только 'http://' протокол.
 
 
 Пример переключение gpio 12 для прошивки wifi-iot
@@ -173,7 +173,15 @@ obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранени
 
 
 ### mqtt.pub()
-mqtt.pub(topic, payload) публикует на MQTT сервер в топик topic значение payload. 
+Синтаксис: mqtt.pub(topic, payload) 
+
+Публикует на MQTT сервер в топик topic значение payload. 
+
+
+Пример управления реле на прошивке Tasmota - cmnd/имя устройства/имя реле 
+```
+  mqtt.pub('cmnd/sonoff5/power', 'toggle')
+```
 
 
 ## Полезные ссылки 
