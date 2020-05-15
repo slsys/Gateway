@@ -94,7 +94,7 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [SLS zigbee2mqtt message structure](/slscommand_eng.md)
 
-## [Supported devices list](https://slsys.io/action/devicelists.html)
+## [Supported devices](https://slsys.io/action/devicelists.html)
 
 # Integrations
 
