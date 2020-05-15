@@ -9,7 +9,8 @@ Support for BLE and the NXP JN5168/JN5169 module is currently undergoing testing
 # General information
 The gateway acts as the coordinator of Zigbee and allows you to:
 
-1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](/devices/devices.md). New equipment may be added after discussion with us.
+1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](https://slsys.io/action/devicelists.html). New equipment may be added after discussion with us.
+
 
 2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
 
@@ -93,7 +94,7 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [SLS zigbee2mqtt message structure](/slscommand_eng.md)
 
-
+## [Supported devices list](https://slsys.io/action/devicelists.html)
 
 # Integrations
 
