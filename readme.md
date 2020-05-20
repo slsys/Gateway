@@ -116,3 +116,19 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 ## [Integration with HomeKit](/int_homekit_eng.md) (under development)
 
 ## [Integration with Domoticz](/int_domoticz_eng.md) (under development)
+
+
+# Useful links
+[Official chat of the project](https://t.me/slsys)
+
+[News group and new firmware versions](https://t.me/slssys)
+
+[List of supported devices](https://slsys.io/action/devicelists.html)
+
+[How to build a gateway yourself](https://modkam.ru/?p=1342)
+
+[Where to purchase](https://t.me/zigberu)
+
+[Partner chat to discuss Zigbee devices](https://t.me/zigbeer)
+
+[Russian Wiki on myzigbee.ru portal](https://myzigbee.ru/)
