@@ -119,11 +119,17 @@
 
 # Полезные ссылки
 [Официальный чат проекта](https://t.me/slsys)
+
 [Группп новостей и новых версия прошивок](https://t.me/slssys)
+
 [Список поддерживаемых устройств](https://slsys.io/action/devicelists.html)
+
 [Как собрать шлюз самому](https://modkam.ru/?p=1342)
+
 [Где приобрести](https://t.me/zigberu)
+
 [Партнерский чат для обсуждения устройств Zigbee](https://t.me/zigbeer)
+
 [Русский Wiki на портале myzigbee.ru]([https://myzigbee.ru/)
 
 
