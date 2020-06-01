@@ -40,9 +40,12 @@
 [Прошивка для модуля CC2530 с усилителем СС2592](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2592_20190523.zip)
 
 Для прошивки через J-Link:
-[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/antst/CC2538-ZNP-Coordinator-firmware/files/3678300/CC2538ZNP-UART-without-SBL-cc2592.hex.zip)
+[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/MODKAMRU_V3_UART-no-flow-control_20200211_sbl.hex)
 
 ## Вопрос: Как прошить ESP32
+
+[Актуальная инструкция](/flashing_rus.md)
+
 
 Для первоначальной прошивки:
 ```
@@ -62,7 +65,7 @@
 ## Вопрос: Как прошить CC2530
 
 Ответ:
-[Инструкция 1](https://modkam.ru/?p=1188)
+[Инструкция](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0-cc2531cc2530)
 
 
 
