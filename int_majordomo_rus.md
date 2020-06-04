@@ -160,6 +160,16 @@ include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
 $z2m = new zigbee2mqtt();
 $z2m->sendcommand('ZigBeeXXXX/led', '{“mode”:”manual”,”hex”:”#FF0000”}');
 ```
+
+# Пример сценария Majoromo для открытия/закрытия штор прикода Aqara
+```
+include_once(DIR_MODULES . 'zigbee2mqtt/zigbee2mqtt.class.php');
+$z2m = new zigbee2mqtt();
+$z2m->sendcommand('ZigBeeXXXX/0x00158D0002EE1285/set', '{"state":"open"}');
+```
+где 0x00158D0002EE1285 - IEEE адрес вашего привода.
+
+
 # Полезные ссылки
 
 Ссылка на интересный тематический канал в телеграм: https://t.me/zigbeer
