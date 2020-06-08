@@ -230,6 +230,20 @@ cat /dev/ttyUSB0 > slslog.txt
 
 Соответственно файл сохранится по пути : D:\
 
+### Windows, альтернативный вариант
+бор лога sls под widows без putty проверял под windows 10
+
+sls.bat
+```
+for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "dt=%%a"
+set "YY=%dt:~2,2%" & set "YYYY=%dt:~0,4%" & set "MM=%dt:~4,2%" & set "DD=%dt:~6,2%"
+set "HH=%dt:~8,2%" & set "Min=%dt:~10,2%" & set "Sec=%dt:~12,2%"
+
+mode com4 115200,n,8,1
+type com4: >> "d:\sls\log\%YYYY%-%MM%-%DD%_%HH%-%Min%-%Sec%".log"
+pause
+```
+
 
 ## Вопрос: на какой скорости ESP32 общается с СС2538
 
