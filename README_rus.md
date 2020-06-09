@@ -91,7 +91,7 @@
 
 ## [Список поддерживаемых устройств](https://slsys.io/action/devicelists.html)
 
-## [Создание свой страницы устройств](https://slsys.io/action/ui_rus.html)
+## [Создание свой страницы устройств](/ui_rus.html)
 
 # Интеграции
 
