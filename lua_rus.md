@@ -116,10 +116,13 @@ if zigbee.value("lumi.sensor_switch", "click") == "single" then
     zigbee.set("lamp_1", "brightness", 0)
   end
  
-  -- print current temperature
-  temp = zigbee.value("lumi.weather", "temperature")
-  print("Current temperature: " .. temp)
-end
+
+
+-- switch 0x00124B0009FE36FC on single click
+if Event.State.Value == "single" then
+   zigbee.set("0x00124B0009FE36FC", "state", "toggle")
+  end
+
 ```
 
 ### Event
