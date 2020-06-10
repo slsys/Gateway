@@ -185,6 +185,7 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 
 ### Двухканальное реле сяоми switch LLKZMK11LM
 
+{% raw %}
 ```
 ### бойлер
 - platform: mqtt
@@ -204,10 +205,14 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   value_template: "{{ value_json.state_l2 }}"
   command_topic: "/ZigBeeCA20/gas_heating/set/state_l2"
  ```
+ {% endraw %}
+ 
 соответственно везде name и адреса топиков поменять на свои
 
 
 ### Включение/отключение вентиляции по нажатии на кнопку
+
+{% raw %}
 ```
 - alias: toggle_bathroom_fan_when_button_pushed
   trigger:
@@ -218,8 +223,11 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     - service: fan.toggle
       entity_id: fan.bathroom
 ```     
+{% endraw %}
 
 ###  Aqara LED Light Bulb Tunable White Model ZNLDP12LM
+
+{% raw %}
 ```
 - platform: mqtt
     name: GardenBulbLeft
@@ -239,8 +247,11 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     schema: json
     command_topic: "/ZigBeeCA20/GardenBulbRight/set”
 ```
+{% endraw %}
 
 ### Датчик движения/освещенности Xiaomi RTCGQ11LM 
+
+{% raw %}
 ```
 #Сенсор Движение Коридор
   - platform: mqtt
@@ -263,8 +274,11 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     value_template: "{{ value_json.illuminance }}"
     unit_of_measurement: 'lux'
 ```
+{% endraw %}
 
 ### Датчик открытия окна Xiaomi MCCGQ01LM
+
+{% raw %}
 ```
 #Сенсор Дверь Улица
   - platform: mqtt
@@ -281,10 +295,13 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
     state_topic: "ZigBeeCA20/Sensor_Door_Uliza"
     value_template: "{{ value_json.contact }}"
 ```
+{% endraw %}
 
 
 ### Cкрипт переводит статус датчиков на off через требуемый таймаут.
 Создаете файл 
+
+{% raw %}
 ```
 #Victor Enot, [06.04.20 18:02]
 #==========================================================================================
@@ -310,8 +327,10 @@ else:
         
     hass.states.set(inputEntity, inputState, inputAttributesObject)
 ```
+{% endraw %}
 
 В  automations.yaml необходимо прописать следующий код
+{% raw %}
 ```
 - id: '1579606187576'
   alias: Tualet pir off
@@ -328,9 +347,8 @@ else:
       state: 'off'
     service: python_script.set_state
 ```
-
-
-      
+{% endraw %}
+     
 
 
 *PS: раздел в разработке.*
