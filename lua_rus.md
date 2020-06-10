@@ -118,7 +118,7 @@ if zigbee.value("lumi.sensor_switch", "click") == "single" then
  
 
 
--- switch 0x00124B0009FE36FC on single click
+-- switch 0x00124B0009FE36FC on single lumi.sensor_switch click
 if Event.State.Value == "single" then
    zigbee.set("0x00124B0009FE36FC", "state", "toggle")
   end
