@@ -19,3 +19,7 @@
   });
 </script>
 ```
+
+Другие примеры:
+![](/img/dashboard.png)
+[Дашборд](/dashboard/ui.html)
