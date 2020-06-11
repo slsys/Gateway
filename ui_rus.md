@@ -22,4 +22,4 @@
 
 ## Другие примеры:
 ![](/img/dashboard.jpg)
-[Дашборд](/dashboard/ui.html)
+[скачать](/dashboard/ui.html)
