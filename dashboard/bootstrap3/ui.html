@@ -41,7 +41,7 @@
 }    
 .card-img {
   width:80px;
-  margin-right:20;
+  margin-right:30;
 }
 .signal-level {
   font-size: 20px;
@@ -156,29 +156,31 @@ data += '<div style="float:right;" >';
 //        data += '<div style="float:left;" >';
 	    //data += '<a href="/zigbee/device?dev='+v.nwkAddr+'&activeTab=Info"   style="text-decoration: none" ><small>'+v.ieeeAddr  +'&nbsp;&nbsp;&nbsp;';
         data += '<a href="/zigbee/device?dev='+v.nwkAddr+'&activeTab=Info"   style="text-decoration: none" >'+v.ieeeAddr  +'&nbsp;&nbsp;&nbsp;';
+        
+
 	    //if(typeof ts1 === 'undefined') {null;} else { data +=  '&nbsp;&nbsp;'+ts1.toLocaleString();}
     	//data +=  '</small></a></p> ';
         data +=  '</a></p> ';
     	//data += '</div>';
         //data += '</div>';
 //        data += '<br>';
-        
-        if(typeof ts1 === 'undefined')  { data += '<p>&nbsp</p>';} else   { data += '<p>'+ts1.toLocaleString()+'</p>';}
-        
+/////////////////////////            
         
         //data += '<div style="white-space: nowrap;">';
-        data += '<div style="float:left;" >';   
+        //data += '<div style="float:left;" >';   
     	data += '<p>'+v.ManufName+'&nbsp;</p> ';
-        data += '</div>';
-        data += '</div>';
-        data += '<br>';
+//        data += '</div>';
+//        data += '</div>';
+//        data += '<br>';
    
     	//data += '<div style="white-space: nowrap;">';
 	    //data += '<div style="float:left;" >';
-        data += '<div align="left;" >';
+//        data += '<div align="left;" >';
     	data += '<p>'+v.ModelId+'</p>&nbsp;  ';
-     	data += '</div>';     
+//     	data += '</div>';     
      	
+        if(typeof ts1 === 'undefined')  { data += '<p>&nbsp</p>';} else   { data += '<p>'+ts1.toLocaleString()+'</p>';}
+/////////////////////////    
 
 }}
 if (data.length>2) { sw_list.insertAdjacentHTML('afterbegin', data);}
