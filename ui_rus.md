@@ -20,6 +20,11 @@
 </script>
 ```
 
-## Другие примеры:
+## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content):
 ![](/img/dashboard.jpg)
-[скачать](/dashboard/ui.html)
+[скачать](/dashboard/bootstrap4/ui.html)
+
+
+## Пример dashboard с использованием [Bootstrap3](https://www.w3schools.com/bootstrap/bootstrap_panels.asp):
+![](/img/dashboard3.jpg)
+[скачать](/dashboard/bootstrap3/ui.html)
