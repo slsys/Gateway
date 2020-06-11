@@ -1,0 +1,183 @@
+   <title>SLS Gateway: Dashboard</title>      
+   <link rel="icon" href="https://cdn.slsys.io/assets/2020.05.21d8/favicon.png" type="image/x-icon">
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<style>
+   .leftpic {
+    float: left; /* Выравнивание по правому краю */
+    margin: 0 0 5px 5px; /* Отступы вокруг фотографии */
+   }
+  </style>
+  
+
+
+
+<style>
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+.panel-heading {padding:3px}
+.panel-title {padding: 9px 12px 9px 12px;}
+.btn-round {
+  border-radius:50px;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 34px;
+	height: 34px;
+	font-size: 12px;
+}
+.dropdown-menu li a .glyphicon {
+  width:25px;
+}
+.dropdown-menu{
+ left: -80px; 
+}    
+.card-img {
+  width:80px;
+  margin-right:10px;
+}
+.signal-level {
+  font-size: 20px;
+}
+.signal-level .glyphicon-signal {
+  color: #000;
+  background: #fff;
+  mix-blend-mode: lighten;
+  padding-top:2px;
+  padding-bottom:9px;
+  top: 0px;
+}
+.panel-content {padding: 5px 10px 0px 10px;}
+.col-sm-6, .col-md-4, .col-lg-4 {padding-left:3px; padding-right:3px;}
+</style>
+
+<main role="main" class="h-100">
+  <form name="wifi" method="get" action="/store"> 
+  <div class="container-fluid">
+  <div class="row col-md-12 col-lg-12">
+
+  
+
+
+ <div class="row" id="sw_list" align="center">
+ </div>
+
+     
+    
+    </form>
+    </main>
+    
+    <script>
+  scanNetworks();
+function showIt()
+{
+  var x = document.getElementById("wifi_pwd");
+  if (x.type === "password") 
+  {
+    x.type = "text";
+  } 
+  else 
+  {
+    x.type = "password";
+  }
+}
+function scanNetworks()
+{
+
+  var list=httpGet('/api/zigbee/devices');
+  var arr=JSON.parse(list);
+  document.getElementById('sw_list').innerHTML="";
+  arr.forEach(function(v) {
+   
+var data='<div class="col-sm-6 col-md-6 col-lg-3" onclick="httpReq(\''+v.ieeeAddr+'\');">';
+//data += '<div class="card text" >';
+data += '<div class="card text-white bg-info mb-2" style="max-width: 25rem;">';
+    data += '<div class="panel-heading"> ';
+    
+    data += '<div class="card-header"><h5> ';
+    data += '<div style="float:left;" >';
+    data += v.friendly_name+'&nbsp; ';
+    data += '</div>';
+
+   //if(typeof v.st.state === 'undefined')    {data += '&nbsp;';}     else     {data += '&nbsp;('+v.st.state+')'};
+   //if(typeof v.st.battery === 'undefined')    {data += '&nbsp;';}     else       {data += '&nbsp;<i class="fas fa fa-battery-full fa-rotate-270" title="'+v.st.battery+'"></i>'};
+   //if(typeof v.st.linkquality != 'undefined')    {data += '&nbsp;';}     else   {data += '&nbsp;<i class="fa fa-signal" title="'+v.st.linkquality+'"></i>'};
+   //if(typeof v.st.linkquality === 'undefined')    {data += '&nbsp;';}     else   {data += '&nbsp;';'};
+   //if ('linkquality' in v.st)  {data += '&nbsp;<i class="fa fa-signal" title="'+v.st.linkquality+'"></i>'} else {data += '&nbsp;';};
+   if ('st' in v) {    if   ('state' in v['st']) {data += '&nbsp;'+v.st.state+''}   else {data += '&nbsp;';};   }
+   if ('st' in v) {    if   ('temperature' in v['st'])  {data += '&nbsp;'+v.st.temperature+'°C'}   else {data += '&nbsp;';};   }
+   if ('st' in v) {    if   ('humidity' in v['st'])  {data += '&nbsp;'+v.st.humidity+'mm'}   else {data += '&nbsp;';};   }
+
+data += '<div style="float:right;" >';
+   if ('st' in v) {    if   ('battery' in v['st']) {
+   if  (v.st.battery==100) {data += '&nbsp;<i class="fas fa fa-battery-full fa-rotate-270" title="'+v.st.battery+'"></i>'}
+   if  (v.st.battery<100 && v.st.battery>=70) {data += '&nbsp;<i class="fas fa fa-battery-three-quarters fa-rotate-270" title="'+v.st.battery+'"></i>'}
+   if  (v.st.battery<70 && v.st.battery>=50) {data += '&nbsp;<i class="fas fa fa-battery-half fa-rotate-270" title="'+v.st.battery+'"></i>'}
+   if  (v.st.battery<50 && v.st.battery>=30) {data += '&nbsp;<i class="fas fa fa-battery-quarter fa-rotate-270" title="'+v.st.battery+'"></i>'}
+   if  (v.st.battery<30 ) {data += '&nbsp;<i class="fas fa fa-battery-empty fa-rotate-270" title="'+v.st.battery+'"></i>'}
+   
+   ts= v.last_seen;
+   var ts1 = new Date(parseInt(ts, 10) * 1000);
+    
+   
+   }   else {data += '&nbsp;';};   }
+   if ('st' in v) {    if   ('linkquality' in v['st']) {data += '&nbsp;<i class="fa fa-signal" title="'+v.st.linkquality+'"></i>'}   else {data += '&nbsp;';};   }
+data += '</div>';
+
+
+ 	data += '</h5></div>';
+    
+    data += '<div class="card-body" align="left"> <img class="leftpic img-circle pull-left card-img" src="https://raw.githubusercontent.com/slsys/Gateway/master/devices/png/'+v.ModelId+'.png">'; 
+    data += '<div style="white-space: nowrap;">';
+    data += '<p class="card-text"><small>'+v.ieeeAddr+'&nbsp;&nbsp;&nbsp;';
+    //data +=  </small></p> ';
+    if(typeof ts1 === 'undefined') {null;} else { data +=  '&nbsp;&nbsp;'+ts1.toLocaleString();}
+    //data +=  ts1.toLocaleString();
+    data +=  '</small></p> ';
+    data += '</div>';
+    
+    data += '<p >'+v.ManufName+'&nbsp;</p> ';
+
+	
+    
+    
+    data += '<div style="white-space: nowrap;"><p class="card-text">';
+    //data += '<div style="float:left;" >';
+    data += v.ModelId+'&nbsp;  ';
+    //data += '</div>';
+    //data += '<div style="float:right;" >';
+    //data +=  ts1.toLocaleString()+'&nbsp;</p>  ';
+    //data += '</div>';
+    
+    data += '</div>';
+
+sw_list.insertAdjacentHTML('afterbegin', data);  });
+  
+}
+
+function httpGet(url)
+{
+console.log('starting http get');
+var xhr = new XMLHttpRequest();
+xhr.open('GET', url, false);
+xhr.send();
+if (xhr.status != 200) {
+  // обработать ошибку
+  //console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+  return false;
+} else {
+  // вывести результат
+  //console.log('nw request ok: ' + xhr.responseText);
+  return( xhr.responseText ); // responseText -- текст ответа.
+} 
+}
+function httpReq(dev) {
+     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", '/api/zigbee?dev='+dev+'&action=setState&name=state&value=TOGGLE', false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}  
+    </script>
+<body>
