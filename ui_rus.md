@@ -21,7 +21,7 @@
 ```
 
 ## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content):
-[![](/img/dashboard.jpg)
+[![](/img/dashboard4.jpg)
 скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/bootstrap4/ui.html)
 
 ## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content):
