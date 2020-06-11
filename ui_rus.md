@@ -21,5 +21,5 @@
 ```
 
 Другие примеры:
-![](/img/dashboard.png)
+![](/img/dashboard.jpg)
 [Дашборд](/dashboard/ui.html)
