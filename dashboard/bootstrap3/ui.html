@@ -9,7 +9,7 @@
 
 
 <style>
-   .leftpic {
+   .leftpic2 {
     float: left; /* Выравнивание по правому краю */
     margin: 0 0 5px 5px; /* Отступы вокруг фотографии */
    }
@@ -24,9 +24,8 @@
 
 
 <style>
-.panel-heading {padding:3px}
-.panel-title {padding: 9px 12px 9px 12px;}
-.btn-round {
+
+.btn-round2 {
   border-radius:50px;
     padding-left: 6px;
     padding-right: 6px;
@@ -42,7 +41,7 @@
 }    
 .card-img {
   width:80px;
-  margin-right:10px;
+  margin-right:20;
 }
 .signal-level {
   font-size: 20px;
@@ -56,7 +55,6 @@
   top: 0px;
 }
 .panel-content {padding: 5px 10px 0px 10px;}
-.col-sm-6, .col-md-4, .col-lg-4 {padding-left:3px; padding-right:3px;}
 </style>
 
 <main role="main" class="h-100">
@@ -102,8 +100,8 @@ if ('ieeeAddr' in v && 'nwkAddr' in v ) {
 //if ('ieeeAddr' in v) {
 //{
 if (v.nwkAddr.length>2) {
-var data='<div class="col-sm-6 col-md-6 col-lg-3" onclick="httpReq(\''+v.ieeeAddr+'\');">';
-data += '<div class="panel-info" >';
+var data='<div class="col-sm-5 col-md-4 col-lg-3" onclick="httpReq(\''+v.ieeeAddr+'\');">';
+data += '<div class="panel panel-info" >';
 
 //	data += '<div class="card text-white bg-primary mb-2" style="max-width: 25rem;">';
     data += '<div class="panel-heading"> ';
@@ -111,7 +109,7 @@ data += '<div class="panel-info" >';
 //    data += '<div class="card-header">';
     data += '<h5> ';
     data += '<div style="float:left;" >';
-    data += v.friendly_name+'&nbsp; ';
+    if (v.friendly_name.length>2) {     data += v.friendly_name+'&nbsp; ';} else  {     data += v.ieeeAddr+'&nbsp; ';}
    data += '</div>';
 
    //if(typeof v.st.state === 'undefined')    {data += '&nbsp;';}     else     {data += '&nbsp;('+v.st.state+')'};
@@ -172,15 +170,16 @@ data += '<div style="float:right;" >';
         data += '<div style="float:left;" >';   
     	data += '<p>'+v.ManufName+'&nbsp;</p> ';
         data += '</div>';
-        //data += '</div>';
+        data += '</div>';
         data += '<br>';
    
     	//data += '<div style="white-space: nowrap;">';
-	    data += '<div style="float:left;" >';
+	    //data += '<div style="float:left;" >';
+        data += '<div align="left;" >';
     	data += '<p>'+v.ModelId+'</p>&nbsp;  ';
      	data += '</div>';     
-     	//data += '</div>';
-//data += '1';
+     	
+
 }}
 if (data.length>2) { sw_list.insertAdjacentHTML('afterbegin', data);}
 
