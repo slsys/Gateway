@@ -20,6 +20,6 @@
 </script>
 ```
 
-Другие примеры:
+## Другие примеры:
 ![](/img/dashboard.jpg)
 [Дашборд](/dashboard/ui.html)
