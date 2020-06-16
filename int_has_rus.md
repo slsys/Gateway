@@ -37,8 +37,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 - platform: mqtt
   name: bathroom_leak
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_leak_1"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_leak_1"
   value_template: >-
     {% if value_json.water_leak == true %}
       {{'ON'}}
@@ -51,8 +51,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   name: bathroom_leak_1_battery
   icon: mdi:battery-high
   unit_of_measurement: "%"
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_leak_1"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
   ````
   {% endraw %}
@@ -63,22 +63,22 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   name: bathroom_temperature
   icon: mdi:thermometer
   unit_of_measurement: "°C"
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_sensor"
   value_template: "{{ value_json.temperature | round(2) }}"
 - platform: mqtt # Влажность
   name: bathroom_humidity
   icon: mdi:water-percent
   unit_of_measurement: "%"
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_sensor"
   value_template: "{{ value_json.humidity | round(2) }}"
 - platform: mqtt # Уровень заряда
   name: bathroom_sensor_battery
   icon: mdi:battery-high
   unit_of_measurement: "%"
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_sensor"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_sensor"
   ````
   {% endraw %}
   
@@ -89,8 +89,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   name: loggia_pressure
   icon: mdi:gauge
   unit_of_measurement: "мм рт.ст."
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/loggia_sensor"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/loggia_sensor"
   value_template: "{{ (value_json.pressure | float * 7.501) | round | int }}"
  ```
  {% endraw %}
@@ -99,8 +99,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 - platform: mqtt
   name: bathroom_button
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bathroom_button"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bathroom_button"
   value_template: >-
     {% if value_json.click == '' %}
       {{'OFF'}}
@@ -120,9 +120,9 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 - platform: mqtt
   name: gateway
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  command_topic: "/ZigBeeCA20/led"
-  rgb_command_topic: "/ZigBeeCA20/led"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  command_topic: "ZigBeeCA20/led"
+  rgb_command_topic: "ZigBeeCA20/led"
   rgb_command_template: >-
     {
       "mode": "manual",
@@ -153,12 +153,12 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 - platform: mqtt
   name: gateway_join
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bridge/config"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bridge/config"
   value_template: "{{ value_json.permit_join }}"
   state_on: true
   state_off: false
-  command_topic: "/ZigBeeCA20/bridge/config/permit_join"
+  command_topic: "ZigBeeCA20/bridge/config/permit_join"
   payload_on: "true"
   payload_off: "false"
 ```  
@@ -170,8 +170,8 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
   name: gateway_uptime
   icon: mdi:timeline-clock
   unit_of_measurement: "%"
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/bridge/config"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/bridge/config"
   value_template: "{{ value_json.UptimeStr }}"
 ```  
 {% endraw %}
@@ -190,20 +190,20 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ### бойлер
 - platform: mqtt
   name: gas_boiler
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/gas_heating"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/gas_heating"
   value_template: "{{ value_json.state_l1 }}"
-  command_topic: "/ZigBeeCA20/gas_heating/set/state_l1"
+  command_topic: "ZigBeeCA20/gas_heating/set/state_l1"
   
 
 ### Насос теплого пола switch
 
 - platform: mqtt
   name: warm_floor
-  availability_topic: "/ZigBeeCA20/bridge/state"
-  state_topic: "/ZigBeeCA20/gas_heating"
+  availability_topic: "ZigBeeCA20/bridge/state"
+  state_topic: "ZigBeeCA20/gas_heating"
   value_template: "{{ value_json.state_l2 }}"
-  command_topic: "/ZigBeeCA20/gas_heating/set/state_l2"
+  command_topic: "ZigBeeCA20/gas_heating/set/state_l2"
  ```
  {% endraw %}
  
@@ -231,21 +231,21 @@ Mosqutto для windows можно скачать [тут](https://mosquitto.org
 ```
 - platform: mqtt
     name: GardenBulbLeft
-    state_topic: "/ZigBeeCA20/GardenBulbLeft"
-    availability_topic: "/ZigBeeCA20/bridge/state"
+    state_topic: "ZigBeeCA20/GardenBulbLeft"
+    availability_topic: "ZigBeeCA20/bridge/state"
     brightness: true
     color_temp: true
     schema: json
-    command_topic: "/ZigBeeCA20/GardenBulbLeft/set"
+    command_topic: "ZigBeeCA20/GardenBulbLeft/set"
 
   - platform: mqtt
     name: GardenBulbRight
-    state_topic: "/ZigBeeCA20/GardenBulbRight"
-    availability_topic: "/ZigBeeCA20/bridge/state"
+    state_topic: "ZigBeeCA20/GardenBulbRight"
+    availability_topic: "ZigBeeCA20/bridge/state"
     brightness: true
     color_temp: true
     schema: json
-    command_topic: "/ZigBeeCA20/GardenBulbRight/set”
+    command_topic: "ZigBeeCA20/GardenBulbRight/set”
 ```
 {% endraw %}
 
