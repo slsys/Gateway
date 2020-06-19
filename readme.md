@@ -96,6 +96,8 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [Supported devices](https://slsys.io/action/devicelists.html)
 
+## [Custom dashboard](/ui_eng.md)
+
 # Integrations
 
 Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated with any local or cloud automation system. The structure of topics almost completely repeats [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). For ease of use, many drivers or integration modules have been developed for many systems.
