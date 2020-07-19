@@ -1,4 +1,4 @@
-[Go to the english version of the site](/README.md)
+[Go to the english version of the site](/readme.md)
 
 # Zigbee шлюз
 
