@@ -21,13 +21,19 @@ Mosqutto for windows can be downloaded [here](https://mosquitto.org/download/)
 
 
 # Discovery
-Discovery mode allows you to automatically add new devices to the system. This functionality is in development.
+Discovery mode automatically adds new devices to the system. Devices in HAS are created when the state is first recorded. If the devices were paired before enabling this setting, it is necessary to re-pair.
 
-*The following examples show the ZigBeeCA20 starting topic - replace it with yours, which you specified in the MQTT settings of the SLS gateway. 
+You can enable Discovery mode from the ZIgbee-> Config menu (checkbox Home Assistant MQTT Discovery)
+
+![int_has_disc](/img/int_has_disc.png)
+
+
+
 
 # Manually adding devices
 SLS Zigbee Gateway devices can be manually added to the Home-Assistant. To do this, add the appropriate settings for the device type to the configuration.yaml configuration file. Below are tested examples of clippings from the configuration file:
 
+*The following examples show the ZigBeeCA20 starting topic - replace it with yours, which you specified in the MQTT settings of the SLS gateway. 
 
 
 ### Leakage Sensor (binary_sensor) SJCGQ11LM
