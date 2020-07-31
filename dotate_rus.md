@@ -6,7 +6,7 @@
 ### Списик устройств для добавления поддержки
 
 1) Термостат Tuya BHT-002-GALZB https://aliexpress.ru/item/4001290635305.html ссылка для доната (термостат + шлюз) https://www.tinkoff.ru/sl/8P611xPyTjZ
-![Термостат Tuya BHT-002-GALZB](https://api.tinkoff.ru/v1/cm/download?moduleId=crowdfund&id=4143bd29-518b-4c10-96de-41c9685b5cb9.jpg)
+![Термостат Tuya BHT-002-GALZB](https://ae01.alicdn.com/kf/H94fc497408204fb18c16681e47f84e88X.jpg?width=1001&height=1001&hash=2002)
 
 
 2) Смарт замок Lock Tuya European M500 https://aliexpress.ru/item/4001136671110.html ссылка для доната  https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET
