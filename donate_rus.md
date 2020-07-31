@@ -11,7 +11,7 @@
 
 1) [Термостат Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html)  (сбор)
 
-ссылка на  донат (термостат + шлюз) https://www.tinkoff.ru/sl/8P611xPyTjZ
+ссылка на  донат https://www.tinkoff.ru/sl/8P611xPyTjZ
 
 ![](https://ae01.alicdn.com/kf/H94fc497408204fb18c16681e47f84e88X.jpg?width=1001&height=1001&hash=2002)
 
