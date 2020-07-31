@@ -27,7 +27,7 @@ To add support for the SLS Zigbee gateway for new devices, the integration of wh
 
 
 
-3) [Smart lock Lock Tuya European M500](https://aliexpress.ru/item/4001136671110.html) ***[link to donate](https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920 /?short_link=5pQkgc7UzuP&httpMethod=GET)*** (collection)
+3) [Smart lock Lock Tuya European M500](https://aliexpress.ru/item/4001136671110.html) ***[link to donate](https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET)*** (collection)
 
 ![](https://ae01.alicdn.com/kf/Hc67430a13eab499b89959e67b2973a3fS.jpg?width=920&height=460&hash=1380)
 
