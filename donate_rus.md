@@ -24,7 +24,7 @@
 
 
 
-3) Смарт замок Lock Tuya European M500 https://aliexpress.ru/item/4001136671110.html        ***[ссылка на  донат](https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET)*** (сбор)
+3) [Смарт замок Lock Tuya European M500](https://aliexpress.ru/item/4001136671110.html)        ***[ссылка на  донат](https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET)*** (сбор)
 
 ![](https://ae01.alicdn.com/kf/Hc67430a13eab499b89959e67b2973a3fS.jpg?width=920&height=460&hash=1380)
 
