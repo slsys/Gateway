@@ -9,7 +9,7 @@
 
 ### Список устройств для добавления поддержки
 
-1) [Термостат Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html)  [ссылка на  донат](https://www.tinkoff.ru/sl/8P611xPyTjZ) (сбор)
+1) [Термостат Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html)  ***[ссылка на  донат](https://www.tinkoff.ru/sl/8P611xPyTjZ)*** (сбор)
 
 
 
