@@ -94,6 +94,8 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [Supported devices](https://slsys.io/action/devicelists.html)
 
+## [Fundraising to buy equipment to add support](https://slsys.io/action/donate_eng.html)
+
 ## [Custom dashboard](/ui_eng.md)
 
 # Integrations
