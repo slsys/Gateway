@@ -22,11 +22,11 @@
 ссылка на  донат  https://www.tinkoff.ru/sl/22NQXhUqwTD
 ![](https://ae01.alicdn.com/kf/Hb6982e9da9b7461080b14ac3d406b0dd4.jpg)
 
-ссылка для доната (термостат + шлюз) https://www.tinkoff.ru/sl/8P611xPyTjZ
+
 
 3) Смарт замок Lock Tuya European M500 https://aliexpress.ru/item/4001136671110.html  (сбор)
 
-ссылка для доната  https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET
+ссылка на  донат  https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET
 
 ![](https://ae01.alicdn.com/kf/Hc67430a13eab499b89959e67b2973a3fS.jpg?width=920&height=460&hash=1380)
 
