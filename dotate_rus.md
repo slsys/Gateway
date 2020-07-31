@@ -19,7 +19,7 @@
 
 2)  [Термостат TUYA Zigbee TRV](https://aliexpress.ru/item/4001043738901.html)  (сбор)
 
-ссылка на  донат  https://www.tinkoff.ru/sl/8P611xPyTjZ
+ссылка на  донат  https://www.tinkoff.ru/sl/22NQXhUqwTD
 ![](https://ae01.alicdn.com/kf/Hb6982e9da9b7461080b14ac3d406b0dd4.jpg)
 
 ссылка для доната (термостат + шлюз) https://www.tinkoff.ru/sl/8P611xPyTjZ
