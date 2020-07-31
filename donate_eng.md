@@ -12,7 +12,7 @@ To add support for the SLS Zigbee gateway for new devices, the integration of wh
 
 ### List of devices to add support
 
-1) [Thermostat Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html) ***[link to donate](https://www.tinkoff.ru/sl/8P611xPyTjZ)*** (collection)
+1) [Thermostat Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html) ******[link to donate](https://www.tinkoff.ru/sl/8P611xPyTjZ)****** (collection)
 
 
 
