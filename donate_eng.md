@@ -10,6 +10,8 @@ It is currently possible to buy a DIY version of the gateway assembled by enthus
 ## Raising funds to purchase devices
 To add support for the SLS Zigbee gateway for new devices, the integration of which is difficult without the presence of the device itself, it was decided to start targeted fundraising using a banking service from Tinkoff. You can add a device to this list through Issues, or by posting through other sources.
 
+***Disclaimer:*** By making a targeted donation, you support the authors of the project, this does not mean that the device will necessarily be added to the supported devices. The authors do not guarantee that after learning the methods and protocols of individual devices, it can be supported by the existing infrastructure.
+
 ### List of devices to add support
 
 1) [Thermostat Tuya BHT-002-GALZB](https://aliexpress.ru/item/4001290635305.html) ******[link to donate](https://www.tinkoff.ru/sl/8P611xPyTjZ)****** (collection)
