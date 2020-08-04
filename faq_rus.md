@@ -298,3 +298,9 @@ Zigbee DeviceState: 9 [ OK ]
 
 
 
+## Вопрос: Существует ли формула пересчета напряжения в проценты?
+Ответ:  В zigbee2mqtt используется следующая формула для пересчета:
+![](/img/percentage1.jpg)
+![](/img/percentage2.jpg)
+![](/img/percentage3.jpg)
+
