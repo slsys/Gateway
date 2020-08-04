@@ -304,8 +304,10 @@ Zigbee DeviceState: 9 [ OK ]
 ![](/img/percentage1.jpg)
 
 Из даташита барареек Panasonic:
+
 ![](/img/percentage2.jpg)
 
 Сергей Коптяков сгенерил график:
+
 ![](/img/percentage3.jpg)
 
