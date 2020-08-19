@@ -170,6 +170,9 @@ os.time() возвращает Unix время.
 ### os.restart()
 Перезагружает ОС
 
+### os.ping(host[, count])
+Отправляет ICMP PING запросы, возвращает среднее время или -1 при недоступности.
+
 
 ###  obj.get() / obj.set()
 obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранения и получения объекта для обмена данными между скриптами
@@ -193,6 +196,19 @@ obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранени
 zigbee.join(255, "0x0000")
 ```
 
+### Ежеминутный таймер
+Просто создайте скрипт с именем OneMinTimer.lua, он будет запускаться каждую минуту.
+
+Пример отправки данных каждую минуту на https://narodmon.ru
+```
+function SendNarodmon(name, value)
+  local MAC = "BC:DD:C2:D7:68:BC"
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
+SendNarodmon("illuminance", value)
+```
 
 ## Полезные ссылки 
 1) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
