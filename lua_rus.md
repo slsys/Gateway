@@ -196,6 +196,12 @@ obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранени
 zigbee.join(255, "0x0000")
 ```
 
+### Управление GPIO
+gpio.mode(pin, mode)
+gpio.read(pin) - чтение цифрового 
+gpio.read(PIN, true) - чтение ADC
+gpio.write(pin, level)
+
 ### Ежеминутный таймер
 Просто создайте скрипт с именем OneMinTimer.lua, он будет запускаться каждую минуту.
 
