@@ -1,3 +1,5 @@
+[Перейти на русскую версию сайта](/ui_rus.md)
+
 # Create your own visualization
 
 In SLS gateway you can create your own visualizations. To do this, through the menu Actions-> Script, you need to create the ui.html file. It will be available when accessing / ui. To control devices, you can use the built-in [http_api](/http_api_eng.md).
