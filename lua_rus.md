@@ -206,6 +206,19 @@ gpio.read(PIN, true) - чтение ADC
 
 gpio.write(pin, level)
 
+### Управление звуком
+audio.playurl(url)
+
+audio.geturl()
+
+audio.stop()
+
+audio.setvolume(volume_procent)
+
+audio.getvolume()
+
+audio.getstatus()
+
 
 ### Ежеминутный таймер
 Просто создайте скрипт с именем OneMinTimer.lua, он будет запускаться каждую минуту.
