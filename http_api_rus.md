@@ -45,6 +45,21 @@ action=getLevel
 
 ```
 
+#### Audio
+
+/audio?action=playurl&url=xxx
+
+/audio?action=geturl
+
+/audio?action=stop
+
+/audio?action=setvolume&value=xxx
+
+/audio?action=getvolume
+
+/audio?action=setstatus
+
+
 #### Touchlink
 
 ```/api/zigbee/touchlink``` - список устройств рядом
