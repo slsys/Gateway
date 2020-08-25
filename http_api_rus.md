@@ -57,7 +57,7 @@ action=getLevel
 
 /audio?action=getvolume
 
-/audio?action=setstatus
+/audio?action=getstatus
 
 
 #### Touchlink
