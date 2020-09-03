@@ -241,9 +241,9 @@ SendNarodmon("illuminance", value)
 function SendTelegram(text)
   local token = "517781105:AAG0..."
   local chat_id = "388...."
-  http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))
-  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
-end  
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))
+  end  
 
 local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
 SendTelegram("illuminance", value)
