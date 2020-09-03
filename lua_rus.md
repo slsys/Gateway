@@ -234,6 +234,22 @@ local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
 SendNarodmon("illuminance", value)
 ```
 
+# Готовые примеры скриптов
+
+## Отправка сообщения в телеграм с помощью вашего бота
+```
+function SendTelegram(text)
+  local token = "517781105:AAG0..."
+  local chat_id = "388...."
+  http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
+SendTelegram("illuminance", value)
+
+```
+
 ## Полезные ссылки 
 1) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
 
