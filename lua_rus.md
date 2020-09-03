@@ -261,8 +261,8 @@ local hex_to_char = function(x)
 end
 
 function SendTelegram(text)
-  local token = "517781105:AAG0bvKJOVaUCzU6vmYferYVtM5qZMEQr2w"
-  local chat_id = "388067888"
+  local token = "5177...:AAG0b...."  --
+  local chat_id = "38806....."
   --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
   http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
  end  
