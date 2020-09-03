@@ -234,9 +234,8 @@ local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
 SendNarodmon("illuminance", value)
 ```
 
-# Готовые примеры скриптов
 
-## Отправка сообщения в телеграм с помощью вашего бота
+### Отправка сообщения в телеграм с помощью вашего бота
 ```
 local char_to_hex = function(c)
   return string.format("%%%02X", string.byte(c))
