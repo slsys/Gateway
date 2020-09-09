@@ -311,6 +311,45 @@ local state =  zigbee.value(tostring(Event.ieeeAddr), "contact")
 if (state) then SendTelegram("Дверь открыта") 
 else   SendTelegram("Дверь закрыта")  end 
 ```
+###
+Оповещение в телеграм при сработке датчика движения
+```
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function round(exact, quantum)
+    local quant,frac = math.modf(exact/quantum)
+    return quantum * (quant + (frac > 0.5 and 1 or 0))
+end
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+  local token = "517781...:AAG0bv...."
+  local chat_id = "3880......"
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+  end  
+
+
+local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
+if (state) then SendTelegram("Датчик движения ".. Event.ieeeAddr  .." обнаружил активность") 
+ else  SendTelegram("Значение датчика ".. Event.FriendlyName .." движения нормализовалось") 
+  
+end 
+```
 
 
 ## Полезные ссылки 
