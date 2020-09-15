@@ -395,8 +395,7 @@ local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
 SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
   
 ```
-
-### Упрощенная отправка сообщений в телеграм (начиная с версии 20200915 
+### Упрощенная отправка сообщений в телеграм (начиная с версии 20200915)
 ```
 telegram.settoken("5961....:AAHJP4...")
 telegram.setchat("5748.....")
