@@ -396,6 +396,13 @@ SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° 
   
 ```
 
+### Упрощенная отправка сообщений в телеграм (начиная с версии 20200915 
+```
+telegram.settoken("5961....:AAHJP4...")
+telegram.setchat("5748.....")
+telegram.send("Температура: " .. string.format("%.2f", zigbee.value(tostring(Event.ieeeAddr), "temperature")) .. "°C, Влажность: " .. string.format("%.2f",zigbee.value(tostring(Event.ieeeAddr), "humidity")) .. "%")
+```
+
 
 
 
