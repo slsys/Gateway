@@ -351,6 +351,54 @@ if (state) then SendTelegram("Датчик движения ".. Event.ieeeAddr  
 end 
 ```
 
+###  Оповещение об изменении значения датчика температуры/влажности
+```
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+
+
+function round2(num, numDecimalPlaces)
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+    local token = "5177....:AAG0......"
+  local chat_id = "388067888"
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+  end  
+
+
+
+
+
+
+local temp =  round2(zigbee.value(tostring(Event.ieeeAddr), "temperature"),1)
+local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
+SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
+  
+```
+
+
+
+
 
 ## Полезные ссылки 
 1) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
