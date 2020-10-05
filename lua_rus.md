@@ -380,7 +380,7 @@ end
 
 function SendTelegram(text)
     local token = "5177....:AAG0......"
-  local chat_id = "388067888"
+  local chat_id = "3880..."
   --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
   http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
   end  
