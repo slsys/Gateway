@@ -37,6 +37,6 @@
 
 
 ## Пример dashboard от Nick7zmail [Nick7zmail](https://www.w3schools.com/bootstrap/bootstrap_panels.asp):
-![](/img/dash_n7z_3.jpg | width=30%) ![](/img/dash_n7z_2.jpg | width=60%)
+![](/img/dash_n7z_3.jpg | width=200) ![](/img/dash_n7z_2.jpg | width=400)
 ![](/img/dash_n7z_1.jpg)
 [скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/nick7zmail/ui.html)
