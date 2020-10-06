@@ -390,7 +390,6 @@ local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
 SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
 ------------  отправка значения на narodmon
 function SendNarodmon(name, value)
-  --local MAC = "BC:DD:C2:D7:68:BC"
   local MAC =tostring(Event.ieeeAddr)
   http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
 end  
