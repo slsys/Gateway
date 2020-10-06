@@ -385,16 +385,21 @@ function SendTelegram(text)
   http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
   end  
 
-
-
-
-
-
 local temp =  round2(zigbee.value(tostring(Event.ieeeAddr), "temperature"),1)
 local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
 SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
-  
+------------  отправка значения на narodmon
+function SendNarodmon(name, value)
+  --local MAC = "BC:DD:C2:D7:68:BC"
+  local MAC =tostring(Event.ieeeAddr)
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+SendNarodmon("temperature", temp)
+SendNarodmon("humidity", hum)
 ```
+
+
 ### Упрощенная отправка сообщений в телеграм (начиная с версии 20200915)
 ```
 telegram.settoken("5961....:AAHJP4...")
