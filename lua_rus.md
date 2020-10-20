@@ -453,6 +453,12 @@ else
 print("Объект не на охране.")
 ```
 
+### Включение звука дверного звонка по событию
+'''
+http.request("http://127.0.0.1/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
+'''
+
+
 
 
 
