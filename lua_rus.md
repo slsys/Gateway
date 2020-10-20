@@ -438,6 +438,23 @@ if hour >= 22 or hour <6 then
 end
 ```
 
+### Создание режима охраны
+
+Постановка 
+```
+obj.set("security_status", "armed")
+```
+
+Проверка
+```
+if obj.get("security_status")=="armed" then 
+print("Объект на охране.")
+else 
+print("Объект не на охране.")
+```
+
+
+
 
 
 ## Полезные ссылки 
