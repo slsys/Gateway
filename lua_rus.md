@@ -406,7 +406,37 @@ telegram.setchat("5748.....")
 telegram.send("Температура: " .. string.format("%.2f", zigbee.value(tostring(Event.ieeeAddr), "temperature")) .. "°C, Влажность: " .. string.format("%.2f",zigbee.value(tostring(Event.ieeeAddr), "humidity")) .. "%")
 ```
 
-
+### Подсветка шлюза по датчику движению только в ночное время с 22 до 6
+Вариант через GPIO
+```
+ local gmt = 3  
+  local time = os.time()  
+  local hour = (math.modf(time / 3600) + gmt) % 24  
+  if hour >= 22 or hour < 6 then  
+         if Event.State.Value == "true" then  
+                gpio.pwm(0, 255)  
+                gpio.pwm(1, 255)  
+                gpio.pwm(2, 255)  
+         else  
+                gpio.pwm(0, 0)  
+                gpio.pwm(1, 0)  
+                gpio.pwm(2, 0)  
+         end  
+  end
+ ```
+ Вариант через MQTT:
+ ```
+ local gmt = 3
+local time = os.time()
+local hour = (math.modf(time / 3600) + gmt) % 24
+if hour >= 22 or hour <6 then
+  if Event.State.Value == "true" then
+        mqtt.pub('ZigBeeSls/led', '{"mode":"manual","hex":"#FF0000"}')
+  else
+        mqtt.pub('ZigBeeSls/led', '{"mode": "off"}')
+  end  
+end
+```
 
 
 
