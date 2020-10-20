@@ -456,6 +456,7 @@ print("Объект не на охране.")
 ### Включение звука дверного звонка по событию (звуковой файл лежит в открытой сети)
 
 ```
+http.request("http://127.0.0.1/audio?action=setvolume&value=100")
 http.request("http://127.0.0.1/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
