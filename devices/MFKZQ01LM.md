@@ -1,10 +1,12 @@
 # Xiaomi MFKZQ01LM
 
-| Model | MFKZQ01LM  |
-| Vendor  | Xiaomi  |
-| Description | Mi/Aqara smart home cube |
-| Supports | shake, wakeup, fall, tap, slide, flip180, flip90, rotate_left and rotate_right |
-| Picture | ![Xiaomi MFKZQ01LM](png2/MFKZQ01LM.png) |
+| Model: | MFKZQ01LM  |
+|-|-|
+| Vendor:  | Xiaomi  |
+| Description: | Mi/Aqara smart home cube |
+| Supports: | shake, wakeup, fall, tap, slide, flip180, flip90, rotate_left and rotate_right |
+| Picture: | ![Xiaomi MFKZQ01LM](png2/MFKZQ01LM.png) |
+---
 
 * Zigbee2MQTT (https://www.zigbee2mqtt.io/devices/MFKZQ01LM.html)
 
