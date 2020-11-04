@@ -455,9 +455,11 @@ print("Объект не на охране.")
 
 ### Включение звука дверного звонка по событию (звуковой файл лежит в открытой сети)
 
+192.168.1.5 - адрес другого шлюза. Нельзя запускать на самом себе таким образом, используйте объект audio.
+
 ```
-http.request("http://127.0.0.1/audio?action=setvolume&value=100")
-http.request("http://127.0.0.1/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
+http.request("http://192.168.1.5/audio?action=setvolume&value=100")
+http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
 
