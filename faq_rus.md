@@ -311,3 +311,4 @@ Zigbee DeviceState: 9 [ OK ]
 
 ![](/img/percentage3.jpg)
 
+:)
