@@ -55,7 +55,7 @@
 # Прошивка устройства
 [Постоянная ссылка на прошивку устроуства](https://github.com/slsys/Gateway/tree/master/rom)
 
-[История изменений прошивки](/rom/history_ru.md)
+[История изменений прошивки](/rom/history_ru.txt)
 
 [Подробная инструкция по перепрошивке](flashing_rus.md)
 
