@@ -1,4 +1,17 @@
 -----------------------------------------------------------------------------
+2020.11.15d10.bin
+-----------------------------------------------------------------------------
++Checking latest firmware
++BYUN Smoke sensor
++BYUN Gas sensor
++Feibit Gas sensor (SGA01ZB) 
++Станция полива
++Sonoff ZbMini
++freepad LeTV
+*Fixed Aqara D1 3 gang smart wall switch (no neutral wire) (QBKG25LM)    
+*Fixed Sonoff Motion models (SNZB-03)
+
+-----------------------------------------------------------------------------
 2020.10.30d1.bin 
 -----------------------------------------------------------------------------
 +Add UDP logging (call os.udplogenable(true) for enable), use: nc -uln 45678
