@@ -47,17 +47,17 @@ action=getLevel
 
 #### Audio
 
-/audio?action=playurl&url=xxx
+/api/audio?action=playurl&url=xxx
 
-/audio?action=geturl
+/api/audio?action=geturl
 
-/audio?action=stop
+/api/audio?action=stop
 
-/audio?action=setvolume&value=xxx
+/api/audio?action=setvolume&value=xxx
 
-/audio?action=getvolume
+/api/audio?action=getvolume
 
-/audio?action=getstatus
+/api/audio?action=getstatus
 
 
 #### Touchlink
