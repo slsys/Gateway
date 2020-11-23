@@ -47,7 +47,7 @@ action=getLevel
 
 #### Audio
 
-/api/audio?action=playurl&url=xxx
+/api/audio?action=play&url=xxx
 
 /api/audio?action=geturl
 
