@@ -61,7 +61,6 @@ action=getLevel
 
 
 #### Touchlink
-
 ```/api/zigbee/touchlink``` - список устройств рядом
 
 ```/api/zigbee/touchlink?action=scan``` - запуск сканирования
@@ -72,6 +71,7 @@ action=getLevel
 
 #### Scripts
 ```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua
+
 ```/api/scripts?action=evalCode&plain=print("ok!")``` - запуск текста Lua скрипта
 
 #### Files
@@ -82,6 +82,9 @@ action=getLevel
 
 
 ```GET http://172.16.1.16/api/files?path=/test.lua``` - получить содержимое файла
+
 ```POST http://172.16.1.16/api/files?path=/test.lua&plain=XXX``` - записать в файл
+
 ```DELETE http://172.16.1.16/api/files?path=/test.lua``` - удалить файл
+
 ```/api/files/rename?old=/file1.lua&new=/file2.lua``` - переименовать файл
