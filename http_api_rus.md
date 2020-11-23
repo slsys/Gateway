@@ -71,11 +71,15 @@ action=getLevel
 ```/api/zigbee/touchlink?action=reset&dev=0x00158D00011D8CB1``` - Сброс устройства 0x00158D00011D8CB1
 
 #### Scripts
-```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua через http.
 
-Также вовзможны варианты: 
-```
-GET http://172.16.1.16/api/files?path=/test.lua
-POST http://172.16.1.16/api/files?path=/test.lua
-DELETE http://172.16.1.16/api/files?path=/test.lua
-```
+Префиксы к пути:
+
+```/sd``` - для хранилища на SD карте
+```/int или /``` - для внутреннего хранилища
+
+
+```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua через http.
+```GET http://172.16.1.16/api/files?path=/test.lua``` - получить содержимое файла
+```POST http://172.16.1.16/api/files?path=/test.lua&plain=XXX``` - записать в файл
+```DELETE http://172.16.1.16/api/files?path=/test.lua``` - удалить файл
+```/api/files/rename?old=/file1.lua&new=/file2.lua``` - переименовать файл
