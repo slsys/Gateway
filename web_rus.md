@@ -4,7 +4,7 @@ Web интерфейс необходим для первоначальной к
 ## Home
 На странице `Home` показаны основные статусы контроллера
 
-![home](/img/slshome.png)
+![Main menu - Home](/img/slshome.png)
 
 ## Zigbee
 Доступные пункты меню
@@ -20,7 +20,7 @@ Web интерфейс необходим для первоначальной к
 ### Devices
 Страница со списком сопряженных устройств (`Zigbee -> Devices`)
 
-![zigbee](/img/slszigbee.png)
+![Main menu - Zigbee](/img/slszigbee.png)
 
 `nwkAddr` – Адрес устройства в сети. Координатор всегда имеет адрес 0x0000. 
 
@@ -47,7 +47,7 @@ Web интерфейс необходим для первоначальной к
 ### Join
 Запуск режима спаривания устройств в течение 255 секунд.
 
-![zigbee](/img/zigbee-join.png)
+![Main menu - Join](/img/zigbee-join.png)
 
 ### Map
 
@@ -58,7 +58,7 @@ Web интерфейс необходим для первоначальной к
 
 Меню `Zigbee -> Config`
 
-![zigbee](/img/zigbee-config.png)
+![Main menu - Config](/img/zigbee-config.png)
 
 1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - 11)
 1. `PanId` - 
@@ -67,32 +67,38 @@ Web интерфейс необходим для первоначальной к
 ### Reset to Default
 Сброс к "заводским настройкам"
 
-![zigbee](/img/zigbee-reset.png)
+![Main menu - Reset to Default](/img/zigbee-reset.png)
 
 ## Log
 На странице log можно посмотреть последние сообщения системы.
 
-![zigbee](/img/slslog2.png)
+![Main menu - Log](/img/slslog2.png)
 
 ## Settings
+![Main menu - Settings](/img/main_menu-settings.png)
+
 ### Wifi
 На данной странице можно параметры сети Wi-Fi:
 
-![zigbee](/img/slswifi.png)
+![Main menu - Settings - WiFi](/img/slswifi.png)
 
 ### Time
 На данной странице можно настроить часовой пояс и сервер синхронизации времени.
 
-![zigbee](/img/slstime.png)
+![Main menu - Settings - Time](/img/slstime.png)
 
 ### Link
 Настройки сервера MQTT,NativeApi и  RestApi.
 
-![zigbee](/img/slssetuplink.png)
+![Main menu - Settings - Link](/img/slssetuplink.png)
 
-![zigbee](/img/slssetupmqtt.png)
+Настройка подключения к MQTT брокеру
 
-![zigbee](/img/slssetupnapive.png)
+![Main menu - Settings - MQTT Setup](/img/slssetupmqtt.png)
+
+Настройка подключения к серверу Native API
+
+![Main menu - Settings - Native API Setup](/img/slssetupnapive.png)
 
 ### Serial
 
@@ -109,11 +115,14 @@ Web интерфейс необходим для первоначальной к
 
 5) Синий светодиод.
 
-![zigbee](/img/slssetuphw.png)
+![Main menu - Settings - Hardware](/img/slssetuphw.png)
 
 ### Help
+![Main menu - Help](/img/main_menu-help.png)
 
 ## Actions
+![Main menu - Actions](/img/main_menu-actions.png)
+
 ### Files
 
 ### Backup 
