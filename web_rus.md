@@ -3,10 +3,12 @@ Web интерфейс необходим для первоначальной к
 
 ## Home
 На странице `Home` показаны основные статусы контроллера
+
 ![home](/img/slshome.png)
 
 ## Zigbee
 Доступные пункты меню
+
 ![zigbee](/img/main_menu-zigbee.png)
 1. `Devices` - [Страница со списком сопряженных устройств.](#Devices)
 1. `Join` - [Запуск режима спаривания устройств в течение 255 секунд.](#Join)
@@ -17,6 +19,7 @@ Web интерфейс необходим для первоначальной к
 
 ### Devices
 Страница со списком сопряженных устройств (`Zigbee -> Devices`)
+
 ![zigbee](/img/slszigbee.png)
 
 `nwkAddr` – Адрес устройства в сети. Координатор всегда имеет адрес 0x0000. 
@@ -49,7 +52,9 @@ Web интерфейс необходим для первоначальной к
 
 ### Config
 Страница настроек zigbee
+
 Меню `Zigbee -> Config`
+
 ![zigbee](/img/zigbee-config.png)
 
 1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - 11)
@@ -60,20 +65,26 @@ Web интерфейс необходим для первоначальной к
 
 # Log
 На странице log можно посмотреть последние сообщения системы.
+
 ![zigbee](/img/slslog2.png)
 
 # Settings -> Wifi
 На данной странице можно параметры сети Wi-Fi:
+
 ![zigbee](/img/slswifi.png)
 
 # Settings -> Time Setup
 На данной странице можно настроить часовой пояс и сервер синхронизации времени.
+
 ![zigbee](/img/slstime.png)
 
 # Settings -> Link Setup
 Настройки сервера MQTT,NativeApi и  RestApi.
+
 ![zigbee](/img/slssetuplink.png)
+
 ![zigbee](/img/slssetupmqtt.png)
+
 ![zigbee](/img/slssetupnapive.png)
 
 # Settings -> HW Setup
@@ -93,10 +104,12 @@ Web интерфейс необходим для первоначальной к
 
 # Action  -> Update
 Обновление прошивки шлюза по ОТА.
+
 ![update](/img/slsupdate.png)
 
 # Action  -> Reset
 Reset – сброс настроек к первоначальному состоянию.
+
 ![update](/img/slsaction.png)
 
 # Action  -> Reboot
