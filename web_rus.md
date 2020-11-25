@@ -69,22 +69,23 @@ Web интерфейс необходим для первоначальной к
 
 ![zigbee](/img/zigbee-reset.png)
 
-# Log
+## Log
 На странице log можно посмотреть последние сообщения системы.
 
 ![zigbee](/img/slslog2.png)
 
-# Settings -> Wifi
+## Settings
+### Wifi
 На данной странице можно параметры сети Wi-Fi:
 
 ![zigbee](/img/slswifi.png)
 
-# Settings -> Time Setup
+### Time
 На данной странице можно настроить часовой пояс и сервер синхронизации времени.
 
 ![zigbee](/img/slstime.png)
 
-# Settings -> Link Setup
+### Link
 Настройки сервера MQTT,NativeApi и  RestApi.
 
 ![zigbee](/img/slssetuplink.png)
@@ -93,7 +94,9 @@ Web интерфейс необходим для первоначальной к
 
 ![zigbee](/img/slssetupnapive.png)
 
-# Settings -> HW Setup
+### Serial
+
+### Hardware
 Настройки аппаратной части шлюза.
 
 1) В данном меню можно выбрать тип модуля Zigbee TI или NXP, а также указать номера GPIO модуля ESP32 (RX, TX)
@@ -108,16 +111,20 @@ Web интерфейс необходим для первоначальной к
 
 ![zigbee](/img/slssetuphw.png)
 
-# Action  -> Update
+### Help
+
+## Actions
+### Files
+
+### Backup 
+
+### Update Firmware
 Обновление прошивки шлюза по ОТА.
 
 ![update](/img/slsupdate.png)
 
-# Action  -> Reset
-Reset – сброс настроек к первоначальному состоянию.
+### Save
 
-![update](/img/slsaction.png)
-
-# Action  -> Reboot
+### Reboot System
 Reboot – перезагрузка шлюза.
 
