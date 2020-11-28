@@ -7,7 +7,7 @@ Instruction:
 1. Re-solder 2 ESP/MOD jumpers (between SW1 and U7 chip) to MOD position.
 2. Disconnect the ESP power. The easiest way is to cut the power line as shown here.
 ![home](/img/disable_esp.jpg)
-3. Connect USB while pressing the RESET button (BOOT_Z on some boards). If there is no such button, you need to connect PA7 pin of CC2538 to ground by wiring. Important - the shield of the USB connector is not ground, look for the ground elsewhere!
+3. Connect USB while pressing the B_NXP button (BOOT_Z on some boards). If there is no such button, you need to connect PA7 pin of CC2538 to ground by wiring. Important - the shield of the USB connector is not ground, look for the ground elsewhere!
 4. Test to read the existing firmware. Download [cc2538-bsl.py](https://github.com/JelmerT/cc2538-bsl), and run the following command in Windows 
 	```
 	python cc2538-bsl.py -p "\\.\COM2" -r old_firmware.bin
