@@ -58,8 +58,8 @@ Web интерфейс необходим для первоначальной к
 
 ![Main menu - Config](/img/zigbee-config.png)
 
-1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - 11)
-1. `PanId` - 
+1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - `11`)
+1. `PanId` - Настройка идентификатора сети Zegbee (Personal area network ID - PAN ID)
 1. `MQTT messages options` - Возможность выбора формата передаваемых данных MQTT.
 
 ### Reset to Default
