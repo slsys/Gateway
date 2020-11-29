@@ -88,3 +88,6 @@ action=getLevel
 ```DELETE http://172.16.1.16/api/files?path=/test.lua``` - удалить файл
 
 ```/api/files/rename?old=/file1.lua&new=/file2.lua``` - переименовать файл
+
+#### Leds
+```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
