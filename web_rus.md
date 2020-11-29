@@ -80,6 +80,7 @@ Web интерфейс необходим для первоначальной к
 1. `Time` - [Настройка часов шлюза.](#Time)
 1. `Link` - [Настройка подключения к внешним сервисам.](#Link)
 1. `Serial` - 
+1. `Services` - 
 1. `Hardware` - [Настройка аппаратной части шлюза.](#Hardware)
 
 ### Wifi
@@ -106,6 +107,8 @@ Web интерфейс необходим для первоначальной к
 ![Main menu - Settings - Native API Setup](/img/slssetupnapive.png)
 
 ### Serial
+
+### Services
 
 ### Hardware
 Настройки аппаратной части шлюза.
