@@ -2,115 +2,145 @@
 Web интерфейс необходим для первоначальной конфигурации шлюза, просмотра лога, добавления новых устройств и др.
 
 ## Home
-На странице  Home показаны основные статусы контроллера
-![home](/img/slshome.png)
+На странице `Home` показаны основные статусы контроллера
 
+![Main menu - Home](/img/slshome.png)
 
 ## Zigbee
+Доступные пункты меню
 
-Страница со списком сопряженных устройств.
+![zigbee](/img/main_menu-zigbee.png)
+1. `Devices` - [Страница со списком сопряженных устройств.](#Devices)
+1. `Join` - [Запуск режима спаривания устройств в течение 255 секунд.](#Join)
+1. `Map` - [Карта Zigbee сети.](#Map)
+1. `Groups` - [Cоздание, редактирование, удаление групп.](#Groups)
+1. `Config` - [Настройка Zigbee модуля.](#Config)
+1. `Reset to Default` - [Сброс настроек в состояние "По умолчанию".](#Reset-to-Default)
 
-nwkAddr – Адрес устройства в сети. Координатор всегда имеет адрес 0x0000. 
+### Devices
+Страница со списком сопряженных устройств (`Zigbee -> Devices`)
 
-FriendlyName - Дружественное имя устройства в сети. 
+![Main menu - Zigbee](/img/slszigbee.png)
 
-ieeeAddr – Физический адрес устройства в сети. ManufName – Наименование производителя. 
+`nwkAddr` – Адрес устройства в сети. Координатор всегда имеет адрес 0x0000. 
 
-ModelId – Условное обозначение модели устройства. 
+`FriendlyName` - Дружественное имя устройства в сети. 
 
-LinkQuality – Оценки качества связи. 
+`ieeeAddr` – Физический адрес устройства в сети. 
 
-Interview – Процесс получения исходных данных от устройства при первой привязке устройства к шлюзу. 
+`ManufName` – Наименование производителя. 
 
-LastSeen – Время, которое прошло с момента последнего сообщения от устройства. 
+`ModelId` – Условное обозначение модели устройства. 
 
-Routes – Адрес устройства, являющегося маршрутизатором. PS – Заряд батареи в %, при условии, что устройство питается от батареи. Если устройство питается от сети, то отображается значок «≈» Actions: управление устройствами. Удалить устройство, задать имя
+`Link` – Оценка качества связи. 
 
-Back – вернуться на предыдущую страницу. Refresh – Обновить текущую страницу. Groups – создание, редактирование, удаление групп. (На стадии разработки)
+`Interview` – Процесс получения исходных данных от устройства при первой привязке устройства к шлюзу. 
 
-Setup – настройка номера канала и PanId. Возможность выбора формата передаваемых данных MQTT.
+`LastSeen` – Время, которое прошло с момента последнего сообщения от устройства. 
 
-Start Join – запуск режима спаривания устройств в течение 255 секунд.
+`Routes` – Адрес устройства, являющегося маршрутизатором. 
 
+`PS` – Заряд батареи в %, при условии, что устройство питается от батареи. Если устройство питается от сети, то отображается значок ![PowerSource - Plug](/img/power_source-plug.png) 
 
-![zigbee](/img/slszigbee.png)
+`Actions` - управление устройствами. Удалить устройство, задать имя
 
-Страница настроек zigbee
-![zigbee](/img/slszigeesetup.png)
+### Join
+Запуск режима спаривания устройств в течение 255 секунд. (`Zigbee -> Join`)
 
+![Main menu - Join](/img/zigbee-join.png)
 
+### Map
 
+### Groups
 
+### Config
+Страница настроек zigbee (`Zigbee -> Config`)
 
-# Log
+![Main menu - Config](/img/zigbee-config.png)
 
+1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - 11)
+1. `PanId` - 
+1. `MQTT messages options` - Возможность выбора формата передаваемых данных MQTT.
+
+### Reset to Default
+Сброс к "заводским настройкам"
+
+![Main menu - Reset to Default](/img/zigbee-reset.png)
+
+## Log
 На странице log можно посмотреть последние сообщения системы.
 
-![zigbee](/img/slslog2.png)
+![Main menu - Log](/img/slslog2.png)
 
-# Settings -> Wifi Setup
+## Settings
+Доступные пункты меню
 
-На данной странице можно параметры сети Wi-Fi:
+![Main menu - Settings](/img/main_menu-settings.png)
+1. `WiFi` - [Настройка параметров сети WiFi.](#WiFi)
+1. `Time` - [Настройка часов шлюза.](#Time)
+1. `Link` - [Настройка подключения к внешним сервисам.](#Link)
+1. `Serial` - 
+1. `Hardware` - [Настройка аппаратной части шлюза.](#Hardware)
 
-![zigbee](/img/slswifi.png)
+### Wifi
+На данной странице можно параметры сети WiFi:
 
+![Main menu - Settings - WiFi](/img/slswifi.png)
 
-# Settings -> Time Setup
-
+### Time
 На данной странице можно настроить часовой пояс и сервер синхронизации времени.
 
-![zigbee](/img/slstime.png)
+![Main menu - Settings - Time](/img/slstime.png)
 
+### Link
+Настройки сервера MQTT, NativeApi и RestApi.
 
-# Settings -> Link Setup
+![Main menu - Settings - Link](/img/slssetuplink.png)
 
-Настройки сервера MQTT,NativeApi и  RestApi.
+Настройка подключения к MQTT брокеру
 
-![zigbee](/img/slssetuplink.png)
-![zigbee](/img/slssetupmqtt.png)
-![zigbee](/img/slssetupnapive.png)
+![Main menu - Settings - MQTT Setup](/img/slssetupmqtt.png)
 
+Настройка подключения к серверу Native API
 
+![Main menu - Settings - Native API Setup](/img/slssetupnapive.png)
 
+### Serial
 
-
-
-
-
-# Settings -> HW Setup
-
+### Hardware
 Настройки аппаратной части шлюза.
 
+![Main menu - Settings - Hardware](/img/slssetuphw.png)
+1. Выбор типа модуля Zigbee: TI или NXP
+1. Указание номера GPIO модуля ESP32 RX 
+1. Указание номера GPIO модуля ESP32 TX
+1. Настройка аппаратной кнопки. (**ВНИМАНИЕ!** Если кнопка притянута к земле, а при нажатии на нее на вход ESP32 подается 3.3В, то обязательно нужно ставить галку `PullUp`.)
+1. Красный светодиод. (зажигается, когда приходит сообщение от конечного zigbee устройства)
+1. Зеленый светодиод. (зажигается, когда активен режим [Join](#Join))
+1. Синий светодиод.
 
-1) В данном меню можно выбрать тип модуля Zigbee TI или NXP, а также указать номера GPIO модуля ESP32 (RX, TX)
+### Help
+![Main menu - Help](/img/main_menu-help.png)
 
-2) Аппаратной кнопки. (если кнопка притянута к земле, а при нажатии на нее на вход ESP32 подается 3.3В, то обязательно нужно ставить галку PullUp.
+## Actions
+![Main menu - Actions](/img/main_menu-actions.png)
+1. `Files` - [Доступ к файловой системе и редактору скриптов](#Files)
+1. `Backup` - [Создание резервных копий настроек](#Backup)
+1. `Update Firmware` - [Обновление прошивки](#Update-Firmware)
+1. `Save` - [Запись текущего состояния](#Save)
+1. `Reboot System` - [Перезагрузка шлюза](#Reboot-System)
 
-3) Красный светодиод. (зажигается, когда приходит сообщение от конечного zigbee устройства)
+### Files
 
-4) Зеленый светодиод. (зажигается, когда активен режим Join)
+### Backup 
 
-5) Синий светодиод.
-
-![zigbee](/img/slssetuphw.png)
-
-
-
-
-
-# Action  -> Update
+### Update Firmware
 Обновление прошивки шлюза по ОТА.
+
 ![update](/img/slsupdate.png)
 
+### Save
 
-
-# Action  -> Reset
-Reset – сброс настроек к первоначальному состоянию.
-![update](/img/slsaction.png)
-
-
-
-
-# Action  -> Reboot
+### Reboot System
 Reboot – перезагрузка шлюза.
 
