@@ -50,6 +50,7 @@ Web интерфейс необходим для первоначальной к
 ![Main menu - Join](/img/zigbee-join.png)
 
 ### Map
+![Main menu - Map](/img/map.png)
 
 ### Groups
 
