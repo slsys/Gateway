@@ -1,4 +1,18 @@
 -----------------------------------------------------------------------------
+2020.10.29d1.bin
+-----------------------------------------------------------------------------
++Implement basic addressable leds
++Implement HTTP Api for leds
++Implement Lua function os.led(r, g, b[, mode])
++Implement I2C pins config
+*Fixed manual save on disabled autosave
+*When WiFi Is not connected, the blue led lights up
++SmartThings Button (IM6001-BTP02)
++Aqara D1 single relay (no neutral wire) (DLKZMK12LM)
++Elari Temperature & humidity sensor (GRD-TH1Z)    
++Feibit Carbon monoxide sensor (SCA01ZB)
+
+-----------------------------------------------------------------------------
 2020.11.15d10.bin
 -----------------------------------------------------------------------------
 +Checking latest firmware
