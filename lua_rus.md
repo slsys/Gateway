@@ -402,6 +402,14 @@ SendNarodmon("humidity", hum)
 
 
 ### Упрощенная отправка сообщений в телеграм (начиная с версии 20200915)
+
+Зарегистрировать своего бота можно у @BotFather
+
+Узнать свой ChatId можно у бота @userinfobot
+
+Токен и ChatId достаточно написать 1 раз в init.lua, потом использовать только telegram.send()
+
+
 ```
 telegram.settoken("5961....:AAHJP4...")
 telegram.setchat("5748.....")
