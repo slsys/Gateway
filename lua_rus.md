@@ -160,7 +160,8 @@ local t1 = math.modf(time/60);                       local sec  = time - t1*60;
 local time = t1;         local t1 = math.modf(time/60);    local min  = time - t1*60;
 local time = t1;         local t1 = math.modf(time/24);    local hour = time - t1*24;
 
-print(hour .. ":" .. min .. ":" .. sec)```
+print(hour .. ":" .. min .. ":" .. sec)
+```
 
 ### os.delay()
 Синтаксис: os.delay(ms)
