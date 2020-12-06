@@ -152,6 +152,15 @@ zigbee.set("lamp_1", "brightness", value)
 ### os.time()
 os.time() возвращает Unix время.
 
+Пример получения текущего часа, времени и секунд, например для планировщика в таймере: 
+```local gmt = 3
+local time = os.time() + gmt * 3600;
+
+local t1 = math.modf(time/60);                       local sec  = time - t1*60;
+local time = t1;         local t1 = math.modf(time/60);    local min  = time - t1*60;
+local time = t1;         local t1 = math.modf(time/24);    local hour = time - t1*24;
+
+print(hour .. ":" .. min .. ":" .. sec)```
 
 ### os.delay()
 Синтаксис: os.delay(ms)
