@@ -190,6 +190,12 @@ print(hour .. ":" .. min .. ":" .. sec)
 obj.get(ObjectName) / obj.set(ObjectName, ObjectValue) для сохранения и получения объекта для обмена данными между скриптами
 
 
+Проверка существования объекта:
+```
+local status = obj.get("security.status")
+if (status == nil) then status = 0 end
+```
+
 ### mqtt.pub()
 Синтаксис: mqtt.pub(topic, payload) 
 
