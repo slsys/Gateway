@@ -135,9 +135,12 @@ Color temperature 4000K, set the value ZigBeeGW/lamp_1/set/color_temp to 250
 ## Question: How to control hardware LEDs?
 Answer:
 It is necessary to send the following content to the ZigBeeGW/led topic in JSON:
-{"mode": "manual", "hex": "# FFFFFF"}
+```{"mode": "manual", "hex": "#FFFFFF"}```     (this should display white color)
+If you use WS2812, you can specify in hardware settings:
+- the Number addressable leds.
+- the data pin you want tu use (put it in place of "Led Red").
 
-mode - sets the mode; valid values ​​are off, manual and auto
+mode - sets the mode; valid values ​​are off, manual and auto  
 hex - color value in RGB Hex format.
 
 
