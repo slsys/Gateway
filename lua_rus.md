@@ -492,10 +492,10 @@ http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh
 
 Необходимо создаеть lua скрипт, который будет вызываться при изменении pressure:
 ```
-local press =  zigbee.value(Event.ieeeAddr, "pressure")
-local pressmm =  zigbee.value(Event.ieeeAddr, "pressure_mm")
-if pressmm == null  then   zigbee.add(Event.ieeeAddr, "pressure_mm", "FLOAT")  end
-zigbee.set(Event.ieeeAddr, "pressure_mm", press*7.5)
+local press =  zigbee.value(tostring(Event.ieeeAddr), "pressure")
+local pressmm =  zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
+if pressmm == null  then   zigbee.add(tostring(Event.ieeeAddr), "pressure_mm", "FLOAT")  end
+zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press*7.5)
 ```
 
 
