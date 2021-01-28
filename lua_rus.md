@@ -488,6 +488,16 @@ http.request("http://192.168.1.5/audio?action=setvolume&value=100")
 http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
+### Преобразование показателей давления из кПа в мм.рт.ст.
+
+Необходимо создаеть lua скрипт, который будет изменяться при изменении pressure
+```
+local press =  zigbee.value(tostring(Event.ieeeAddr), "pressure")
+local pressmm =  zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
+if pressmm == null  then   zigbee.add(tostring(Event.ieeeAddr), "pressure_mm", "FLOAT")  end
+zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press*7.5)
+```
+
 
 
 
