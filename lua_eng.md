@@ -19,14 +19,14 @@ When the gateway starts, the /init.lua file is executed
 
 
 ## List of available functions and structures
-1) [http.request ()](lua_rus.md#httprequest)
-2) [zigbee.value ()](lua_rus.md#zigbeevalue)
-3) [zigbee.get ()](lua_rus.md#zigbeeget)
-4) [zigbee.set ()](lua_rus.md#zigbeeset)
-5) [Event](lua_rus.md#event)
-6) [os.time()](lua_rus.md#ostime)
-7) [obj.get()/obj.set ()](lua_rus.md#objget - objset)
-8) [mqtt.pub()](lua_rus.md#mqttpub)
+1) [http.request ()](lua_eng.md#httprequest)
+2) [zigbee.value ()](lua_eng.md#zigbeevalue)
+3) [zigbee.get ()](lua_eng.md#zigbeeget)
+4) [zigbee.set ()](lua_eng.md#zigbeeset)
+5) [Event](lua_eng.md#event)
+6) [os.time()](lua_eng.md#ostime)
+7) [obj.get()/obj.set ()](lua_eng.md#objget-objset)
+8) [mqtt.pub()](lua_eng.md#mqttpub)
 
 
 ### http.request
