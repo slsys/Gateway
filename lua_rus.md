@@ -557,7 +557,19 @@ end
 ```
 
 
+### Выполнение сценария по времени
 
+Пример выполнения задачи в назначенное время
+
+```
+if Event.Time.hour == 15 then
+  if Event.Time.min == 0 then
+    -- включаем
+  elseif Event.Time.min == 1 then
+    -- выключаем
+  end
+end
+```
 
 
 
