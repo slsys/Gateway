@@ -19,8 +19,8 @@
 ![](/img/execlua.jpg).
 
 2) [Запуск скрипта по времени](lua_rus.md#выполнение-сценария-по-времени)
-3) Запуск скрипта по подписке mqtt. Ожидается.
-4) Запуск скрипта при вызове http api. /api/scripts?action=evalFile&path=/test.lua.
+3) Запуск lua скрипта по подписке mqtt. Ожидается.
+4) Запуск lua скрипта с помощью  http api. /api/scripts?action=evalFile&path=/test.lua.
 5) [Запуск lua скрипта из другого скрипта](lua_rus.md#запуск-lua-скрипта-из-другого-скрипта)
 
 
@@ -582,6 +582,13 @@ end
 ```
 dofile("/int/test.lua")
 ```
+
+
+### Запуск скрипта с помощью  http api
+```
+/api/scripts?action=evalFile&path=/test.lua
+```
+
 
 
 
