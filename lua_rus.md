@@ -490,7 +490,7 @@ http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh
 
 ### Преобразование показателей давления из кПа в мм.рт.ст.
 
-Необходимо создаеть lua скрипт, который будет вызываться при изменении pressure:
+Необходимо создать lua скрипт, который будет вызываться при изменении pressure:
 ```
 local press =  zigbee.value(tostring(Event.ieeeAddr), "pressure")
 local pressmm =  zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
