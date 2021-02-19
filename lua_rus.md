@@ -1,3 +1,6 @@
+[Go to the english version of the site](/lua_eng.md)
+
+
 # Поддержка lua скриптов
 
 В шлюзе SLS имеется  поддержка автоматизаций на основе скриптового языка программирования [lua](https://ru.wikipedia.org/wiki/Lua). Редактор скриптов находится в меню Actions -> Scripts.  
