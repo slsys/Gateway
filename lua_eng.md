@@ -24,9 +24,9 @@ When the gateway starts, the /init.lua file is executed
 3) [zigbee.get ()](lua_rus.md#zigbeeget)
 4) [zigbee.set ()](lua_rus.md#zigbeeset)
 5) [Event](lua_rus.md#event)
-6) [os.time ()](lua_rus.md# ostime)
-7) [obj.get ()/obj.set ()](lua_rus.md # objget - objset)
-8) [mqtt.pub ()](lua_rus.md # mqttpub)
+6) [os.time()](lua_rus.md#ostime)
+7) [obj.get()/obj.set ()](lua_rus.md#objget - objset)
+8) [mqtt.pub()](lua_rus.md#mqttpub)
 
 
 ### http.request
