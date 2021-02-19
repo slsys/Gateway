@@ -464,7 +464,7 @@ if hour> = 22 or hour <6 then
         mqtt.pub ('ZigBeeSls / led', '{"mode": "off"}')
   end
 end
-``
+```
 
 ### Creating a security mode
 
@@ -487,6 +487,7 @@ print ("Object is not armed.")
 
 ```
 http.request ("http://192.168.1.5/audio?action=setvolume&value=100")
+
 http.request ("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
@@ -576,6 +577,6 @@ end
 
 
 ## Useful links
-1) On-line tutorial on [lua] (https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0 % BD% D1% 83% D1% 82 /)
+1) On-line tutorial on [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
 
-2) Generator of lua scripts based on [Blockly] (https://blockly-demo.appspot.com/static/demos/code/index.html)
+2) Generator of lua scripts based on [Blockly](https://blockly-demo.appspot.com/static/demos/code/index.html)
