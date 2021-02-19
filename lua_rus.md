@@ -498,6 +498,44 @@ if pressmm == null  then   zigbee.add(tostring(Event.ieeeAddr), "pressure_mm", "
 zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press*7.5)
 ```
 
+### Запрос данных от устройств через скрипт, например запрос мгновенного потребления, если устройство само не оповещает.
+zigbee.get("0x842E14FFFE05B8E2", "power")  в файле onemintimer.lua где  0x842E14FFFE05B8E2 - идентификатор устройсва
+
+
+
+### Пример работы с астротаймером
+
+Астротаймером называется обычный таймер, имеющий привязку к циклам захода\восхода солнца.
+Так как на разной широте время захода и восхода отличается, то в таких таймерах присутствует установка долготы/широты.
+
+```
+local sunset_add_min <const> = 20
+local sunset_hour, sunset_min = os.sunset()
+sunset_min = sunset_min + sunset_add_min
+if sunset_min > 59 then
+  sunset_hour = sunset_hour + 1
+  sunset_min = sunset_min - 60
+end  
+if Event.Time.hour == sunset_hour and Event.Time.min == sunset_min then
+ -- Включает уличный свет через 20 минут после заката
+  telegram.send("Включено уличное освещение")
+  http.request("http://192.168.2.200:8888/objects/?object=MegaD3-8&op=m&m=extended")
+end
+local sunrise_add_min <const> = 1
+local sunrise_hour, sunrise_min = os.sunrise()
+sunrise_min = sunrise_min + sunrise_add_min
+if sunrise_min > 59 then
+  sunrise_hour = sunrise_hour + 1
+  sunrise_min = sunrise_min - 60
+end  
+if Event.Time.hour == sunrise_hour and Event.Time.min == sunrise_min then
+  -- Открывает шторы после рассвета
+  telegram.send("Шторы в гостинной открыты")
+  zigbee.set("0x5C0272FFFEC8A21B", "position", 0)
+
+end
+```
+
 
 
 
