@@ -157,9 +157,9 @@ An example of getting the current hour, time and seconds, for example, for a sch
 local gmt = 3
 local time = os.time () + gmt * 3600;
 
-local t1 = math.modf (time / 60); local sec = time - t1 * 60;
-local time = t1; local t1 = math.modf (time / 60); local min = time - t1 * 60;
-local time = t1; local t1 = math.modf (time / 24); local hour = time - t1 * 24;
+local t1 = math.modf (time/60); local sec = time - t1 * 60;
+local time = t1; local t1 = math.modf (time/60); local min = time - t1 * 60;
+local time = t1; local t1 = math.modf (time/24); local hour = time - t1 * 24;
 print (hour .. ":" .. min .. ":" .. sec)
 ```
 
@@ -202,9 +202,9 @@ Syntax: mqtt.pub (topic, payload)
 Publishes the payload value to the MQTT server in the topic topic.
 
 
-Example of relay control on Tasmota firmware - cmnd / device name / relay name
+Example of relay control on Tasmota firmware - cmnd/device_name/relay_name
 ```
-  mqtt.pub ('cmnd / sonoff5 / power', 'toggle')
+  mqtt.pub ('cmnd/sonoff5/power', 'toggle')
 ````
 
 ### Enabling "pairing mode" by pressing the side button of the gateway
@@ -260,14 +260,14 @@ local char_to_hex = function (c)
 end
 
 function round (exact, quantum)
-    local quant, frac = math.modf (exact / quantum)
+    local quant, frac = math.modf (exact/quantum)
     return quantum * (quant + (frac> 0.5 and 1 or 0))
 end
 local function urlencode (url)
   if url == nil then
     return
   end
-  url = url: gsub ("\ n", "\ r \ n")
+  url = url: gsub ("\n", "\r\n")
   url = url: gsub ("([^% w])", char_to_hex)
   url = url: gsub ("", "+")
   return url
@@ -280,15 +280,15 @@ end
 function SendTelegram (text)
   local token = "5177 ...: AAG0b ...." -
   local chat_id = "38806 ....."
-  --http.request ("https://api.telegram.org/bot" .. token .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. tostring (text)) - https doesn't work in lua yet
-  http.request ("http://212.237.16.93/bot" .. token .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. urlencode (text))
+  --http.request ("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id =".. chat_id.."& text="..tostring (text)) - https doesn't work in lua yet
+  http.request ("http://212.237.16.93/bot"..token.."/sendMessage?chat_id =" .. chat_id .. "& text="..urlencode (text))
  end
 
 
 
 
 local value = zigbee.value ("0x00158D00036C1508", "temperature")
-local text = "temperature:" .. round (tostring (value), 2)
+local text = "temperature:"..round(tostring(value), 2)
 SendTelegram (text)
 
 ```
@@ -296,18 +296,18 @@ SendTelegram (text)
 ### Telegram notification about door opening
 ```
 local char_to_hex = function (c)
-  return string.format ("%%% 02X", string.byte (c))
+  return string.format ("%%%02X", string.byte (c))
 end
 
 function round (exact, quantum)
-    local quant, frac = math.modf (exact / quantum)
-    return quantum * (quant + (frac> 0.5 and 1 or 0))
+    local quant, frac = math.modf (exact/quantum)
+    return quantum * (quant + (frac>0.5 and 1 or 0))
 end
 local function urlencode (url)
   if url == nil then
     return
   end
-  url = url: gsub ("\ n", "\ r \ n")
+  url = url: gsub ("\n", "\r\n")
   url = url: gsub ("([^% w])", char_to_hex)
   url = url: gsub ("", "+")
   return url
@@ -320,8 +320,8 @@ end
 function SendTelegram (text)
   local token = "517781 ...: AAG0 ..."
   local chat_id = "38806 ...."
-  --http.request ("https://api.telegram.org/bot" .. token .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. tostring (text)) - https doesn't work in lua yet
-  http.request ("http://212.237.16.93/bot" .. token .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. urlencode (text))
+  --http.request ("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id ="..chat_id .. "&text =" .. tostring (text)) - https doesn't work in lua yet
+  http.request ("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id ="..chat_id.."&text =" .. urlencode (text))
   end
 
 
@@ -333,18 +333,18 @@ else SendTelegram ("Door closed") end
 Notification in telegrams when the motion sensor is triggered
 ```
 local char_to_hex = function (c)
-  return string.format ("%%% 02X", string.byte (c))
+  return string.format ("%%%02X", string.byte (c))
 end
 
 function round (exact, quantum)
-    local quant, frac = math.modf (exact / quantum)
+    local quant, frac = math.modf (exact/quantum)
     return quantum * (quant + (frac> 0.5 and 1 or 0))
 end
 local function urlencode (url)
   if url == nil then
     return
   end
-  url = url: gsub ("\ n", "\ r \ n")
+  url = url: gsub ("\n","\r\n")
   url = url: gsub ("([^% w])", char_to_hex)
   url = url: gsub ("", "+")
   return url
@@ -357,10 +357,8 @@ end
 function SendTelegram (text)
   local token = "517781 ...: AAG0bv ...."
   local chat_id = "3880 ......"
-  --http.request ("https://api.telegram.org/bot" .. token .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. tostring (text)) - https doesn't work in lua yet
-  http.request ("http://212.237.16.93/bot" .. token
-  
-  .. "/ sendMessage? chat_id =" .. chat_id .. "& text =" .. urlencode (text))
+  --http.request ("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text =" .. tostring (text)) - https doesn't work in lua yet
+  http.request ("http://212.237.16.93/bot" .. token.. "/sendMessage?chat_id=" .. chat_id .. "&text =" .. urlencode (text))
   end
 
 
@@ -374,7 +372,7 @@ end
 ### Alert about change of temperature / humidity sensor value
 ```
 local char_to_hex = function (c)
-  return string.format ("%%% 02X", string.byte (c))
+  return string.format ("%%%02X", string.byte (c))
 end
 
 
@@ -388,8 +386,8 @@ local function urlencode (url)
   if url == nil then
     return
   end
-  url = url: gsub ("\ n", "\ r \ n")
-  url = url: gsub ("([^% w])", char_to_hex)
+  url = url: gsub ("\n", "\r\n")
+  url = url: gsub ("([^%w])", char_to_hex)
   url = url: gsub ("", "+")
   return url
 end
@@ -431,7 +429,7 @@ It is enough to write the token and ChatId once in init.lua, then use only teleg
 ```
 telegram.settoken ("5961 ....: AAHJP4 ...")
 telegram.setchat ("5748 .....")
-telegram.send ("Temperature:" .. string.format ("%. 2f", zigbee.value (tostring (Event.ieeeAddr), "temperature")) .. "° C, Humidity:" .. string.format ("% .2f", zigbee.value (tostring (Event.ieeeAddr), "humidity")) .. "%")
+telegram.send ("Temperature:" .. string.format ("%.2f", zigbee.value (tostring (Event.ieeeAddr), "temperature")) .. "° C, Humidity:" .. string.format ("% .2f", zigbee.value (tostring (Event.ieeeAddr), "humidity")) .. "%")
 ```
 
 ### Gateway illumination by motion sensor only at night from 22 to 6
@@ -459,9 +457,9 @@ local time = os.time ()
 local hour = (math.modf (time / 3600) + gmt)% 24
 if hour> = 22 or hour <6 then
   if Event.State.Value == "true" then
-        mqtt.pub ('ZigBeeSls / led', '{"mode": "manual", "hex": "# FF0000"}')
+        mqtt.pub ('ZigBeeSls/led', '{"mode": "manual", "hex": "# FF0000"}')
   else
-        mqtt.pub ('ZigBeeSls / led', '{"mode": "off"}')
+        mqtt.pub ('ZigBeeSls/led', '{"mode": "off"}')
   end
 end
 ```
