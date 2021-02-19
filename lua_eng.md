@@ -1,3 +1,5 @@
+[Перейти на русскую версию сайта](/lua_rus.md)
+
 # Support for lua scripts
 
 The SLS gateway has support for automation based on the scripting programming language [lua](https://ru.wikipedia.org/wiki/Lua). The script editor is located in the Actions -> Scripts menu.
