@@ -494,6 +494,24 @@ http.request("http://192.168.1.5/audio?action=setvolume&value=100")
 http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
+### Создание виртуальных переменных
+```
+zigbee.add(IEEE, "myproperies", type) 
+```
+Варианты typeE: "BOOL", "INT", "FLOAT"
+
+Пример инициализвции с сохранением данных
+```
+local res= zigbee.add("0x00124B001F7CA144", "prop_float", "FLOAT") 
+local res= zigbee.add("0x00124B001F7CA144", "prop_bool", "BOOL") 
+local res= zigbee.add("0x00124B001F7CA144", "prop_int", "INT") 
+os.save()
+
+'''
+
+
+
+
 ### Преобразование показателей давления из кПа в мм.рт.ст.
 
 Необходимо создать lua скрипт, который будет вызываться при изменении pressure:
