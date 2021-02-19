@@ -498,7 +498,7 @@ if pressmm == null  then   zigbee.add(tostring(Event.ieeeAddr), "pressure_mm", "
 zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press*7.5)
 ```
 
-### Запрос данных от устройств через скрипт, например запрос мгновенного потребления, если устройство само не оповещает.
+### Запрос данных от устройств через скрипт, например запрос мгновенного потребления, если устройство само не оповещает
 zigbee.get("0x842E14FFFE05B8E2", "power")  в файле onemintimer.lua где  0x842E14FFFE05B8E2 - идентификатор устройсва
 
 
@@ -507,6 +507,21 @@ zigbee.get("0x842E14FFFE05B8E2", "power")  в файле onemintimer.lua где 
 
 Астротаймером называется обычный таймер, имеющий привязку к циклам захода\восхода солнца.
 Так как на разной широте время захода и восхода отличается, то в таких таймерах присутствует установка долготы/широты.
+
+```
+local sunrise_add_min <const> = 15
+local sunrise_hour, sunrise_min = os.sunrise()
+sunrise_min = sunrise_min + sunrise_add_min
+if sunrise_min > 59 then
+  sunrise_hour = sunrise_hour + 1
+  sunrise_min = sunrise_min - 60
+end  
+if Event.Time.hour == sunrise_hour and Event.Time.min == sunrise_min then
+  print(sunrise_hour .. ":" .. sunrise_min)
+end
+```
+
+### Пример использования астротаймера
 
 ```
 local sunset_add_min <const> = 20
