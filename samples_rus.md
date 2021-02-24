@@ -68,16 +68,13 @@ telegram.send("Event.Time.hour ".. Event.Time.hour)
 telegram.send("sunset_hour ".. sunset_hour) 
 telegram.send("sunrise_hour ".. sunrise_hour) 
 
-
-if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
-  
+  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
   zigbee.set("0x00124B001F7CA144", "state_l2", "ON")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
-end    
+  end    
     
   if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour   then
   zigbee.set("0x00124B001F7CA144", "state_l2", "OFF")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
-
-end
+  end
 ```
