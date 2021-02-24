@@ -56,7 +56,7 @@ end
 
 ![](/img/astrosettings.png)
 
-Создаем сценарий occupation_astro.lua
+Создаем сценарий occupancy_astro.lua
 
 ```
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
