@@ -59,9 +59,7 @@
 
 [Подробная инструкция по перепрошивке](flashing_rus.md)
 
-[Прошивка для использования шлюза как WiFi-моста](https://github.com/slsys/Gateway/tree/master/rom/2020.08.05d1-bridge.bin)
-
-(Прошивка мост из UART в TCP, позволяет подключить координатор по WiFi к программному шлюзу zigbee2mqtt / ioBroker.Zigbee и др. Порт 8881)
+[Прошивка для использования шлюза как WiFi-моста](https://github.com/slsys/Gateway/tree/master/rom/2020.08.05d1-bridge.bin) (позволяет подключить координатор по WiFi к программному шлюзу zigbee2mqtt / ioBroker.Zigbee и др. порт 8881)
 
 
 
