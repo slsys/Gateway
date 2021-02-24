@@ -20,7 +20,7 @@ true,0x00124B001F7CA144,state_l1,ON;false,0x00124B001F7CA144,state_l1,OFF;
 ### Вариант 2 с использованием значений датчика освещения 
 В данном примере мы будем использовать датчик движения Aqara 	lumi.sensor_motion.aq2 со встроенным датчиком освещенности  и исполнительное реле на 8 каналов с [modkam](https://modkam.ru/?p=1638). 
 
-Создаем сценарий occupation.lua
+Создаем сценарий occupancy.lua
 
 ```
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
@@ -29,7 +29,7 @@ local minlightlevel=300 --зададим минимальный уровень �
 
 if (state) then telegram.send("Датчик движения ".. Event.FriendlyName  .." обнаружил активность") 
   
-if (lightlevel)<minlightlevel then 
+if (lightlevel<minlightlevel) then 
   zigbee.set("0x00124B001F7CA144", "state_l2", "ON")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
 end    
@@ -38,7 +38,7 @@ end
  else
   telegram.send("Значение датчика движения "..  Event.FriendlyName .."  нормализовалось") 
   
-  if (lightlevel)<minlightlevel then 
+  if (lightlevel<minlightlevel) then 
   zigbee.set("0x00124B001F7CA144", "state_l2", "OFF")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
 end    
