@@ -10,7 +10,7 @@
 
 Пример команды SimpleBind для включения реле по датчику движения:
 ```
-true;0x00124B001F7CA144",state_l1;ON;false;0x00124B001F7CA144",state_l1;OFF;
+true;0x00124B001F7CA144,state_l1;ON;false;0x00124B001F7CA144,state_l1;OFF;
 ```
 ![](/img/ocup_sb.png)
 
