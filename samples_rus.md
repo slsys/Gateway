@@ -64,21 +64,20 @@ local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 local sunset_hour, sunset_min = os.sunset() --закат 
 local sunrise_hour, sunrise_min = os.sunrise() --рассвет
 
+telegram.send("Event.Time.hour ".. Event.Time.hour) 
+telegram.send("sunset_hour ".. sunset_hour) 
+telegram.send("sunrise_hour ".. sunrise_hour) 
 
-if (state) then telegram.send("Датчик движения ".. Event.FriendlyName  .." обнаружил активность") 
+
+if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
   
-if Event.Time.hour == sunset_hour and Event.Time.min == sunset_min then
   zigbee.set("0x00124B001F7CA144", "state_l2", "ON")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
 end    
     
-    
- else
-  telegram.send("Значение датчика движения "..  Event.FriendlyName .."  нормализовалось") 
-  
-if Event.Time.hour == sunset_hour and Event.Time.min == sunset_min then
+  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour   then
   zigbee.set("0x00124B001F7CA144", "state_l2", "OFF")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
-end    
+
 end
 ```
