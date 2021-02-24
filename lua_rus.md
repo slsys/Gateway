@@ -609,7 +609,14 @@ dofile("/int/test.lua")
 /api/scripts?action=evalFile&path=/test.lua
 ```
 ### Периодический запуск скриптов
-SLS шлюз может  запускать с определенной периодичностью. Для этого необходимо создать скрипт, с именем, соответсвующий периоду: onesectimer.lua, onemintimer.lua, onehourtimer.lua.
+SLS шлюз может  запускать с определенной периодичностью. Для этого необходимо создать скрипт, с именем, соответсвующий периоду: onesectimer.lua, onemintimer.lua.
+
+onehourtimer.lua - отсутствует, но его можете выполнять сомостоятельно из onemintimer.lua:
+```
+if Event.Time.min == 0 then
+dofile("/int/onehourtimer.lua")
+end
+```
 
 **Внимание, данный функционал начинает действовать после перезагрузки шлюза!!!**
 
