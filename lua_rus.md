@@ -621,6 +621,10 @@ telegram.settoken("51778***5:AAG0bvK***")
 telegram.setchat("-3348***")
 telegram.send("SLS загружен!!!")
 
+local sunset_hour, sunset_min = os.sunset()
+local sunrise_hour, sunrise_min = os.sunrise()
+telegram.send("sunrise " ..sunset_hour  ..":".. sunset_min )
+
 ```
 
 
