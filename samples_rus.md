@@ -64,15 +64,30 @@ local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 local sunset_hour, sunset_min = os.sunset() --закат 
 local sunrise_hour, sunrise_min = os.sunrise() --рассвет
 
+local str=Event.Param 
+local p = {}
+ 
+for  x in string.gmatch(str,'([^:]+)') do
+  table.insert(p, x) 
+end
+
+local ieee=p[1]
+local par=p[2]
+
+
 if (state) then 
-	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour  then
-   	zigbee.set("0x00124B001F7CA144", "state_l2", "ON")
-  	telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
+
+
+	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
+   	zigbee.set(ieee, par, "ON")
 	end    
+    
+    
  else
-  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour   then
-  zigbee.set("0x00124B001F7CA144", "state_l2", "OFF")
-  telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
+
+
+  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour   then
+  zigbee.set(ieee, par, "OFF")
 	end    
 end
 ```
