@@ -500,13 +500,14 @@ http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh
 ```
 zigbee.add(IEEE, "myproperies", type) 
 ```
-Варианты typeE: "BOOL", "INT", "FLOAT"
+Варианты type: "BOOL", "INT", "FLOAT", "STRING"
 
 Пример инициализвции с сохранением данных
 ```
 local res= zigbee.add("0x00124B001F7CA144", "prop_float", "FLOAT") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_bool", "BOOL") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_int", "INT") 
+local res= zigbee.add("0x00124B001F7CA144", "prop_int", "STRING") 
 os.save()
 
 ```
