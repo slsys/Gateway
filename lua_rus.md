@@ -507,7 +507,7 @@ zigbee.add(IEEE, "myproperies", type)
 local res= zigbee.add("0x00124B001F7CA144", "prop_float", "FLOAT") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_bool", "BOOL") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_int", "INT") 
-local res= zigbee.add("0x00124B001F7CA144", "prop_int", "STRING") 
+local res= zigbee.add("0x00124B001F7CA144", "prop_int", "STR") 
 os.save()
 
 ```
