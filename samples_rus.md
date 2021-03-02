@@ -74,23 +74,39 @@ end
 local ieee=p[1]
 local par=p[2]
 
+zigbee.add(ieee, par.."_activate_on", "STR")  --добавляем переменную для хранения информации, что управляемый сенсор включен датчиком движения
 
 if (state) then 
 
 
 	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
-   	zigbee.set(ieee, par, "ON")
+
+  --если выключен, мы его включаем и записываем, кто включил
+ if (zigbee.value(ieee, par)=="OFF")      then  
+     zigbee.set(ieee, par, "ON")
+     zigbee.set(ieee, par.."_activate_on", "PIR")
+-- 	 telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
 	end    
+    end      
     
     
  else
 
 
   if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour   then
+    
+--проверяем, если включен не датчиком движений PIR, то не трогаем    
+if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then 
   zigbee.set(ieee, par, "OFF")
-	end    
-end
+  zigbee.set(ieee, par.."_activate_on", "")    
+---  telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
+      
+	end      
+    end    
+	end	
 ```
 
-Для корректной работы  данного сценария, необходимо передать два параметра через двоеточие.
-Пример:  occupancy_astro.lua,0x00124B001F7CA144:state_l1 
+Для корректной работы   сценария, необходимо передать два параметра через двоеточие, наример:  occupancy_astro.lua,0x00124B001F7CA144:state_l1.
+Сценарий запоминает, что свет включен по датчику движения, и выключает только в том случае, если был включен по датчику движения. 
+
+
