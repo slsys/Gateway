@@ -79,7 +79,7 @@ zigbee.add(ieee, par.."_activate_on", "STR")  --добавляем переме�
 if (state) then 
 
 
-	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour  then
+	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour  then
 
   --если выключен, мы его включаем и записываем, кто включил
  if (zigbee.value(ieee, par)=="OFF")      then  
@@ -93,7 +93,7 @@ if (state) then
  else
 
 
-  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sanrise_hour   then
+  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour   then
     
 --проверяем, если включен не датчиком движений PIR, то не трогаем    
 if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then 
