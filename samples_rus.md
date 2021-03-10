@@ -110,3 +110,69 @@ if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then
 Сценарий запоминает, что свет включен по датчику движения, и выключает только в том случае, если был включен по датчику движения. 
 
 
+### Вариант 4. Привязка нескольких устройств  с использованием астротаймера и сценариев [lua](/lua_rus.md)
+
+При вызове lua скрипта необходимо в виде параметров передать список привязываемых устройств. Пример параметров:
+```
+occupancy_astro2.lua,0x00124B001EC83D62:state_l4/0x00124B001EC83D62:state_l2
+```
+
+Пример сценария occupancy_astro2.lua
+
+```
+local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
+
+local sunset_hour, sunset_min = os.sunset() --закат 
+local sunrise_hour, sunrise_min = os.sunrise() --рассвет
+
+local str=Event.Param 
+
+--telegram.send(str) 
+
+
+for  x1 in string.gmatch(str,'([^/]+)') do
+  
+local p = {}  
+for  x2 in string.gmatch(x1,'([^:]+)') do
+     table.insert(p, x2) 
+end
+
+local ieee=p[1]
+local par=p[2]
+
+zigbee.add(ieee, par.."_activate_on", "STR")  --добавляем переменную для хранения информации, что управляемый сенсор включен датчиком движения
+
+if (state) then 
+
+
+	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour  then
+
+  --если выключен, мы его включаем и записываем, кто включил
+ if (zigbee.value(ieee, par)=="OFF")      then  
+     zigbee.set(ieee, par, "ON")
+     zigbee.set(ieee, par.."_activate_on", "PIR")
+-- 	 telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили ("..par..")") 
+	end    
+    end      
+    
+    
+ else
+
+
+  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour   then
+    
+--проверяем, если включен не датчиком движений PIR, то не трогаем    
+if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then 
+  zigbee.set(ieee, par, "OFF")
+  zigbee.set(ieee, par.."_activate_on", "")    
+  --telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
+      
+	end      
+    end    
+	end	
+   p=nill
+  ieee=nill
+  par=nill
+  
+    end
+```    
