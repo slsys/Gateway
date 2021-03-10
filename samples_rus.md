@@ -110,7 +110,7 @@ if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then
 Сценарий запоминает, что свет включен по датчику движения, и выключает только в том случае, если был включен по датчику движения. 
 
 
-### Вариант 4. Привязка нескольких устройств  с использованием астротаймера и сценариев [lua](/lua_rus.md)
+### Вариант 5. Привязка нескольких устройств  с использованием астротаймера и сценариев [lua](/lua_rus.md)
 
 При вызове lua скрипта необходимо в виде параметров передать список привязываемых устройств. Пример параметров:
 ```
@@ -146,33 +146,30 @@ if (state) then
 
 
 	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour  then
-
-  --если выключен, мы его включаем и записываем, кто включил
- if (zigbee.value(ieee, par)=="OFF")      then  
-     zigbee.set(ieee, par, "ON")
-     zigbee.set(ieee, par.."_activate_on", "PIR")
--- 	 telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили ("..par..")") 
-	end    
-    end      
-    
-    
- else
+	--если выключен, мы его включаем и записываем, кто включил
+ 		if (zigbee.value(ieee, par)=="OFF")      then  
+     		zigbee.set(ieee, par, "ON")
+     		zigbee.set(ieee, par.."_activate_on", "PIR")
+		--telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили ("..par..")") 
+		end    
+    	end
+	else
 
 
-  if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour   then
+	if Event.Time.hour >= sunset_hour or Event.Time.hour <= sunrise_hour   then
     
---проверяем, если включен не датчиком движений PIR, то не трогаем    
-if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then 
-  zigbee.set(ieee, par, "OFF")
-  zigbee.set(ieee, par.."_activate_on", "")    
-  --telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
-      
-	end      
-    end    
-	end	
-   p=nill
+		--проверяем, если включен не датчиком движений PIR, то не трогаем    
+		if (zigbee.value(ieee, par.."_activate_on") )=="PIR"    then 
+  		zigbee.set(ieee, par, "OFF")
+  		zigbee.set(ieee, par.."_activate_on", "")    
+  		--telegram.send("Свет в комнате ".. Event.FriendlyName  .." выключили") 
+		end
+	end
+end
+
+  --на всякий случай чисти переменные
+  p=nill
   ieee=nill
   par=nill
-  
-    end
+end
 ```    
