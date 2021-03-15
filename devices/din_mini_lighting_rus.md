@@ -35,7 +35,7 @@ dali.setaddr(1, 36)
 ```
 Отправка команды изменения яркости на 30 на устройство с коротким адресом 5:
 ```
-dali.cmd('arc', { addrtype = 'short', addr = 5, value = 30 })
+dali.cmd('arc', { addrtype = 'short', address = 5, value = 30 })
 ```
 
 
