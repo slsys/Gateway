@@ -4,7 +4,7 @@
 
 Сылка на прошивку [bridge](https://github.com/slsys/Gateway/tree/master/rom/2020.08.05d1-bridge.bin). Для подключения используйте порт 8881.
 
-Пример файла конфигурации configuration.yaml
+Пример файла конфигурации configuration.yaml:
 
 ```
 serial:
