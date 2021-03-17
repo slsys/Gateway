@@ -54,6 +54,12 @@ dali.setaddr(1, 36)
 | 0    | off |  | * | | |
 | 1    | up |  | * | | |
 | 2    | down |  | * | | |
+| 3    | stepup |  | * | | |
+| 4    | stepdown |  | * | | |
+| 5    | recallmax |  | * | | |
+| 6    | recallmin |  | * | | |
+| 7    | stepdownoff |  | * | | |
+| 8    | stepupon |  | * | | |
 | 32    | reset |  | * | | |
 | 96-111    | addtogroup |  | * | | 0..15 |
 | 112-127    | removefromgroup |  | * | | 0..15 |
