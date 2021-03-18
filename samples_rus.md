@@ -173,3 +173,12 @@ end
   par=nill
 end
 ```    
+## Воспроизведение звука при нажатии кнопки (звонок)
+
+```
+--zvonok.lua   скрипт ставим на датчик открытия двери если кнопка ON меняем на Single (одиночное нажатие)
+if Event.State.Value == "ON" then
+audio.setvolume(100)
+audio.playurl("http://funny-dog.surge.sh/door_bell.mp3")
+end
+```
