@@ -615,6 +615,16 @@ if Event.Time.hour == sunrise_hour and Event.Time.min == sunrise_min then
 end
 ```
 
+### Определение времени суток (светлое или темное)
+
+```
+sunrise_h, sunrise_m = os.sunrise()
+sunset_h, sunset_m = os.sunset()
+sunshine = (Event.Time.hour*60+Event.Time.min)>(sunrise_h*60+sunrise_m) and (Event.Time.hour*60+Event.Time.min)<(sunset_h*60+sunset_m)
+```
+sunshine -  булева переменная, показывает время суток, дневное или вечернее. 
+
+
 
 ### Выполнение сценария по времени
 
