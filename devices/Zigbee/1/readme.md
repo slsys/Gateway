@@ -1,1 +1,1 @@
-first zigbee device for new converters system
+Tuya Repeater (_TZ3000_m0vaazab / TS0207)
