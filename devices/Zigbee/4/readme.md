@@ -1,3 +1,5 @@
+![icon](icon.png)
+
 Tuya Blitzwolf Water leak sensor (BW IS5) 
 
 _TYZB01_o63ssaah / TS0207
