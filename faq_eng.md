@@ -175,5 +175,5 @@ Next, you need to perform the necessary actions with the device and save the scr
 
 [Перейти на русскую версию страницы](/faq_rus.md)
 
-## Question: How do I reset the SLS Gateway settings?
+## Question: How do i switch gateway to wifi access point mode?
 Answer: You need to hold the button for 3-5 seconds when power is applied.
