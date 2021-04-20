@@ -13,5 +13,6 @@
 | ![icon](9/icon.png)   | Tuya 1 gang switch module with N (QS-Zigbee-S05-LN) |[Open](9/readme.md)
 | ![icon](10/icon.png)  | Tuya 2 gang switch module with N (QS-Zigbee-S04-2C-LN) |[Open](10/readme.md)
 | ![icon](11/icon.png)  | Tuya Neo Temperature & humidity sensor and alarm (NAS-AB02B0) |[Open](11/readme.md)
+| ![icon](12/icon.png)  | Tuya Blitzwolf 1 gang switch module with N (BW-SS7) |[Open](12/readme.md)
 
 
