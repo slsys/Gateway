@@ -16,3 +16,4 @@
 | ![icon](12/icon.png)  | Tuya Blitzwolf 1 gang switch module with N (BW-SS7) |[Open](12/readme.md)
 | ![icon](13/icon.png)  | Tuya Moes Smart light switch module (2 gang) (MS-104BZ) |[Open](13/readme.md)
 | ![icon](14/icon.png)  | Tuya Smart Valve |[Open](14/readme.md)
+| ![icon](15/icon.png)  | Tuya Zigbee Smart Socket EU Plug 16A Adapter |[Open](15/readme.md)
