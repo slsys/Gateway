@@ -1,6 +1,6 @@
 ![icon](icon.png)
 
-Tuya Smart Valve Upgrade 
+Tuya Smart Valve 
 
 _TYZB01_rifa0wlb / TS0011 
 
