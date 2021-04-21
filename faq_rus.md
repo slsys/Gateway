@@ -198,7 +198,7 @@ DEBUG=zigbee-herdsman:zStack:* npm start
 Для того, чтобы при чтении данных с порта не отправлять полученные с него же данные обратно в порт, необходимо отправить команду 
 
 ```
-stty -F /dev/ttyUSB0 921600 -cstopb -oddp -opost raw -echo
+stty -F /dev/ttyUSB0 115200 -cstopb -oddp -opost raw -echo
 ```
 
 Далее запускаем команду записи данных порта в файл
