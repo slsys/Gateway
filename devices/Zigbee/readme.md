@@ -15,4 +15,4 @@
 | ![icon](11/icon.png)  | Tuya Neo Temperature & humidity sensor and alarm (NAS-AB02B0) |[Open](11/readme.md)
 | ![icon](12/icon.png)  | Tuya Blitzwolf 1 gang switch module with N (BW-SS7) |[Open](12/readme.md)
 | ![icon](13/icon.png)  | Tuya Moes Smart light switch module (2 gang) (MS-104BZ) |[Open](13/readme.md)
-
+| ![icon](14/icon.png)  | Tuya Smart Valve |[Open](14/readme.md)
