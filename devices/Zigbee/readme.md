@@ -17,3 +17,4 @@
 | ![icon](13/icon.png)  | Tuya Moes Smart light switch module (2 gang) (MS-104BZ) |[Open](13/readme.md)
 | ![icon](14/icon.png)  | Tuya Smart Valve |[Open](14/readme.md)
 | ![icon](15/icon.png)  | Tuya Zigbee Smart Socket EU Plug 16A Adapter |[Open](15/readme.md)
+| ![icon](16/icon.png)  | Aqara single switch module T1 (with neutral) (SSM-U01) |[Open](16/readme.md)
