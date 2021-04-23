@@ -1,6 +1,6 @@
 ![icon](icon.png)
 
-Tuya Zigbee Smart Socket EU Plug 16A Adapter
+Tuya Zigbee Smart Socket EU Plug 16A Adapter (WGH-JLCZ01)
 
 
 Updated in SLS firmware: 2021.04.21d2 
