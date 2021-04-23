@@ -18,3 +18,5 @@
 | ![icon](14/icon.png)  | Tuya Smart Valve |[Open](14/readme.md)
 | ![icon](15/icon.png)  | Tuya Zigbee Smart Socket EU Plug 16A Adapter |[Open](15/readme.md)
 | ![icon](16/icon.png)  | Aqara single switch module T1 (with neutral) (SSM-U01) |[Open](16/readme.md)
+| ![icon](17/icon.png)  | Tuya Blitzwolf Smart Socket EU Plug 16A Adapter (BW SHP-13) |[Open](17/readme.md)
+
