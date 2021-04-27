@@ -1,6 +1,6 @@
 ![icon](icon.png)
 
-DIN Rail Energy meter with Relay (DDS238-2)
+Tuya DIN Rail Energy meter with Relay (DDS238-2)
 
 
 Updated in SLS firmware: 2021.04.27d1 
