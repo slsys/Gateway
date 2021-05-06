@@ -21,4 +21,7 @@
 | ![icon](17/icon.png)  | Tuya Blitzwolf Smart Socket EU Plug 16A Adapter (BW SHP-13) |[Open](17/readme.md)
 | ![icon](18/icon.png)  | Tuya DIN Rail Energy meter with Relay (DDS238-2) |[Open](18/readme.md)
 | ![icon](19/icon.png)  | DIY Impulse counter |[Open](19/readme.md)
+| ![icon](eWeLink/zb-sw01/icon.png)  | eWeLink ZB-SW01 - 1 gang wall switch with N |[Open](eWeLink/zb-sw01/readme.md)
+| ![icon](eWeLink/zb-sw02/icon.png)  | eWeLink ZB-SW02 - 3 gang wall switch with N |[Open](eWeLink/zb-sw02/readme.md)
+| ![icon](eWeLink/zb-sw03/icon.png)  | eWeLink ZB-SW03 - 3 gang wall switch with N |[Open](eWeLink/zb-sw03/readme.md)
 
