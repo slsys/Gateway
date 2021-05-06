@@ -1,6 +1,6 @@
 ![icon](icon.png)
 
-Tuya 2P circuit breaker ()
+Tuya 2P circuit breaker
 
 [Buy](http://alli.pub/5ra3t4)
 
