@@ -26,4 +26,4 @@
 | ![icon](23/icon.png)  | Livolo Motion Sensor |[Open](23/readme.md)
 | ![icon](25/icon.png)  | eWeLink Light RGBW (ZB-RGBCW) |[Open](25/readme.md)
 | ![icon](26/icon.png)  | Tuya 2P circuit breaker |[Open](26/readme.md)
-| ![icon](27/icon.png)  | Lonsonho Rotary Dimmer |[Open](27/readme.md)
+| ![icon](27/icon.png)  | Lonsonho Dimmer Switch |[Open](27/readme.md)
