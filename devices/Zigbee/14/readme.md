@@ -2,13 +2,17 @@
 
 Tuya Smart Valve 
 
+[Buy](http://alli.pub/5rropc)
 
-Updated in SLS firmware: 2021.04.21d1
+
+Updated in SLS firmware: 2021.05.12d1
 
 
 Zigbee models:
 
 _TYZB01_rifa0wlb / TS0011 
+
+_TZ3000_o4cjetlm / TS0001 
 
 Review: https://youtu.be/ev3kEltX1oo 
 
