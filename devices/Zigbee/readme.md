@@ -1,7 +1,7 @@
 # Supported devices:
 
 | Фото  | Описание  | Модель |
-|:------------- |:---------------:| -------------:|
+|:------------- |:---------------:|:---------------:| -------------:|
 | ![icon](1/icon.png)   | Tuya Repeater |[Open](1/readme.md) |
 | ![icon](2/icon.png)   | Tuya Moes Smart light switch module (1 gang) (MS-104Z) |[Open](2/readme.md)
 | ![icon](3/icon.png)   | Tuya Curtain motor/roller blind motor/window pusher/tubular motor |[Open](3/readme.md)
