@@ -30,3 +30,4 @@
 | ![icon](28/icon.png)  | + | Livolo Socket |[Open](28/readme.md)
 | ![icon](29/icon.png)  | + | Neo Temperature, Humidity And Light Intensity Sensor |[Open](29/readme.md)
 | ![icon](30/icon.png)  | + | DIY Doorphone controller (ZIntercom) |[Open](30/readme.md)
+| ![icon](31/icon.png)  | + | Tuya Moes E-Ink Temperature, Humidity And Light Intensity Sensor |[Open](31/readme.md)
