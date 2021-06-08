@@ -31,5 +31,6 @@
 | ![icon](29/icon.png)  | + | Neo Temperature, Humidity And Light Intensity Sensor |[Open](29/readme.md)
 | ![icon](30/icon.png)  | + | DIY Doorphone controller (ZIntercom) |[Open](30/readme.md)
 | ![icon](31/icon.png)  |  | Tuya Moes E-Ink Temperature, Humidity And Light Intensity Sensor |[Open](31/readme.md)
+| ![icon](32/icon.png)  |  | DIY ptvo_switch_3ch |[Open](32/readme.md)
 | ![icon](33/icon.png)  |  | Tuya Moes Scene remote |[Open](33/readme.md)
 
