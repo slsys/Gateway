@@ -4,7 +4,7 @@ DIY Doorphone controller (ZIntercom)
 
 [Buy](https://t.me/avenit)
 
-Updated in SLS firmware: 2021.05.22d1
+Updated in SLS firmware: 2021.06.09d4
 
 Zigbee models:
 
