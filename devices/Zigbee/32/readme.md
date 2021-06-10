@@ -1,10 +1,10 @@
 ![icon](icon.png)
 
-DIY ptvo_switch_3ch
+DIY 3ch Switch 
 
 [Buy](https://t.me/avenit)
 
-Updated in SLS firmware: 2021.06.06d1
+Updated in SLS firmware: 2021.06.10d1
 
 Zigbee models:
 
