@@ -47,7 +47,7 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 
 
 # Hardware
-The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the site [Smart Logic System](slsys.io)
+The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the [Telegram](https://t.me/avenit)
 
 ![home](/img/Mi_Gateway_Shield12.jpg)
 
