@@ -33,4 +33,5 @@
 | ![icon](31/icon.png)  |  | Tuya Moes E-Ink Temperature, Humidity And Light Intensity Sensor |[Open](31/readme.md)
 | ![icon](32/icon.png)  |  | DIY ptvo_switch_3ch |[Open](32/readme.md)
 | ![icon](33/icon.png)  |  | Tuya Moes Scene remote |[Open](33/readme.md)
+| ![icon](34/icon.png)  |  | Tuya 2 gang sensor switch w/o neutral |[Open](34/readme.md)
 
