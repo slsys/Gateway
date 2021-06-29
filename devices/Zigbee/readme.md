@@ -36,6 +36,6 @@
 |34| ![icon](34/icon.png)  |  | Tuya 2 gang sensor switch w/o neutral |[Open](34/readme.md)
 |35| ![icon](35/icon.png)  | + | Tuya Lonsonho Curtain switch (11830304) |[Open](35/readme.md)
 |36| ![icon](36/icon.png)  |  | Tuya Lonsonho Curtain module (QS-Zigbee-C01) |[Open](36/readme.md)
-
+|37| ![icon](37/icon.png)  | + | Livolo Sensor Switch |[Open](37/readme.md)
 
 
