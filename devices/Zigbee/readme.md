@@ -42,4 +42,4 @@
 |[40](40/readme.md)| [![icon](40/icon.png)](40/readme.md)  |  | TRADFRI bulb E26/E27 CWS 800/806 lumen, dimmable, color, opal white (LED1924G9)
 |[41](41/readme.md)| [![icon](41/icon.png)](41/readme.md)  | + | Tuya relay module 10A
 |[42](42/readme.md)| [![icon](42/icon.png)](42/readme.md)  |  | Tuya relay module 16A
-|[43](43/readme.md)| [![icon](43/icon.png)](43/readme.md)  | + | Tuya Mni led strip controller 5V/12V/24V RGB+CCT
+|[43](43/readme.md)| [![icon](43/icon.png)](43/readme.md)  | + | Tuya Mini led strip controller 5V/12V/24V RGB+CCT
