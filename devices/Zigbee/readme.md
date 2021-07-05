@@ -38,4 +38,4 @@
 |36| ![icon](36/icon.png)  |  | Tuya Lonsonho Curtain module (QS-Zigbee-C01) |[Open](36/readme.md)
 |37| ![icon](37/icon.png)  | + | Livolo Sensor Switch |[Open](37/readme.md)
 |[38](38/readme.md)| [![icon](38/icon.png)](38/readme.md)  |  | Livolo 2 gang Sensor Switch
-
+|[39](39/readme.md)| [![icon](39/icon.png)](39/readme.md)  |  | Tuya Rotary dimmer w/o neutral
