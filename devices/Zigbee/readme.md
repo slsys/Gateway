@@ -39,3 +39,4 @@
 |37| ![icon](37/icon.png)  | + | Livolo Sensor Switch |[Open](37/readme.md)
 |[38](38/readme.md)| [![icon](38/icon.png)](38/readme.md)  |  | Livolo 2 gang Sensor Switch
 |[39](39/readme.md)| [![icon](39/icon.png)](39/readme.md)  |  | Tuya Rotary dimmer w/o neutral
+|[40](40/readme.md)| [![icon](40/icon.png)](40/readme.md)  |  | TRADFRI bulb E26/E27 CWS 800/806 lumen, dimmable, color, opal white (LED1924G9)
