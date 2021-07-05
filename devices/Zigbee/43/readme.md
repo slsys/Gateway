@@ -1,6 +1,6 @@
 ![icon](icon.png)
 
-Tuya Mni led strip controller 5V/12V/24V RGB+CCT
+Tuya Mini led strip controller 5V/12V/24V RGB+CCT
 
 [Buy](http://alli.pub/5votlh)
 
