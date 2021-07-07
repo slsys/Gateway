@@ -43,3 +43,4 @@
 |[41](41/readme.md)| [![icon](41/icon.png)](41/readme.md)  | + | Tuya relay module 10A
 |[42](42/readme.md)| [![icon](42/icon.png)](42/readme.md)  |  | Tuya relay module 16A
 |[43](43/readme.md)| [![icon](43/icon.png)](43/readme.md)  | + | Tuya Mini led strip controller 5V/12V/24V RGB+CCT
+|[44](44/readme.md)| [![icon](44/icon.png)](44/readme.md)  | + | Tuya Moes BHT series Thermostat
