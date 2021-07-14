@@ -1,8 +1,8 @@
 ![icon](icon.png)
 
-Heiman Smoke detector (HS3SA) ()
+Heiman Smoke detector (HS3SA)
 
-[Buy](http://alli.pub/5wabnp)
+[Buy](http://alli.pub/5wabvv)
 
 Updated in SLS firmware: 2021.07.14d1
 
