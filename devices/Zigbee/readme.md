@@ -45,3 +45,6 @@
 |[43](43/readme.md)| [![icon](43/icon.png)](43/readme.md)  | + | Tuya Mini led strip controller 5V/12V/24V RGB+CCT
 |[44](44/readme.md)| [![icon](44/icon.png)](44/readme.md)  | + | Tuya Moes BHT series Thermostat
 |[45](45/readme.md)| [![icon](45/icon.png)](45/readme.md)  | + | LifeControl Power plug (MCLH-03)
+|[46](46/readme.md)| [![icon](46/icon.png)](46/readme.md)  |  | Heiman Smoke detector (HS1SA-E)
+|[47](47/readme.md)| [![icon](47/icon.png)](47/readme.md)  | + | Heiman Smoke detector (HS3SA-E)
+
