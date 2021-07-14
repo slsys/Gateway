@@ -47,4 +47,4 @@
 |[45](45/readme.md)| [![icon](45/icon.png)](45/readme.md)  | + | LifeControl Power plug (MCLH-03)
 |[46](46/readme.md)| [![icon](46/icon.png)](46/readme.md)  |  | Heiman Smoke detector (HS1SA-E)
 |[47](47/readme.md)| [![icon](47/icon.png)](47/readme.md)  | + | Heiman Smoke detector (HS3SA-E)
-
+|[48](48/readme.md)| [![icon](48/icon.png)](48/readme.md)  |  | DIY Flower Sensor (ZeeFlora)
