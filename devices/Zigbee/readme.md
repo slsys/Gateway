@@ -50,3 +50,4 @@
 |[48](48/readme.md)| [![icon](48/icon.png)](48/readme.md)  |  | DIY Flower Sensor (ZeeFlora)
 |[49](49/readme.md)| [![icon](49/icon.png)](49/readme.md)  | + | Heiman Air quality monitor (HS2AQ-EM)
 |[50](50/readme.md)| [![icon](50/icon.png)](50/readme.md)  | + | Tuya FrankEver Smart valve (FK_V02)
+|[51](51/readme.md)| [![icon](51/icon.png)](51/readme.md)  |  | Xiaomi Aqara E1 2 gang switch (without neutral)
