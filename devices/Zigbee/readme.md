@@ -51,3 +51,4 @@
 |[49](49/readme.md)| [![icon](49/icon.png)](49/readme.md)  | + | Heiman Air quality monitor (HS2AQ-EM)
 |[50](50/readme.md)| [![icon](50/icon.png)](50/readme.md)  | + | Tuya FrankEver Smart valve (FK_V02)
 |[51](51/readme.md)| [![icon](51/icon.png)](51/readme.md)  |  | Xiaomi Aqara E1 2 gang switch (without neutral)
+|[52](52/readme.md)| [![icon](52/icon.png)](52/readme.md)  |  | Xiaomi Aqara smart RGBW light controller (ZNTGMK11LM)
