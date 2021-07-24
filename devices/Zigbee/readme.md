@@ -53,3 +53,4 @@
 |[51](51/readme.md)| [![icon](51/icon.png)](51/readme.md)  |  | Xiaomi Aqara E1 2 gang switch (without neutral)
 |[52](52/readme.md)| [![icon](52/icon.png)](52/readme.md)  |  | Xiaomi Aqara smart RGBW light controller (ZNTGMK11LM)
 |[53](53/readme.md)| [![icon](53/icon.png)](53/readme.md)  |  | Tuya 4Ch relay
+|[54](54/readme.md)| [![icon](54/icon.png)](54/readme.md)  |  | Fish feeder
