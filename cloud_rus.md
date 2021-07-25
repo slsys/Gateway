@@ -35,8 +35,8 @@
 Возможно отключение отправки данных по устройствам и прием команд управления из облака.
 
 # HTTP API
-* Получение данных об устройстве по его токену:
-* 
+**Получение данных об устройстве по его токену**
+
 GET https://cloud.slsys.io/api/device/{TOKEN}
 
 
@@ -49,7 +49,7 @@ GET/POST https://cloud.slsys.io/api/user/check
   email (*)
   
   
-* Регистрирует новый аккаунт
+**Регистрирует новый аккаунт**
  
 GET/POST https://cloud.slsys.io/api/user/reg
 
@@ -64,18 +64,20 @@ password (*)
 Возвращает ok при успешной регистрации   
 
 
-* Вход в аккаунт
-* 
+**Вход в аккаунт**
+
 GET/POST https://cloud.slsys.io/api/user/reg
 
 email (*)
 
 password (*)  
 
+application - Идентификатор приложения для сессии, по умолчанию default
+
 Возвращает sid при успешном входе
 
 
-* Получение данных по аккаунту (email и name)
+**Получение данных по аккаунту (email и name)**
  
 GET/POST https://cloud.slsys.io/api/user/profile
 
