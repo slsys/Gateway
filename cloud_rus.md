@@ -36,8 +36,50 @@
 
 # HTTP API
 * Получение данных об устройстве по его токену:
-https://cloud.slsys.io/api/device/{TOKEN}
+* 
+GET https://cloud.slsys.io/api/device/{TOKEN}
 
 
+* Проверяем есть ли данный email, если нет - отправляет код подтверждения на него, который необходим для регистрации 
+ 
+GET/POST https://cloud.slsys.io/api/user/check
 
+Параметры: 
+
+  email (*)
+  
+  
+* Регистрирует новый аккаунт
+ 
+GET/POST https://cloud.slsys.io/api/user/reg
+
+email (*)
+
+email_code (*)
+
+name (*)  
+
+password (*)
+
+Возвращает ok при успешной регистрации   
+
+
+* Вход в аккаунт
+* 
+GET/POST https://cloud.slsys.io/api/user/reg
+
+email (*)
+
+password (*)  
+
+Возвращает sid при успешном входе
+
+
+* Получение данных по аккаунту (email и name)
+ 
+GET/POST https://cloud.slsys.io/api/user/profile
+
+access_token (*)  
+
+Возвращает информацию профиля 
 
