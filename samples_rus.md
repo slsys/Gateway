@@ -198,7 +198,7 @@ if (btn=="single") then --при однократном нажатии пере�
 
 local position =  zigbee.value(remoteieee, "position")
   
-if (position<=maxlevel-10	) then 
+if (position<=maxlevel-10) then 
 
   zigbee.set(remoteieee, "position", maxlevel)
   
