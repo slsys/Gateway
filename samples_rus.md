@@ -187,9 +187,16 @@ end
 
 Создаем сценарий curtian.lua:
 ```
-local minlevel=0 --зададим минимальный уровень
-local maxlevel=75 --зададим максимальный уровень
-local remoteieee=Event.Param 
+local str=Event.Param 
+local p = {}
+ 
+for  x in string.gmatch(str,'([^:]+)') do
+  table.insert(p, x) 
+end
+
+local remoteieee=p[1] -- ieee адрес привода для штор
+local minlevel=p[2] --зададим минимальный уровень
+local maxlevel=p[3] --зададим максимальный уровень
 
 local btn=zigbee.value(tostring(Event.ieeeAddr), "action") 
 
