@@ -182,3 +182,42 @@ audio.setvolume(100)
 audio.playurl("http://funny-dog.surge.sh/door_bell.mp3")
 end
 ```
+
+## Управляем открытием/закрытием привода штор Tuya с помощью zigbee кнопки WXKG01LM
+
+Создаем сценарий curtian.lua:
+```
+local minlevel=0 --зададим минимальный уровень
+local maxlevel=75 --зададим максимальный уровень
+local remoteieee=Event.Param 
+
+local btn=zigbee.value(tostring(Event.ieeeAddr), "action") 
+
+
+if (btn=="single") then --при однократном нажатии переключим шторы в противоположный режим
+
+local position =  zigbee.value(remoteieee, "position")
+  
+if (position<=maxlevel-10	) then 
+
+  zigbee.set(remoteieee, "position", maxlevel)
+  
+ else
+
+  zigbee.set(remoteieee, "position", minlevel)
+ end
+  
+ end
+
+if (btn=="double") then  --при двукратном  нажатии откроем шторы
+    zigbee.set(remoteieee, "position", maxnlevel)
+end
+
+if (btn=="triple") then --при трезкратном  нажатии закроем шторы
+    zigbee.set(remoteieee, "position", minlevel)
+end
+```
+
+В разделе SB выключателя WXKG01LM в метрике action прописываем вызов сценария curtian.lua и ieee адрес привода Tuya
+```curtin.lua,0x5C0272FFFECAAC69```
+Теперь при однократном нажатии кнопки осуществляется переключение в противоположный режим, при двукратном - открытие, трекратном  - закрытие.
