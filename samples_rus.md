@@ -224,11 +224,11 @@ if (btn=="double") then  --при двукратном  нажатии откр�
     zigbee.set(remoteieee, "position", maxlevel)
 end
 
-if (btn=="triple") then --при трезкратном  нажатии закроем шторы
+if (btn=="triple") then --при трехкратном  нажатии закроем шторы
     zigbee.set(remoteieee, "position", minlevel)
 end
 
-if (btn=="long_release") then --при трезкратном  нажатии закроем шторы
+if (btn=="long_release") then --при длительном  нажатии остановим привод
     zigbee.set(remoteieee, "state", "STOP")
 end
 ```
