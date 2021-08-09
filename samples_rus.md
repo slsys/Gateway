@@ -202,22 +202,17 @@ local btn=zigbee.value(tostring(Event.ieeeAddr), "action")
 
 
 if (btn=="single") then --при однократном нажатии переключим шторы в противоположный режим
-
 local position =  zigbee.value(remoteieee, "position")
-  
-if (position<=maxlevel-10) then 
-
-  zigbee.set(remoteieee, "position", maxlevel)
-  
+ 
+ if (tonumber(position)<=tonumber(maxlevel)-10) then 
+ zigbee.set(remoteieee, "position", maxlevel)
  else
-
-  zigbee.set(remoteieee, "position", minlevel)
- end
-  
- end
+ zigbee.set(remoteieee, "position", minlevel)
+  end
+  end
 
 if (btn=="double") then  --при двукратном  нажатии откроем шторы
-    zigbee.set(remoteieee, "position", maxnlevel)
+    zigbee.set(remoteieee, "position", maxlevel)
 end
 
 if (btn=="triple") then --при трезкратном  нажатии закроем шторы
