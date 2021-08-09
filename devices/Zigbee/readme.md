@@ -54,3 +54,4 @@
 |[52](52/readme.md)| [![icon](52/icon.png)](52/readme.md)  |  | Xiaomi Aqara smart RGBW light controller (ZNTGMK11LM)
 |[53](53/readme.md)| [![icon](53/icon.png)](53/readme.md)  |  | Tuya 4Ch relay
 |[54](54/readme.md)| [![icon](54/icon.png)](54/readme.md)  |  | Fish feeder
+|[55](55/readme.md)| [![icon](55/icon.png)](55/readme.md)  |  | Xiaomi Aqara TVOC air quality monitor (VOCKQJK11LM)
