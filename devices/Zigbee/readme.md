@@ -55,3 +55,6 @@
 |[53](53/readme.md)| [![icon](53/icon.png)](53/readme.md)  |  | Tuya 4Ch relay
 |[54](54/readme.md)| [![icon](54/icon.png)](54/readme.md)  |  | Fish feeder
 |[55](55/readme.md)| [![icon](55/icon.png)](55/readme.md)  |  | Xiaomi Aqara TVOC air quality monitor (VOCKQJK11LM)
+|[56](56/readme.md)| [![icon](56/icon.png)](56/readme.md)  |  | IKEA TRADFRI LED bulb E14 WW clear 250 lumen, dimmable (LED1935C3)
+|[57](57/readme.md)| [![icon](57/icon.png)](57/readme.md)  |  | IKEA TRADFRI LED bulb E27 WW clear 250 lumen, dimmable (LED1934G3)
+|[58](58/readme.md)| [![icon](58/icon.png)](58/readme.md)  |  | Xiaomi Aqara T1 human body movement and illuminance sensor (RTCGQ12LM)
