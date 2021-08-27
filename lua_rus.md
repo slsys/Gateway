@@ -214,6 +214,10 @@ mode:
 local status = obj.get("security.status")
 if (status == nil) then status = 0 end
 ```
+Для изменения типа переменной сохраняемого значения можно сделать так:
+```
+obj.setOpt("security.status", "INT")
+```
 
 ### mqtt.pub()
 Синтаксис: `mqtt.pub(topic, payload)`
