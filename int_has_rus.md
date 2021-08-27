@@ -353,6 +353,33 @@ else:
 ```
 {% endraw %}
      
+### Умный термостат Tuya MoesHouse BHT-002-GBLZB
+
+{% raw %}
+```
+#Термостат теплый пол кухня
+  - platform: mqtt
+    name: Пол кухня
+    payload_on: "true"
+    payload_off: "false"
+    power_command_topic: "zigbee5710/pol_kitchen/system_mode"
+    temperature_command_topic: "zigbee5710/pol_kitchen/set/current_heating_setpoint"
+    temperature_state_topic: "zigbee5710/pol_kitchen/current_heating_setpoint"
+    current_temperature_topic: "zigbee5710/pol_kitchen/local_temperature"
+    mode_state_topic: "zigbee5710/pol_kitchen/system_mode"
+    action_topic: "true"
+    mode_command_topic: "zigbee5710/pol_kitchen/set/system_mode"
+    modes: 
+      - "heat"
+      - "off"
+    min_temp: 20
+    max_temp: 45
+    temp_step: 1
+    precision: 1
+    retain: true
+
+```
+{% endraw %}
 
 
 *PS: раздел в разработке.*

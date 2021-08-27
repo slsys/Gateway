@@ -15,6 +15,7 @@
 
 ```/api/zigbee/join?duration=255&target=XXX```   Управление режимом сопряжения duration 0 для выключения, значения больше 0 указывают период ожидания в секундах,  target разрешает сопряжение на конктетном роутере.  все параметры не обязательны
 
+```/zigbee/clearnvram``` Очистка NVRAM, процесс занимает несколько минут, информацию об очистке видно в логе.  Запускать, только понимая, что вы делаете.
 
 
 ``` /api/zigbee?dev=0xABCD&action=setInterview&state=0 ``` - Запуск интервью на устройстве.
@@ -47,21 +48,20 @@ action=getLevel
 
 #### Audio
 
-/audio?action=playurl&url=xxx
+/api/audio?action=play&url=xxx
 
-/audio?action=geturl
+/api/audio?action=geturl
 
-/audio?action=stop
+/api/audio?action=stop
 
-/audio?action=setvolume&value=xxx
+/api/audio?action=setvolume&value=xxx
 
-/audio?action=getvolume
+/api/audio?action=getvolume
 
-/audio?action=getstatus
+/api/audio?action=getstatus
 
 
 #### Touchlink
-
 ```/api/zigbee/touchlink``` - список устройств рядом
 
 ```/api/zigbee/touchlink?action=scan``` - запуск сканирования
@@ -71,11 +71,31 @@ action=getLevel
 ```/api/zigbee/touchlink?action=reset&dev=0x00158D00011D8CB1``` - Сброс устройства 0x00158D00011D8CB1
 
 #### Scripts
-```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua через http.
+```/api/scripts?action=evalFile&path=/test.lua``` - запуск скрипта test.lua
 
-Также вовзможны варианты: 
-```
-GET http://172.16.1.16/api/files?path=/test.lua
-POST http://172.16.1.16/api/files?path=/test.lua
-DELETE http://172.16.1.16/api/files?path=/test.lua
-```
+```/api/scripts?action=evalCode&plain=print("ok!")``` - запуск текста Lua скрипта
+
+#### Files
+Префиксы к пути:
+```/sd``` - для хранилища на SD карте
+
+```/int или /``` - для внутреннего хранилища
+
+
+```GET http://172.16.1.16/api/files?path=/test.lua``` - получить содержимое файла
+
+```POST http://172.16.1.16/api/files?path=/test.lua&plain=XXX``` - записать в файл
+
+```DELETE http://172.16.1.16/api/files?path=/test.lua``` - удалить файл
+
+```/api/files/rename?old=/file1.lua&new=/file2.lua``` - переименовать файл
+
+#### Leds
+```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
+
+#### Objects (начиная с fw: 2021.03.23d1)
+```GET /api/obj``` - Получить список объектов
+
+```GET /api/obj?name=XXX``` - Получить значение объъекта XXX
+
+```POST /api/obj?name=XXX&value=YYY``` - Установить значение YYY объъекта XXX 

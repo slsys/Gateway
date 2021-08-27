@@ -24,6 +24,6 @@ action=getLevel
 ```
 ```/api/zigbee?dev=0x1841&action=setSimpleBind&state=click&value=test.lua``` - Binds the start of the test.lua script to the state parameter equal to click on the device with the address 0x1841. The address can be in IEEE format, or FriendlyName.
 
-```/api/zigbee?dev=0x2855&action=setState&state=state&value=ON``` - Sets the state state to ON for the device with the address 0x2855. The address can be in IEEE format, or FriendlyName.
+```/api/zigbee?dev=0x2855&action=setState&name=state&value=ON``` - Sets the state state to ON for the device with the address 0x2855. The address can be in IEEE format, or FriendlyName.
 
 ```/api/zigbee?dev=0xABCD&action=setInterview&state=0``` - Start the interview on the device.

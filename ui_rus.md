@@ -36,7 +36,7 @@
 скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/bootstrap3/ui.html)
 
 
-## Пример dashboard от Nick7zmail [Nick7zmail](https://www.w3schools.com/bootstrap/bootstrap_panels.asp):
+## Пример dashboard от Nick7zmail [Nick7zmail](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/nick7zmail/ui.html):
 <img src="/img/dash_n7z_3.jpg" width="30%"> <img src="/img/dash_n7z_2.jpg" width="60%">
 ![](/img/dash_n7z_1.jpg)
 [скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/nick7zmail/ui.html)

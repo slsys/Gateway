@@ -2,7 +2,7 @@
 
 # Zigbee 
 
-This product is designed to work with common ZigBee, BLE devices. The gateway is based on the controller [ESP32 from Espressif](https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). The tandem of chips from Texas Instruments [ZIgbee CC2538](https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pfgo-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds) and amplifier [CC2592](https://www.ti.com/product/CC2592utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUvCIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds)
+This product is designed to work with common ZigBee devices. The gateway is based on the controller [ESP32 from Espressif](https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). The tandem of chips from Texas Instruments [ZIgbee CC2538](https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pfgo-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds) and amplifier [CC2592](https://www.ti.com/product/CC2592utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUvCIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds)
 
 # General information
 The gateway acts as the coordinator of Zigbee and allows you to:
@@ -47,7 +47,7 @@ The gateway acts as the coordinator of Zigbee and allows you to:
 
 
 # Hardware
-The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the site [Smart Logic System](slsys.io)
+The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the [Telegram](https://t.me/avenit)
 
 ![home](/img/Mi_Gateway_Shield12.jpg)
 

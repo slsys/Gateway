@@ -5,7 +5,7 @@
 Проект финансируется за счет собственных средств авторов.  Поддержать развитие проекта можно одним из нижеуказанных способов:
 
 ## Поддержка проекта путем приобретения  шлюза 
-В настоящее время  можно купить DIY версию  шлюза, собранную энтузиастами в группе [@zigberu](https://t.me/zigberu)
+В настоящее время  можно купить собранную DIY версию  шлюза [Telegram](https://t.me/avenit)
 
 ##  Сбор средств на приобретение устройств
 Для добавления  поддержки шлюзом SLS  Zigbee новых устройств, интеграция  которых  без наличия  самого устройства затруднена, было принято решение начать целевой сбор средств с помощью банковского сервиса от Тинькофф. Добавить устройство в данный список вы можете через Issues, либо сообщением через другие источники.
@@ -15,27 +15,23 @@
 
 ### Список устройств для добавления поддержки
 
-1) [Термостат Tuya BHT-002-GBLZBW](https://aliexpress.ru/item/4001290635305.html)        ***[ссылка на  донат](https://www.tinkoff.ru/sl/8P611xPyTjZ)*** (сбор)
+1) [Tuya Multi-Sensor 4 in 1 (Motion, Humidity, Light, Temperature)](http://alli.pub/5u04to) ******[ссылка на  донат](https://www.tinkoff.ru/sl/3sYNyrmFYMC)****** (сбор)
 
+![](https://api.tinkoff.ru/v1/cm/download?moduleId=crowdfund&id=936807e9-a277-4331-bb40-8373fb895f9b.png)
 
+2) [Tuya Presence & Light  sensor](http://alli.pub/5u05jj) ***[ссылка на  донат](https://www.tinkoff.ru/sl/10EHvJmevzy)*** (сбор)
 
-![](https://ae01.alicdn.com/kf/H94fc497408204fb18c16681e47f84e88X.jpg?width=1001&height=1001&hash=2002)
+![](https://api.tinkoff.ru/v1/cm/download?moduleId=crowdfund&id=93069a79-4cc7-4735-980e-ba67f2a593a1.jpg)
 
-
-
-2)  [Термостат TUYA Zigbee TRV](https://aliexpress.ru/item/4001043738901.html)         (сбор окончен)
-
-
-![](https://ae01.alicdn.com/kf/Hb6982e9da9b7461080b14ac3d406b0dd4.jpg)
-
-
-
-3) [Смарт замок Lock Tuya European M500](https://aliexpress.ru/item/4001136671110.html)        ***[ссылка на  донат](https://www.tinkoff.ru/collectmoney/crowd/gira.grigoriy1/Kp2oi65920/?short_link=5pQkgc7UzuP&httpMethod=GET)*** (сбор)
-
-![](https://ae01.alicdn.com/kf/Hc67430a13eab499b89959e67b2973a3fS.jpg?width=920&height=460&hash=1380)
 
 ##  Альтернативный вариант поддержки проекта
 
-Поддержать проект можно также  с помощью сервиса [Yandex](https://yasobe.ru/na/slsys)
+Поддержать проект можно также  с помощью сервисов:
+
+[YMoney](https://yasobe.ru/na/slsys)
+
+[Tinkoff](https://www.tinkoff.ru/sl/9REs8jDbVHD)
+
+[PayPal](https://paypal.me/slsys)
 
 
