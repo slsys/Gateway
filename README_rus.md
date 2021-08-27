@@ -126,7 +126,7 @@
 
 [Группа новостей и новых версий прошивок](https://t.me/slssys)
 
-[Список поддерживаемых устройств](https://slsys.io/action/devicelists.html)
+[Список поддерживаемых устройств](https://slsys.io/action/supported_devices.html)
 
 [Как собрать шлюз самому](https://modkam.ru/?p=1342)
 

@@ -125,7 +125,7 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 
 [News group and new firmware versions](https://t.me/slssys)
 
-[List of supported devices](https://slsys.io/action/devicelists.html)
+[List of supported devices](https://slsys.io/action/supported_devices.html)
 
 [How to build a gateway yourself](https://modkam.ru/?p=1342)
 
