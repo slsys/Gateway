@@ -219,6 +219,12 @@ if (status == nil) then status = 0 end
 obj.setOpt("security.status", "INT")
 ```
 
+Получение времени события в секундах lua list (curr,prev):
+```
+curr, prev = obj.getTime("security.status")
+print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
+```
+
 ### mqtt.pub()
 Синтаксис: `mqtt.pub(topic, payload)`
 
