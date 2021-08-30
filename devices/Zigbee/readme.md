@@ -1,3 +1,11 @@
+**Actual list is [here](https://slsys.io/action/supported_devices.html)!**
+
+
+
+
+
+
+
 # Supported devices:
 
 | Id | Photo  | Have in lab | Description  | Open |
