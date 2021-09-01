@@ -7,7 +7,7 @@ This product is designed to work with common ZigBee devices. The gateway is base
 # General information
 The gateway acts as the coordinator of Zigbee and allows you to:
 
-1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](https://slsys.io/action/devicelists.html). New equipment may be added after discussion with us.
+1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](https://slsys.io/action/supported_devices.html). New equipment may be added after discussion with us.
 
 
 2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
