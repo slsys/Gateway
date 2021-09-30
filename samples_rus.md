@@ -238,3 +238,18 @@ end
 ```curtain.lua,0x5C0272FFFECAAC69:0:75```
 
 Теперь при однократном нажатии кнопки осуществляется переключение в противоположный режим, при двукратном - открытие, трекратном  - закрытие.
+
+## Периодическое включение/отключение циркуляционного насоса по таймеру
+
+onemintimer.lua:
+```
+--включаем цикруляцию ГВС каждые 10 минут
+if (Event.Time.min == 0 ) or (Event.Time.min == 20 )   or (Event.Time.min == 40 ) then
+  zigbee.set("0x00124B001EC823EC", "state_l1", "OFF")
+telegram.send("Цикруляция ГВС выключена") 
+end
+if (Event.Time.min == 10 ) or (Event.Time.min == 30 )   or (Event.Time.min == 50 ) then
+  zigbee.set("0x00124B001EC823EC", "state_l1", "ON") 
+telegram.send("Цикруляция ГВС включена") end
+```
+
