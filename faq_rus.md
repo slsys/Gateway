@@ -344,3 +344,7 @@ zigbee.SetModel("0xXXXXXXXX", "ptvo.switch")
 ```
 nc -ulnk 45678
 ```
+или  для WIN
+```
+nc -ulnp 45678
+```
