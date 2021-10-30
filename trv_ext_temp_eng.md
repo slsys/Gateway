@@ -1,4 +1,4 @@
-It is possible to use an external themperature sensor for TRV thermostat (Model TS0601).
+It is possible to use an external temperature sensor for TRV thermostat (Model TS0601).
 
 1. Set an object name in the `SB rule` column to the `temperature` state of the external temperature sensor. For example: `room1.temperature`
 
