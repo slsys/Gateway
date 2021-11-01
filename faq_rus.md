@@ -344,7 +344,7 @@ zigbee.SetModel("0xXXXXXXXX", "ptvo.switch")
 ```
 nc -ulnk 45678
 ```
-или  для WIN
+или  для WIN(https://github.com/slsys/Gateway/raw/master/rom/netcat/nc111nt.zip)
 ```
 nc -ulnp 45678
 ```
