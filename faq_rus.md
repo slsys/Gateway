@@ -340,11 +340,11 @@ zigbee.SetModel("0xXXXXXXXX", "ptvo.switch")
 ## Включение UDP LOG
 В  lua необходимо выполнить команду os.udplogenable(true)
 
-На любой машине должна быть запушена утилита netcat 
+На любой машине должна быть запушена утилита [netcat](https://ru.wikipedia.org/wiki/Netcat) 
 ```
 nc -ulnk 45678
 ```
-или  для WIN(https://github.com/slsys/Gateway/raw/master/rom/netcat/nc111nt.zip)
+или  для [Windows](https://github.com/slsys/Gateway/raw/master/rom/netcat/nc111nt.zip)
 ```
 nc -ulnp 45678
 ```
