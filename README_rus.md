@@ -92,7 +92,7 @@
 
 ## [Структура сообщений SLS zigbee2mqtt](/slscommand_rus.md)
 
-## [Список поддерживаемых устройств](https://slsys.io/action/devicelists.html)
+## [Список поддерживаемых устройств](https://slsys.io/action/supported_devices.html)
 
 ## [Сбор средств на покупку оборудования для добавления поддержки](/donate_rus.md)
 
