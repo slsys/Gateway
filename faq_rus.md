@@ -177,7 +177,7 @@ zigbee.join(255, "0x0000")
 
 ```
 cd /opt/zigbee2mqtt 
-DEBUG=zigbee-herdsman:zStack:* npm start
+DEBUG=zigbee-herdsman:adapter:zStack:znp*,zigbee-herdsman:controller* npm start
 ```
 
 Далее необходимо выполнить нужные действия с устройством и сохранить вывод  экрана. Данные сообщения можно добавить в [issue](https://github.com/slsys/Gateway/issues) или с помощью сервиса [pastebin](https://pastebin.com)
