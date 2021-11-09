@@ -54,8 +54,10 @@ gpio.mode(25, gpio.OUTPUT)
 gpio.write(25, gpio.LOW)
 ```
 
-
-
+Запуск шлюза OpenTherm:
+```
+thermo.beginOpenTherm()
+```
 
 
 
