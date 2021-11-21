@@ -114,3 +114,9 @@ Payload: 30
 Topic: xxx/dali/g0/cmd/off 
 Payload:
 ```
+
+Отправка команды выключения на все устройства:
+```
+Topic: xxx/dali/broadcast/cmd/off 
+Payload:
+```
