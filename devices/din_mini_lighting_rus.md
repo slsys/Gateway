@@ -76,6 +76,8 @@ dali.setaddr(1, 36)
 | 152    | querydtr |  | * | * | |
 | 153    | querydevicetype |  | * | * | |
 | 160    | queryactual |  | * | * | |
+| 161    | querymax |  | * | * | |
+| 162    | querymin |  | * | * | |
 | 192    | querygroupslow | Возвращает битовую маску групп в которых состоит 0-7 | * | * | |
 | 193    | querygroupshigh |  Возвращает битовую маску групп в которых состоит 8-15 | * | * | |
 
