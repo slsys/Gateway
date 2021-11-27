@@ -94,13 +94,21 @@ dali.setaddr(1, 36)
 
 
  
- 
- 
-
-
 Отправка команды изменения яркости на 30 на устройство с коротким адресом 5:
 ```
 dali.cmd('arc', { addrtype = 'short', address = 5, value = 30 })
+```
+
+Получает значение яркости для устройства с адресом 1:
+```
+print(dali.cmd('queryactual', { addrtype = 'short', address = 1 }))
+```
+
+Если на шине только одно устройство, назначает ему адрес 42:
+```
+address = 42
+dali.cmd('setdtr', { addrtype = 'broadcast', value = address * 2 + 1 })
+dali.cmd('storeshortaddress', { addrtype = 'broadcast' })
 ```
 
 ## Управление через MQTT (с версии 2021.11.21d12)
