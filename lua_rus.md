@@ -142,7 +142,7 @@ if Event.State.Value == "single" then
 * Event.State.Name - Имя состояния которое вызвало скрипт
 * Event.State.Value - Новое значение состояния
 
-Пример скрипта для включения света:
+Пример скрипта для включения света диммируемого:
 ```
 if Event.State.Value == "single" then 
   value = 255 
@@ -154,6 +154,17 @@ end
 zigbee.set("lamp_1", "brightness", value)
 ```
 
+Пример скрипта для включения света ON/OFF:
+```
+if Event.State.Value == "single" then 
+  value = "ON" 
+elseif Event.State.Value == "double" then 
+  value = "OFF" 
+else 
+  return 
+end
+zigbee.set("lamp_1", "brightness", value)
+```
 
 ### os.time()
 `os.time()` возвращает Unix время.
