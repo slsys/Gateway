@@ -267,6 +267,6 @@ mqtt.pub('wled/f6dafd/col', '#36A615DD')
 ```
 Установка  произвольного  цвета
 ```
-mqtt.pub('wled/f6dafd/col', '#'..math.random(0,16777215))  --цвет
+mqtt.pub('wled/f6dafd/col', '#'..math.random(0,16777215))  
 ```
 
