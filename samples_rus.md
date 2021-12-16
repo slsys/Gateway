@@ -252,7 +252,7 @@ if (Event.Time.min == 10 ) or (Event.Time.min == 30 )   or (Event.Time.min == 50
   zigbee.set("0x00124B001EC823EC", "state_l1", "ON") 
 telegram.send("Цикруляция ГВС включена") end
 ```
-## Управление адрерсными светодидами, подключенными к контроллеру [WLED](https://github.com/Aircoookie/WLED)
+## Управление адрерсными светодиодами, подключенными к контроллеру [WLED](https://github.com/Aircoookie/WLED)
 WLED поддерживает множество вариантов управления, в том числе mqtt. Ниже собраны  примеры кода на lua для управления 
 
 Включение, переключение режима
