@@ -269,4 +269,8 @@ mqtt.pub('wled/f6dafd/col', '#36A615DD')
 ```
 mqtt.pub('wled/f6dafd/col', '#'..math.random(0,16777215))  
 ```
-
+Установка произвольного эффекта и отключение эффектов
+```
+mqtt.pub('wled/f6dafd/api', 'win&A=128&FX='..=math.random(0, 50)) -- установка произвольного эффекта
+mqtt.pub('wled/f6dafd/api', 'win&A=128&FX=0') -- отключение  эффектов
+```
