@@ -54,6 +54,8 @@ knx.discovery()
 ### Поддерживаемые типы данных
 * 1.001 DPT_Switch
 * 3.007 DPT_Control_Dimming
+* 7.000 DPT_2ByteUInt (Базовый тип, целое число 0 .. 65 535)
+* 8.000 DPT_2ByteInt (Базовый тип, число -32 768 ... 32 767)
 * 9.001 DPT_Value_Temp
 * 10.001 DPT_TimeOfDay
 * 11.001 DPT_Date
