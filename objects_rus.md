@@ -26,9 +26,10 @@
 
 ## Работа с объектами из скриптов
 
-Получение значения объекта:
+Получение значения (текущего и предыдущего) объекта и проверка его существования:
 ```
-obj.get(ObjectName)
+local current_status, previous_status = obj.get("security.status")
+if (current_status == nil) then current_status = 0 end
 ```
 
 Установка значения объекта:
@@ -39,12 +40,6 @@ obj.set(ObjectName, ObjectValue)
 Удаление объекта:
 ```
 obj.remove(ObjectName)
-```
-
-Проверка существования объекта:
-```
-local status = obj.get("security.status")
-if (status == nil) then status = 0 end
 ```
 
 Для изменения типа переменной сохраняемого значения можно сделать так:
