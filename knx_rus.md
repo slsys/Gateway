@@ -52,8 +52,12 @@ knx.discovery()
 Ознакомится с полным списком возможных данных можно в официальной документации [KNX](https://www.knx.org/wAssets/docs/downloads/Certification/Interworking-Datapoint-types/03_07_02-Datapoint-Types-v02.02.01-AS.pdf).
 
 ### Поддерживаемые типы данных
-* 1.001 DPT_Switch
+* 1.001 DPT_Switch (Off / On)
 * 3.007 DPT_Control_Dimming
+* 5.000 DPT_1ByteUInt (Базовый тип, целое число 0 .. 255)
+* 5.001 DPT_Scaling (Диапазон 0 .. 100 %)
+* 5.003 DPT_Angle (Диапазон 0 .. 360 °)
+* 6.000 DPT_1ByteInt (Базовый тип, целое число -128 .. 127)
 * 7.000 DPT_2ByteUInt (Базовый тип, целое число 0 .. 65 535)
 * 8.000 DPT_2ByteInt (Базовый тип, число -32 768 ... 32 767)
 * 9.001 DPT_Value_Temp
