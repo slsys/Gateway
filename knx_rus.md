@@ -20,7 +20,7 @@
 Когда выполнено подключение, шлюз отслеживает его состояния и переподключается если связь разрывается.
 
 Подключиться можно из скриптов:
-```
+```lua
 require("knx")
 
 knx.beginIP()
@@ -28,14 +28,14 @@ knx.connect("172.16.1.88", 3671)
 ```
 
 Отключение от IP Interface:
-```
+```lua
 require("knx")
 
 knx.disconnect()
 ```
 
 Возможно обнаружение в сети KNX IP Interface через функцию Discovery:
-```
+```lua
 require("knx")
 
 knx.beginIP()
@@ -79,14 +79,14 @@ knx.discovery()
 
 ## Скрипты
 Конфигурация группового объекта, задание типа и названия:
-```
+```lua
 require("knx")
 
 knx.groupConf("1/2/200", "DPT_Value_Temp", "Actual temperature")
 ```
 
 Запрос на чтение группового объекта:
-```
+```lua
 require("knx")
 
 knx.groupRead("1/1/10")
@@ -95,14 +95,14 @@ knx.groupRead("1/1/10")
 
 
 Запрос на запись в групповой объект:
-```
+```lua
 require("knx")
 
 knx.groupWrite("1/1/10", 0x01)
 ```
 
 Получение значения группового объекта из базы:
-```
+```lua
 require("knx")
 
 local sw = knx.groupValue("1/1/10")
