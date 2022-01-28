@@ -6,10 +6,10 @@
 
 ## Отличия от бесплатной версии
 1) Поддержка Ethernet
-2) Поддержка KNX
-3) Поддержка DALI
-4) Поддержка OpenTherm/eBUS
-5) Поддержка Modbus
+2) Поддержка [KNX](/knx_rus.md)
+3) Поддержка [DALI](/devices/din_mini_lighting_rus.md)
+4) Поддержка [OpenTherm/eBUS](/devices/din_mini_boiler_rus.md)
+5) Поддержка [Modbus](/modbus_rus.md)
 6) Поддержка CAN (данный функционал в разработке)
 7) Поддержка DMX (данный функционал в разработке)
 8) Поддержка HomeKit (данный функционал в разработке)
