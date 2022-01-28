@@ -42,30 +42,30 @@
 В данный момент поддерживается только `http://` протокол.
 
 Пример переключение gpio 12 для прошивки wifi-iot
-```
+```lua
 http.request("http://192.168.1.34/gpio?st=2&pin=12")
 ```
 
 Пример отправки POST запроса:
-```
+```lua
 http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
 ```
 
 Пример переключения реле sw1 в прошивке espHome:
 
-```
+```lua
 http.request("http://192.168.1.71/switch/sw1/toggle", "POST") 
 ```
 
 Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
-```
+```lua
 if Event.State.Value == "btn_2_single"  then
   http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
 end
 ```
 
 Запрос инфомации со стороннего ресурса
-```
+```lua
 local Response = http.request("http://wtfismyip.com/text")
 print("My IP: " .. Response)
 ```
@@ -73,7 +73,7 @@ print("My IP: " .. Response)
 ### zigbee.value()
 Получение значения состояния устройства из кэша zigbee.value("ieeard", "temperature")
 
-```
+```lua
 -- Получаем значение температуры и округляем до целого  
 temp = zigbee.value("0x00158D0001A2D2FE", "temperature")
 temp = math.floor(temp)
@@ -82,7 +82,7 @@ print("Текущая температура: " .. temp .. " C°")
 
 Вместо адреса устройства можно испрользовать FriendlyName (в том числе кириллицу), либо текущий адрес устройства в сети (0x9EC8).
 
-```
+```lua
 -- Получаем значение температуры и округляем до целого  
 temp = zigbee.value("датчик в комнате", "temperature")
 temp = math.floor(temp)
@@ -93,7 +93,7 @@ print("Текущая температура: " .. temp .. " C°")
 Вызывает команду GET в ковертере. Используется для ручного чтения состояний из устройств.
 
 Пример: 
-```
+```lua
 zigbee.get("lamp1", "brightness")
 ```
 
@@ -103,7 +103,7 @@ zigbee.get("lamp1", "brightness")
 
 Открывает сеть для подключения новых устройств на duration секунд (макс. 255), для устройства target или для всей сети. 
 
-```
+```lua
 zigbee.join(255, "plug1")
 ```
 
@@ -112,7 +112,7 @@ zigbee.join(255, "plug1")
 Установка значения  устройства `zigbee.set(Ident, StateName, StateValue)`
 
 Пример скрипта, который при нажатии кнопки выключателя *lumi.sensor_switch* включает освещение *lamp_1*:
-```
+```lua
 if zigbee.value("lumi.sensor_switch", "click") == "single" then
   -- toggle lamp
   current_brightness = zigbee.value("lamp_1", "brightness")
@@ -135,7 +135,7 @@ if Event.State.Value == "single" then
 Отправляет запрос на чтение атрибута в кластере.
 
 Читает атрибут swBuild в кластере genBasic в 1 эндпоинте:
-```
+```lua
 zigbee.readAttr("0x90FD9FFFFEF7E26D", 0x0000, 1, 0x4000)
 ```
 
@@ -158,7 +158,7 @@ zigbee.readAttr("0x90FD9FFFFEF7E26D", 0x0000, 1, 0x4000)
 * Event.State.Value - Новое значение состояния
 
 Пример скрипта для включения света диммируемого:
-```
+```lua
 if Event.State.Value == "single" then 
   value = 255 
 elseif Event.State.Value == "double" then 
@@ -170,7 +170,7 @@ zigbee.set("lamp_1", "brightness", value)
 ```
 
 Пример скрипта для включения света ON/OFF:
-```
+```lua
 if Event.State.Value == "single" then 
   value = "ON" 
 elseif Event.State.Value == "double" then 
@@ -190,7 +190,7 @@ zigbee.set("lamp_1", "brightness", value)
 
 Пример получения текущего часа, времени и секунд, например для планировщика в таймере:
 
-```
+```lua
 local gmt = 3
 local time = os.time() + gmt * 3600;
 
@@ -236,7 +236,7 @@ mode:
 Включается и выключает WDT (Сторожевой таймер), может использоваться для отладки незапланированных перезагрузок.
 
 Выключить WDT:
-```
+```lua
 os.wdt(false)
 ```
 
@@ -245,17 +245,17 @@ os.wdt(false)
 `obj.get(ObjectName)` / `obj.set(ObjectName, ObjectValue)` для сохранения и получения объекта для обмена данными между скриптами
 
 Проверка существования объекта:
-```
+```lua
 local status = obj.get("security.status")
 if (status == nil) then status = 0 end
 ```
 Для изменения типа переменной сохраняемого значения можно сделать так:
-```
+```lua
 obj.setOpt("security.status", "INT")
 ```
 
 Получение времени события в секундах lua list (curr,prev):
-```
+```lua
 curr, prev = obj.getTime("security.status")
 print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
 ```
@@ -267,7 +267,7 @@ print("Время предыдущего изменения:" .. prev .. ", И �
 
 Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
 
-```
+```lua
   mqtt.pub('cmnd/sonoff5/power', 'toggle')
 ```
 
@@ -276,17 +276,17 @@ print("Время предыдущего изменения:" .. prev .. ", И �
 
 ### Включение "режима сопряжения" при нажатии на боковую кнопку  шлюза
 Необходимо привязать скрипт `btn_sw1.lua` к `io.input0.value` который будет вызываться при нажатии на кнопку:
-```
+```lua
 obj.onChange("io.input0.value", "btn_sw1.lua")
 ```
 
 В скрипт `btn_sw1.lua` нужно добавить следующий код:
-```
+```lua
 zigbee.join(255, "0x0000")
 ```
 
 ### Управление GPIO
-```
+```lua
 gpio.mode(pin, mode)
 gpio.read(pin) - чтение цифрового 
 gpio.read(PIN, true) - чтение ADC
@@ -294,7 +294,7 @@ gpio.write(pin, level)
 ```
 
 ### Управление звуком
-```
+```lua
 audio.playurl(url) -- проигрывание звука из URL
 audio.geturl() --- возвращает текущий URL
 audio.stop() -- остановить проигрывание
@@ -311,7 +311,7 @@ audio.getstatus() -- возвращает текущий статус
 
 Пример отправки данных каждую минуту на https://narodmon.ru
 
-```
+```lua
 function SendNarodmon(name, value)
   local MAC = "BC:DD:C2:D7:68:BC"
   http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
@@ -324,7 +324,7 @@ SendNarodmon("illuminance", value)
 
 ### Отправка сообщения в телеграм с помощью вашего бота
 
-```
+```lua
 local char_to_hex = function(c)
   return string.format("%%%02X", string.byte(c))
 end
@@ -363,7 +363,7 @@ SendTelegram(text)
 
 ### Уведомление в телеграм об открытии двери
 
-```
+```lua
 local char_to_hex = function(c)
   return string.format("%%%02X", string.byte(c))
 end
@@ -405,7 +405,7 @@ end
 
 ### Оповещение в телеграм при сработке датчика движения
 
-```
+```lua
 local char_to_hex = function(c)
   return string.format("%%%02X", string.byte(c))
 end
@@ -446,7 +446,7 @@ end
 ```
 
 ###  Оповещение об изменении значения датчика температуры/влажности
-```
+```lua
 local char_to_hex = function(c)
   return string.format("%%%02X", string.byte(c))
 end
@@ -500,7 +500,7 @@ SendNarodmon("humidity", hum)
 *token* и *ChatId* достаточно написать 1 раз в `init.lua`, потом использовать только `telegram.send()` :
 
 
-```
+```lua
 -- добавьте в init.lua
 telegram.settoken("5961....:AAHJP4...")
 telegram.setchat("5748.....")
@@ -513,7 +513,7 @@ telegram.send("Температура: " .. string.format("%.2f", zigbee.value(t
 
 Вариант через GPIO
 
-```
+```lua
 local gmt = 3  
 local time = os.time()  
 local hour = (math.modf(time / 3600) + gmt) % 24  
@@ -531,7 +531,7 @@ end
 ```
 
 Вариант через MQTT:
-```
+```lua
 local gmt = 3
 local time = os.time()
 local hour = (math.modf(time / 3600) + gmt) % 24
@@ -547,12 +547,12 @@ end
 ### Создание режима охраны
 
 Постановка 
-```
+```lua
 obj.set("security_status", "armed")
 ```
 
 Проверка
-```
+```lua
 if obj.get("security_status")=="armed" then 
   print("Объект на охране.")
 else 
@@ -564,14 +564,14 @@ end
 
 192.168.1.5 - адрес другого шлюза. Нельзя запускать на самом себе таким образом, используйте объект audio.
 
-```
+```lua
 http.request("http://192.168.1.5/audio?action=setvolume&value=100")
 http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
 ```
 
 ### Создание виртуальных свойств
 
-```
+```lua
 zigbee.add(IEEE, "myproperies", type) 
 ```
 
@@ -583,7 +583,7 @@ zigbee.add(IEEE, "myproperies", type)
 
 Пример инициализвции с сохранением данных
 
-```
+```lua
 local res= zigbee.add("0x00124B001F7CA144", "prop_float", "FLOAT") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_bool", "BOOL") 
 local res= zigbee.add("0x00124B001F7CA144", "prop_int", "INT") 
@@ -596,7 +596,7 @@ os.save()
 
 Необходимо создать lua скрипт, который будет вызываться при изменении pressure:
 
-```
+```lua
 local press = zigbee.value(tostring(Event.ieeeAddr), "pressure")
 local pressmm = zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
 if pressmm == null  then
@@ -616,7 +616,7 @@ zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press * 7.5)
 
 Астротаймер вызывавается скриптом `OneMinTimer.lua` каждую минуту:
 
-```
+```lua
 local sunrise_add_min <const> = 15
 local sunrise_hour, sunrise_min = os.sunrise()
 sunrise_min = sunrise_min + sunrise_add_min
@@ -635,7 +635,7 @@ end
 
 ### Пример использования астротаймера
 
-```
+```lua
 local sunset_add_min <const> = 20
 local sunset_hour, sunset_min = os.sunset()
 sunset_min = sunset_min + sunset_add_min
@@ -669,7 +669,7 @@ end
 
 ### Определение времени суток (светлое или темное)
 
-```
+```lua
 sunrise_h, sunrise_m = os.sunrise()
 sunset_h, sunset_m = os.sunset()
 sunshine = (Event.Time.hour*60+Event.Time.min)>(sunrise_h*60+sunrise_m) and (Event.Time.hour*60+Event.Time.min)<(sunset_h*60+sunset_m)
@@ -680,14 +680,14 @@ sunshine -  булева переменная, показывает время �
 
 ### Запуск lua скрипта из другого скрипта
 
-```
+```lua
 dofile("/int/test.lua")
 ```
 
 
 ### Запуск скрипта с помощью HTTP API
 
-```
+```lua
 /api/scripts?action=evalFile&path=/test.lua
 ```
 
@@ -702,17 +702,17 @@ dofile("/int/test.lua")
 
 
 Запуск скрипта OneMinTimer каждые 60 секунд:
-```
+```lua
 scripts.setTimer("OneMinTimer", 60)
 ```
 
 Запуск скрипта my1 через 5 секунд однократно:
-```
+```lua
 scripts.setTimer("my1", os.time() + 5)
 ```
 
 Отмена таймера для скрипта OneMinTimer:
-```
+```lua
 scripts.setTimer("OneMinTimer", 0)
 ```
 
@@ -721,7 +721,7 @@ scripts.setTimer("OneMinTimer", 0)
 ### Скрипт инициализации 
 При запуске системы единоразово выполняется init.lua. В нем полезно задать переменные для работы с устройством. 
 
-```
+```lua
 telegram.settoken("51778***5:AAG0bvK***")
 telegram.setchat("-3348***")
 telegram.send("SLS загружен!!!")
