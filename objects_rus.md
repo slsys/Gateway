@@ -12,6 +12,15 @@
 
 Данный функционал в разработке.
 
+## MQTT
+Шлюз может слать уведомления в MQTT при изменении объекта, это включается через 3 параметр *obj.setOpt()*.
+
+Шлюз будет публиковать в топик вида: *zgwXXXX/obj/OBJ_NAME*
+
+Для изменения объекта необходимо отправить значение объекта в топик *zgwXXXX/obj/OBJ_NAME/set*
+
+Для запроса текущего значения объекта необходимо отправить пустой топик *zgwXXXX/obj/OBJ_NAME/get*
+
 ## Сохранение объектов
 В данный момент объекты хранятся только в памяти и не сохраняются в флеш-память. 
 
@@ -27,34 +36,39 @@
 ## Работа с объектами из скриптов
 
 Получение значения (текущего и предыдущего) объекта и проверка его существования:
-```
+```lua
 local current_status, previous_status = obj.get("security.status")
 if (current_status == nil) then current_status = 0 end
 ```
 
 Установка значения объекта:
-```
+```lua
 obj.set(ObjectName, ObjectValue)
 ```
 
 Удаление объекта:
-```
+```lua
 obj.remove(ObjectName)
 ```
 
 Для изменения типа переменной сохраняемого значения можно сделать так:
-```
+```lua
 obj.setOpt("security.status", "INT")
 ```
 
-Получение времени события в секундах lua list (curr,prev):
+Включение уведомления об изменении в MQTT:
+```lua
+obj.setOpt("security.status", "INT", true)
 ```
-curr, prev = obj.getTime("security.status")
+
+Получение времени события в секундах lua list (curr,prev):
+```lua
+local curr, prev = obj.getTime("security.status")
 print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
 ```
 
 Привязка к объекту скрипта, который запускается по изменению:
-```
+```lua
 obj.onChange('room1.temperature', 'room1_trv_calibration.lua')
 ```
 
@@ -63,7 +77,7 @@ obj.onChange('room1.temperature', 'room1_trv_calibration.lua')
 
 Так же передается имя объекта, его текущее и предыдущее значение.
 
-```
+```lua
 if Event.Type == 2 then
   local Name = Event.Obj.Name
   local Value = Event.Obj.Value
