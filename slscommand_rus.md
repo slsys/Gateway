@@ -12,3 +12,8 @@ ZigBeeXXXX/reboot {}
 ```
 ZigBeeXXXX/led {“mode”:”manual”,”hex”:”#FFFFFF”}
 ```
+
+## Переименование датчика
+```
+ZigBeeXXXX/bridge/config/rename {"old": "0x00158D0001", "new": "water3"}
+```
