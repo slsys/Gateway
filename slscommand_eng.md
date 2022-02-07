@@ -13,4 +13,9 @@ ZigBeeXXXX/reboot {}
 ZigBeeXXXX/led {“mode”: ”manual”, ”hex”: ”#FFFFFF”}
 ```
 
+## Sensor friendly_name changing
+```
+ZigBeeXXXX/bridge/config/rename {"old": "0x00158D0001", "new": "water3"}
+```
+
 [Перейти на русскую версию страницы](/slscommand_rus.md)
