@@ -57,7 +57,7 @@ dp.hangup()
 
 Проверить, что сейчас идет вызов:
 ```
-if dp.status == dp.CALL begin
+if dp.status() == dp.CALL begin
   print("CALL!")
 end
 ```
