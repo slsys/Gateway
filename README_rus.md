@@ -134,6 +134,5 @@
 
 [Партнерский чат для обсуждения устройств Zigbee](https://t.me/zigbeer)
 
-[Русский Wiki на портале myzigbee.ru](https://myzigbee.ru/)
 
 
