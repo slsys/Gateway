@@ -41,6 +41,16 @@
 1) В режиме прозрачного шлюза, когда котлом управляет комнатный термостат, а шлюз прозрачно транслирует его сообщения котлу и обратно, фиксируя текущее состояние системы.
 3) В режиме термостата, тогда контроллер самостоятельно или по командом из вне управляет котлом отопления
 
+## Поддержка OpenTherm Monitor
+[Opentherm Monitor](https://otgw.tclcode.com/otmonitor.html) - это небольшая утилита, которая предназначена для того, чтобы помочь вам настроить и контролировать ваш шлюз OpenTherm. 
+
+![icon](https://otgw.tclcode.com/otmonitor1.png)
+
+Включение сервера:
+```lua
+thermo.beginOpenThermMonitor()
+```
+
 ## Выбор программного режима работы порта
 Выбор программного режима работы порта осуществляется через функции *gpio.mode(GPIO, mode)*, где mode может быть *gpio.INPUT* или *gpio.OUTPUT*.
 
@@ -52,33 +62,33 @@
 ### Примеры использования в скриптах
 
 Задать каналу реле режим выхода и выключить его:
-```
+```lua
 gpio.mode(25, gpio.OUTPUT)
 gpio.write(25, gpio.LOW)
 ```
 
 Запуск шлюза OpenTherm:
-```
+```lua
 thermo.beginOpenTherm()
 ```
 
 Установка температуры теплоносителя 50 градусов:
-```
+```lua
 thermo.setBoilerTemperature(50);
 ```
 
 Установка температуры горячей воды 50 градусов:
-```
+```lua
 thermo.setDHWTemperature(50);
 ```
 
 Включение отопления:
-```
+```lua
 thermo.setBoilerEnable(true)
 ```
 
 Включение нагрева горячей воды:
-```
+```lua
 thermo.setDHWEnable(true)
 ```
 
@@ -87,26 +97,26 @@ thermo.setDHWEnable(true)
 
 
 Установка температуры теплоносителя:
-```
+```mqtt
 xxx/thermo/boiler/set/target_temperature
 ```
 
 Установка температуры горячей воды:
-```
+```mqtt
 xxx/thermo/dhw/set/target_temperature
 ```
 
 Включение/выключение отопления:
-```
+```mqtt
 xxx/thermo/boiler/set/enable true/false
 ```
 
 Включение/выключение нагрева горячей воды:
-```
+```mqtt
 xxx/thermo/dhw/set/enable true/false
 ```
 
 Срос ошибки котла:
-```
+```mqtt
 xxx/thermo/ot/set/error_code      0
 ```
