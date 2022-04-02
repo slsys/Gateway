@@ -133,4 +133,4 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 
 [Partner chat to discuss Zigbee devices](https://t.me/zigbeer)
 
-[Russian Wiki on myzigbee.ru portal](https://myzigbee.ru/)
+[Russian Wiki on zigbee.wiki portal](https://zigbee.wiki/)
