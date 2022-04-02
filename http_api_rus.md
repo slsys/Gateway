@@ -75,20 +75,7 @@ action=getLevel
 
 ```/api/scripts?action=evalCode&plain=print("ok!")``` - запуск текста Lua скрипта
 
-#### Files
-Префиксы к пути:
-```/sd``` - для хранилища на SD карте
-
-```/int или /``` - для внутреннего хранилища
-
-
-```GET http://172.16.1.16/api/files?path=/test.lua``` - получить содержимое файла
-
-```POST http://172.16.1.16/api/files?path=/test.lua&plain=XXX``` - записать в файл
-
-```DELETE http://172.16.1.16/api/files?path=/test.lua``` - удалить файл
-
-```/api/files/rename?old=/file1.lua&new=/file2.lua``` - переименовать файл
+#### [Хранилище](https://github.com/slsys/Gateway/blob/master/storage_rus.md#http-api)
 
 #### Leds
 ```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
