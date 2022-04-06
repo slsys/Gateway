@@ -42,28 +42,36 @@
 Для этого достаточно добавить в *init.lua* команду *dp.begin()*
 После этого, при входящем звонке будет вызывать скрипт *dp.lua*
 
+## Тайминги
+Для разных домофонов необходимы разные тайминги, по умолчанию они такие:
+1. DP_TIMING_CALL_TIMEOUT   = 3*1000
+2. DP_TIMING_ANSWER_TIMEOUT = 60*1000
+3. DP_TIMING_OPEN_TIMEOUT   = 1000
+4. DP_TIMING_BEFORE_ANSWER  = 400
+5. DP_TIMING_BEFORE_OPEN    = 1000
+
 ### Примеры использования
 Ответить на звонок и открыть дверь:
-```
+```lua
 dp.answer()
 dp.open()
 ```
 
 Сбросить вызов:
-```
+```lua
 dp.answer()
 dp.hangup()
 ```
 
 Проверить, что сейчас идет вызов:
-```
+```lua
 if dp.status() == dp.CALL begin
   print("CALL!")
 end
 ```
 
 Задать режим входа для обоих каналов и получить их значения:
-```
+```lua
 gpio.mode(32, gpio.INPUT)
 gpio.mode(25, gpio.INPUT)
   local IN1 = gpio.read(32)
@@ -72,7 +80,10 @@ gpio.mode(25, gpio.INPUT)
   print(IN2)
 ```
 
-
+Установить таймаут открытия, для автозавершения в 2000мс:
+```lua
+dp.setTiming(3, 2000)
+```
 
 
 
