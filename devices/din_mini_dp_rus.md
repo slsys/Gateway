@@ -70,14 +70,10 @@ if dp.status() == dp.CALL begin
 end
 ```
 
-Задать режим входа для обоих каналов и получить их значения:
+Добавить входы модуля в объекты:
 ```lua
-gpio.mode(32, gpio.INPUT)
-gpio.mode(25, gpio.INPUT)
-  local IN1 = gpio.read(32)
-  local IN2 = gpio.read(25)
-  print(IN1)
-  print(IN2)
+gpio.addInput(32, gpio.INPUT, 0, "IN1")
+gpio.addInput(25, gpio.INPUT, 0, "IN2")
 ```
 
 Установить таймаут открытия, для автозавершения в 2000мс:
