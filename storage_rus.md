@@ -61,3 +61,9 @@ GET /api/storage/mkdir?path=/int/mydir
 ```http
 GET /api/storage/rmdir?path=/int/mydir
 ```
+
+## Скрипты Lua
+Примонтировать SD-карту, можно добавить в *init.lua*:
+```lua
+os.mountSD(true)
+```
