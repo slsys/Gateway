@@ -49,7 +49,7 @@ knx.discovery()
 
 Если тип для группового объекта не задан (Undefined), то используется его фактическое представление (Raw), если его длина 1-6 бит, то он содержится в первом байте значения, если длина 1 байт и больше, что первый байт значения должен быть 0x00.
 
-Ознакомится с полным списком возможных данных можно в официальной документации [KNX](https://www.knx.org/wAssets/docs/downloads/Certification/Interworking-Datapoint-types/03_07_02-Datapoint-Types-v02.02.01-AS.pdf).
+Ознакомится с полным списком возможных типов данных можно в официальной документации [KNX](https://www.knx.org/wAssets/docs/downloads/Certification/Interworking-Datapoint-types/03_07_02-Datapoint-Types-v02.02.01-AS.pdf).
 
 ### Поддерживаемые типы данных
 * 1.001 DPT_Switch (Off / On)
