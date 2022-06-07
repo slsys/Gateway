@@ -53,9 +53,9 @@ os.delay(100)
 gpio.write(27, 0)
 ```
 
-Включить режим входа MultuSwitch на 1 канале
+Включить режим входа MultiSwitch на 1 канале:
 ```lua
-gpio.addInput(32, gpio.INPUT, 2, "input0")
+gpio.addInput(32, gpio.INPUT, 2, "input1")
 ```
 
 
