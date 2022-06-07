@@ -29,30 +29,34 @@
 
 ### Примеры испольхования
 Задать каналу 2 режим входа, получить его значение:
-```
+```lua
 gpio.mode(25, gpio.INPUT)
 local value = gpio.read(25)
 print(value)
 ```
 Задать каналу 4 режим выхода и включить его:
-```
+```lua
 gpio.mode(27, gpio.OUTPUT)
 gpio.write(27, 1)
 ```
 Задать каналу 1 режим выхода и включить ШИМ со скважностью 50%:
-```
+```lua
 gpio.mode(32, gpio.OUTPUT)
 gpio.pwmsetup(3, 32)
 gpio.pwm(3, 255/100*50)
 ```
-Задать каналу 1 режим выхода и включить его на 100мс:
-```
+Задать каналу 4 режим выхода и включить его на 100мс:
+```lua
 gpio.mode(27, gpio.OUTPUT)
 gpio.write(27, 1)
 os.delay(100)
 gpio.write(27, 0)
 ```
 
+Включить режим входа MultuSwitch на 1 канале
+```lua
+gpio.addInput(32, gpio.INPUT, 2, "input0")
+```
 
 
 
