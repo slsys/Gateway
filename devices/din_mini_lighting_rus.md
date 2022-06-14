@@ -1,6 +1,6 @@
 # Модуль управления освещением
 
-Модуль предназначен для установки в шлюз SLS DIN Mini.
+Модуль предназначен для установки в контролер [SLS DIN Mini](https://github.com/slsys/Gateway/blob/master/devices/din_mini_base_rus.md).
 
 Модуль добавляет следующую функциональность:
 
