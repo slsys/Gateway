@@ -90,6 +90,8 @@
 
 ## [Примеры типовых сценариев](/samples_rus.md)
 
+## [Использования GPIO на примерах решаемых задач](/gpio_sample_rus.md.md)
+
 ## [Структура сообщений zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (поддерживается большинство команд)
 
 ## [Структура сообщений SLS zigbee2mqtt](/slscommand_rus.md)
