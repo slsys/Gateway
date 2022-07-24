@@ -131,6 +131,14 @@ if Event.State.Value == "single" then
 
 ```
 
+### zigbee.setState(ident, name, value[[, type], events])
+Устанавливает значение состояния Zigbee устройства. Можно указать тип значения (по умолчанию STR) и необходимо ли выполнять события (по умолчанию true).
+Начиная с версии 2022.07.24d1.
+
+```lua
+zigbee.setState("0x00124B001E1EB5C0", "my_count", 5, "INT")
+```
+
 ### zigbee.readAttr(ident, epId, clusterId, AttrId[, manufId])
 Отправляет запрос на чтение атрибута в кластере.
 
@@ -144,6 +152,14 @@ zigbee.readAttr("0x90FD9FFFFEF7E26D", 0x0000, 1, 0x4000)
 
 ### zigbee.configReport(ident, epId, clusterId, AttrId, dataType, minRepInt, maxRepInt, repChange)
 Конфигурирует репортинг атрибута в кластере.
+
+### zigbee.getStatus()
+Возвращает статус координатора, если запущен успешно - 9.
+Начиная с версии 2022.07.24d1.
+
+```lua
+coord_status = zigbee.getStatus()
+```
 
 ### Event
 Структура Event например позволяет использовать один и тот же скрипт для разных состояний или устройств.
