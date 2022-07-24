@@ -591,22 +591,22 @@ http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh
 ### Создание виртуальных свойств
 
 ```lua
-zigbee.add(IEEE, "myproperies", type) 
+zigbee.setState(IEEE, "myproperies", type) 
 ```
 
 Варианты type:
 * "BOOL"
 * "INT"
 * "FLOAT"
-* "STRING"
+* "STR"
 
 Пример инициализвции с сохранением данных
 
 ```lua
-local res= zigbee.add("0x00124B001F7CA144", "prop_float", "FLOAT") 
-local res= zigbee.add("0x00124B001F7CA144", "prop_bool", "BOOL") 
-local res= zigbee.add("0x00124B001F7CA144", "prop_int", "INT") 
-local res= zigbee.add("0x00124B001F7CA144", "prop_int", "STR") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_float", "FLOAT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_bool", "BOOL") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "INT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "STR") 
 os.save()
 ```
 
@@ -618,10 +618,7 @@ os.save()
 ```lua
 local press = zigbee.value(tostring(Event.ieeeAddr), "pressure")
 local pressmm = zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
-if pressmm == null  then
-  zigbee.add(tostring(Event.ieeeAddr), "pressure_mm", "FLOAT")
-end
-zigbee.set(tostring(Event.ieeeAddr), "pressure_mm", press * 7.5)
+zigbee.setState(Event.ieeeAddr, "pressure_mm", press * 7.5, "FLOAT")
 ```
 
 ### Запрос данных от устройств через скрипт, например запрос мгновенного потребления, если устройство само не оповещает
