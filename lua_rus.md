@@ -172,6 +172,7 @@ coord_status = zigbee.getStatus()
 * Event.FriendlyName - FriendlyName устройства, которое вызывало скрипт
 * Event.State.Name - Имя состояния которое вызвало скрипт
 * Event.State.Value - Новое значение состояния
+* Event.State.OldValue - Предыдущее значение состояния
 
 Пример скрипта для включения света диммируемого:
 ```lua
