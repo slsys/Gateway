@@ -129,7 +129,7 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 
 [How to build a gateway yourself](https://modkam.ru/?p=1342)
 
-[Where to purchase](https://t.me/zigberu)
+[Where to purchase](https://t.me/avenit)
 
 [Partner chat to discuss Zigbee devices](https://t.me/zigbeer)
 
