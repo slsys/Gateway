@@ -136,7 +136,7 @@
 
 [Как собрать шлюз самому](https://modkam.ru/?p=1342)
 
-[Где приобрести](https://t.me/zigberu)
+[Где приобрести](https://t.me/avenit)
 
 [Партнерский чат для обсуждения устройств Zigbee](https://t.me/zigbeer)
 
