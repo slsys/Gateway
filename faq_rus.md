@@ -24,23 +24,7 @@
 
 
 ## Вопрос: Можно ли приобрести готовое оборудование?
-Ответ: В настоящее время распространяются опытные образцы по индивидуальным завявкам. После отладки всего процесса, приобрести готовое оборудование можно будет в интернет магазине. 
-
-
-## Вопрос: Какую прошивку выбрать для модуля ZigBee
-Ответ: Все зависит от того какой у вас модуль и усилитель.
-Прошивка должна быть обязательно основана на Z-Stack 3.0.
-
-Для прошивки через CC Debugger:
-
-[Прошивка для модуля CC2530 без усилителя](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_20190523.zip)
-
-[Прошивка для модуля CC2530 с усилителем СС2591](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2591_20190523.zip)
-
-[Прошивка для модуля CC2530 с усилителем СС2592](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2592_20190523.zip)
-
-Для прошивки через J-Link:
-[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/MODKAMRU_V3_UART-no-flow-control_20200211_sbl.hex)
+Ответ: Можно купить у разработчиков [тут](https://t.me/avenit)
 
 ## Вопрос: Как прошить ESP32
 
@@ -62,11 +46,22 @@
 4. Нажать Start update.
 ```
 
+## Вопрос: Какую прошивку выбрать для модуля ZigBee
+Ответ: Все зависит от того какой у вас модуль и усилитель.
+Прошивка должна быть обязательно основана на Z-Stack 3.0.
+
 ## Вопрос: Как прошить CC2530
 
 Ответ:
 [Инструкция](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0-cc2531cc2530)
 
+Для прошивки через CC Debugger:
+
+[Прошивка для модуля CC2530 без усилителя](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_20190523.zip)
+
+[Прошивка для модуля CC2530 с усилителем СС2591](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2591_20190523.zip)
+
+[Прошивка для модуля CC2530 с усилителем СС2592](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2592_20190523.zip)
 
 
 ## Вопрос: Как прошить CC2538
@@ -75,9 +70,11 @@
 [Инструкция 1](https://modkam.ru/?p=1188)
 [Инструкция 2](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC-%D1%81%D1%812538-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-j-link)
 
-[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/MODKAMRU_V3_UART-no-flow-control_20200211_sbl.hex)
+[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20211222.hex)
 
+## Вопрос: Как прошить CC2652
 
+[Прошивка для модуля Rf-Star CC2652P](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_202207262.hex)
 
 ## Вопрос: Как добавлять устройства.
 
