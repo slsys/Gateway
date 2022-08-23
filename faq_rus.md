@@ -48,7 +48,14 @@
 
 ## Вопрос: Какую прошивку выбрать для модуля ZigBee
 Ответ: Все зависит от того какой у вас модуль и усилитель.
+
+Если нет поддержки BSL в текущей прошивке, тогда необходим программатор для обновления.
+
 Прошивка должна быть обязательно основана на Z-Stack 3.0.
+
+Ссылки на актуальные прошивки смотрите ниже.
+
+[Видео-инструкция обновления прошивки по воздуху](https://www.youtube.com/watch?v=5VKNBCV6M4U)
 
 ## Вопрос: Как прошить CC2530
 
@@ -70,11 +77,11 @@
 [Инструкция 1](https://modkam.ru/?p=1188)
 [Инструкция 2](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC-%D1%81%D1%812538-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-j-link)
 
-[Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20211222.hex)
+[BSL Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20211222.hex)
 
 ## Вопрос: Как прошить CC2652
 
-[Прошивка для модуля Rf-Star CC2652P](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_202207262.hex)
+[BSL Прошивка для модуля Rf-Star CC2652P](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_20220726.hex)
 
 ## Вопрос: Как добавлять устройства.
 
