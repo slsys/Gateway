@@ -287,3 +287,94 @@ else
 telegram.send("Протечка на датчике  "..Event.FriendlyName .. " устранена")
 end
 ```
+
+## Обработка двойного, тройного и тд нажатия на выключателях, которые не поддерживают такие режимы
+Данный сценарий тестировался для выключателей, которые подключены к [8-ми канальному реле modkam](https://modkam.ru/2020/06/24/zigbee-rele-na-8-kanalov/).  При первом нажатии создается таймер на 3 секунды, который при запуске которого выполняются действия. 
+
+callback.lua (привязывается в интерфейсе к каналу, который будем считать)
+```
+function search_value (tbl, val)
+    for i = 1, #tbl do
+        if tbl[i][1] == val then
+            return i
+        end
+    end
+    return nil
+end
+
+
+if (Event.State.Value ~= Event.State.OldValue) then
+
+  local ar = {
+  {"0x00124B001EC84F3C.state_l8","0x00158D0002EE1285", 'cover'},  --спальня
+  {"0x00124B001F7CA144.state_l2","0x50325FFFFEA65978", 'cover'},  --Анюта
+  {"0x00124B001F7CA144.state_l8","0x50325FFFFEA457C4", 'cover'},  --Софа
+  {"0x00124B001EC80F20.state_l7","0x5C0272FFFECAAC69", 'cover'},  --Гостиная    
+  {"0x00124B001EC84F3C.state_l7","hello",'telega'}}
+ 
+
+ myevent=Event.ieeeAddr .. "." .. Event.State.Name
+  
+ remotedev= ar[search_value(ar, myevent)][2]
+ remotetype=ar[search_value(ar, myevent)][3] 
+
+  
+obj.setOpt(remotedev.. "_cnt","INT",true)
+obj.setOpt(remotedev.. "_timer","BOOL",true)
+
+
+timer=obj.get(remotedev.. "_timer")
+obj.set(remotedev.."_cnt" ,obj.get(remotedev.."_cnt")+1)  
+
+  
+  
+  --проверяем, если скрипт был запущен давно и не сбросился
+  curr, prev = obj.getTime(remotedev.. "_timer")
+  
+  if  (timer==true and  os.time()- curr>60) then
+
+     obj.set(remotedev.. "_timer",false) 
+     obj.set(remotedev.."_cnt" ,0)  
+ --    telegram.send("сбросили таймер и счетчик")
+   end 
+  
+  
+  --запускам таймер сброса на 3 сек
+  if  (timer==false) then 
+--telegram.send(" запускаю scripts.setTimer(clear_cnt)")
+
+   scripts.setTimer("clear_cnt", os.time() + 3,remotedev) 
+   obj.set(remotedev.. "_timer",true)   
+   end
+   end
+  ``` 
+  
+  Сценарий, который выполняет сами действия clear_cnt.lua
+  ```
+  --telegram.send(Event.Param) 
+remotedev=Event.Param
+val=obj.get(remotedev.."_cnt")
+if (val>1) then 
+--obj.set(Event.Param.."_cnt" ,0) 
+--obj.set(Event.Param.."_timer",false)
+obj.set(remotedev.."_cnt" ,0) 
+obj.set(remotedev.."_timer",false)
+  
+--telegram.send(val..", счетчик сброшен,"..remotedev)
+scripts.setTimer("clear_cnt", 0)  
+end
+
+if (val==4) then 
+--      telegram.send("val:"..val) 
+  position=zigbee.value(remotedev, "position")
+--    telegram.send("position:"..position) 
+  if (position>0) then 
+--   telegram.send("закрываю шторы") 
+   zigbee.set(remotedev, "position", 0)
+    else 
+ --   telegram.send("открываю шторы")
+    zigbee.set(remotedev, "position", 100)
+    end 
+    end
+  ```
+  
