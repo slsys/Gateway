@@ -22,7 +22,7 @@ true,0x00124B001F7CA144,state_l1,ON;false,0x00124B001F7CA144,state_l1,OFF;
 
 Создаем сценарий occupancy.lua
 
-```
+```lua
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 local lightlevel =  zigbee.value(tostring(Event.ieeeAddr), "illuminance")
 local minlightlevel=300 --зададим минимальный уровень освещенности, когда необходимо включать освещение
@@ -58,7 +58,7 @@ end
 
 Создаем сценарий occupancy_astro.lua
 
-```
+```lua
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 
 local sunset_hour, sunset_min = os.sunset() --закат 
@@ -119,7 +119,7 @@ occupancy_astro2.lua,0x00124B001EC83D62:state_l4/0x00124B001EC83D62:state_l2
 
 Пример сценария occupancy_astro2.lua
 
-```
+```lua
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 
 local sunset_hour, sunset_min = os.sunset() --закат 
@@ -175,7 +175,7 @@ end
 ```    
 ## Воспроизведение звука при нажатии кнопки (звонок)
 
-```
+```lua
 --zvonok.lua   скрипт ставим на датчик открытия двери если кнопка ON меняем на Single (одиночное нажатие)
 if Event.State.Value == "ON" then
 audio.setvolume(100)
@@ -186,7 +186,7 @@ end
 ## Управляем открытием/закрытием привода штор Tuya с помощью zigbee кнопки WXKG01LM
 
 Создаем сценарий curtian.lua:
-```
+```lua
 local str=Event.Param 
 local p = {}
  
@@ -242,7 +242,7 @@ end
 ## Периодическое включение/отключение циркуляционного насоса по таймеру
 
 onemintimer.lua:
-```
+```lua
 --включаем цикруляцию ГВС каждые 10 минут
 if (Event.Time.min == 0 ) or (Event.Time.min == 20 )   or (Event.Time.min == 40 ) then
   zigbee.set("0x00124B001EC823EC", "state_l1", "OFF")
@@ -256,21 +256,21 @@ telegram.send("Цикруляция ГВС включена") end
 WLED поддерживает множество вариантов управления, в том числе mqtt. Ниже собраны  примеры кода на lua для управления через mqtt.
 
 Включение, переключение режима:
-```
+```lua
 mqtt.pub('wled/f6dafd', 'toggle')
 mqtt.pub('wled/f6dafd', 'on')
 mqtt.pub('wled/f6dafd', 'off')
 ```
 Установка  заданного цвета:
-```
+```lua
 mqtt.pub('wled/f6dafd/col', '#36A615DD')
 ```
 Установка  произвольного  цвета:
-```
+```lua
 mqtt.pub('wled/f6dafd/col', '#'..math.random(0,16777215))  
 ```
 Установка произвольного эффекта и отключение эффектов:
-```
+```lua
 mqtt.pub('wled/f6dafd/api', 'win&A=128&FX='..math.random(0, 50)) -- установка произвольного эффекта
 mqtt.pub('wled/f6dafd/api', 'win&A=128&FX=0') -- отключение  эффектов
 ```
