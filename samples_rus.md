@@ -355,8 +355,6 @@ obj.set(remotedev.."_cnt" ,obj.get(remotedev.."_cnt")+1)
 remotedev=Event.Param
 val=obj.get(remotedev.."_cnt")
 if (val>1) then 
---obj.set(Event.Param.."_cnt" ,0) 
---obj.set(Event.Param.."_timer",false)
 obj.set(remotedev.."_cnt" ,0) 
 obj.set(remotedev.."_timer",false)
   
