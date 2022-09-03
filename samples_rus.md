@@ -292,7 +292,7 @@ end
 Данный сценарий тестировался для выключателей, которые подключены к [8-ми канальному реле modkam](https://modkam.ru/2020/06/24/zigbee-rele-na-8-kanalov/).  При первом нажатии создается таймер на 3 секунды, который при запуске которого выполняются действия. 
 
 callback.lua (привязывается в интерфейсе к каналу, который будем считать)
-```
+```lua
 function search_value (tbl, val)
     for i = 1, #tbl do
         if tbl[i][1] == val then
@@ -350,7 +350,7 @@ obj.set(remotedev.."_cnt" ,obj.get(remotedev.."_cnt")+1)
   ``` 
   
   Сценарий, который выполняет сами действия clear_cnt.lua
-  ```
+  ```lua
   --telegram.send(Event.Param) 
 remotedev=Event.Param
 val=obj.get(remotedev.."_cnt")
