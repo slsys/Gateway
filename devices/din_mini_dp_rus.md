@@ -72,8 +72,8 @@ end
 
 Добавить входы модуля в объекты:
 ```lua
-gpio.addInput(32, gpio.INPUT, 0, "IN1")
-gpio.addInput(25, gpio.INPUT, 0, "IN2")
+gpio.addInput(32, gpio.INPUT_PULLUP, 2, "IN1")
+gpio.addInput(25, gpio.INPUT_PULLUP, 2, "IN2")
 ```
 
 Установить таймаут открытия, для автозавершения в 2000мс:
