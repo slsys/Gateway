@@ -73,8 +73,15 @@ gpio.addInput(32, gpio.INPUT, 2, "input1")
 gpio.addInput(33, gpio.INPUT_PULLUP, 2, "input0", 100, 500, 2000)
 ```
 
-
-
+Добавить все входы модуля в режиме MultiSwitch:
+```lua
+gpio.addInput(32, gpio.INPUT_PULLUP, 2, "input1")
+gpio.addInput(25, gpio.INPUT_PULLUP, 2, "input2")
+gpio.addInput(26, gpio.INPUT_PULLUP, 2, "input3")
+gpio.addInput(27, gpio.INPUT_PULLUP, 2, "input4")
+gpio.addInput(12, gpio.INPUT_PULLUP, 2, "input5")
+gpio.addInput(13, gpio.INPUT_PULLUP, 2, "input6")
+```
 
 
 
