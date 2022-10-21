@@ -366,7 +366,7 @@ if (val==4) then
 --      telegram.send("val:"..val) 
   position=zigbee.value(remotedev, "position")
 --    telegram.send("position:"..position) 
-  if (position>0) then 
+  if (position>6) then 
 --   telegram.send("закрываю шторы") 
    zigbee.set(remotedev, "position", 0)
     else 
