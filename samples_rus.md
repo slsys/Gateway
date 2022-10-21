@@ -383,7 +383,7 @@ if (val==4) then
 
 ![toggle_timer](/img/toggle_timer.png)
 
-Сценарий toggle_timer.lua
+Сценарий toggle_timer.lua:
 ```lua
 local p = {}
 local waittime=900
@@ -411,9 +411,8 @@ if (state=="ON" and timer==true and  os.time()- curr>waittime+10)  then
    scripts.setTimer("toggle_timer2", os.time() + waittime,ieee..":"..parname) 
    obj.set(ieee.. "_"..parname.."_timer",true) 
    end
-'''
-
-сценарий выключения света toggle_timer2.lua
+```
+сценарий, который будет вызываться по таймеру (выключение света) toggle_timer2.lua:
 ```lua
 
 local p = {}
