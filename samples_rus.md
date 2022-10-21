@@ -376,3 +376,57 @@ if (val==4) then
     end
   ```
   
+  
+## Отключение счета через 15 минут после включения
+
+На всякий случай предусмотрим передачу параметров (если тригером будет не сам объект), для этого привяжем к управляемой линии вызов сценария toggle_timer
+[скрин]
+
+Сценарий toggle_timer.lua
+```lua
+local p = {}
+local waittime=900
+ 
+for  x in string.gmatch(Event.Param ,'([^:]+)') do
+  table.insert(p, x) 
+end
+
+local ieee=p[1]
+local parname=p[2]
+
+local state =  zigbee.value(ieee, parname)
+local timer=obj.get(ieee.. "_"..parname.."_timer") 
+local  curr, prev = obj.getTime(ieee.. "_"..parname.."_timer")
+obj.setOpt(ieee.. "_"..parname.."_timer","BOOL",true)
+
+
+ --сброс таймера, если по какойто причине таймер просрочен
+if (state=="ON" and timer==true and  os.time()- curr>waittime+10)  then 
+     obj.set(ieee.. "_"..parname.."_timer",false) 
+   end 
+  
+  --запускам таймер выключения
+  if  (state=="ON" and timer==false) then 
+   scripts.setTimer("toggle_timer2", os.time() + waittime,ieee..":"..parname) 
+   obj.set(ieee.. "_"..parname.."_timer",true) 
+   end
+'''
+
+сценарий выключения света toggle_timer2.lua
+```lua
+
+local p = {}
+ 
+for  x in string.gmatch(Event.Param,'([^:]+)') do
+  table.insert(p, x) 
+end
+
+local ieee=p[1]
+local parname=p[2]
+
+zigbee.set(ieee, parname, "OFF")
+obj.set(ieee.. "_"..parname.."_timer",false)
+--telegram.send(ieee.."."..parname.." выключен по таймеру")
+scripts.setTimer("toggle_timer2", 0) 
+```
+  
