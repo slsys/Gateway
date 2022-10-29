@@ -7,33 +7,19 @@ The project is financed by the authors' own funds. You can support the developme
 ## Project support by purchasing a gateway
 It is currently possible to buy a DIY version of the gateway assembled [Telegram](https://t.me/avenit)
 
-## Raising funds to purchase devices
-To add support for the SLS Zigbee gateway for new devices, the integration of which is difficult without the presence of the device itself, it was decided to start targeted fundraising using a banking service from Tinkoff. You can add a device to this list through Issues, or by posting through other sources.
+## Support on Boosty
 
-***Disclaimer:*** By making a targeted donation, you support the authors of the project, this does not mean that the device will necessarily be added to the supported devices. The authors do not guarantee that after learning the methods and protocols of individual devices, it can be supported by the existing infrastructure.
+https://boosty.to/slsys
 
-### List of devices to add support
+This community is established to support the development of the SLS project, the acquisition of new devices to add support, the review of these devices, and the coordination of further development paths.
 
-1) [Tuya Multi-Sensor 4 in 1 (Motion, Humidity, Light, Temperature)](http://alli.pub/5u04to) ******[link to donate](https://www.tinkoff.ru/sl/3sYNyrmFYMC)****** (collection)
+For community members, first of all, we will hold a presentation of new devices and SLS capabilities, as well as regularly upload updates with new devices!
 
-
-
-![](https://api.tinkoff.ru/v1/cm/download?moduleId=crowdfund&id=936807e9-a277-4331-bb40-8373fb895f9b.png)
-
-
-
-2) [Tuya Presence & Light  sensor](http://alli.pub/5u05jj) ***[link to donate](https://www.tinkoff.ru/sl/10EHvJmevzy)*** ( collection)
-
-
-![](https://api.tinkoff.ru/v1/cm/download?moduleId=crowdfund&id=93069a79-4cc7-4735-980e-ba67f2a593a1.jpg)
-
-
-
-
+In a closed community chat, you can choose devices to prioritize for adding upcoming versions and offer ideas for developing the project.
 
 ## Alternative project support option
 
 You can also support the project using the:
-[YMoney](https://yasobe.ru/na/slsys)
+
 [Tinkoff](https://www.tinkoff.ru/sl/9REs8jDbVHD)
-[PayPal](https://paypal.me/slsys)
+
