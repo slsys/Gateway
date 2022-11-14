@@ -3,12 +3,20 @@
 * Modbus TCP Slave (с версии 2021.05.26d6 регистры хранения (holdings))
 * Modbus TCP Master (в разработке)
 * Modbus RTU Master (в разработке)
-* Modbus RTU Slave (в разработке)
+* Modbus RTU Slave (с версии 2021.05.26d6 регистры хранения (holdings))
 * Modbus RTUoverTCP Master (в разработке)
 * Modbus RTUoverTCP Slave (в разработке)
 
 # Как работает
 Шлюз обеспечивает связь регистра Modbus с объектом в шлюзе, что позволяет обеспечить двухстороннюю передачу данных.
+
+# TCP Slave
+Запускается через команду: *mb.startTCPSlave()*.
+Используется стандартный TCP порт - 502.
+
+# RTU Slave
+Запускается через команду: *mb.startRTUSlave(SlaveId)*, где SlaveId - идентификатор в сети Modbus RTU.
+Настройка параметров Serial интерфейса произодится в соответстующем разделе.
 
 # Примеры
 Добавить в init.lua:
