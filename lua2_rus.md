@@ -113,7 +113,7 @@ obj.set("there.is.no.spoon", true, true)
 
 ### Запуск скрипта с помощью HTTP API
 
-Скрипт SLS можно вызвать из внешней системы используя [HTTP API](http_api_rus.html):
+Скрипт SLS можно вызвать из внешней системы используя [HTTP API](http_api_rus.md):
 `/api/scripts?action=evalFile&path=/test.lua`
 
 
