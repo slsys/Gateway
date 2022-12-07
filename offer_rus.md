@@ -5,8 +5,8 @@
 
 # Дорожная карта
 
-**GHES release version dates**:
-| **Version Number** | **Release Quarter** | **Release Notes** |
+**Реализованые и планируемые функции**:
+| **Дата реализации** | **Краткое описание** | **Статус** |
 |-|-|-|
-| 3.5 | Q2 2022 | [Release Notes](https://docs.github.com/en/enterprise-server@3.5/admin/release-notes) |
+| Q1 2020 | Q2 2022 | Реализовано |
 
