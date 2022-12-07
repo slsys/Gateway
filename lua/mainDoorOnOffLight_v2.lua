@@ -11,54 +11,53 @@
 		- при открывании/закрывании двери меняет состояние СМК state: contact = true: дверь закрыта, false: дверь открыта
 			- соответсвенно на state: contact вешаем скрипт
 --]]
-
 -- rel_tambur/0xA4C138D8A539DB0F/0x4F61
--- mainDoorOnLight_v2.lua,false|0x4F61|state|ON|300|sbMag
+-- mainDoorOnOffLight_v2.lua,mag|false|0x4F61|state|ON|300
 
--- local scriptName = Event.Name -- имя данного скрипта (TODO вроде не работает)
 -- разбираю аргументы 
 local arr = explode("|", Event.Param)
--- формат вызова скрипта scriptName,srcStateVal|dstDevice|dstState|dstStateVal|timer|whoCalled
-local srcStateVal = arr[1] --[[ состояние вызывающего устройства, которое необходимо контролировать. 
+-- формат вызова скрипта scriptName,caller|srcStateTarget|dstDevice|dstState|dstStateVal|timer
+local caller = arr[1] -- кто вызвал: mag = СМК; btn = кнопка; timer = таймер/планировщик; track = Трекер
+local srcStateTarget = arr[2] --[[ целевое состояние вызывающего устройства, которое необходимо контролировать. 
 					Например, для СМК скрипт вызывается по изменению состояния сенсора contact.
 					Если нужно, чтобы скрипт сработал при размыкании СМК (открытие двери/окна)
 					то прописать false]]
-local dstDevice = arr[2] -- исполняющее устройство (реле/розетка/лампа), прописать ieeeAddr или nwkAddr или Friendly name
-local dstState = arr[3] -- состояние исполняющего устройства, которым необходимо управлять. Как правило - state
-local dstStateVal = arr[4] -- значение состояния исполняющего устройства, которое необходимо передать для получения результата. Как правило ON или OFF - вкл/выкл или TOGGLE - переключить
-local timer = arr[5] -- таймер в сек
-local whoCalled = arr[6] -- кто вызвал
---[[
-SB СМК = sbMag				mainDoorOnOffLight.lua,false|0x4F61|state|ON|300|sbMag
-SB кнопки = sbBtn			ToDo mainDoorOnOffLight.lua,double|0|0|0|0|sbMag
-Таймер = timer				mainDoorOnOffLight.lua,false|0x4F61|state|OFF|300|timer
-deviceTracker = devTrack	mainDoorOnOffLight.lua,0|0x4F61|state|OFF|0|devTrack
---]]
+local dstDevice = arr[3] -- исполняющее устройство (реле/розетка/лампа), прописать ieeeAddr или nwkAddr или Friendly name
+local dstState = arr[4] -- состояние исполняющего устройства, которым необходимо управлять. Как правило - state
+local dstStateVal = arr[5] -- значение состояния исполняющего устройства, которое необходимо передать для получения результата. Как правило ON или OFF - вкл/выкл или TOGGLE - переключить
+local timer = arr[6] -- таймер в сек
 arr = nil -- cleanup
--- проверяю кто вызвал: SB, deviceTracker, Timer
-local srcStateCurr = Event.State.Value -- принимаю статус вызвавшего сенсора
--- если есть srcStateCurr, то вызвал SB
-if (srcStateCurr) then
-  -- если srcStateCurr = srcStateVal, значит открыли дверь
-  if (srcStateCurr == srcStateVal) then
+-- принимаю статус вызвавшего устройства
+local srcStateCurr
+if Event.State then
+  srcStateCurr = Event.State.Value 
+end
+local scriptName = (explode(".", Event.Name))[1] -- имя данного скрипта
+-- проверяю кто вызвал (а-ля switch-case)
+if (caller == "mag") then -- датчик открытия - надо включить свет
+  -- если srcStateCurr = srcStateTarget, значит открыли дверь
+  if (srcStateCurr == srcStateTarget) then
+    -- задать/продлить таймер на запуск скрипту себя через время timer
+    local param = "timer|X|" .. dstDevice .. "|" .. dstState .. "|OFF" -- меняю целевое воздействие на OFF
+    scripts.setTimer(scriptName, os.time() + timer, param)
     if (zigbee.value(dstDevice, dstState) ~= dstStateVal) then -- если свет (реле) выключен
       zigbee.set(dstDevice, dstState, dstStateVal) -- то включить
-	  -- задать таймер на запуск скрипту себя через время timer
-	  script.setTimer("mainDoorOnOffLight", os.time() + timer, "false|0x4F61|state|OFF|300|timer") -- передаю теже параметры для совместимости, меняю только целевое воздействие на OFF
-	  -- TODO проверить со scriptName
 	end  
   end
--- если нет srcStateCurr, то вызвал таймер и надо свет выключить
--- TODO - проверить - должен быть nil
-elseif 
-
-
-end
-else -- иначе вызвал таймер
+elseif (caller == "btn") then -- кнопка: single - переключить свет; double - отключить таймер и TODO неплохо бы моргнуть шлюзом для подтверждения
+  if (srcStateCurr == "single") then -- безусловно переключить свет и отключить таймер
+	zigbee.set(dstDevice, dstState, "TOGGLE")
+	scripts.setTimer(scriptName, 0)
+  elseif (srcStateCurr == "double") then -- отключить таймер и моргнуть шлюзом
+    scripts.setTimer(scriptName, 0)
+	-- TODO - моргнуть шлюзом для подтверждения
+  end
+elseif (caller == "track") then -- вызов из трекера, вероятно для выключения. по таймеру тоже действие
+  caller = "timer" -- а-ля goto timer :)
+elseif (caller == "timer") then -- вернулся по окончанию таймера
   if (zigbee.value(dstDevice, dstState) ~= dstStateVal) then -- если свет (реле) включен
     zigbee.set(dstDevice, dstState, dstStateVal) -- то выключить
     -- обнулить таймер - по идее - удаление задачи планировщика
-    script.setTimer("mainDoorOnOffLight", 0)
+    scripts.setTimer(scriptName, 0)
   end
-end
-
+end 
