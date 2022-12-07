@@ -48,9 +48,14 @@ elseif (caller == "btn") then -- кнопка: single - переключить �
   if (srcStateCurr == "single") then -- безусловно переключить свет и отключить таймер
 	zigbee.set(dstDevice, dstState, "TOGGLE")
 	scripts.setTimer(scriptName, 0)
-  elseif (srcStateCurr == "double") then -- отключить таймер и моргнуть шлюзом
-    scripts.setTimer(scriptName, 0)
-	-- TODO - моргнуть шлюзом для подтверждения
+  elseif (srcStateCurr == "double") then -- если свет включен, отключить таймер и моргнуть шлюзом
+    if (zigbee.value(dstDevice, dstState) == "ON") then 
+      scripts.setTimer(scriptName, 0)
+	  -- моргнуть шлюзом для подтверждения
+      os.led("ON",250,255,255,100)
+	  os.delay(500)
+	  os.led("OFF")
+    end
   end
 elseif (caller == "track") then -- вызов из трекера, вероятно для выключения. по таймеру тоже действие
   caller = "timer" -- а-ля goto timer :)
