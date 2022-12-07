@@ -79,6 +79,16 @@
 | Q4 2023 | Облако:  Интеграция с сервисами Яндекс||
 
 
+- [ ] Mercury
+- [x] Venus
+- [x] Earth (Orbit/Moon)
+- [x] Mars
+- [ ] Jupiter
+- [ ] Saturn
+- [ ] Uranus
+- [ ] Neptune
+- [ ] Comet Haley
+
 
 
 
