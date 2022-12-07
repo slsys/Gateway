@@ -5,6 +5,10 @@
 ### Скрипт инициализации
 ```lua
 -- init.lua --
+-- Таймер. Ежеминутный запуск скрипта для отслеживания юзеров в сети
+scripts.setTimer("personesTracker.lua", 60)
+-- Таймер. Запуск скрипта для каких-либо ежеминутных проверок/действий
+scripts.setTimer("flush", 60, "bowl")
 -- Уведомление в Telegram о старте шлюза --
 telegram.settoken("51778***5:AAG0bvK***")
 telegram.setchat("-3348***")
@@ -17,8 +21,6 @@ telegram.send("SLS загружен!!!")
 local sunset_hour, sunset_min = os.sunset()
 local sunrise_hour, sunrise_min = os.sunrise()
 telegram.send("sunrise " .. sunset_hour .. ":" .. sunset_min)
--- Запуск скрипта для каких-либо ежеминутных проверок/действий --
-scripts.setTimer("flush", 60, "bowl")
 -- Инициализация объектов для обмена между скриптами --
 obj.setOpt("there.is.no.spoon", "BOOL")
 obj.set("there.is.no.spoon", true, true)
