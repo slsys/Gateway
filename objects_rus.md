@@ -4,8 +4,9 @@
 
 Доступ к объекту осуществляется по его имени:
 ```lua
-obj.get("security.status")
+local curr, prev = obj.getTime("security.status")
 ```
+Доступно получение текущего *curr*  и предыдущего *prev* значения. 
 
 ## Веб интерфейс
 Просмотреть текущие объекты можно на странице Objects (*/objects*).
