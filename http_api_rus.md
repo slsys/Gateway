@@ -82,7 +82,7 @@ action=getLevel
 #### Leds
 ```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
 
-#### Objects (начиная с fw: 2021.03.23d1)
+#### [Objects](/object_rus.md) 
 ```GET /api/obj``` - Получить список объектов
 
 ```GET /api/obj?name=XXX``` - Получить значение объъекта XXX
