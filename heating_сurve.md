@@ -51,3 +51,6 @@ telegram.send("На улице ".. string.format ("%.2f", ul_average) .."("..ul_
 thermo.setBoilerTemperature(ust)
 --thermo.setDHWTemperature(65);
 ```
+
+
+Полезные ссылки: https://wdn.su/blog/1154
