@@ -10,7 +10,7 @@ function getust(tbl, val)
 end
 
 function getrequest(url, ieee,name)
-  return http.request2(url.."/api/zigbee?dev="..ieee.."&action=getStateValue&name="..name.."&token=e9d38bedb6412e7f4ef49476a2ed9575","POST", "Content-Type: text/text; charset=utf-8\r\n", "body")
+  return http.request2(url.."/api/zigbee?dev="..ieee.."&action=getStateValue&name="..name.."&token=e9d3......f49476a2ed9575","POST", "Content-Type: text/text; charset=utf-8\r\n", "body")
 end
 
 local url = "http://192.168.1.48"
