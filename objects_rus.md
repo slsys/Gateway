@@ -20,7 +20,7 @@ obj.setOpt("security.status", "BOOL")
 obj.setOpt("security.status", "BOOL", true)
 ```
 
-## Типы данных
+*Типы данных*
 Можно установить объекту тип данных:
 * STR - Строки (используется по умолчанию)
 * BOOL - Бинарный (true / false)
