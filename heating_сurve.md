@@ -1,8 +1,8 @@
 # Управление котлом по кривым отопления
 Это заготовка статьи.
 
-Сценарий 
-'''lua
+Сценарий^ 
+```lua
 function getust(tbl, val)
     for i = 1, #tbl do
         if        (tbl[i][1] >= val )  then  return  tbl[i][2]  end 
@@ -50,4 +50,4 @@ print (ust)
 telegram.send("На улице ".. string.format ("%.2f", ul_average) .."("..ul_temp..","..ul_ot..","..temp_veranda.."), установлена уставка котла "..ust.." градусов, средняя температура в доме "..string.format ("%.2f", temp_average))
 thermo.setBoilerTemperature(ust)
 --thermo.setDHWTemperature(65);
-'''
+```
