@@ -149,4 +149,6 @@ GET /api/obj - Получить список объектов
 GET /api/obj?name=XXX - Получить значение объъекта XXX
 
 POST /api/obj?name=XXX&value=YYY - Установить значение YYY объъекта XXX
+
+DELETE /api/obj?name=obj_name - Удалить объект с устройства
 ```
