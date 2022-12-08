@@ -13,7 +13,7 @@ function getust(tbl, val)
     end return 30
 end
 
---функция для поулчения значения температуры с другого контроллера SLS. В примере используется Zigbee датчик температуры, размещенный на веранде. 
+--функция для получения значения температуры с другого контроллера SLS. В примере используется Zigbee датчик температуры, размещенный на веранде. 
 function getrequest(url, ieee,name)
   return http.request2(url.."/api/zigbee?dev="..ieee.."&action=getStateValue&name="..name.."&token=e9d38bedb6412e.....ed9575","POST", "Content-Type: text/text; charset=utf-8\r\n", "body")
 end
