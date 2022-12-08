@@ -62,3 +62,4 @@ thermo.setBoilerTemperature(ust)
 [ПИД РЕГУЛЯТОР урок от AlexGyver](https://alexgyver.ru/lessons/pid/])
 
 [Кривая отопления. Что это и как ее настроить?](https://dzen.ru/a/X5J1nrKM8FGEFVn4)
+[SLS: управление газовым котлом](https://igorkandaurov.com/2022/10/12/sls-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B3%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%BC-%D0%BA%D0%BE%D1%82%D0%BB%D0%BE%D0%BC/)
