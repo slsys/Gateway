@@ -36,6 +36,8 @@ obj.onChange('security.status', 'security_event.lua')
 Для того, чтобы при изменении значения объекта security.status при установке шлюз не уходил в бесконечный цикл, есть возможность управлять обратной связью.  
 
 
+
+
 ## Обратная связь при изменении значения объектов
 Объекты поддерживают установку флага обратной связи, таким образом можно в вызываемом скрипте можно получить информацию об источнике изменения. 
 
@@ -58,35 +60,30 @@ obj.set("security.status", true, true)
 
 Пример скрипта-обработчика security_event.lua (скрипт ранее был привязан к объекту в init.lua):
 ```lua
-local current_status, previous_status, ack = obj.get("room_setpoint11")
-if ack==true then telegram.send("security status is "..current_status)  end
+local current_status, previous_status, ack = obj.get("security.status")
+local status=""
+if current_status==true then  status="true" else   status="false" end  --добавим обработчик булевых значений для склейки со строками
+if ack==true then telegram.send("wsecurity status is "..status)  end  --отправляем уведомление только  в случае изменения значений с признаком ackw
 ```
 
 
 ## Работа с объектами из скриптов
-
-Получение флага обратной связи, значения (текущего и предыдущего) объекта и проверка его существования:
-```lua
-local current_status, previous_status, ack = obj.get("security.status")
-if (current_status == nil) then current_status = 0 end
-```
-
 Установка значения объекта:
 ```lua
-obj.set(ObjectName, ObjectValue)
+obj.set("security.status", true)
 ```
 
-Установка значения объекта с отметкой обратной связи:
+Установка значения объекта с передачей ACK:
 ```lua
-obj.set("room_setpoint", 24, true)
+obj.set("security.status", true,true)
 ```
 
 Удаление объекта:
 ```lua
-obj.remove(ObjectName)
+obj.remove("security.status")
 ```
 
-Для изменения типа переменной сохраняемого значения можно сделать так:
+Для изменения типа переменной:
 ```lua
 obj.setOpt("security.status", "INT")
 ```
@@ -102,15 +99,10 @@ local curr, prev = obj.getTime("security.status")
 print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
 ```
 
-Привязка к объекту скрипта, который запускается по изменению:
-```lua
-obj.onChange('room1.temperature', 'room1_trv_calibration.lua')
-```
-
 ## События
-При вызове скрипта привязанного к объекту вызывается событие с типом *SCRIPT_EVENT_TYPE_OBJ_CHANGE* и значением 2 (с версии 2022.01.13d11).
+При вызове скрипта привязанного к объекту вызывается событие с типом *SCRIPT_EVENT_TYPE_OBJ_CHANGE* и значением 2.
 
-Так же передается имя объекта, его текущее и предыдущее значение, флаг обратной связи.
+Передается имя объекта, его текущее и предыдущее значение, флаг обратной связи.
 
 ```lua
 if Event.Type == 2 then
