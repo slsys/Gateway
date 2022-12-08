@@ -54,7 +54,7 @@ thermo.setBoilerTemperature(ust)
 
 
 Полезные ссылки: 
-https://wdn.su/blog/1154
-https://habr.com/ru/post/145991/
-https://alexgyver.ru/lessons/pid/
+[Логика управления котлом Vaillant](https://wdn.su/blog/1154)
+[ПИД-регулятор своими руками](https://habr.com/ru/post/145991/)
+[ПИД РЕГУЛЯТОР урок от AlexGyver](https://alexgyver.ru/lessons/pid/])
 [Кривая отопления. Что это и как ее настроить?](https://dzen.ru/a/X5J1nrKM8FGEFVn4)
