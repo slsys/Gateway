@@ -45,6 +45,24 @@ obj.onChange('security.status', 'security_event.lua')
 
 При запуске привязанного к объекту скрипта, флаг так же передается содержится в *Event.Obj.Ack*
 
+Пример установки значения объекта security.status:
+```lua
+obj.set("security.status", true)
+```
+
+Установка значения security.status с передачей Ack:
+```lua
+obj.set("security.status", true, true)
+```
+
+
+Пример скрипта-обработчика security_event.lua (скрипт ранее был привязан к объекту в init.lua):
+```lua
+local current_status, previous_status, ack = obj.get("room_setpoint11")
+if ack==true then telegram.send("security status is "..current_status)  end
+```
+
+
 ## Работа с объектами из скриптов
 
 Получение флага обратной связи, значения (текущего и предыдущего) объекта и проверка его существования:
