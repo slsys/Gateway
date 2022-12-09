@@ -222,21 +222,8 @@ obj.onChange("Name"(STR), "script.lua"(STR))
 -- script.lua - имя файла скрипта с расширением
 ```
 
-Проверка существования объекта:
-```lua
-local status = obj.get("security.status")
-if (status == nil) then status = 0 end
-```
-Для изменения типа переменной сохраняемого значения можно сделать так:
-```lua
-obj.setOpt("security.status", "INT")
-```
 
-Получение времени события в секундах lua list (curr,prev):
-```lua
-curr, prev = obj.getTime("security.status")
-print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
-```
+
 
 
 
