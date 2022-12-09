@@ -753,6 +753,14 @@ local sunrise_hour, sunrise_min = os.sunrise()
 telegram.send("sunrise " ..sunset_hour  ..":".. sunset_min )
 ```
 
+# Запись в память / карту памяти
+```
+os.writeFile("/int/!file.db","привет\n",true)  --3 параметр определяет, перезаписывать или нет файл
+value = os.readFile("/int/!file.db")
+print(value)
+```
+
+Для карты памяти необходимо использовать путь "/sd/file.txt"
 
 
 ## Полезные ссылки 

@@ -1,7 +1,9 @@
 ## Описание HTTP API команд
 
-Взаимодействовать с шлюзом можно с помощью HTTP API комманд. Поддерживаются GET и POST сообщения. 
-
+Взаимодействовать с шлюзом можно с помощью HTTP API комманд. Поддерживаются GET и POST сообщения.  В целях безопасности в меню Settings -> Users можно ограничить доступ к информации  токену. В таком случае для доступа необходимо передавать 
+```
+&token=e9d38bed.......f4ef49476a2ed9575 
+```
 Ниже указаны примеры доступных комманд:
 
 ``` /api/zigbee/devices ```
@@ -47,6 +49,7 @@ action=getLevel
 ```
 
 #### Audio
+```
 
 /api/audio?action=play&url=xxx
 
@@ -59,6 +62,7 @@ action=getLevel
 /api/audio?action=getvolume
 
 /api/audio?action=getstatus
+```
 
 
 #### Touchlink
@@ -80,7 +84,7 @@ action=getLevel
 #### Leds
 ```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
 
-#### Objects (начиная с fw: 2021.03.23d1)
+#### [Objects](/objects_rus.md) 
 ```GET /api/obj``` - Получить список объектов
 
 ```GET /api/obj?name=XXX``` - Получить значение объъекта XXX
