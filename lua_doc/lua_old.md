@@ -1,78 +1,4 @@
-# Поддержка lua скриптов (Draft)
-
-## Введение
-Шлюз SLS самодостаточен и может обходиться без внешних систем управления Умным домом. Для реализации автоматизаций, он поддерживает скриптовый язык программирования [LUA](https://ru.wikipedia.org/wiki/Lua).
-При разработке скриптов можно использовать функции как встроенные в прошивку шлюза, так и функции поддерживаемых шлюзом библиотек LUA.
-<!--	#ToDo - какие библиотеки встроены в прошивку
-		известны из доков:
-		os
-		string
-		...
- -->
-Текущая, поддерживаемая, версия [LUA 5.4.4](https://www.lua.org/versions.html#5.4).
-## Соглашения
-Немного о форматировании и названиях различных объектов шлюза.
-
-Для работы с различными объектами используется формат кода типа `zigbee.getStatus()`. В терминологии LUA это выглядит как `библиотека.функция()`. Поэтому постараемся придерживаться подобного именования объектов SLS.
-
-Форматирование текста:
-- пункты меню: *File -> Save* 
-- небольшие куски кода: `print(a)`
-- многострочный код:
-```lua
-local var = 0
-print(var)
-```
-Поскольку материала по теме достаточно много, дабы не превращать документацию в бесконечно длинную простыню, решено разбить его на несколько страничек. Также большинство примеров выделено отдельно, с удобными кросс-ссылками.
-
-let's begin
-
-
-
 ## Список доступных функций и структур
-1. [http.request()](lua2_rus.md#httprequest)
-2. [zigbee.value()](lua_rus.md#zigbeevalue)
-3. [zigbee.get()](lua_rus.md#zigbeeget)
-4. [zigbee.set()](lua_rus.md#zigbeeset)
-5. [Event](lua_rus.md#event)
-6. [os.time()](lua_rus.md#ostime) 
-7. [obj.get()/obj.set()](lua_rus.md#objget--objset) 
-8. [mqtt.pub()](lua_rus.md#mqttpub) 
-
-
-### http.request 
-Вызов URL запроса http.request (`url[:port], [method, headers, body]`)
-
-В данный момент поддерживается только `http://` протокол.
-
-Пример переключение gpio 12 для прошивки wifi-iot
-```lua
-http.request("http://192.168.1.34/gpio?st=2&pin=12")
-```
-
-Пример отправки POST запроса:
-```lua
-http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
-```
-
-Пример переключения реле sw1 в прошивке espHome:
-
-```lua
-http.request("http://192.168.1.71/switch/sw1/toggle", "POST") 
-```
-
-Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
-```lua
-if Event.State.Value == "btn_2_single"  then
-  http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
-end
-```
-
-Запрос инфомации со стороннего ресурса
-```lua
-local Response = http.request("http://wtfismyip.com/text")
-print("My IP: " .. Response)
-```
 
 ### zigbee.value()
 Получение значения состояния устройства из кэша zigbee.value("ieeard", "temperature")
@@ -262,26 +188,6 @@ mode:
 Выключить WDT:
 ```lua
 os.wdt(false)
-```
-
-###  obj.get() / obj.set()
-
-`obj.get(ObjectName)` / `obj.set(ObjectName, ObjectValue)` для сохранения и получения объекта для обмена данными между скриптами
-
-Проверка существования объекта:
-```lua
-local status = obj.get("security.status")
-if (status == nil) then status = 0 end
-```
-Для изменения типа переменной сохраняемого значения можно сделать так:
-```lua
-obj.setOpt("security.status", "INT")
-```
-
-Получение времени события в секундах lua list (curr,prev):
-```lua
-curr, prev = obj.getTime("security.status")
-print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
 ```
 
 ### mqtt.pub()
