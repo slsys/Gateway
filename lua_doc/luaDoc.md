@@ -92,14 +92,22 @@ telegram.send("SLS загружен!!!")
 Аргументов может быть несколько. В данном примере передается 3 аргумента, разделенные символом `:`: целевое устройство, которым должен управлять датчик по сработке; контролируемый статус; задержка управляющего действия. Если аргументы не прописывать, то при изменении условий, придется менять эти значения в теле скрипта. Пример похожего скрипта [здесь](/lua_doc/luaMainDoorLight.md)
 
 ### Запуск скрипта по событию изменения объекта
-[Синтаксис: `obj.onChange('objName', 'script.lua')`](/lua_doc/luaDoc.md#objonChange)
-- `objName` - имя контролируемого объекта
-- `script.lua` - имя скрипта, вызываемого при возникновении события
+Привязка к объекту скрипта, который будет выполняться при каждом изменении объекта
+```lua
+obj.onChange("Name"(STR), "script.lua"(STR))
+-- Name - имя объекта
+-- script.lua - имя файла скрипта с расширением
+```
+Данные объекта в вызываемый скрипт передаются через событие с типом `SCRIPT_EVENT_TYPE_OBJ_CHANGE` и значением `2`. Получить данные можно, например, так:
+```lua
+if Event.Type == 2 then
+  local Name = Event.Obj.Name -- имя объекта
+  local Value = Event.Obj.Value -- значение 
+  local OldValue = Event.Obj.OldValue -- предыдущее значение
+  local Ack = Event.Obj.Ack -- статус флага обратной связи
+end
+```
 
-[Например](/lua_doc/luaExamples.md#Включение-режима-сопряжения-по-нажатию-на-кнопку-шлюза), можно вызвать скрипт по событию нажатия аппаратной кнопки шлюза. Реагировать можно на объекты `io.input0.*`. Включим "режим сопряжения" по нажатию на кнопку:
-1. в `init.lua` добавить код: `obj.onChange("io.input0.value", "btn_sw1.lua")`
-2. создать `btn_sw1.lua` с кодом: `zigbee.join(255, "0x0000")`
-<!--	#ToDo - добавить ссылку на описание join  -->
  
 ### Запуск LUA скрипта из другого скрипта
 
@@ -152,12 +160,12 @@ scripts.setTimer("OneMinTimer", 0)
 
 ## Встроенные библиотеки
 В прошивку шлюза встроены следующие библиотеки:
-- [obj.](lua_rus.md#Работа-с-объектами) 
-- [Event.](lua_rus.md#event)
-- [zigbee.](lua_rus.md#zigbeevalue)
-- [mqtt.](lua_rus.md#mqttpub) 
-- [http.](lua2_rus.md#httprequest)
-- [telegram.](lua2_rus.md#)
+- [obj.](/lua_doc/luaDoc.md#Работа-с-объектами) 
+- [Event.](/lua_doc/luaDoc.md#event)
+- [zigbee.](/lua_doc/luaDoc.md#zigbeevalue)
+- [mqtt.](/lua_doc/luaDoc.md#mqttpub) 
+- [http.](/lua_doc/luaDoc.md#httprequest)
+- [telegram.](/lua_doc/luaDoc.md#)
 
 Огромное количество примеров использования [здесь](/lua_doc/luaExamples.md).
 
