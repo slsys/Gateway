@@ -434,25 +434,7 @@ scripts.setTimer("toggle_timer2", 0)
 ```lua 
 local new_ust, prev_ust = obj.get('thermo.boiler.target_temperature') --получение текущего значения уставки 
 local ul_ot, prev_ul_ot = obj.get('thermo.boiler.temperature_outside')--получение уличной темпетуры с котла по ОТ
-local new_ds18, prev_ds18 = obj.get('1w.28-96A907D6013C/temperature') --получение текущего значения уставки 
-local ul_bt, prev_bt = obj.get('thermo.boiler.temperature')--получение уличной темпетуры с котла по ОТ
-local new_dhwt, prev_dhwt = obj.get('thermo.dhw.temperature') --получение текущего значения уставки 
-
-
-local cdate=string.format("%02d", Event.Time.day).."/"..string.format("%02d", Event.Time.month).."/"..Event.Time.year
-local ctime=string.format("%02d", Event.Time.hour)..":"..string.format("%02d", Event.Time.min)..":"..string.format("%02d", Event.Time.sec)
---local storage='int'
-local storage='sd'
-local fn="/"..storage.."/!log_"..string.gsub(cdate, '/', '_')..".txt"
-local fnjs="/"..storage.."/!log_"..string.gsub(cdate, '/', '_')..".json"
-
-os.fileWrite(fn,'{"new_ust":'..new_ust..',"ul_ot":'.. ul_ot.. ',"new_ds18":'..new_ds18..',"ul_bt":'..ul_bt..',"new_dhwt":'.. new_dhwt .. ',"unixtime":'..os.time().. ',"datetime":"'..cdate.." "..ctime..'"},\n',true)
-
-value = os.fileRead(fn)
-local js='{"temp":['..value..']}'
-js=string.gsub(js, ',\n]}', '\n]}')
-
-os.fileWrite(fnjs,js)
-print("http://"..net.localIP().."/api/storage?path="..fnjs)
-print(js)
+local new_ds18, prev_ds18 = obj.get('1w.28-96A907D6013C/temperature') --получение  значения датчика температуры 
+local ul_bt, prev_bt = obj.get('thermo.boiler.temperature')--получение температуры теплоносителя (отопления)
+local new_dhwt, prev_dhwt = obj.get('thermo.dhw.temperature') --получение температуры бойлера
 ```
