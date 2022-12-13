@@ -124,3 +124,4 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 
 </html>
 ```
+![График](/img/graph.jpg)
