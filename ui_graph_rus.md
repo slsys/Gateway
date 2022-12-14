@@ -166,7 +166,8 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 ```lua
 <html>
    <head>
-      <title>SLS OpenTherm graphics</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+      <title>SLS OpenTherm graphics привет</title>
       <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
       </script>
       <script src = "https://code.highcharts.com/highcharts.js"></script> 
@@ -218,9 +219,11 @@ xhr.onerror = function() {
    			average_temp = [];
             dhwt_status = [];
             flame_status = [];
+            ctimesh = [];
             
           			for (i = 0; i < length; i++) {
-                labels.push(responseObj.temp[i].ctimesh);
+                ctimesh.push(responseObj.temp[i].ctimesh);
+                labels.push(responseObj.temp[i].datetime);
 				ul_ot.push(responseObj.temp[i].ul_ot);
                 new_ds18.push(responseObj.temp[i].new_ds18);
                 new_ust.push(responseObj.temp[i].new_ust);
@@ -231,18 +234,24 @@ xhr.onerror = function() {
                 flame_status.push(responseObj.temp[i].flame_status);
     	     	}
             
-  
+
     var title = {
                text: 'SLS OpenTherm'   
             };
             var subtitle = {
                text: 'daily temp'
             };
+             
+    var chart = {
+             zoomType: 'x'
+			};
 
-  var xAxis ='['+ labels+']';
 
   var xAxis = {
-  categories:labels};
+  categories:ctimesh,
+    type: 'datetime',
+     minRange: 1
+   };
             var yAxis = {
                title: {
                   text: 'Temperature (\xB0C)'
@@ -265,25 +274,26 @@ xhr.onerror = function() {
             };
 
 				var series =  [{
-				name: 'new_ds18',
+				name: 'Уличный ds18b2',
 				data: new_ds18},
                 
                {
-			 	name: 'ul_ot',
+			 	name: 'Уличный термометр по OpenTherm',
 				data: ul_ot
                 },
                    {
-			 	name: 'new_ust',
+			 	name: 'Уставка отопления',
 				data: new_ust
                 },
                    {
-			 	name: 'new_dhwt',
+			 	name: 'Температура ГВС',
 				data: new_dhwt
                 },
                    {
-			 	name: 'average_temp',
-				data: average_temp
-                }
+			 	name: 'Средняя температура в доме',
+				data: average_temp,
+
+                },
                 
 //                         {
 //			 	name: 'dhwt_status',
@@ -293,19 +303,26 @@ xhr.onerror = function() {
   //                        {
 //			 	name: 'flame_status',
 //				data: flame_status
-//                }
+//                },
+  {
+			 	name: 'Температура теплоносителя',
+				data: ul_bt,
+                type: 'area'
+                }
 
 
             ];
+          
 
             var json = {};
             json.title = title;
-            json.subtitle = subtitle;
+ //           json.subtitle = subtitle;
             json.xAxis = xAxis;
             json.yAxis = yAxis;
-            json.tooltip = tooltip;
+ //           json.tooltip = tooltip;
             json.legend = legend;
             json.series = series;
+            json.chart =  chart;
          
 
             $('#container').highcharts(json);
