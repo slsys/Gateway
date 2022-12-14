@@ -164,5 +164,157 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 
 ## Пример и использованием бибоиотеки [highcharts](https://www.highcharts.com/)
 ```lua
-wait
+<html>
+   <head>
+      <title>SLS OpenTherm graphics</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+      <script src = "https://code.highcharts.com/highcharts.js"></script> 
+    
+   </head>
+   
+   <body>
+      <div id = "container" style = "height: 100%; margin: 0 auto"></div>
+      <script language = "JavaScript">
+         $(document).ready(function() {
+         
+         var today = new Date();
+  		 var dd = String(today.getDate()).padStart(2, '0');
+		 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		 var yyyy = today.getFullYear();
+
+      logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
+      let xhr = new XMLHttpRequest();
+      
+      var filename='/api/storage?path=/sd/'+logfile;
+
+      xhr.responseType = 'json';
+      xhr.open('GET', filename);
+      // 3. Отсылаем запрос
+xhr.send();
+// 4. Этот код сработает после того, как мы получим ответ сервера
+xhr.onload = function() {
+  if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+    alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+  } else { // если всё прошло гладко, выводим результат
+//    alert(`good! ${xhr.response.length} байт`); // response -- это ответ сервера
+  }
+};
+
+xhr.onerror = function() {
+  alert("error");
+};
+
+  xhr.onload = function() {
+  let responseObj = xhr.response;
+  length = responseObj.temp.length;
+    
+    	    labels = [];
+			ul_ot = [];
+            new_ust = [];
+            new_ds18 = [];
+            ul_bt = [];
+            new_dhwt = [];
+   			average_temp = [];
+            dhwt_status = [];
+            flame_status = [];
+            
+          			for (i = 0; i < length; i++) {
+                labels.push(responseObj.temp[i].ctimesh);
+				ul_ot.push(responseObj.temp[i].ul_ot);
+                new_ds18.push(responseObj.temp[i].new_ds18);
+                new_ust.push(responseObj.temp[i].new_ust);
+                new_dhwt.push(responseObj.temp[i].new_dhwt);
+                ul_bt.push(responseObj.temp[i].ul_bt);
+                average_temp.push(responseObj.temp[i].average_temp);
+                dhwt_status.push(responseObj.temp[i].dhwt_status);
+                flame_status.push(responseObj.temp[i].flame_status);
+    	     	}
+            
+  
+    var title = {
+               text: 'SLS OpenTherm'   
+            };
+            var subtitle = {
+               text: 'daily temp'
+            };
+
+  var xAxis ='['+ labels+']';
+
+  var xAxis = {
+  categories:labels};
+            var yAxis = {
+               title: {
+                  text: 'Temperature (\xB0C)'
+               },
+               plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+               }]
+            };   
+
+            var tooltip = {
+               valueSuffix: '\xB0C'
+            }
+            var legend = {
+               layout: 'vertical',
+               align: 'right',
+               verticalAlign: 'middle',
+               borderWidth: 0
+            };
+
+				var series =  [{
+				name: 'new_ds18',
+				data: new_ds18},
+                
+               {
+			 	name: 'ul_ot',
+				data: ul_ot
+                },
+                   {
+			 	name: 'new_ust',
+				data: new_ust
+                },
+                   {
+			 	name: 'new_dhwt',
+				data: new_dhwt
+                },
+                   {
+			 	name: 'average_temp',
+				data: average_temp
+                }
+                
+//                         {
+//			 	name: 'dhwt_status',
+//				data: dhwt_status
+//                },
+                
+  //                        {
+//			 	name: 'flame_status',
+//				data: flame_status
+//                }
+
+
+            ];
+
+            var json = {};
+            json.title = title;
+            json.subtitle = subtitle;
+            json.xAxis = xAxis;
+            json.yAxis = yAxis;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.series = series;
+         
+
+            $('#container').highcharts(json);
+               };
+         });
+      
+         
+      </script>
+   </body>
+   
+</html>
 ```
