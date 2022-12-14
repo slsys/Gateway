@@ -1,4 +1,25 @@
 [[toc]]
+### 2022.12.10d3
+- +Telegram: Добавлена возможность форматировать текст и вставлять клавиатуру: telegram.send(text[, chat[, param]])
+- +MQTT: Добавлена опция добавления FN в префикс Entity Name
+- *MQTT: Теперь имя устройства Zigbee пробрасывается в HA независимо от настройки Use FN
+- +Lua: Добавлена функция получения времени работы системы: os.getUptime([inSec])
+- +Lua: Добавлена функция чтения файла в хранилище: os.fileRead(fileName)
+- +Lua: Добавлена функция записи в файл в хранилище: os.fileWrite(fileName, value[, append])
+- *Lua: Исправлена работа os.save()
+- *Lua: Исправлена ошибка проверки диапазона CRON в scripts.setTimer()
+- *Lua: Исправлена ошибка передачи пустого имя скрипта в obj.OnChange()
+- *Zigbee: Добавлена поддержка EP 9-16 для #228 DIY PTVO Universal switch (PTVO) (ptvo.info / ptvo.switch)
+- +Zigbee: Новая модель для #235 Tuya door sensor (_TZ3000_oxslv1c9 / TS0203)
+- +Zigbee: Поддержка для #242 Tuya Temperature & humidity sensor with display (ZG-227ZL) (_TZE200_znbl8dj5 / TS0601, _TZE200_qoy0ekbd )
+- +Zigbee: Поддержка для #243 Tuya Moes light switch - 2 gang (SR-ZS) (_TZ3000_18ejxno0 / TS0012)
+- +Zigbee: Поддержка для #244 Tuya Motion sensor with scene switch (_TZ3210_cwamkvua / TS0202)
+- +Zigbee: Поддержка для #245 Gledopto Zigbee 12W E26/E27 Bulb RGB+CCT (pro) (GLEDOPTO / GL-B-008P)
+- +Zigbee: Поддержка для #246 Tuya Smoke sensor (_TZE200_ntcy3xu1 / TS0601)
+- +Zigbee: Поддержка для #247 Tuya 3-phase clamp power meter (TS0601_3_phase_clamp_meter) (_TZE200_nslr42tt / TS0601)
+- +Zigbee: Поддержка для #248 Tuya Led RGB-WW-CW Zigbee LED Spotlight (_TZ3210_leyz4rju / TS0505B)
+- +Zigbee: Поддержка для #249 Tuya CO2 sensor with display (_TZE200_ogkdpgy2 / TS0601)
+- +Zigbee: Поддержка для #250 Tuya Temperature & humidity external sensor with display (_TZE200_qyflbnbj / TS0601)
 ### 2022.11.26d1
 - +OS: Добавлена возможность включить/отключить WiFi: os.wifi(true/false)
 - *OS: Улучшена работа с WiFi Mesh сетями
