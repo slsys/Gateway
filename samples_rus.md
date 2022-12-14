@@ -438,23 +438,35 @@ local ul_ot, prev_ul_ot = obj.get('thermo.boiler.temperature_outside')--полу
 local new_ds18, prev_ds18 = obj.get('1w.28-96A907D6013C/temperature') --получение  значения датчика температуры 
 local ul_bt, prev_bt = obj.get('thermo.boiler.temperature')--получение температуры теплоносителя (отопления)
 local new_dhwt, prev_dhwt = obj.get('thermo.dhw.temperature') --получение температуры бойлера
+local dhwst, prev_dhwst = obj.get('thermo.dhw.status')       --нагрев воды
+local flame, prev_flame = obj.get('thermo.boiler.flame') --нагрев отопления
+local avr_temp,  avr_temp = obj.get('average_temp')       --средняя температура в доме
 
 
-local cdate=string.format("%02d", Event.Time.day).."/"..string.format("%02d", Event.Time.month).."/"..Event.Time.year
-local ctime=string.format("%02d", Event.Time.hour)..":"..string.format("%02d", Event.Time.min)..":"..string.format("%02d", Event.Time.sec)
+if (flame=="true") then flame_status=100 else flame_status=0 end  --переназнчаем, так как почему-то значения хранятся в STRING
+if (dhwst=="true") then dhwst_status=100 else dhwst_status=0 end  --переназнчаем, так как почему-то значения хранятся в STRING
+
+
+local cdate=string.format("%02d", Event.Time.day).."/"..string.format("%02d", Event.Time.month).."/"..Event.Time.year  --приводим дату в нужный формат
+local ctime=string.format("%02d", Event.Time.hour)..":"..string.format("%02d", Event.Time.min)..":"..string.format("%02d", Event.Time.sec) --приводим время  в нужный формат
+local ctimesh=string.format("%02d", Event.Time.hour)..":"..string.format("%02d", Event.Time.min) --приводим время  в краткий формат
 --local storage='int'   --для записи во внутренню память
 local storage='sd'      --для записи на карту памяти
 local fn="/"..storage.."/!log_"..string.gsub(cdate, '/', '_')..".txt"
 local fnjs="/"..storage.."/!log_"..string.gsub(cdate, '/', '_')..".json"
 
-os.fileWrite(fn,'{"new_ust":'..new_ust..',"ul_ot":'.. ul_ot.. ',"new_ds18":'..new_ds18..',"ul_bt":'..ul_bt..',"new_dhwt":'.. new_dhwt .. ',"unixtime":'..os.time().. ',"datetime":"'..cdate.." "..ctime..'"},\n',true)
+os.fileWrite(fn,'{"new_ust":'..new_ust..',"ul_ot":'.. ul_ot.. ',"new_ds18":'..new_ds18..',"ul_bt":'..ul_bt..',"new_dhwt":'.. new_dhwt .. ',"unixtime":'..os.time().. 
+',"datetime":"'..cdate.." "..ctime..'","dhwt_status":'.. dhwst_status..',"flame_status":'.. flame_status..',"average_temp":'.. avr_temp..',"ctimesh":"'.. ctimesh..  '"},\n',true)
 
 value = os.fileRead(fn)
 local js='{"temp":['..value..']}'
 js=string.gsub(js, ',\n]}', '\n]}')
 
 os.fileWrite(fnjs,js)
+print("Список файлов доступен тут http://"..net.localIP().."/api/storage?path=/"..storage.."/")
+
+local free=http.request2("http://"..net.localIP().."/api/storage/info")
+
 print("http://"..net.localIP().."/api/storage?path="..fnjs)
-print(js)
 
 ```
