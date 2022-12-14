@@ -267,9 +267,10 @@ xhr.onerror = function() {
                valueSuffix: '\xB0C'
             }
             var legend = {
-               layout: 'vertical',
-               align: 'right',
-               verticalAlign: 'middle',
+//               layout: 'vertical',
+               align: 'center',
+ //               itemWidth: 290,
+               verticalAlign: 'top',
                borderWidth: 0
             };
 
@@ -300,14 +301,17 @@ xhr.onerror = function() {
 //				data: dhwt_status
 //                },
                 
-  //                        {
-//			 	name: 'flame_status',
-//				data: flame_status
-//                },
+                          {
+			 	name: 'Горелка',
+				data: flame_status,
+                type: 'area',
+                color: '#FFCF73',
+                   step: 'left'
+                },
   {
 			 	name: 'Температура теплоносителя',
 				data: ul_bt,
-                type: 'area'
+                type: 'areaspline'
                 }
 
 
