@@ -9,6 +9,7 @@ SLS с помощью библиотек позволяет отобразить
 <html>
 
 <head>
+<link rel="icon" type="image/png" href="/favicon.png">
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -43,6 +44,7 @@ var yyyy = today.getFullYear();
 
 logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 //var logfile='!log_13_12_2022.json'
+
         
         
 
@@ -62,14 +64,24 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
             new_ds18 = [];
             ul_bt = [];
             new_dhwt = [];
+   			average_temp = [];
+            dhwt_status = [];
+            flame_status = [];
             
 			for (i = 0; i < length; i++) {
-				labels.push(data.temp[i].datetime);
+//				labels.push(data.temp[i].datetime);
+                labels.push(data.temp[i].ctimesh);
+
+
 				ul_ot.push(data.temp[i].ul_ot);
                 new_ds18.push(data.temp[i].new_ds18);
                 new_ust.push(data.temp[i].new_ust);
                 new_dhwt.push(data.temp[i].new_dhwt);
                 ul_bt.push(data.temp[i].ul_bt);
+                average_temp.push(data.temp[i].average_temp);
+                dhwt_status.push(data.temp[i].dhwt_status);
+                flame_status.push(data.temp[i].flame_status);
+          
                 
 			}
 
@@ -93,19 +105,40 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 						},	
                            {
 							label: "Температура теплоносителя",
-                            backgroundColor: ["#3cba9f"],                           
+                            backgroundColor: ["#c45850"],                           
 							data: ul_bt
                   
 						},
                         {
+							label: "Средняя температура в доме",
+                            backgroundColor: ["#eeebc9"],							
+                            data: average_temp
+                  
+						},
+                          {
 							label: "Температура бойлера",
                             backgroundColor: ["#e8c3b9"],							
                             data: new_dhwt
                   
 						},
+                        
+                        {
+							label: "Нагрев бойлера",
+                            backgroundColor: ["#14bfbf"], 
+                            type: 'bar',
+							data: dhwt_status
+                  
+						},
+                         {
+							label: "Включена горелка",
+                            backgroundColor: ["#11bf4f"], 
+                            type: 'bar',
+							data: flame_status
+                  
+						},
                         {
 							label: "Уличная ds18b2",
-                            backgroundColor: ["#c45850"],                            
+                            backgroundColor: ["#11bfbf"],                            
 							data: new_ds18
                   
 						}
@@ -126,6 +159,7 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 </body>
 
 </html>
+
 ```
 
 ## Пример и использованием бибоиотеки [highcharts](https://www.highcharts.com/)
