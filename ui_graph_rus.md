@@ -163,6 +163,8 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 ```
 
 ## Пример и использованием бибоиотеки [highcharts](https://www.highcharts.com/)
+Пример позволяет проводить масштабирование графика.
+
 ![График highcharts](/img/highcharts.png)
 ```lua
 <html>
