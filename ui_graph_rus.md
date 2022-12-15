@@ -163,6 +163,7 @@ logfile = '!log_'+dd + '_' + mm + '_' + yyyy+'.json';
 ```
 
 ## Пример и использованием бибоиотеки [highcharts](https://www.highcharts.com/)
+![График highcharts](/img/highcharts.jpg)
 ```lua
 <html>
    <head>
