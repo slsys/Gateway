@@ -41,6 +41,13 @@
 
 К клеммам 5 и 6 возможно опциональное подключение комнатного термостата OpenTherm, таким образом устройство встает в разрыв шины OpenTherm.
 
+Инициализация режима производится в стартовом скрипте init.lua
+
+```lua
+thermo.beginOpenTherm(true)  --прозрачнцй
+--thermo.beginOpenTherm()    --мастер
+```
+
 ## Поддержка OpenTherm Monitor
 [Opentherm Monitor](https://otgw.tclcode.com/otmonitor.html) - это небольшая утилита, которая предназначена для того, чтобы помочь вам настроить и контролировать ваш шлюз OpenTherm. 
 
@@ -83,6 +90,7 @@ thermo.setBoilerTemperature(50);
 ```lua
 thermo.setDHWTemperature(50);
 ```
+Управлять уставкой можно несколькими способами, подоробнее об уставке можно прочитать в [отдельном разделе](/heating_curve.md). 
 
 Включение отопления:
 ```lua
@@ -92,6 +100,17 @@ thermo.setBoilerEnable(true)
 Включение нагрева горячей воды:
 ```lua
 thermo.setDHWEnable(true)
+```
+
+Включение строгого режима позволяет усреднить получаемые по OT значения, в SLS попадают только те значения, которые при следующем опросе были получены повторно. 
+```lua
+thermo.setStrict(true)
+```
+
+Можно прочитать и отправить произвольные RAW значения 
+```
+thermo.rawRead(14)           --запросить и прочитать значение 14 регистра
+thermo.rawWrite(14,60*256)   --зададим максимальную модуляцию 60%
 ```
 
 ## MQTT управление OpenTherm
@@ -124,6 +143,9 @@ xxx/thermo/ot/set/error_code      0
 ```
 
 ## Статьи
+
+[Построение графиков работы котла](/ui_graph_rus.md)
+[Управление по кривым отопления](/heating_сurve.md)
 [Фантастический OpenTherm и где он обитает](https://homever.ru/?p=1417)
 
 [SLS: управление газовым котлом](https://igorkandaurov.com/2022/10/12/sls-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B3%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%BC-%D0%BA%D0%BE%D1%82%D0%BB%D0%BE%D0%BC/)
