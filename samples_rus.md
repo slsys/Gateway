@@ -172,7 +172,316 @@ end
   ieee=nill
   par=nill
 end
-```    
+```  
+
+### Отправка сообщения в телеграм с помощью вашего бота
+
+```lua
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function round(exact, quantum)
+    local quant,frac = math.modf(exact/quantum)
+    return quantum * (quant + (frac > 0.5 and 1 or 0))
+end
+
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+  local token = "5177...:AAG0b...."  --
+  local chat_id = "38806....."
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+end  
+
+
+local value = zigbee.value("0x00158D00036C1508", "temperature")
+local text = "temperature: " .. round(tostring(value),2)
+SendTelegram(text)
+```
+
+### Уведомление в телеграм об открытии двери
+
+```lua
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function round(exact, quantum)
+    local quant,frac = math.modf(exact/quantum)
+    return quantum * (quant + (frac > 0.5 and 1 or 0))
+end
+
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+  local token = "517781...:AAG0..."
+  local chat_id = "38806...."
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+end  
+
+
+local state =  zigbee.value(tostring(Event.ieeeAddr), "contact")
+if (state) then
+  SendTelegram("Дверь открыта") 
+else
+  SendTelegram("Дверь закрыта")
+end 
+```
+
+### Оповещение в телеграм при сработке датчика движения
+
+```lua
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function round(exact, quantum)
+    local quant,frac = math.modf(exact/quantum)
+    return quantum * (quant + (frac > 0.5 and 1 or 0))
+end
+
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+  local token = "517781...:AAG0bv...."
+  local chat_id = "3880......"
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+end  
+
+
+local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
+if (state) then
+  SendTelegram("Датчик движения ".. Event.ieeeAddr  .." обнаружил активность")
+else
+  SendTelegram("Значение датчика ".. Event.FriendlyName .." движения нормализовалось")
+end
+```
+
+###  Оповещение об изменении значения датчика температуры/влажности
+```lua
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function round2(num, numDecimalPlaces)
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+local function urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = url:gsub("([^%w ])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+local hex_to_char = function(x)
+  return string.char(tonumber(x, 16))
+end
+
+function SendTelegram(text)
+    local token = "5177....:AAG0......"
+  local chat_id = "3880..."
+  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
+  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
+end  
+
+local temp =  round2(zigbee.value(tostring(Event.ieeeAddr), "temperature"),1)
+local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
+SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
+
+------------  отправка значения на narodmon
+function SendNarodmon(name, value)
+  local MAC =tostring(Event.ieeeAddr)
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+SendNarodmon("temperature", temp)
+SendNarodmon("humidity", hum)
+```
+### Подсветка шлюза по датчику движению только в ночное время с 22 до 6
+
+Вариант через GPIO
+
+```lua
+local gmt = 3  
+local time = os.time()  
+local hour = (math.modf(time / 3600) + gmt) % 24  
+if hour >= 22 or hour < 6 then  
+  if Event.State.Value == "true" then  
+    gpio.pwm(0, 255)  
+    gpio.pwm(1, 255)  
+    gpio.pwm(2, 255)  
+  else  
+    gpio.pwm(0, 0)  
+    gpio.pwm(1, 0)  
+    gpio.pwm(2, 0)  
+  end  
+end
+```
+
+Вариант через MQTT:
+```lua
+local gmt = 3
+local time = os.time()
+local hour = (math.modf(time / 3600) + gmt) % 24
+if hour >= 22 or hour <6 then
+  if Event.State.Value == "true" then
+    mqtt.pub('ZigBeeSls/led', '{"mode":"manual","hex":"#FF0000"}')
+  else
+    mqtt.pub('ZigBeeSls/led', '{"mode": "off"}')
+  end
+end
+```
+
+### Создание режима охраны
+
+Постановка 
+```lua
+obj.set("security_status", "armed")
+```
+
+Проверка
+```lua
+if obj.get("security_status")=="armed" then 
+  print("Объект на охране.")
+else 
+  print("Объект не на охране.")
+end
+```
+
+### Пример работы с астротаймером
+
+Астротаймером называется обычный таймер, имеющий привязку к циклам захода\восхода солнца.
+Так как на разной широте время захода и восхода отличается, то в таких таймерах присутствует установка долготы/широты. Параметры долготы/широты задаются через Web на вкладке *Settings->Location*.
+
+Астротаймер вызывавается скриптом `OneMinTimer.lua` каждую минуту:
+
+```lua
+local sunrise_add_min <const> = 15
+local sunrise_hour, sunrise_min = os.sunrise()
+sunrise_min = sunrise_min + sunrise_add_min
+if sunrise_min > 59 then
+  sunrise_hour = sunrise_hour + 1
+  sunrise_min = sunrise_min - 60
+end  
+if Event.Time.hour == sunrise_hour and Event.Time.min == sunrise_min then
+  print(sunrise_hour .. ":" .. sunrise_min)
+end
+```
+
+Данный скрипт напечатает время рассвета, через 15 минут после наступления, т.е. если 8:55 наступает рассвет,  добавляем 15 минут, то скрипт сработает в 9:10. Можно задавать 
+не более 60 минут. 
+
+
+### Пример использования астротаймера
+
+```lua
+local sunset_add_min <const> = 20
+local sunset_hour, sunset_min = os.sunset()
+sunset_min = sunset_min + sunset_add_min
+
+if sunset_min > 59 then
+  sunset_hour = sunset_hour + 1
+  sunset_min = sunset_min - 60
+end
+
+if Event.Time.hour == sunset_hour and Event.Time.min == sunset_min then
+  -- Включает уличный свет через 20 минут после заката
+  telegram.send("Включено уличное освещение")
+  http.request("http://192.168.2.200:8888/objects/?object=MegaD3-8&op=m&m=extended")
+end
+
+local sunrise_add_min <const> = 1
+local sunrise_hour, sunrise_min = os.sunrise()
+sunrise_min = sunrise_min + sunrise_add_min
+
+if sunrise_min > 59 then
+  sunrise_hour = sunrise_hour + 1
+  sunrise_min = sunrise_min - 60
+end
+
+if Event.Time.hour == sunrise_hour and Event.Time.min == sunrise_min then
+  -- Открывает шторы после рассвета
+  telegram.send("Шторы в гостинной открыты")
+  zigbee.set("0x5C0272FFFEC8A21B", "position", 0)
+end
+```
+
+### Определение времени суток (светлое или темное)
+
+```lua
+sunrise_h, sunrise_m = os.sunrise()
+sunset_h, sunset_m = os.sunset()
+sunshine = (Event.Time.hour*60+Event.Time.min)>(sunrise_h*60+sunrise_m) and (Event.Time.hour*60+Event.Time.min)<(sunset_h*60+sunset_m)
+```
+sunshine -  булева переменная, показывает время суток, дневное или вечернее. 
+
+
+
+
+### Преобразование показателей давления из кПа в мм.рт.ст.
+
+Необходимо создать lua скрипт, который будет вызываться при изменении pressure:
+
+```lua
+local press = zigbee.value(tostring(Event.ieeeAddr), "pressure")
+local pressmm = zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
+zigbee.setState(Event.ieeeAddr, "pressure_mm", press * 7.5, "FLOAT")
+```
+
+### Включение звука дверного звонка по событию (звуковой файл лежит в открытой сети)
+
+192.168.1.5 - адрес другого шлюза. Нельзя запускать на самом себе таким образом, используйте объект audio.
+
+```lua
+http.request("http://192.168.1.5/audio?action=setvolume&value=100")
+http.request("http://192.168.1.5/audio?action=play&url=http://funny-dog.surge.sh/door_bell.mp3")
+```
+
 ## Воспроизведение звука при нажатии кнопки (звонок)
 
 ```lua
