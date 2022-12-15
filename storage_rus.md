@@ -63,19 +63,19 @@ GET /api/storage/rmdir?path=/int/mydir
 ```
 
 ## Скрипты Lua
-Примонтировать SD-карту, можно добавить в *init.lua*:
+### Примонтировать SD-карту, можно добавить в *init.lua*:
 ```lua
 os.mountSD(true)
 ```
-## Проверка наличия файла, возвращает true/false
+### Проверка наличия файла, возвращает true/false
 ```lua
 os.fileExists(fileName)
 ```
-## Удаления файла
+### Удаления файла
 ```lua
  os.fileRemove(fileName)
 ```
- ## Переименования файла
+ ### Переименования файла
  ```lua
 os.fileRename(old, new)
 ```
