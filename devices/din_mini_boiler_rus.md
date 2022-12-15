@@ -143,8 +143,9 @@ xxx/thermo/ot/set/error_code      0
 ```
 Установка максимального уровня модуляции:
 ```mqtt
-xxx/thermo/ot/max_modulation 
-```mqtt
+xxx/thermo/ot/set/max_modulation 
+```
+
 ## Статьи
 
 [Построение графиков работы котла](/ui_graph_rus.md)
