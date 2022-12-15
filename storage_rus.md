@@ -67,3 +67,15 @@ GET /api/storage/rmdir?path=/int/mydir
 ```lua
 os.mountSD(true)
 ```
+## Проверка наличия файла, возвращает true/false
+```lua
+os.fileExists(fileName)
+```
+## Удаления файла
+```lua
+ os.fileRemove(fileName)
+```
+ ## Переименования файла
+ ```lua
+os.fileRename(old, new)
+```
