@@ -106,6 +106,10 @@ thermo.setDHWEnable(true)
 ```lua
 thermo.setStrict(true)
 ```
+Задать максимальное значение модуляции:
+```lua
+thermo.setMaxModulation(60)
+```
 
 Можно прочитать и отправить произвольные RAW значения 
 ```
