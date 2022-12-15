@@ -753,12 +753,30 @@ local sunrise_hour, sunrise_min = os.sunrise()
 telegram.send("sunrise " ..sunset_hour  ..":".. sunset_min )
 ```
 
-# Запись в память / карту памяти
+## Работа с хранилищем](/storage_rus.md)
+Примонтировать SD-карту, можно добавить в *init.lua*:
+```lua
+os.mountSD(true)
 ```
+Проверка наличия файла, возвращает true/false
+```lua
+os.fileExists(fileName)
+```
+Удаления файла
+```lua
+ os.fileRemove(fileName)
+```
+Переименование файла
+ ```lua
+os.fileRename(old, new)
+```
+Запись в файл:
+```lua
 os.writeFile("/int/!file.db","привет\n",true)  --3 параметр определяет, перезаписывать или нет файл
 value = os.readFile("/int/!file.db")
 print(value)
 ```
+
 
 Для карты памяти необходимо использовать путь "/sd/file.txt"
 
