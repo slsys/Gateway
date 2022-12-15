@@ -98,7 +98,6 @@ telegram.send("SLS загружен!!!")
 Например, так может выглядеть запись SB Rule для датчика открытия ![](/img/luaSBRule.png)
 - `mainDoorOnLight.lua` - имя запускаемого скрипта
 - `Param` - необязательный параметр, через который в скрипт можно передать необходимые аргументы. Принимается он в скрипте через Событие `Event.Param`
-<!--	#ToDo - добавить ссылку на описание событий -->
 Аргументов может быть несколько. В данном примере передается 3 аргумента, разделенные символом `:`: целевое устройство, которым должен управлять датчик по сработке; контролируемый статус; задержка управляющего действия. Если аргументы не прописывать, то при изменении условий, придется менять эти значения в теле скрипта. Пример похожего скрипта [здесь](/lua_doc/luaMainDoorLight.md)
 
 ### Запуск скрипта по событию изменения объекта
@@ -293,47 +292,36 @@ zigbee.value("device"(STR), "state"(STR))
 ```
 #### zigbee.get()
 Возвращает значения состояния устройства вызовом функции GET в конвертере
-zigbee.get()
-
-TODO - описать разницу с .value() 
-
-### zigbee.set()
-Изменяет значение состояния устройства
 ```lua
-zigbee.set("device"(STR), "stateName"(STR), "stateValue"(STR))
+zigbee.get("device"(STR), "state"(STR))
+-- device - FriendlyName, ieeeAddr или nwkAddr устройства
+-- state - состояние, значение которого необходимо получить
+```
+#### zigbee.set()
+Устанавливает значение состояния устройства
+```lua
+zigbee.set("device"(STR), "stateName"(STR), stateValue)
 -- device - FriendlyName, ieeeAddr или nwkAddr устройства
 -- stateName - имя состояния, значение которого необходимо изменить
--- stateValue - значение состояние
+-- stateValue - значение состояние. Тип - свой для каждого значения. Например, для кнопки State:Action тип будет STR, а для яркости State:brightness тип будет INT 
 ```
+#### zigbee.setState()
+Устанавливает значение состояния устройства. Можно указать тип значения (по умолчанию STR) и необходимо ли выполнять события (по умолчанию true).
+Начиная с версии 2022.07.24d1.
 
-TODO - закончить с zigbee.set()
-
-
-Установка значения  устройства 
-
-Пример скрипта, который при нажатии кнопки выключателя *lumi.sensor_switch* включает освещение *lamp_1*:
 ```lua
-if zigbee.value("lumi.sensor_switch", "click") == "single" then
-  -- toggle lamp
-  current_brightness = zigbee.value("lamp_1", "brightness")
-  if current_brightness == 0 then
-    zigbee.set("lamp_1", "brightness", 255)
-  else
-    zigbee.set("lamp_1", "brightness", 0)
-  end
-end
+zigbee.setState("device"(STR), "stateName"(STR), stateValue[[, "type"(STR)], events])
 
 
--- switch 0x00124B0009FE36FC on single lumi.sensor_switch click
-if Event.State.Value == "single" then
-   zigbee.set("0x00124B0009FE36FC", "state", "toggle")
-  end
-
+zigbee.setState("0x00124B001E1EB5C0", "my_count", 5, "INT")
 ```
 
+TODO - setState скудно описан. Разобраться. По идее нужен для создания кастомных стэйтов и управлении ими. При этом управляется также и через set(), но как-то криво, например: есть color_temp, создал color_temp1. При изменении color_temp1 через set() - меняется также и color_temp. Как удалить созданного стэйта. Разобраться с флагом events. Как читать состояние флага?
 
-zigbee.join()
-zigbee.set()
+
+
+
+
 zigbee.setState(ident, name, value[[, type], events])
 zigbee.readAttr(ident, epId, clusterId, AttrId[, manufId])
 zigbee.writeAttr(ident, epId, clusterId, AttrId, dataType, value[, manufId])
@@ -342,14 +330,7 @@ zigbee.getStatus()
 
 
 
-### zigbee.setState(ident, name, value[[, type], events])
-Устанавливает значение состояния Zigbee устройства. Можно указать тип значения (по умолчанию STR) и необходимо ли выполнять события (по умолчанию true).
-Начиная с версии 2022.07.24d1.
-
-```lua
-zigbee.setState("0x00124B001E1EB5C0", "my_count", 5, "INT")
-```
-
+### 
 ### zigbee.readAttr(ident, epId, clusterId, AttrId[, manufId])
 Отправляет запрос на чтение атрибута в кластере.
 

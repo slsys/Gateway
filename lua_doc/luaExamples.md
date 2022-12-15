@@ -76,7 +76,6 @@ scripts.setTimer("OneMinTimer", 0)
 
 ## Объекты
 
-
 ## Zigbee
 ### Включение режим сопряжения для подключения новых устройств, через роутер 
 ```lua
@@ -95,10 +94,39 @@ print("Текущая температура: " .. temp .. " C°")
 ```
 ### Получение значения состояния устройства вызовом GET в конвертере
 ```lua
+-- Получаем значение яркости лампочки
 zigbee.get("lamPochka", "brightness")
 ```
 
+Установка значения  устройства 
 
+### Переключение лампочки при нажатии кнопки выключателя
+1. при нажатии кнопки выключателя переключает лампу 'lamp_1' через контроль яркости. Может выполняться как самостоятельно, например по таймеру, так и из правила Simple Bind
 
+```lua
+-- получаем значение состояния 'click' кнопки 'lumi.sensor_switch'
+-- если значение = single
+if zigbee.value("lumi.sensor_switch", "click") == "single" then
+  -- переключаем (toggle) лампу
+  -- получим текущее значение яркости лампы
+  current_brightness = zigbee.value("lamp_1", "brightness")
+  -- если лампа выключена (яркость = 0)
+  if current_brightness == 0 then
+    -- включим её
+    zigbee.set("lamp_1", "brightness", 255)
+  else -- если включена (значение яркости отлично от 0)
+    -- включим
+    zigbee.set("lamp_1", "brightness", 0)
+  end
+end
+```
+2. при нажатии кнопки переключает лампу 0x00124B0009FE36FC, через установку состояния "State" в "TOGGLE". Должен выполняться из SB Rule
+```lua
+-- toggleLamp.lua
+-- switch 0x00124B0009FE36FC on single lumi.sensor_switch click
+if Event.State.Value == "single" then
+   zigbee.set("0x00124B0009FE36FC", "state", "toggle")
+  end
 
+```
 
