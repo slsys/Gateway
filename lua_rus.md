@@ -372,7 +372,8 @@ end
 local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
 SendNarodmon("illuminance", value)
 ```
-
+### net.localIP() - возвращает адрес устройства SLS в  локальной сети
+### net.remoteIP() - возвращает внешний адрес SLS в сети  интернет (если доступен). 
 
 
 
