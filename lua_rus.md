@@ -386,7 +386,7 @@ SendNarodmon("illuminance", value)
 2. Узнать свой *ChatId* можно у бота [@userinfobot](https://t.me/userinfobot).
 
 *token* и *ChatId* достаточно написать 1 раз в `init.lua`, потом использовать только `telegram.send()` :
-
+Более подробная информация собрана в специальном [разделе](/telegram_rus.md) 
 
 ```lua
 -- добавьте в init.lua
