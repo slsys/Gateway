@@ -11,9 +11,12 @@
 выбираете имя бота из списка
 Bot settings
 Group privacy
-Enable
+Disable
 ```
-
+В итоге нужно получить такой ответ
+```
+Privacy mode (https://core.telegram.org/bots#privacy-mode) is disabled for your bot
+```
 
 Теперь требуется инициализовать бота в стартовом скрипте, для этого войдите в редактор скриптов Actions->Files и   если ранее не создавали, создайте стартовый скрипт init.lua. Пропишите строки инициализации токена телеграм как в примере: 
 ![initlua](/img/initlua.png)
