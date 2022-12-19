@@ -37,7 +37,7 @@ telegram.send('hello world')
 ```
 if ( Event.Telegram.Text=="Info") then dofile("/int/info.lua") end
 ```
-Теперь при получении сообщения "Info" в просматриваемом чате будет запускаться скрипт /int/info.lua, в который можно поместить например отправку информации о шлбюзе:
+Теперь при получении сообщения "Info" в просматриваемом чате будет запускаться скрипт /int/info.lua, в который можно поместить например отправку информации о шлюзе:
 ``` lua
 local remip = http.request("http://wtfismyip.com/text")
 uptime=os.millis()
@@ -51,6 +51,7 @@ msg=msg.."\n\r".."Free heap: "..os.freeMem('heap')
 msg=msg.."\n\r".."Free psram: "..os.freeMem('psram')
 telegram.send(msg)
 ```
+Данный скрипт отправит локальный / внешний ip, количество свободной памяти и время работы шлюза. 
 
 
 
