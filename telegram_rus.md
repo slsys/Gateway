@@ -32,4 +32,25 @@ telegram.send("SLS  загружен "..net.localIP()) --отправит соо
 telegram.send('hello world')
 ```
 
-## 
+## Обработка входящих сообщений
+Для обработки взодящий сообщений необходимо создать файл tlg.lua. Пример файла:
+```
+if ( Event.Telegram.Text=="Info") then dofile("/int/info.lua") end
+```
+Теперь при получении сообщения "Info" в просматриваемом чате будет запускаться скрипт /int/info.lua, в который можно поместить например отправку информации о шлбюзе:
+``` lua
+local remip = http.request("http://wtfismyip.com/text")
+uptime=os.millis()
+uptime_s=math.floor(uptime/1000)%60
+uptime_m=math.floor(uptime/1000/60)%60
+uptime_h=math.floor(uptime/1000/60/60)%24
+uptime_d=math.floor(uptime/1000/60/60/24)
+msg="SLS XIAOMI  is working  "..net.localIP()..", "..remip
+msg=msg.."\n\r".."Uptime: " .. uptime_d  .. "d ".. uptime_h .. ":" .. uptime_m..":"..uptime_s
+msg=msg.."\n\r".."Free heap: "..os.freeMem('heap')
+msg=msg.."\n\r".."Free psram: "..os.freeMem('psram')
+telegram.send(msg)
+```
+
+
+
