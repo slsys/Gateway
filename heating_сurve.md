@@ -4,6 +4,8 @@
 # Управление котлом по кривым отопления
 Это заготовка статьи.
 
+Управление по заданному массиву ПЗА
+
 Сценарий:
 ```lua
 --функция для поиска уставки в кривой отопления
@@ -56,6 +58,28 @@ telegram.send("На улице ".. string.format ("%.2f", ul_average) .."("..ul_
 thermo.setBoilerTemperature(ust)
 end
   
+```
+
+Управление по апроксимированным кривым отопления ПЗА от @Deimon9603 на основе [статьи](https://wdn.su/blog/1154) 
+```lua
+local ul  = "1w.28-D16D2A4E2001/temperature"      
+local ul_temp = obj.get(ul)  
+local k = 0.8
+local a = -0.21 * k - 0.06
+local b = 6.04 * k + 1.98
+local c = -5.06 * k + 18.06
+local x = -0.6 * ul_temp + 5     
+local new_ust = math.floor ((a * x ^ 2) + (b * x) + c)
+local ust = obj.get("thermo.boiler.target_temperature")
+local min_temp = 35
+if new_ust == min_temp then
+  end
+if new_ust < min_temp then
+   thermo.setBoilerTemperature(35)
+end
+if ust ~= new_ust then
+   thermo.setBoilerTemperature(new_ust)
+end
 ```
 
 # Управление PID-регулированием
