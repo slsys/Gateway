@@ -54,6 +54,12 @@ telegram.send(msg)
 Данный скрипт отправит локальный / внешний ip, количество свободной памяти и время работы шлюза. 
 
 ## Отправка кнопок
+## ReplyKyboard
+Шлюз может отправить сообщение  [replyKyboard](https://core.telegram.org/api/bots%2Fbuttons)
 
+```
+telegram.send("Главное меню", "chatid","parse_mode=MarkdownV2&reply_markup={\"keyboard\":[[\"Температуры\"],[\"Info\",\"cmd3\"]],\"resize_keyboard\":true,\"one_time_keyboard\":true}")
+```  
+где chatid - ваш chatid для отправки
 
 
