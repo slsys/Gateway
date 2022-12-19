@@ -18,6 +18,17 @@ Disable
 Privacy mode (https://core.telegram.org/bots#privacy-mode) is disabled for your bot
 ```
 
+Если у вас еще нет chatid, необходимо узнать, куда вы будете писать. Существует множество вариантов получения chatid бота или группы, начиная с использования различных специализованных ботов [getmyid_bot](https://t.me/getmyid_bot) или с использованием стандартного API по [инструкции](https://it-stories.ru/blog/web-dev/kak-uznat-chat-id-dlja-kanala-gruppy-telegram/) 
+```
+https://api.telegram.org/botBOT:TOKEN/getChat?chat_id=@имяканала
+```
+в ответ получим 
+```
+{«ok»:true,»result»:{«id»:-100ХХХХХХХХХ8,»title»:………
+```
+где id - будет как раз ваш chatid. 
+
+
 Теперь требуется инициализовать бота в стартовом скрипте, для этого войдите в редактор скриптов Actions->Files и   если ранее не создавали, создайте стартовый скрипт init.lua. Пропишите строки инициализации токена телеграм как в примере: 
 ![initlua](/img/initlua.png)
 ```lua
