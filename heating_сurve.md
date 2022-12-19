@@ -53,7 +53,7 @@ local k=1.1
 local ust=getust(krivaya, ul_temp)*k   --рассчет необходимой температуры для внесения уставки
 
 --меняем уставку при необходимости 
-if (ust!=new_ust) then
+if (ust~=new_ust) then
 telegram.send("На улице ".. string.format ("%.2f", ul_average) .."("..ul_temp..","..ul_ot..","..temp_veranda.."), установлена уставка котла "..ust.." градусов, средняя температура в доме "..string.format ("%.2f", temp_average))
 thermo.setBoilerTemperature(ust)
 end
