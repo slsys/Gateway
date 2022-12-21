@@ -1,4 +1,4 @@
-- [Главная (LUA)](/lua_doc/luaDoc.md)
+- [Главная (LUA)](/lua_rus.md)
 
 [[toc]]
 # Примеры скриптов
