@@ -423,173 +423,34 @@ end
 end
 ```  
 
-### Отправка сообщения в телеграм с помощью вашего бота
-
-```lua
-local char_to_hex = function(c)
-  return string.format("%%%02X", string.byte(c))
-end
-
-function round(exact, quantum)
-    local quant,frac = math.modf(exact/quantum)
-    return quantum * (quant + (frac > 0.5 and 1 or 0))
-end
-
-local function urlencode(url)
-  if url == nil then
-    return
-  end
-  url = url:gsub("\n", "\r\n")
-  url = url:gsub("([^%w ])", char_to_hex)
-  url = url:gsub(" ", "+")
-  return url
-end
-
-local hex_to_char = function(x)
-  return string.char(tonumber(x, 16))
-end
-
-function SendTelegram(text)
-  local token = "5177...:AAG0b...."  --
-  local chat_id = "38806....."
-  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
-  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
-end  
-
-
-local value = zigbee.value("0x00158D00036C1508", "temperature")
-local text = "temperature: " .. round(tostring(value),2)
-SendTelegram(text)
-```
 
 ### Уведомление в телеграм об открытии двери
 
 ```lua
-local char_to_hex = function(c)
-  return string.format("%%%02X", string.byte(c))
-end
-
-function round(exact, quantum)
-    local quant,frac = math.modf(exact/quantum)
-    return quantum * (quant + (frac > 0.5 and 1 or 0))
-end
-
-local function urlencode(url)
-  if url == nil then
-    return
-  end
-  url = url:gsub("\n", "\r\n")
-  url = url:gsub("([^%w ])", char_to_hex)
-  url = url:gsub(" ", "+")
-  return url
-end
-
-local hex_to_char = function(x)
-  return string.char(tonumber(x, 16))
-end
-
-function SendTelegram(text)
-  local token = "517781...:AAG0..."
-  local chat_id = "38806...."
-  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
-  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
-end  
-
-
 local state =  zigbee.value(tostring(Event.ieeeAddr), "contact")
 if (state) then
-  SendTelegram("Дверь открыта") 
+  telegram.send("Дверь открыта") 
 else
-  SendTelegram("Дверь закрыта")
+  telegram.send("Дверь закрыта")
 end 
 ```
 
 ### Оповещение в телеграм при сработке датчика движения
 
 ```lua
-local char_to_hex = function(c)
-  return string.format("%%%02X", string.byte(c))
-end
-
-function round(exact, quantum)
-    local quant,frac = math.modf(exact/quantum)
-    return quantum * (quant + (frac > 0.5 and 1 or 0))
-end
-
-local function urlencode(url)
-  if url == nil then
-    return
-  end
-  url = url:gsub("\n", "\r\n")
-  url = url:gsub("([^%w ])", char_to_hex)
-  url = url:gsub(" ", "+")
-  return url
-end
-
-local hex_to_char = function(x)
-  return string.char(tonumber(x, 16))
-end
-
-function SendTelegram(text)
-  local token = "517781...:AAG0bv...."
-  local chat_id = "3880......"
-  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
-  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
-end  
-
-
 local state =  zigbee.value(tostring(Event.ieeeAddr), "occupancy")
 if (state) then
-  SendTelegram("Датчик движения ".. Event.ieeeAddr  .." обнаружил активность")
+  telegram.send("Датчик движения ".. Event.ieeeAddr  .." обнаружил активность")
 else
-  SendTelegram("Значение датчика ".. Event.FriendlyName .." движения нормализовалось")
+  telegram.send("Значение датчика ".. Event.FriendlyName .." движения нормализовалось")
 end
 ```
 
 ###  Оповещение об изменении значения датчика температуры/влажности
 ```lua
-local char_to_hex = function(c)
-  return string.format("%%%02X", string.byte(c))
-end
-
-function round2(num, numDecimalPlaces)
-  local mult = 10^(numDecimalPlaces or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
-
-local function urlencode(url)
-  if url == nil then
-    return
-  end
-  url = url:gsub("\n", "\r\n")
-  url = url:gsub("([^%w ])", char_to_hex)
-  url = url:gsub(" ", "+")
-  return url
-end
-
-local hex_to_char = function(x)
-  return string.char(tonumber(x, 16))
-end
-
-function SendTelegram(text)
-    local token = "5177....:AAG0......"
-  local chat_id = "3880..."
-  --http.request("https://api.telegram.org/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. tostring(text))  -- https пока не работает в lua
-  http.request("http://212.237.16.93/bot" .. token .. "/sendMessage?chat_id=" .. chat_id .. "&text=" .. urlencode(text))
-end  
-
 local temp =  round2(zigbee.value(tostring(Event.ieeeAddr), "temperature"),1)
 local hum =  round2(zigbee.value(tostring(Event.ieeeAddr), "humidity"),1)
-SendTelegram("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
-
-------------  отправка значения на narodmon
-function SendNarodmon(name, value)
-  local MAC =tostring(Event.ieeeAddr)
-  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
-end  
-
-SendNarodmon("temperature", temp)
-SendNarodmon("humidity", hum)
+telegram.send("Значение ДТВ ".. Event.FriendlyName .. " ".. temp.."° / " .. hum .. "%") 
 ```
 ### Подсветка шлюза по датчику движению только в ночное время с 22 до 6
 
