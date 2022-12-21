@@ -529,7 +529,7 @@ obj.onChange("io.input0.value", "btn_sw1.lua")
 Более подробно вопрос с обрабокой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
 
 ## Логирование по UDP 
-Можно включить логирование через UDP разместив строку например в init.lua, примеры получения есть в [FAQ](/faq_rus.md)
+Можно включить логирование через UDP разместив строку например в init.lua, примеры получения есть в [FAQ](/faq_rus.md#%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-udp-log))
 ```lua
 os.udplogenable(true)
 ```
