@@ -18,7 +18,7 @@
 
 **Baxi**
 
-|<sup>Модель</sup> |<sup> Метод инт. </sup>| <sup> [blrst][boiler.status] </sup>|<sup> [dhwst][dhw.status]</sup>| <sup>[errcd][ot.error_code]</sup>|<sup>[blrtemp][boiler.temperature]</sup>| <sup>[dwhtemp][dhw.temperature]</sup>| <sup>[tempout][boiler.temperature_outside]</sup>| <sup>[bltempret][boiler.return_temperature]</sup>|<sup>[modul][boiler.modulation]</sup>|<sup>[press][boiler.pressure]</sup>|<sup>[errcnt][bus_error_count]</sup>|<sup>[state][bus_state]</sup>|<sup> [blrtarget][boiler.target_temperature]</sup>|<sup>[dhwtrg][dhw.target_temperature]</sup>|<sup>[maxtemp][boiler.max_temperature]</sup>|
+|<sup>Модель</sup> |<sup> Метод инт. </sup>| <sup> [blrst][boiler.status] </sup>|<sup> [dhwst][dhw.status]</sup>| <sup>[errcd][ot.error_code]</sup>|<sup>[blrtmp][boiler.temperature]</sup>| <sup>[dhwtmp][dhw.temperature]</sup>| <sup>[outsa][boiler.temperature_outside]</sup>| <sup>[bltempret][boiler.return_temperature]</sup>|<sup>[modul][boiler.modulation]</sup>|<sup>[press][boiler.pressure]</sup>|<sup>[errcnt][bus_error_count]</sup>|<sup>[state][bus_state]</sup>|<sup> [blrtarget][boiler.target_temperature]</sup>|<sup>[dhwtrg][dhw.target_temperature]</sup>|<sup>[maxtemp][boiler.max_temperature]</sup>|
 |-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-|
 |<sup>SLIM</sup>|<sup>OpenTherm</sup>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>
 
