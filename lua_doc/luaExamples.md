@@ -130,3 +130,12 @@ if Event.State.Value == "single" then
 
 ```
 
+### Преобразование показателей давления из kPa в mmhg
+Необходимо создать lua скрипт и назначить его вызов при изменении pressure:
+
+```lua
+-- kPa2mmhg.lua
+local press = zigbee.value(tostring(Event.ieeeAddr), "pressure")
+local pressmm = zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
+zigbee.setState(Event.ieeeAddr, "pressure_mm", press * 7.5, "FLOAT")
+```
