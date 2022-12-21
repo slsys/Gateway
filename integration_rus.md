@@ -3,7 +3,7 @@
 
 ## [Интеграция с MQTT](/mqtt_rus.md)
 
-## [Интеграция с telegram](/telegram_rus.md)
+## [Интеграция с TELEGRAM](/telegram_rus.md)
 
 ## [Интеграция с Алисой Яндекс](/int_yandex_rus.md)  (в разработке)
 
