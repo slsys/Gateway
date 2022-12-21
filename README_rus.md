@@ -7,7 +7,7 @@
 
 [SLS Железо](/sls_dev_rus.md) - это железо, собираемое многотысячным сообществом любителей радиоэлектроники своими руками (DIY). 
 
-[SLS Прошивка](https://boosty.to/slsys) - универсальная прошивка, в которой реализована поддержка транспортных протоколов: [zigbee](/basic_rus.md), Matter,  [OpenTherm](/devices/din_mini_boiler_rus.md), eBUS, [1-Wire](/devices/din_mini_boiler_rus.md), CAN, [DALI](/devices/din_mini_lighting_rus.md),  [DMX](/devices/din_mini_lighting_rus.md), [KNX](/knx_rus.md) и многих других.
+[SLS Прошивка](https://boosty.to/slsys) - универсальная прошивка, в которой реализована поддержка транспортных протоколов: [Zigbee](/basic_rus.md), Matter,  [OpenTherm](/devices/din_mini_boiler_rus.md), eBUS, [1-Wire](/devices/din_mini_boiler_rus.md), CAN, [DALI](/devices/din_mini_lighting_rus.md),  [DMX](/devices/din_mini_lighting_rus.md), [KNX](/knx_rus.md) и многих других.
 
 [SLS Облако](https://slsys.io/) -  облако, через которое можно в удобном виде получать статистику со всех своих шлюзов SLS, строить графики и интегрировать с голосовыми помощниками. 
 
