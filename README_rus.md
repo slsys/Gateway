@@ -7,7 +7,7 @@
 
 [SLS Железо](/sls_dev_rus.md) - это железо, собираемое многотысячным сообществом любителей радиоэлектроники своими руками (DIY). 
 
-[SLS Прошивка](https://boosty.to/slsys) - универсальная прошивка, в которой реализована поддержка транспортных протоколов: [Zigbee](/basic_rus.md), Matter,  [OpenTherm](/devices/din_mini_boiler_rus.md), eBUS, [1-Wire](/devices/din_mini_boiler_rus.md), CAN, [DALI](/devices/din_mini_lighting_rus.md),  [DMX](/devices/din_mini_lighting_rus.md), [KNX](/knx_rus.md) и многих других.
+[SLS Прошивка](https://boosty.to/slsys) - универсальная прошивка, в которой реализована поддержка транспортных протоколов: [zigbee](/basic_rus.md), Matter,  [OpenTherm](/devices/din_mini_boiler_rus.md), eBUS, [1-Wire](/devices/din_mini_boiler_rus.md), CAN, [DALI](/devices/din_mini_lighting_rus.md),  [DMX](/devices/din_mini_lighting_rus.md), [KNX](/knx_rus.md) и многих других.
 
 [SLS Облако](https://slsys.io/) -  облако, через которое можно в удобном виде получать статистику со всех своих шлюзов SLS, строить графики и интегрировать с голосовыми помощниками. 
 
@@ -20,7 +20,7 @@
 ## [SLS Zigbee](/basic_rus.md)
 В основе концепции SLS изначально лежал протокол Zigbee, под его задачи были реализованы [основные функции](/basic_rus.md), которые теперь можно использовать на любых шлюзах SLS.  
 Толчком для развития проекта в самостоятельный  продукт послужило множество  факторов: 
-* доступность относительно недорогих и энергоэффективных беспроводных устройств Zigbee (SLS [поддерживает](https://slsys.io/ru/action/supported_devices) около 250 востребованных  различных устройств, при необходимости можно поддержать любые проверенные сообществами Zigbee устройства [z2m](https://www.zigbee2mqtt.io/supported-devices/) ,[blakadder](https://zigbee.blakadder.com/all.html). 
+* доступность относительно недорогих и энергоэффективных беспроводных устройств Zigbee (SLS [поддерживает](https://slsys.io/ru/action/supported_devices) около 250 востребованных  различных устройств, при необходимости можно поддержать любые проверенные сообществами Zigbee устройства [z2m](https://www.zigbee2mqtt.io/supported-devices/), [blakadder](https://zigbee.blakadder.com/all.html)). 
 * огромнейшее [сообщество](https://t.me/zigbeer) неравнодушных пользователей программных координаторов [Zigbee2mqtt](https://www.zigbee2mqtt.io/) и др. подобных решений,
 * стремление к популяризации DIY-собществ,  заинтересованных в стремлении разобраться в вопросах взамодействия протоколов и технологий,   побудить при стартовых нулевых навыках заинтересованного  самостоятельно изготовить устройство своими руками на основе проектов на сайте [modkam.ru](/https://modkam.ru/)
 
