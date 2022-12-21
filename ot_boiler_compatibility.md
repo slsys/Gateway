@@ -1,5 +1,6 @@
 # Совместимость котлов
-|Производитель котла|Модель | Метод интеграции | Возможности регулирования|
+*Baxi*
+|Модель | Метод интеграции |thermo.boler.status (BOOL) |thermo.dhw.status (BOOL)| thermo.ot.error_code(INT)|
 |-|-|-|-| 
-|Baxi |SLIM|OT|thermo.dhw.status (BOOL)  thermo.boiler.flame (BOOL)  thermo.ot.error_code (INT)|
-|Baxi |LUNA|OT||
+ |SLIM|OT|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|
+
