@@ -55,7 +55,7 @@ obj.onChange("io.input0.value", "btn_sw1.lua")
 ```lua
 zigbee.join(255, "0x0000")
 ```
-### Обработка нажатий кнопки и управление сетом
+### Обработка нажатий кнопки и управление светом
 ####  Переключение света через управление яркостью
 ```lua
 -- однократное нажатие, включить свет (яркость max)
@@ -84,21 +84,31 @@ zigbee.set("lamp_1", "state", value)
 ```
 
 ## Таймеры
-Запуск скрипта каждые 60 секунд:
+### Запуск скрипта каждые 60 секунд
 ```lua
 scripts.setTimer("getMoney", 60, "$")
 ```
-Запуск скрипта через 5 минут, однократно:
+### Запуск скрипта через 5 минут, однократно
 ```lua
 scripts.setTimer("giveMoney", os.time() + 300)
 ```
-Запуск скрипта каждый день в 01:05:
+### Запуск скрипта каждый день в 01:05
 ```lua
 scripts.setTimer("earnMoney", "5 1 * * *")
 ```
-Сброс таймера для скрипта OneMinTimer.lua:
+### Сброс таймера для скрипта OneMinTimer.lua
 ```lua
 scripts.setTimer("OneMinTimer", 0)
+```
+### Отправка данных каждую минуту на narodmon.ru
+```lua
+function SendNarodmon(name, value)
+  local MAC = "BC:DD:C2:D7:68:BC"
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
+SendNarodmon("illuminance", value)
 ```
 
 ## Объекты
@@ -109,7 +119,6 @@ scripts.setTimer("OneMinTimer", 0)
 zigbee.join(255, "plug1")
 -- включить JOIN через роутер "plug1", на 255 секунд
 ```
-
 ### Получение значения состояния устройства из кэша
 ```lua
 -- Получаем значение температуры и округляем до целого  
@@ -124,12 +133,8 @@ print("Текущая температура: " .. temp .. " C°")
 -- Получаем значение яркости лампочки
 zigbee.get("lamPochka", "brightness")
 ```
-
-Установка значения  устройства 
-
 ### Переключение лампочки при нажатии кнопки выключателя
 1. при нажатии кнопки выключателя переключает лампу 'lamp_1' через контроль яркости. Может выполняться как самостоятельно, например по таймеру, так и из правила Simple Bind
-
 ```lua
 -- получаем значение состояния 'click' кнопки 'lumi.sensor_switch'
 -- если значение = single
@@ -147,7 +152,7 @@ if zigbee.value("lumi.sensor_switch", "click") == "single" then
   end
 end
 ```
-2. при нажатии кнопки переключает лампу 0x00124B0009FE36FC, через установку состояния "State" в "TOGGLE". Должен выполняться из SB Rule
+1. при нажатии кнопки переключает лампу 0x00124B0009FE36FC, через установку состояния "State" в "TOGGLE". Должен выполняться из SB Rule
 ```lua
 -- toggleLamp.lua
 -- switch 0x00124B0009FE36FC on single lumi.sensor_switch click
@@ -156,6 +161,17 @@ if Event.State.Value == "single" then
   end
 
 ```
+
+### Создание виртуальных свойств устройства
+Пример инициализации с сохранением данных
+```lua
+local res= zigbee.setState("0x00124B001F7CA144", "prop_float", "FLOAT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_bool", "BOOL") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "INT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "STR") 
+os.save()
+```
+
 ### Преобразование показателей давления из kPa в mmhg
 Необходимо создать lua скрипт и назначить его вызов при изменении pressure:
 
