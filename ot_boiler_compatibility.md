@@ -18,7 +18,7 @@
 
 **Baxi**
 
-|Модель | Метод интеграции | <sup> [blrst][boiler.status] </sup>|<sup> [dhwst][dhw.status]</sup>| <sup>[errcd][ot.error_code]</sup>|<sup>[blrtemp][boiler.temperature]</sup>| <sup>[dwhtemp][dhw.temperature]</sup>| <sup>[tempout][boiler.temperature_outside]</sup>| <sup>[bltempret][boiler.return_temperature]</sup>|<sup>[modul][boiler.modulation]</sup>|<sup>thermo.boiler.pressure (float)</sup>|<sup>thermo.ot.bus_error_count (float)</sup>|<sup>thermo.ot.bus_state (float)</sup>|<sup> thermo.boiler.target_temperature (float)</sup>|<sup> thermo.dhw.target_temperature (float)</sup>|<sup>thermo.boiler.max_temperature (float)</sup>|
+|Модель | Метод интеграции | <sup> [blrst][boiler.status] </sup>|<sup> [dhwst][dhw.status]</sup>| <sup>[errcd][ot.error_code]</sup>|<sup>[blrtemp][boiler.temperature]</sup>| <sup>[dwhtemp][dhw.temperature]</sup>| <sup>[tempout][boiler.temperature_outside]</sup>| <sup>[bltempret][boiler.return_temperature]</sup>|<sup>[modul][boiler.modulation]</sup>|<sup>[press][boiler.pressure]</sup>|<sup>[errcnt][bus_error_count]</sup>|<sup>[state][bus_state]</sup>|<sup> [blrtarget][boiler.target_temperature]</sup>|<sup>[dhwtrg][dhw.target_temperature]</sup>|<sup>[maxtemp][boiler.max_temperature]</sup>|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 |SLIM|OpentTherm|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>
 
