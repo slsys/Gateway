@@ -276,6 +276,13 @@ obj.remove("Name"(STR))
 ### Библиотека zigbee
 Служит для управления zigbee устройствами, зарегистрированными на шлюзе. Подробные примеры [здесь](/lua_doc/luaExamples.md#zigbee)
 
+#### zigbee.getStatus()
+Возвращает статус координатора. Если запущен, вернёт 9.
+Начиная с версии 2022.07.24d1.
+```lua
+-- пример
+coord_status = zigbee.getStatus()
+```
 #### zigbee.join()
 Включает режим сопряжения для подключения новых устройств
 ```lua
@@ -360,13 +367,7 @@ zigbee.configReport("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBE
 ```
 > функционал и его описание в разработке <!-- todo -->
 
-### zigbee.getStatus()
-Возвращает статус координатора. Если запущен, вернёт 9.
-Начиная с версии 2022.07.24d1.
-```lua
--- пример
-coord_status = zigbee.getStatus()
-```
+
 
 
 ----------------------------
