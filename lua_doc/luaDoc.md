@@ -319,42 +319,57 @@ zigbee.setState("device"(STR), "stateName"(STR), stateValue[[, "type"(STR)], eve
 ```
 <!-- TODO - setState скудно описан. Разобраться. По идее нужен для создания кастомных стэйтов и вроде как устройств и управлении ими. При этом управляется также и через set(), но как-то криво, например: есть color_temp, создал color_temp1. При изменении color_temp1 через set() - меняется также и color_temp. Как удалить созданного стэйта. Разобраться с флагом events. Как читать состояние флага?  -->
 
-#### zigbee.readAttr(ident, epId, clusterId, AttrId[, manufId])
+#### zigbee.readAttr()
 Отправляет запрос на чтение атрибута в кластере.
-
-Читает атрибут swBuild в кластере genBasic в 1 эндпоинте:
 ```lua
-zigbee.readAttr("0x90FD9FFFFEF7E26D", 0x0000, 1, 0x4000)
+zigbee.readAttr("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER)[, manufId])
+-- device - FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - номер эндпоинта
+-- clusterID - номер кластера
+-- AttrId - номер атрибута
+-- Например, вернуть атрибут swBuild в кластере genBasic в 1 эндпоинте:
+zigbee.readAttr("0x90FD9FFFFEF7E26D", 1, 0x4000, 0x0000)
 ```
+> функционал и его описание в разработке <!-- todo -->
 
-
-zigbee.readAttr(ident, epId, clusterId, AttrId[, manufId])
-zigbee.writeAttr(ident, epId, clusterId, AttrId, dataType, value[, manufId])
-zigbee.configReport(ident, epId, clusterId, AttrId, dataType, minRepInt, maxRepInt, repChange)
-zigbee.getStatus()
-
-
-
-
-
-### zigbee.writeAttr(ident, epId, clusterId, AttrId, dataType, value[, manufId])
+#### zigbee.writeAttr()
 Записывает значение атрибута в кластере.
+```lua
+zigbee.writeAttr("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER), "dataType"(STR), value[, manufId])
+-- device - FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - номер эндпоинта
+-- clusterID - номер кластера
+-- AttrId - номер атрибута
+-- dataType - тип данных
+-- value - значение атрибута
+```
+> функционал и его описание в разработке <!-- todo -->
 
-### zigbee.configReport(ident, epId, clusterId, AttrId, dataType, minRepInt, maxRepInt, repChange)
+#### zigbee.configReport()
 Конфигурирует репортинг атрибута в кластере.
+```lua
+zigbee.configReport("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER), "dataType"(STR), minRepInt(INT), maxRepInt(INT), repChange(BOOL))
+-- device - FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - номер эндпоинта
+-- clusterID - номер кластера
+-- AttrId - номер атрибута
+-- dataType - тип данных
+-- minRepInt
+-- maxRepInt
+-- repChange
+```
+> функционал и его описание в разработке <!-- todo -->
 
 ### zigbee.getStatus()
-Возвращает статус координатора, если запущен успешно - 9.
+Возвращает статус координатора. Если запущен, вернёт 9.
 Начиная с версии 2022.07.24d1.
-
 ```lua
+-- пример
 coord_status = zigbee.getStatus()
 ```
 
-------------------------------------------------------------------
 
-
-
+----------------------------
 
 ### http.request 
 Вызов URL запроса http.request (`url[:port], [method, headers, body]`)
