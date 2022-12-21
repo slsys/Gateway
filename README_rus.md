@@ -2,8 +2,23 @@
 
 Поддержите проект: https://boosty.to/slsys
 
-# Zigbee шлюз
+# SLS (Smart Logic System)
+[SLS] - решения для твоего умного дома. Проводные и надежные, беспроводные и доступные. И все остальные.  
+[SLS] - это железо, собираемое многотысячным сообществом любителей радиоэлектроники своими руками (DIY). 
+[SLS] - это софт, в котором реализована поддержка транспортных протоколов: Zigbee, OpenTherm, 1-wire, KNX и многих других. 
+[SLS] - Cloud - 
+[SLS Pro]  - 
 
+# Решения
+
+# Аппаратная составляющая
+
+## SLS DIN MINI
+Универсальный контроллер с  расширяем функционалом, можно подклчить два модуля расширения, тем самым выполнять мастером в нескольких сетях (OpenTherm и Zigbee)
+
+## Zigbee шлюз
+
+### DIY шлюз
 Шлюз  предназначен для работы с  устройствами ZigBee.  В основе  лежит контроллер [ESP32 от Espressif](https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). В качестве связущего звена протокола Zigbee  выступает тандем чипов от Texas Instruments [ZIgbee CC2538](https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds) и  усилителя  [сс2592](https://www.ti.com/product/CC2592?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUv-CIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds).
 
 
