@@ -1,4 +1,6 @@
 # Совместимость котлов
+[boiler.status]: ## "thermo.boiler.status (bool)"
+This is a [ot][boiler.status] example.
 
 **Baxi**
 
