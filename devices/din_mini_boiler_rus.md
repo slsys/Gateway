@@ -6,6 +6,8 @@
 * Цифровая шина OpenTherm (Master) для подключения котла
 * Цифровая шина OpenTherm (Slave) для подключения комнатного термостата
 
+Список протестированных [отопительных котлов](/ot_boiler_compatibility.md)
+
 ## Клеммы
 1) Шина 1-Wire
 2) Питание +5V для шины 1-Wire
@@ -44,8 +46,8 @@
 Инициализация режима производится в стартовом скрипте init.lua
 
 ```lua
-thermo.beginOpenTherm(true)  --прозрачнцй
---thermo.beginOpenTherm()    --мастер
+thermo.beginOpenTherm(true)  --прозрачный режим (наблюдение)
+thermo.beginOpenTherm()      --мастер (SLS выступает в роли термостата)
 ```
 
 ## Поддержка OpenTherm Monitor
