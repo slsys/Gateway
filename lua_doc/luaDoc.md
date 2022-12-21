@@ -502,7 +502,7 @@ os.fileRename("old"(STR), "new"(STR))
 -- old - старое имя переимновываемого файла
 -- new - новое имя переимновываемого файла
 ```
-#### os.readFile("/int/!file.db")
+#### os.readFile()
 Читает файл 
 ```lua
 os.readFile("fileName"(STR))
