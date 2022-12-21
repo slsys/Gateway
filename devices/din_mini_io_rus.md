@@ -37,11 +37,28 @@ gpio.addInput(26, gpio.INPUT, 2, "input3")                  -- Вход 3, gpio 
 gpio.addInput(27, gpio.INPUT, 0, "input4", 100, 200, 300)   -- Вход 4, gpio 27   (геркон ворот)
 gpio.addInput(12, gpio.INPUT, 2, "input5")                  -- Вход 5, gpio 12
 gpio.addInput(13, gpio.INPUT, 2, "input6")                  -- Вход 6, gpio 13
----определяем действия, которые необходимо выполнять при изменении значений портов
+----------
+obj.setOpt('septik','STR',true) -- для удобства работы создадим объект septik и настроим отправку состояния в mqtt (true)
+----------
+--- определяем действия, которые необходимо выполнять при изменении значений портов
 obj.onChange('io.input4.value', 'vorota.lua')  -- при изменении io.input4.value выполним скрипт vorota.lua
 obj.onChange('io.input2.value', 'vorota.lua')  -- при изменении io.input4.value выполним скрипт vorota.lua
 obj.onChange('io.input1.value', 'septik.lua')  -- при изменении io.input4.value выполним скрипт vorota.lua
+scripts.setTimer("septik", os.time() + 5)      -- запустим скрипт чтения состояния сэптика при запуске SLS
 ```
+
+Пример скрипт аопроса состояния сэптика septik.lua (запускается при включении SLS  и изменении gpio:
+```lua
+  local septik = gpio.read(32)           --опредеяем порт для чтения состояния
+  if septik == 1  then  
+    telegram.send("#Сэптик очищен")      --отправляем сообщение в телеграм
+  obj.set("septik", "empty")             --задаем состояние объекта (для удобства работы)
+  end
+  if septik == 0  then  
+  obj.set("septik", "full")          
+  telegram.send("#Сэптик заполнен") end  --отправляем сообщение в телеграм
+  ```
+
 ### Выбор программного режима работы (mode)
 
 Переназнчаить  режима работы порта можно  функцией *gpio.mode(GPIO, mode)*, где mode может быть *gpio.INPUT* или *gpio.OUTPUT*.
