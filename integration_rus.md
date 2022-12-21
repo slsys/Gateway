@@ -1,4 +1,4 @@
-# Возможности интеграции шлюза SLS
+# Возможности интеграции шлюза SLS:
 
 ## [Интеграция с HomeAssistant](/int_has_rus.md) (для большинства устройств поддерживается режим [Discovery](https://www.home-assistant.io/integrations/discovery/) 
 
