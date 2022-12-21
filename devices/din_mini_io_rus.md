@@ -44,7 +44,7 @@ obj.onChange('io.input1.value', 'septik.lua')  -- при изменении io.i
 ```
 ### Выбор программного режима работы (mode)
 
-Переназнчаить  режима работы порта можно функцией функцией *gpio.mode(GPIO, mode)*, где mode может быть *gpio.INPUT* или *gpio.OUTPUT*.
+Переназнчаить  режима работы порта можно  функцией *gpio.mode(GPIO, mode)*, где mode может быть *gpio.INPUT* или *gpio.OUTPUT*.
 
 | mode | Режим | Описание |
 |-|-|-|
