@@ -6,3 +6,7 @@
 |SLIM|OT|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>
 
 hint[hint text here](https://URL.com)
+
+
+[id1]: ## "your hover text"
+This is a [hover text][id1] example.
