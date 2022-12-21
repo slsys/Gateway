@@ -47,7 +47,7 @@ obj.onChange('io.input1.value', 'septik.lua')  -- при изменении io.i
 scripts.setTimer("septik", os.time() + 5)      -- запустим скрипт чтения состояния сэптика при запуске SLS
 ```
 
-Пример скрипт аопроса состояния сэптика septik.lua (запускается при включении SLS  и изменении gpio:
+Пример скрипта опроса состояния сэптика septik.lua (запускается при включении SLS  и изменении gpio:
 ```lua
   local septik = gpio.read(32)           --опредеяем порт для чтения состояния
   if septik == 1  then  
