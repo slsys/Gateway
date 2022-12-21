@@ -162,19 +162,20 @@ end
 **Внимание, скрипты OneMinTimer.lua и OneSecTimer.lua более не запускаются автоматически!!! (с версии прошивки 2022.01.30d1)**
 
 ---
-## Встроенные библиотеки
+## Библиотеки SLS
 В прошивку шлюза встроены следующие библиотеки:
-- [obj.](/lua_doc/luaDoc.md#работа-с-объектами) 
-- [Event.](/lua_doc/luaDoc.md#события)
+- [obj.](/lua_doc/luaDoc.md#Библиотека-OBJ) 
+- [Event.](/lua_doc/luaDoc.md#Библиотека-event) 
 - [zigbee.](/lua_doc/luaDoc.md#библиотека-zigbee)
 - [mqtt.](/lua_doc/luaDoc.md#mqttpub) 
 - [http.](/lua_doc/luaDoc.md#httprequest)
 - [telegram.](/lua_doc/luaDoc.md#)
+- [os.](/lua_doc/luaDoc.md#)
 
 Огромное количество примеров использования [здесь](/lua_doc/luaExamples.md). (в разработке)
 
 
-### Работа с объектами
+### Библиотека OBJ
 Объекты это универсальная сущность для хранения и обмена данными между подсистемами шлюза, например между скриптами. [Подробнее здесь](/objects_rus.md). [Примеры](/lua_doc/luaExamples.md).
 
 Синтаксис функций:
@@ -231,7 +232,7 @@ obj.onChange("Name"(STR), "script.lua"(STR))
 obj.remove("Name"(STR))
 -- Name - имя объекта
 ```
-### События
+### Библиотека EVENT
 Библиотека `Event` служит для передачи данных в скрипт, в зависимости от того, из какой подсистемы он вызван.
 ### Типы событий
 События различаются типом `Event.Type`. В скрипт передается числовое значение типа события, позволяющее определить источник вызова и получить различные параметры:
@@ -273,7 +274,7 @@ obj.remove("Name"(STR))
 #### Вызов по таймеру Cron 
 <!-- - `Event.Param` - аргументы -->
 
-### Библиотека zigbee
+### Библиотека ZIGBEE
 Служит для управления zigbee устройствами, зарегистрированными на шлюзе. Подробные примеры [здесь](/lua_doc/luaExamples.md#zigbee)
 
 #### zigbee.getStatus()
@@ -367,41 +368,317 @@ zigbee.configReport("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBE
 ```
 > функционал и его описание в разработке <!-- todo -->
 
-
-
-
-----------------------------
-
-### http.request 
-Вызов URL запроса http.request (`url[:port], [method, headers, body]`)
-
-В данный момент поддерживается только `http://` протокол.
-
-Пример переключение gpio 12 для прошивки wifi-iot
+### Библиотека MQTT
+#### mqtt.pub()
+Публикует на MQTT сервер в топик *topic* значение *payload*. 
 ```lua
-http.request("http://192.168.1.34/gpio?st=2&pin=12")
+mqtt.pub("topic"(STR), "payload"(STR))
+```
+Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
+```lua
+mqtt.pub('cmnd/sonoff5/power', 'toggle')
 ```
 
-Пример отправки POST запроса:
+#### mqtt.connected()
+Возвращает статус подключение к брокеру MQTT. Выполняется без параметров.
+
+#### mqtt.sub()
+Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
 ```lua
-http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
+mqtt.sub("topic"(STR), "objName"(STR))
+-- topic - топик MQTT
+-- objName - объект, в который записываются данные
+```
+Пример подписки на топик с температурой, которую шлюз помещает в объект:
+```lua
+mqtt.sub('dev/sensor/temp', 'room_temp')
 ```
 
-Пример переключения реле sw1 в прошивке espHome:
-
+#### mqtt.unSub()
+Отписывается от топика.
 ```lua
-http.request("http://192.168.1.71/switch/sw1/toggle", "POST") 
+mqtt.unSub("topic"(STR))
+```
+Пример отписки от топика с температурой
+```lua
+mqtt.unSub('dev/sensor/temp')
+```
+### Библиотека HTTP
+#### http.request2()
+Служит для отправки HTTP (HTTPS в разработке) запросов во внешние системы. Поддерживает методы GET и POST.
+```lua
+http.request ("url"(STR)[:"port"(STR)], ["method"(STR), "headers"(STR), "body"(STR)]`)
+-- url:port - URL адрес и порт целевого ресурса
+-- method - метод POST или GET
+-- headers - заголовки запроса
+-- body - тело запроса
+```
+[Примеры](/lua_doc/luaExamples.md#HTTP-запросы)
+Предыдущая версия функции: `http.request()` имеет такой же синтаксис и для обратной совместимости, также доступна.
+
+### Библиотека OS
+#### os.time()
+Возвращает Unix время. Вызывается без параметров.
+[Примеры](/lua_doc/luaExamples.md#Библиотека-OS)
+
+#### os.setSleep()
+Включает и выключает режим сна для модема WiFi. По-умолчанию выключено. Также можно заставить систему заснуть глубоким сном на `time` секунд, тем самым снизив энергопотребление практически до нуля. В этом режиме не работает ничего, кроме таймера отсчета до окончания сна, по прошествии которого система перезагрузится. Это может использоваться при питании от аккумулятора.
+```lua
+os.setSleep(enable(BOOL)[,time(INT)])
+-- enable - включить = true, выключить = false спящий режим
+-- time - время сна в сек.
+```
+#### os.delay()
+Выполняет паузу выполнения скрипта на указанное время. Не рекомендуется делать паузу более чем на 1 секунду.
+```lua
+os.delay(time(INT))
+-- time - время паузы в милисекундах (1 сек = 1000 мс)
+```
+#### os.millis()
+Возвращает количество миллисекунд с момента загрузки системы. Вызывается без параметров.
+
+#### os.save()
+Сохраняет данные. Тоже, что и меню *Actions -> Save*. Вызывается без параметров.
+
+#### os.restart()
+Перезагружает ОС. Вызывается без параметров.
+
+#### os.ping()
+Отправляет запросы ICMP PING на тестируемый хост. Возвращает среднее время ответа или -1 при недоступности.
+```lua
+os.ping("host"(STR)[, count(INT)])
+-- host - IP или DNS адрес хоста
+-- count - количество запрсов (по-умолчанию 1)
+```
+#### os.led()
+SLS шлюз может управлять различными  светодиодами. Это может быть подсветка корпуса Xiaomi, круглые платы с modkam.ru, либо индикационный многофункциональный светодиод шлюза SLS DIN MINI. В дополнение можно подключить обычную светодиодную ленту. Описание параметров:
+```lua
+os.led(mode(STR), brightness(INT), r(INT), g(INT), b(INT)[, effect])
+-- mode - режим. OFF - выключено, ON - включено, AUTO - индикация режимов/состояний шлюза (см. описаниее далее) 
+-- brightness - яркость (целое, от 0 до 255)
+-- r, g, b - цвет (целое, от 0 до 255 или -1, если цвет менять не требуется)
+-- effect - включает эффекты в соответствии с таблицей
+
+``` 
+В режиме AUTO шлюз оповещает о своем состоянии по следующему алгоритму: 
+- зеленый горит - Join
+- синий переливается - режим AP
+- синий мигает - идет подключение к Wi-Fi
+- красный - ошибка подключения к Wi-Fi
+
+[Таблица эффектов](/led_effects.md)
+[Примеры для различных устройств](/lua_doc/luaExamples.md#Управление-адресными-светодиодами)
+
+#### os.wdt()
+Включается и выключает WDT (Сторожевой таймер), может использоваться для отладки незапланированных перезагрузок.
+```lua
+os.wdt(enable(BOOL))
+-- enable - включить (true), выключить (false) 
+```
+------------------------------------
+
+ToDo 
+
+
+
+
+
+### Управление GPIO
+```lua
+gpio.mode(pin, mode)
+gpio.read(pin) - чтение цифрового 
+gpio.read(PIN, true) - чтение ADC
+gpio.write(pin, level)
 ```
 
-Пример переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
+### Управление звуком
 ```lua
-if Event.State.Value == "btn_2_single"  then
-  http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
-end
+audio.playurl(url) -- проигрывание звука из URL
+audio.geturl() --- возвращает текущий URL
+audio.stop() -- остановить проигрывание
+audio.setvolume(volume_procent) -- установить уровень громкости
+audio.getvolume() -- возвращает текущий уровень громкости
+audio.getstatus() -- возвращает текущий статус
 ```
 
-Запрос инфомации со стороннего ресурса
+### Ежеминутный таймер
+
+Просто создайте скрипт с именем `OneMinTimer.lua`, он будет запускаться каждую минуту.
+
+Установите [таймер](/lua_rus.md#периодический-запуск-скриптов-таймеры) через scripts.setTimer("OneMinTimer", 60). Для автоматического запуска `OneMinTimer.lua` добавьте эту строку в стартовый  скрипт init.lua.
+
+Пример отправки данных каждую минуту на https://narodmon.ru
+
 ```lua
-local Response = http.request("http://wtfismyip.com/text")
-print("My IP: " .. Response)
+function SendNarodmon(name, value)
+  local MAC = "BC:DD:C2:D7:68:BC"
+  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
+end  
+
+local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
+SendNarodmon("illuminance", value)
 ```
+### net.localIP() 
+Возвращает адрес устройства SLS в  локальной сети
+### net.remoteIP()  
+Возвращает внешний адрес SLS в сети  интернет (если доступен). 
+
+
+
+
+### Отправка сообщений в телеграм 
+
+1. Зарегистрировать своего бота можно у [@BotFather](https://t.me/BotFather). Во время регистрации будет выдан *token*.
+2. Узнать свой *ChatId* можно у бота [@userinfobot](https://t.me/userinfobot).
+
+*token* и *ChatId* достаточно написать 1 раз в `init.lua`, потом использовать только `telegram.send()` :
+Более подробная информация собрана в специальном [разделе](/telegram_rus.md) 
+
+```lua
+-- добавьте в init.lua
+telegram.settoken("5961....:AAHJP4...")
+telegram.setchat("5748.....")
+
+-- добавьте в любой lua скрипт где требуется оповещение
+telegram.send("Температура: " .. string.format("%.2f", zigbee.value(tostring(Event.ieeeAddr), "temperature")) .. "°C, Влажность: " .. string.format("%.2f",zigbee.value(tostring(Event.ieeeAddr), "humidity")) .. "%")
+```
+
+
+
+### Создание виртуальных свойств
+
+```lua
+zigbee.setState(IEEE, "myproperies", type) 
+```
+
+Варианты type:
+* "BOOL"
+* "INT"
+* "FLOAT"
+* "STR"
+
+Пример инициализвции с сохранением данных
+
+```lua
+local res= zigbee.setState("0x00124B001F7CA144", "prop_float", "FLOAT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_bool", "BOOL") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "INT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "STR") 
+os.save()
+```
+
+
+
+### Запрос данных от устройств через скрипт, например запрос мгновенного потребления, если устройство само не оповещает
+
+`zigbee.get("0x842E14FFFE05B8E2", "power")` в файле `onemintimer.lua` где  `0x842E14FFFE05B8E2` - идентификатор устройсва
+
+
+
+### Запуск lua скрипта из другого скрипта
+
+```lua
+dofile("/int/test.lua")
+```
+
+
+### Запуск скрипта с помощью HTTP API
+
+```lua
+/api/scripts?action=evalFile&path=/test.lua
+```
+
+### Периодический запуск скриптов (таймеры)
+Шлюз может запускать скрипты с определенной периодичностью. Для этого необходимо назначить ему таймер. 
+Можно будет установить таймер к любому скрипту, а так же отменить его. Дискретность таймеров 1 секунда, для cron - 1 минута.
+
+
+Типы таймеров:
+* Периодический (выполняется каждые X секунд) (Event.Type = 5)
+* Однократный (выполняется однократно в UNIX время) (Event.Type = 4)
+* cron (синтаксис как у [UNIX cron](https://ru.wikipedia.org/wiki/Cron)) (Event.Type = 6) (начиная с версии 2022.04.24d11) 
+
+Запуск скрипта OneMinTimer каждые 60 секунд:
+```lua
+scripts.setTimer("OneMinTimer", 60)
+```
+
+Запуск скрипта my1 через 5 секунд однократно:
+```lua
+scripts.setTimer("my1", os.time() + 5)
+```
+
+Запуск скрипта my2 каждый день в 01:05:
+```lua
+scripts.setTimer("my2", "5 1 * * *")
+```
+
+Отмена всех таймеров для скрипта OneMinTimer:
+```lua
+scripts.setTimer("OneMinTimer", 0)
+```
+
+:warning: **Внимание, скрипты OneMinTimer.lua и OneSecTimer.lua более не запускаются автоматически!!!**
+
+### Скрипт инициализации 
+При запуске системы единоразово выполняется init.lua. В нем полезно задать переменные для работы с устройством. 
+
+```lua
+telegram.settoken("51778***5:AAG0bvK***")
+telegram.setchat("-3348***")
+telegram.send("SLS   загружен "..net.localIP())
+
+local sunset_hour, sunset_min = os.sunset()
+local sunrise_hour, sunrise_min = os.sunrise()
+telegram.send("sunrise " ..sunset_hour  ..":".. sunset_min )
+```
+
+## Работа с хранилищем](/storage_rus.md)
+Примонтировать SD-карту, можно добавить в *init.lua*:
+```lua
+os.mountSD(true)
+```
+Проверка наличия файла, возвращает true/false
+```lua
+os.fileExists(fileName)
+```
+Удаления файла
+```lua
+ os.fileRemove(fileName)
+```
+Переименование файла
+ ```lua
+os.fileRename(old, new)
+```
+Запись в файл:
+```lua
+os.writeFile("/int/!file.db","привет\n",true)  --3 параметр определяет, перезаписывать или нет файл
+value = os.readFile("/int/!file.db")
+print(value)
+```
+Для карты памяти необходимо использовать путь "/sd/file.txt"
+
+## Обработка нажатий кнопок
+Многие ревизии шлюзов имеют кнопку, нажатия которой можно обрабатывать скриптами
+
+Например для включение "режима сопряжения" при нажатии на боковую кнопку  шлюза
+Необходимо привязать скрипт `btn_sw1.lua`
+```lua
+zigbee.join(255, "0x0000")
+```
+и привязать его выполнение в init.lua
+```lua
+obj.onChange("io.input0.value", "btn_sw1.lua")
+```
+- где `io.input0.value` - номер обрататываемого порта (в примере указана кнопка для круглого шлюза)
+
+Более подробно вопрос с обрабокой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
+
+
+## Полезные ссылки 
+1) [Примеры типовых сценариев](/samples_rus.md) 
+2) On-line учебник по [lua](https://zserge.wordpress.com/2012/02/23/lua-%D0%B7%D0%B0-60-%D0%BC%D0%B8%D0%BD%D1%83%D1%82/)
+3) Генератор lua скриптов  на основе [Blockly](https://blockly-demo.appspot.com/static/demos/code/index.html)
+
+
+

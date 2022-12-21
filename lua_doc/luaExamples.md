@@ -55,6 +55,33 @@ obj.onChange("io.input0.value", "btn_sw1.lua")
 ```lua
 zigbee.join(255, "0x0000")
 ```
+### Обработка нажатий кнопки и управление сетом
+####  Переключение света через управление яркостью
+```lua
+-- однократное нажатие, включить свет (яркость max)
+if Event.State.Value == "single" then 
+  value = 255 
+-- двойное нажатие, выключить свет (яркость 0)
+elseif Event.State.Value == "double" then 
+  value = 0 
+-- другие нажатия - ничего не делать
+else 
+  return 
+end
+-- непосредственно, отправка полученного значения в целевое устройство
+zigbee.set("lamp_1", "brightness", value)
+```
+#### Переключение света
+```lua
+if Event.State.Value == "single" then 
+  value = "ON" 
+elseif Event.State.Value == "double" then 
+  value = "OFF" 
+else 
+  return 
+end
+zigbee.set("lamp_1", "state", value)
+```
 
 ## Таймеры
 Запуск скрипта каждые 60 секунд:
@@ -129,7 +156,6 @@ if Event.State.Value == "single" then
   end
 
 ```
-
 ### Преобразование показателей давления из kPa в mmhg
 Необходимо создать lua скрипт и назначить его вызов при изменении pressure:
 
@@ -138,4 +164,71 @@ if Event.State.Value == "single" then
 local press = zigbee.value(tostring(Event.ieeeAddr), "pressure")
 local pressmm = zigbee.value(tostring(Event.ieeeAddr), "pressure_mm")
 zigbee.setState(Event.ieeeAddr, "pressure_mm", press * 7.5, "FLOAT")
+```
+
+## HTTP запросы
+### Пример отправки POST запроса
+```lua
+http.request2("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
+-- Альтернативный вариант:
+http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
+```
+### Переключение gpio 12 для прошивки wifi-iot
+```lua
+http.request("http://192.168.1.34/gpio?st=2&pin=12")
+```
+### Переключение реле sw1 в прошивке espHome
+```lua
+http.request("http://192.168.1.71/switch/sw1/toggle", "POST") 
+```
+### Переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
+```lua
+if Event.State.Value == "btn_2_single"  then
+  http.request("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
+end
+```
+### Запрос информации со стороннего ресурса
+```lua
+local Response = http.request("http://wtfismyip.com/text")
+print("My IP: " .. Response)
+```
+
+## Библиотека OS
+### Получение текущего часа, времени и секунд, например для планировщика в таймере:
+```lua
+local gmt = 3
+local time = os.time() + gmt * 3600;
+
+local t1 = math.modf(time/60);
+local sec  = time - t1*60;
+local time = t1;
+local t1 = math.modf(time/60);
+local min  = time - t1*60;
+local time = t1;
+local t1 = math.modf(time/24);
+local hour = time - t1*24;
+
+print(hour .. ":" .. min .. ":" .. sec)
+```
+### Управление адресными светодиодами
+#### Шлюз SLS в корпусе Xiaomi
+[Модернизированный  шлюз Xiaomi](https://modkam.ru/2019/11/25/obnovljaem-shljuz-xiaomi/) или индикаторное кольцо с обычными светодиодами.  На странице настроек *Settings-> Hardware* необходимо выполнить настройки:
+
+![](/img/luaIntLedGPIOSettings.png)
+
+#### Шлюз SLS DIN MINI (индикаторный светодиод)
+На странице настроек *Settings -> Hardware* необходимо установить: *Led Red (or addr): 21*, указать количество светодиодов *Number addressable leds: 1*.
+
+#### Светодиодное кольцо Modkam
+![](https://modkam.ru/wp-content/uploads/2019/11/Mi_Gateway_Shield02.jpg).
+На странице настроек *Settings -> Hardware* необходимо установить: *Led Red (or addr): 21*, указать количество светодиодов *Number addressable leds: 1*.
+
+#### Примеры управления светодиодами:
+```lua
+os.led('ON',255,200,1, 1) -- красный, с максимальной яркостью
+os.led('ON',255,1,250, 1) -- зеленый, с максимальной яркостью
+os.led('ON',255,1,1, 255) -- синий, с максимальной яркостью
+os.led('ON',255,200,100,100,10) -- включить эффект номер 10
+os.led('OFF') -- выключить
+os.led('AUTO') -- вернуть к индикации состояния шлюза
 ```
