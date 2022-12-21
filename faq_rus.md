@@ -141,13 +141,15 @@ left, PTVO, state_bottom_left, TOGGLE; right, PTVO, state_bottom_right, TOGGLE
 Цветовая температура 4000К, задаем в ZigBeeGW/lamp_1/set/color_temp значение 250
 
 ## Вопрос: Как управлять аппаратными светодиодами?
-Ответ:
+MQTT:
 Необходимо отправить в JSON значение в топик ZigBeeGW/led следующего содержания:
 {"mode":"manual","hex":"#FFFFFF"}
 
 mode - устанавливает режим, допустимы значения off, manual и auto
 hex - значение цвета в RGB Hex формате.
 
+Через [lua](/lua_rus.md#osledmodeonoffauto-brightness0255-r-g-b-effect)
+Через [HTTP API](/http_apt_rus.md)
 
 ## Вопрос: Как включить режим сопряжения боковой  кнопкой шлюза?
 Ответ: Необходимо создать скрипт, например btn_sw1.lua, далее привязать его к нужному типу нажатия в объекте кнопки.
