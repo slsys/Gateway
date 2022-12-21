@@ -20,7 +20,7 @@
 
 |<sup>Модель</sup> |<sup> Метод инт. </sup>| <sup> [bst][boiler.status] </sup>|<sup> [dhwst][dhw.status]</sup>| <sup>[errcd][ot.error_code]</sup>|<sup>[temp][boiler.temperature]</sup>| <sup>[dhwt][dhw.temperature]</sup>| <sup>[outs][boiler.temperature_outside]</sup>| <sup>[rett][boiler.return_temperature]</sup>|<sup>[modul][boiler.modulation]</sup>|<sup>[prss][boiler.pressure]</sup>|<sup>[state][bus_state]</sup>|<sup> [blrtarget][boiler.target_temperature]</sup>|<sup>[dhwtrg][dhw.target_temperature]</sup>|<sup>[maxtemp][boiler.max_temperature]</sup>|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-|
-|<sup>SLIM</sup>|<sup>OpenTherm</sup>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>
+|<sup>SLIM</sup>|<sup>OpenTherm</sup>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|<ul><li>- [x] </li></ul>|
 
 
 
