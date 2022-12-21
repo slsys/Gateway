@@ -353,3 +353,22 @@ nc -ulnk 45678
 ```
 nc -ulnp 45678
 ```
+
+Или скриптом на python  sls_udp_log.py:
+```python
+#!/usr/bin/env python3
+
+import socket
+
+UDP_IP = "0.0.0.0"
+UDP_PORT = 45678
+
+sock = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+sock.bind( (UDP_IP, UDP_PORT) )
+
+print("SLS Log Viewer v1.0 started!")
+
+while True:
+	data, addr = sock.recvfrom(1024)
+	print(data.decode(), end='')
+ ``` 
