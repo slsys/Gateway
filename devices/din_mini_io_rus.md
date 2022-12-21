@@ -120,5 +120,8 @@ gpio.addInput(12, gpio.INPUT_PULLUP, 2, "input5")
 gpio.addInput(13, gpio.INPUT_PULLUP, 2, "input6")
 ```
 
+## Полезные ссылки 
+[Использования GPIO на примерах решаемых задач](/gpio_sample_rus.md)
+
 
 
