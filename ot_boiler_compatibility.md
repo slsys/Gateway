@@ -1,4 +1,6 @@
 # Совместимость котлов
+Зачастую доступность отдаваемых котлами параметров можно проверить в таблице совместимости [OTGW](http://otgw.tclcode.com/matrix.cgi#boilers). С контроллером SLS Boiler Shield были протестированы следующее отопительное оборудование: 
+
 [boiler.status]: ## "thermo.boiler.status (bool)"
 [dhw.status]: ## "thermo.dhw.status (bool)"
 [ot.error_code]: ## "thermo.ot.error_code (int)"
