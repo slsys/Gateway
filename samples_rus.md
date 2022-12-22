@@ -43,8 +43,25 @@ end
 
 ```
 Пример вывода:
-
-![luaEventsParser](/img/luaEventsParser.png)
+```
+[22:28:49.552] [Scripts] Event.State.OldValue	true
+[22:28:49.558] [Scripts] Event.State.Name	contact
+[22:28:49.563] [Scripts] Event.State.Value	false
+[22:28:49.568] [Scripts] Event.Name			tables.lua
+[22:28:49.667] [Scripts] Event.Type			1
+[22:28:49.672] [Scripts] Event.Param
+[22:28:49.678] [Scripts] Event.nwkAddr		42108
+[22:28:49.687] [Scripts] Event.Time.min		28
+[22:28:49.694] [Scripts] Event.Time.month	12
+[22:28:49.702] [Scripts] Event.Time.year	2022
+[22:28:49.709] [Scripts] Event.Time.sec		49
+[22:28:49.713] [Scripts] Event.Time.hour	22
+[22:28:49.721] [Scripts] Event.Time.wday	5
+[22:28:49.726] [Scripts] Event.Time.day		9
+[22:28:49.733] [Scripts] Event.ModelId		lumi.sensor_magnet
+[22:28:49.738] [Scripts] Event.FreindlyName	
+[22:28:49.745] [Scripts] Event.ieeeAddr		0x0123456789ABCDEF
+```
 ### Включение режима сопряжения по нажатию на кнопку шлюза
 По нажатию на аппаратную кнопку будет включаться режим сопряжения (Join) Zigbee устройств. 
 1. в `init.lua` добавить код: 
