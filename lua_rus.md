@@ -381,6 +381,16 @@ zigbee.configReport("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBE
 -- repChange
 ```
 > функционал и его описание в разработке <!-- todo -->
+<!-- 
+#### zigbee.addInstallCode()
+todo - в разработке
+#### zigbee.configConv()
+todo - в разработке
+#### zigbee.setRetain()
+todo - в разработке
+#### zigbee.setsaveinterval()
+todo - в разработке
+ -->
 
 ### Библиотека MQTT
 #### mqtt.pub()
