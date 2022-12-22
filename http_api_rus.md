@@ -83,6 +83,8 @@ action=getLevel
 
 #### Leds
 ```/api/led?red=5&green=5&blue=5&mode=manual``` - Установить цвет светодиода
+Альтернативный вариант управления череp [lua](/lua_rus.md#osled)
+
 
 #### [Objects](/objects_rus.md) 
 ```GET /api/obj``` - Получить список объектов
