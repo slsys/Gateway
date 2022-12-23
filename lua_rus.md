@@ -169,7 +169,7 @@ end
 - [zigbee.](/lua_rus.md#библиотека-zigbee) - управление zigbee устройствами 
 - [mqtt.](/lua_rus.md#библиотека-mqtt) - работа с MQTT брокером
 - [http.](/lua_rus.md#библиотека-http) - взаимодействие с внешними системами по HTTP
-- [telegram.](/lua_rus.md#) - отправка уведомлений и управление шлюзом
+- [telegram.](/lua_rus.md#библиотека-telegram) - отправка уведомлений и управление шлюзом. [Подробнее здесь](/telegram_rus.md)
 - [os.](/lua_rus.md#) - взаимодействие с операционной системой шлюза. [Работа с хранилищем](/storage_rus.md)
 - [gpio.](/lua_rus.md#Библиотека-GPIO) - управление GPIO
 - [audio.](/lua_rus.md#Библиотека-audio) - управление встроенным в шлюза звуком
@@ -439,6 +439,42 @@ http.request ("url"(STR)[:"port"(STR)], ["method"(STR), "headers"(STR), "body"(S
 ```
 [Примеры](/samples_rus.md#HTTP-запросы)
 Предыдущая версия функции: `http.request()` имеет такой же синтаксис и для обратной совместимости, также доступна.
+
+### Библиотека TELEGRAM
+[Подробное описание здесь](/telegram_rus.md)
+#### telegram.settoken()
+Инициализирует токен
+```lua
+telegram.settoken("token"(STR))
+-- token - API-токен вашего бота
+```
+#### telegram.setchat()
+Инициализирует чат, в который бот будет отправлять уведомления
+```lua
+telegram.setchat("chatid"(STR))
+-- chatid - ID чата, куда бот будет писать сообщения
+```
+#### telegram.secure()
+Инициализирует протокол HTTPS.
+**Внимание! Включение этой опции отнимает большое количество свободной памяти! Возможны частые перезагрузки  шлюза!**
+```lua
+telegram.secure(enable(BOOL))
+-- enable - включить: true, выключить (по-умолчанию): false
+```
+#### telegram.receive()
+Инициализирует обработку входящих сообщений
+```lua
+telegram.receive(enable(BOOL))
+-- enable - включить: true, выключить (по-умолчанию): false
+```
+#### telegram.send()
+Отправляет сообщение.
+```lua
+telegram.send("msg"(STR)[, "chatid"(STR), "parse_mode"])
+-- msg - сообщение 
+-- chatid - ID чата, куда бот будет писать сообщения
+-- parse_mode - можно использовать для отправки ReplyKeyboard
+```
 
 ### Библиотека OS
 
