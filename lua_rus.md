@@ -543,7 +543,7 @@ os.led(mode(STR), brightness(INT), r(INT), g(INT), b(INT)[, effect])
 os.wdt(enable(BOOL))
 -- enable - включить (true), выключить (false) 
 ```
-## os.udplogenable()
+#### os.udplogenable()
 Включает логирование через UDP. [Примеры получения лога](/faq_rus.md#включение-udp-log)
 ```lua
 os.udplogenable(enable(BOOL))
