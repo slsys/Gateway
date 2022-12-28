@@ -610,21 +610,21 @@ os.fileRename("old"(STR), "new"(STR))
 -- old - старое имя переимновываемого файла
 -- new - новое имя переимновываемого файла
 ```
-#### os.readFile()
+#### os.fileRead()
 Читает файл 
 ```lua
-os.readFile("fileName"(STR))
+os.fileRead("fileName"(STR))
 -- fileName - имя целевого файла
 ```
 #### os.writeFile()
 Записывает данные в файл:
 ```lua
-os.writeFile("fileName"(STR),"data"(STR)[, overwrite(BOOL)])
+os.fileWrite("fileName"(STR),"data"(STR)[, overwrite(BOOL)])
 -- fileName - имя целевого файла
 -- data - данные
 -- overwrite - перезаписать файл (true)
 -- Пример:
-os.writeFile("/int/!file.db","привет\n",true)
+os.fileWrite("/int/!file.db","привет\n",true)
 -- Для карты памяти необходимо использовать путь "/sd/file.txt"
 ```
 #### os.setAssets()
