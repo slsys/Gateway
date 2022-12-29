@@ -616,7 +616,7 @@ os.fileRename("old"(STR), "new"(STR))
 os.fileRead("fileName"(STR))
 -- fileName - имя целевого файла
 ```
-#### os.writeFile()
+#### os.fileWrite()
 Записывает данные в файл:
 ```lua
 os.fileWrite("fileName"(STR),"data"(STR)[, overwrite(BOOL)])
