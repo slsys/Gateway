@@ -5,7 +5,7 @@
 
 
 
-## SLS Zigbee IR Zigbee_Gateway  (в разработке)
+## SLS IR Zigbee_Gateway  (в разработке)
 ![SLSIR](/img/gw1-500x500.png)
 
 
