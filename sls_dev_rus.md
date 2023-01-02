@@ -1,7 +1,7 @@
 # Поддерживаемое "железо":
 
 ## [SLS DIN MINI](/devices/din_mini_base_rus.md) и модули расширения
-![SLSDIN](/devices/images/SLS%20Din%20Mini.png)
+![SLSDIN](/img/slsmini.jpg)
 
 
 
