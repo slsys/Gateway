@@ -597,6 +597,12 @@ os.mountSD(mount(BOOL))
 os.fileExists("fileName"(STR))
 -- fileName - имя проверяемого файла
 ```
+#### os.fileSize()
+Возвращает размер файла
+```lua
+os.fileSize("fileName"(STR))
+-- fileName - имя проверяемого файла
+```
 #### os.fileRemove()
 Удаляет файл
 ```lua
