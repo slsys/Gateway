@@ -1,4 +1,22 @@
 [[toc]]
+### 2022.12.31d2
+- +OS: Добавлена возможность передачи параметра page для UI
+- +OS: Добавлена возможность отключения аутентификации для UI
+- *OS: Исправлено HTTP API для управления светодиодом
+- *OS: Возможность задать цвет для отображения входящих пакетов в режиме auto: os.ledReceive(r, g, b)
+- *OpenTherm: Исправлены типы объектов
+- +OpenTherm: Добавлено управление максимальным уровнем модуляции
+- +OpenTherm: Добавлено получение максимальной уставки теплоносителя
+- +Lua: Добавлена функция проверка существования файла: os.fileExists(fileName)
+- +Lua: Добавлена функция удаления файла: os.fileRemove(fileName)
+- +Lua: Добавлена функция переименования файла: os.fileRename(old, new)
+- +Lua: Добавлена функция чтения размера файла: os.fileSize(fileName)
+- +Zigbee: Добавлено состояние (команда) reset для всех устройств, для сброса на заводские настройки
+- *Zigbee: Исправлено появление некорректных значений при получения данных по Tuya DP
+- *Zigbee: Добавлены состояния sensitivity и selftest для #86 MiJia Honeywell smoke detector (JTYJ-GD-01LM/BW) (LUMI / lumi.sensor_smoke) 
+- +Zigbee: Новая модель для #209 Tuya Smart Human Presense Sensor (_TZE204_ztc6ggyl / TS0601)
+- +Zigbee: Поддержка для #251 Tuya MiBoxer Track RGB+CCT light (_TZB210_gdsxpa1z / TS0505B)
+- +Zigbee: Поддержка для #252 DIY CO2 Mini Monitor with TFT Display, outdoor temperature, date and time. (efektalab / EFEKTA_iAQ_S)
 ### 2022.12.10d3
 - +Telegram: Добавлена возможность форматировать текст и вставлять клавиатуру: telegram.send(text[, chat[, param]])
 - +MQTT: Добавлена опция добавления FN в префикс Entity Name
