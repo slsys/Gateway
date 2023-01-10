@@ -1,4 +1,22 @@
 [[toc]]
+### 2023.01.08d1
+- +OS: Управление эффектами статусных светодидов в HA
+- *OS: Исправлена обратная связь при управлении стутусными светодиодами
+- +Zigbee: Добавлено определение новых прошивок 20221214, 20221220, 20221226
+- *Zigbee: Исправлена загрузка при отсутствии файла groups.json
+- *Zigbee: Переработан конвертер для #153 Tuya MOES TRV thermostat (HY369RT)
+- *Zigbee: Исправлена передача времени для #224 Tuya Temperature & humidity sensor with clock
+- *Zigbee: Исправлено состояние action для #152 Aqara smart wall switch H1 EU (with neutral, double rocker) (WS-EUK04)
+- *Zigbee: Добавлены состояния hooks_lock, hand_open и limits_calibration для #237 Xiaomi Aqara curtain driver E1 (ZNCLBL01LM)
+- *Zigbee: Добавлено состояние power_outage_memory для #85 Aqara wireless relay controller (LLKZMK11LM)
+- *Zigbee: Добавлено состояние flip_indicator_light для #142 Aqara E1 2 gang switch (with neutral) (QBKG41LM)
+- *Zigbee: Добавлены состояния power_outage_memory, mode_switch, flip_indicator_light для #71 Xiaomi Aqara E1 1 gang switch (without neutral) (QBKG38LM)
+- *Zigbee: Добавлены состояния power_outage_memory, mode_switch, flip_indicator_light для #51 Xiaomi Aqara E1 2 gang switch (without neutral) (QBKG39LM)
+- *Zigbee: Добавлены состояния mode_switch, flip_indicator_light для #152 Aqara smart wall switch H1 EU (with neutral, double rocker) (WS-EUK04)
+- +Zigbee: Поддержка для #253 Tuya Din smart relay (with power monitoring) (_TZ3000_qeuvnohg / TS011F)
+- +Zigbee: Поддержка для #254 Aqara smart wall switch H1 EU (no neutral, double rocker) (WS-EUK02) (lumi.switch.l2aeu1)
+- +Zigbee: Поддержка для #255 Aqara smart wall switch H1 EU (with neutral, single rocker) (WS-EUK03) (lumi.switch.n1aeu1)
+- +Zigbee: Поддержка для #256 Aqara smart wall switch H1 EU (no neutral, single rocker) (WS-EUK01) (lumi.switch.l1aeu1)
 ### 2022.12.31d2
 - +OS: Добавлена возможность передачи параметра page для UI
 - +OS: Добавлена возможность отключения аутентификации для UI
