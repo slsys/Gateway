@@ -668,12 +668,12 @@ audio.getstatus() -- возвращает текущий статус
 ### explode()
 Разбивает строку с помощью разделителя. Результат помещает в массив.
 ```lua
-explode("string"(STR), "separator"(STR))
+explode("separator"(STR), "string"(STR))
 -- string - строка, которую необходимо разбить
 -- separator - символ разделителя
 -- пример:
 local string = "param1|param2|param3"
-local t = explode(string, "|")
+local t = explode("|", string)
 local param1 = t[1]
 local param2 = t[2]
 local param3 = t[3]
