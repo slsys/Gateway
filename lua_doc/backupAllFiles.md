@@ -8,7 +8,7 @@ $pathBackup = ".\_back\" + (Get-Date).ToString("yyyyMMdd_HHmm") + "\"
 $fileSLSBackup = "backup_" + (Get-Date).ToString("yyyyMMdd_HHmmss") + ".sls"
 $url = "192.168.1.247/api/storage?path=/"
 md $pathBackup
-# bacup all Files
+# backup all Files
 $result = wget $url
 if ($result.StatusCode -eq 200) {
 	$data = ConvertFrom-Json $([String]::new($result.Content))
