@@ -444,11 +444,12 @@ end
 ### Уведомление в телеграм об открытии двери
 
 ```lua
-local state =  zigbee.value(tostring(Event.ieeeAddr), "contact")
-if (state) then
-  telegram.send("Дверь открыта") 
-else
-  telegram.send("Дверь закрыта")
+if (Event.State.Value ~= Event.State.OldValue) then
+  if (Event.State.Value == 'true') then
+    telegram.send("Дверь закрыта") 
+  else
+    telegram.send("Дверь открыта")
+  end 
 end 
 ```
 
