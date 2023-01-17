@@ -2,12 +2,13 @@
 Иногда требуется скопировать все файлы из хранилища SLS. Следующие примеры позволяют выполнить данную задачу различными способами.
 ## Windows 
 ### Powershell
-Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `.\_back\date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на Windows 11, Powershell 5.1
+Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `.\_back\date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на Windows 11, Powershell 5.1. **Внимание!** Обязательно указать token, даже при отключенной авторизации в шлюзе.
 ```powershell
 $slsIP = "192.168.1.247"
+$tokenSLS="e9d38bedb6412e.....ed9575"
 $pathBackup = ".\_back\" + (Get-Date).ToString("yyyyMMdd_HHmm") + "\"
 $fileSLSBackup = "backup_" + (Get-Date).ToString("yyyyMMdd_HHmmss") + ".sls"
-$url = $slsIP + "/api/storage?path=/"
+$url = $slsIP + "/api/storage?token=" + $tokenSLS + "&path=/"
 md $pathBackup
 # bacup all Files
 $result = wget $url
@@ -23,7 +24,7 @@ if ($result.StatusCode -eq 200) {
 	Write-Host "Error request for Files: $($result.StatusCode)"
 }
 # native backup
-$url = $slsIP + "/api/backup?action=create&config=1&zigbee=1"
+$url = $slsIP + "/api/backup?token=" + $tokenSLS + "&action=create&config=1&zigbee=1"
 $result = wget -Uri $url -Method Post -OutFile $($pathBackup + $fileSLSBackup)
 if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false) {
 	$fileSLSBackup
@@ -33,14 +34,15 @@ if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false)
 ```
 ## Linux
 ### Bash + JQ
-Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `./date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на `Ubuntu 22.04.1 LTS` + `JQ 1.6`
+Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `./date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на `Ubuntu 22.04.1 LTS` + `JQ 1.6`. **Внимание!** Обязательно указать token, даже при отключенной авторизации в шлюзе.
 ```shell
 slsIP=192.168.1.247
+tokenSLS="e9d38bedb6412e.....ed9575"
 backupPath=$(date +%Y%m%d_%H%M)
 fileSLSBackup=backup_$backupPath.sls
 mkdir $backupPath
 # bakcup all Files
-url=$slsIP/api/storage?path=/
+url="$slsIP/api/storage?token=$tokenSLS&path=/"
 result=$(curl $url 2>/dev/null)
 if [[ $(echo $result | jq ".success")  = "true" ]]; then 
 	data=$(echo $result | jq -c -r ".result[]")
@@ -57,7 +59,8 @@ else
 fi
 # native backup
 url=$slsIP/api/backup
-curl -d "action=create&config=1&zigbee=1" -o ./$backupPath/$fileSLSBackup $url 2>/dev/null
+get="token=$tokenSLS&action=create&config=1&zigbee=1"
+curl -d $get -o ./$backupPath/$fileSLSBackup $url 2>/dev/null
 if [ -f "./$backupPath/$fileSLSBackup" ]; then
 	echo $fileSLSBackup
 else
