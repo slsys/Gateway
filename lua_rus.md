@@ -301,7 +301,7 @@ zigbee.value("device"(STR), "state"(STR))
 -- state - состояние, значение которого необходимо получить
 ```
 #### zigbee.get()
-Возвращает значения состояния устройства вызовом функции GET в конвертере
+Вызывает функцию GET в конвертере. Возвращает `true` в случае успеха.
 ```lua
 zigbee.get("device"(STR), "state"(STR))
 -- device - FriendlyName, ieeeAddr или nwkAddr устройства
