@@ -89,6 +89,12 @@ action=getLevel
 #### [Objects](/objects_rus.md) 
 ```GET /api/obj``` - Получить список объектов
 
-```GET /api/obj?name=XXX``` - Получить значение объъекта XXX
+```POST /api/obj?name=XXX&value=YYY``` - Установить значение YYY объекта XXX
+ 
+```DELETE /api/obj?name=obj_name``` - Удалить объект с устройства
 
-```POST /api/obj?name=XXX&value=YYY``` - Установить значение YYY объъекта XXX 
+```GET /api/obj?name=XXX``` - Получить значение объекта XXX. Флаги возвращаются в поле `flags: value`:
+- value 0: ACK=0; MQTT=0
+- value 1: ACK=0; MQTT=1
+- value 2: ACK=1; MQTT=0
+- value 3: ACK=1; MQTT=1
