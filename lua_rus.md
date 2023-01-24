@@ -113,9 +113,8 @@ end
 ### Запуск LUA скрипта из другого скрипта
 
 ```lua
-dofile("scriptPath"(STR),[, "Param"(STR)])
+dofile("scriptPath"(STR))
 -- scriptPath - путь к запускаемому скрипту вида "/int/script.lua"
--- Param - аргументы, передаваемые в скрипт (в разработке)
 ```
 
 ### Запуск скрипта с помощью HTTP API
