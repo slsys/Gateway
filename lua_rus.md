@@ -654,16 +654,24 @@ os.setAssets("url"(STR))
 ```
 ###  Библиотека GPIO
 Управление пинами ввода/вывода шлюза (GPIO)
+
 ```lua
 gpio.mode(pin, mode)
-gpio.read(pin) - чтение цифрового 
-gpio.read(PIN, true) - чтение ADC
+-- mode: gpio.INPUT, gpio.INPUT_PULLUP, gpio.INPUT_PULLDOWN, gpio.OUTPUT
+gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
+-- chanel: 0-15
+-- resolution: 1-16 bits
+gpio.pwm(channel, value)
 gpio.write(pin, level)
+-- level: gpio.HIGH, gpio.LOW
+gpio.read(pin) - чтение цифрового 
+gpio.read(pin, true) - чтение ADC
 ```
+GPIO с 34 по 39 не могут генерировать ШИМ.
 Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
 ```lua
 gpio.mode(32, gpio.OUTPUT)
-gpio.pwmsetup(3, 32)
+gpio.pwmSetup(3, 32)
 gpio.pwm(3, 255/100*50)
 ```
 
