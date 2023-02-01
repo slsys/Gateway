@@ -660,7 +660,12 @@ gpio.read(pin) - чтение цифрового
 gpio.read(PIN, true) - чтение ADC
 gpio.write(pin, level)
 ```
-<!-- TODO - надо собирать по всем докам -->
+Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
+```lua
+gpio.mode(32, gpio.OUTPUT)
+gpio.pwmsetup(3, 32)
+gpio.pwm(3, 255/100*50)
+```
 
 ### Библиотека AUDIO
 Управление звуком
