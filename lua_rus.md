@@ -239,7 +239,7 @@ obj.onChange("Name"(STR), "script.lua"(STR))
 obj.setScript("Name"(STR), "script.lua"(STR)[, run_on_write(BOOL)])
 -- Name - имя объекта
 -- script.lua - имя файла скрипта с расширением
--- run_on_write - false (default) = запуск при обновлении значения; true = запуск при каждом изменении
+-- run_on_write - false (default) = запуск при обновлении значения; true = запуск при каждом изменении + поднимается флаг W
 ```
 #### obj.remove()
 Удаление объекта
