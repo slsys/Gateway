@@ -653,21 +653,54 @@ os.setAssets("url"(STR))
 -- url - источник ресурсов
 ```
 ###  Библиотека GPIO
-Управление пинами ввода/вывода шлюза (GPIO)
+Управление контактами ввода/вывода (GPIO) чипа ESP32.
 
+#### gpio.mode()
+Управление режимом контакта:
+- INPUT: ввод
+- OUTPUT: вывод
+- INPUT_PULLUP: подтянуть к VCC
+- INPUT_PULLDOWN: подтянуть к GND
 ```lua
 gpio.mode(pin, mode)
--- mode: gpio.INPUT, gpio.INPUT_PULLUP, gpio.INPUT_PULLDOWN, gpio.OUTPUT
-gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
--- chanel: 0-15
--- resolution: 1-16 bits
-gpio.pwm(channel, value)
-gpio.write(pin, level)
--- level: gpio.HIGH, gpio.LOW
-gpio.read(pin) - чтение цифрового 
-gpio.read(pin, true) - чтение ADC
+-- pin: номер контакта
+-- mode: режим контакта - gpio.INPUT, gpio.INPUT_PULLUP, gpio.INPUT_PULLDOWN, gpio.OUTPUT
 ```
-GPIO с 34 по 39 не могут генерировать ШИМ.
+
+#### gpio.write()
+Запись уровня в GPIO
+```lua
+gpio.write(pin, level)
+-- pin: номер контакта
+-- level: уровень - gpio.HIGH - высокий, gpio.LOW - низкий
+```
+#### gpio.read()
+Чтение сигнала с GPIO
+```lua
+gpio.read(pin[, ADC)
+-- pin: номер контакта
+-- ADC: true - чтение ADC; false - чтение цифрового сигнала
+```
+#### PWM (ШИМ)
+ШИМ-контроллер ESP32 имеет 16 независимых каналов, которые можно настроить для генерации ШИМ-сигналов с различными свойствами. Все выводы, которые могут выступать в качестве выходов, могут использоваться в качестве выводов ШИМ (GPIO с 34 по 39 не могут генерировать ШИМ).
+
+#### gpio.pwmSetup()
+Настройка ШИМ
+```lua
+gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
+-- chanel: канал ШИМ - 0-15
+-- pin: номер контакта
+-- resolution: разрешение 1-16 bits
+-- freq: частота
+```
+#### gpio.pwm()
+Управление ШИМ
+```lua
+gpio.pwm(channel, value)
+-- channel: канал 0-15
+-- value: значение ШИМ
+```
+
 Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
 ```lua
 gpio.mode(32, gpio.OUTPUT)
