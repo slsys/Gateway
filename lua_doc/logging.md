@@ -11,10 +11,10 @@ os.udplogenable(true)
 ```
 ## Логирование в Linux
 `nc -ulnk 45678`
-## Постоянный лог в файл с ротацией в Linux
-### Запуск логирования при старте ОС
-Способ с CRON. В crontab добавить строку `@reboot nc -ulnk 45678 >> /var/log/sls/debug.log`
-### Ротация лога с помощью logrotate
+### Постоянный лог в файл с ротацией в Linux
+#### Запуск логирования при старте ОС
+##### Способ с CRON. В crontab добавить строку `@reboot nc -ulnk 45678 >> /var/log/sls/debug.log`
+#### Ротация лога с помощью logrotate
 Создать конфиг в `/etc/logrotate.d`
 ```json
 /var/log/sls/debug.log {
@@ -26,9 +26,6 @@ os.udplogenable(true)
     compress
     delaycompress
     maxage 30
-    postrotate
-        /usr/bin/killall nc
-        /usr/bin/nc -ulnk 45678 >> /var/log/sls/debug.log
-    endscript
+    copytruncate
 }
 ```
