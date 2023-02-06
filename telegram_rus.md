@@ -34,7 +34,7 @@ https://api.telegram.org/botBOT:TOKEN/getChat?chat_id=@имяканала
 ```lua
 telegram.settoken("597******444:AAG4Nxe27**********rXDUgy7U")   --API-токен вашего бота
 telegram.setchat("-1001******01")   --номер чата, куда бот будет писать сообщения
-telegram.receive(true)   --обрабатывать входящие сообщения
+telegram.receive(true[, period])   --обрабатывать входящие сообщения. По умолчанию выключен. Period - частота приема входящих сообщений в мс, не менее 1000. По умолчанию 1000мс.
 telegram.send("SLS  загружен "..net.localIP()) --отправит сообщение с локальным адресом SLS в вашей сети в телеграм
 ```
 
