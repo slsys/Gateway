@@ -1,9 +1,37 @@
 [[toc]]
-### 2023.01.08d1
+### 2023.02.11d1
+- +HDL: Добавлена базовая поддержка HDL SmartBus протокола, поддерживаются реле, диммеры, датчики температуры, DLP термостаты
+- *MQTT: Добвлено отображение ошибки подключения на главной страницы
+- *OS: Отключено сохранение состояния статусных светодиодов
 - *OS: Команда os.setAssets(url) теперь перенаправляет запросы ко всем веб-ресурсам
-- *Obj в HTTP API добавлен вывод флагов и привязанного скрипта
+- *OS: Для HTTP API Obj добавлен вывод флагов и привязанного скрипта
+- +Obj: Добавлен тип данный JSON для объектов
+- *Obj: Исправлена работа с объектами больше 254 символов
+- +Lua: Добавлена возможнось выполнять код скрипта без записи его в файл, например из SimpleBind правила
+- +Lua: Добавлена команда для запуска скрипта: scripts.run(name[, param])
+- +Lua: Изменена функция привязки скрипта к объекту, старая (OnChange) будет удалена в ближайших версиях: obj.setScript(name[[, param], run_on_set])
+- +Lua: Добавлена возможность указания периода опроса для telegram.receive(enable[, period = 1000])
+- *Lua: При использовании explode больше не изменяется исходная строка
+- *Lua: Исправлена передача параметра при запуске таймера
+- *Lua: Теперь Obj.Value и Obj.OldValue в Event имеют корректный тип данных
+- *Lua: Теперь State.Value и State.OldValue в Event имеют корректный тип данных
+- +Zigbee: Добавлен тип данный JSON для состояний Zigbee устройств
+- *Zigbee: Доработан интерфейс выбора и отображения конвертера
+- +Zigbee: Новая модель для #5 Tuya Smart Valve Upgrade (TUYATEC-pf3wdnnk / TS0001) 
+- *Zigbee: Исправлено автоопределение конвертера для #236 Tuya Avatto 2 gang switch module w/o N (_TZ3000_llfaquvp / TS0012, _TZ3000_jl7qyupf / TS0012)
 - *Zigbee: Переработан конвертер для #67 Philips Hue motion sensor (9290012607) (Philips / SML001)
 - *Zigbee: Переработан конвертер для #68 Philips Hue motion outdoor sensor (9290019758) (Philips / SML002)
+- +Zigbee: Поддержка для #257 Xiaomi Aqara roller shade companion E1 (ZNJLBL01LM) (LUMI / lumi.curtain.acn002)
+- +Zigbee: Поддержка для #258 DIY Relay 5Ch with PZEM monitor (Rele_5CH_PZEM) (zigbee-shop / Rele_5CH_PZEM)
+- +Zigbee: Поддержка для #264 Tuya Wireless smart button (YSB22) (_TZ3000_ghqckvr8 / TS0041)
+- +Zigbee: Поддержка для #265 Tuya Wireless smart button (ERS-10TZBVB-AA) (_TZ3000_ja5osu5g / TS004F)
+- +Zigbee: Поддержка для #266 Tuya Luminance door sensor (ZG-102ZL) (_TZE200_pay2byax / TS0601)
+- +Zigbee: Поддержка для #267 Tuya Water leakage sensor (_TZ3000_qhozxs2b / TS0207)
+- +Zigbee: Поддержка для #268 Tuya Door sensor (_TZ3000_au1rjicn / TS0203)
+- +Zigbee: Поддержка для #269 Tuya Motion sensor (ZM-40ZH-Q) (_TZ3000_msl6wxk9 / TS0202)
+- +Zigbee: Поддержка для #270 DIY TVOC/eCO2 monitor with oled display (efektalab / EFEKTA_pixelAQ)
+- +Zigbee: Поддержка для #271 DIY CO2 monitor with IPS display (efektalab / EFEKTA_iAQ)
+- +Zigbee: Поддержка для #272 Xiaomi Aqara Smart Radiator Thermostat E1 (SRTS-A01) (LUMI / lumi.airrtc.agl001)
 ### 2023.01.08d1
 - +OS: Управление эффектами статусных светодидов в HA
 - *OS: Исправлена обратная связь при управлении стутусными светодиодами
