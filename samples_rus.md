@@ -1,6 +1,5 @@
 - [Главная (LUA)](/lua_rus.md)
 
-[[toc]]
 # Примеры скриптов
 ## Скрипт инициализации
 ```lua
@@ -126,6 +125,27 @@ end
 
 local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
 SendNarodmon("illuminance", value)
+```
+###  Задачи cron
+```lua
+--init.lua
+-- Аквариум 
+scripts.setTimer("crontab", "5 6 * * 1-5", "aqua_on") -- Время включения 6:05 в будни:
+scripts.setTimer("crontab", "0 22 * * 1-5", "aqua_off") -- Время выключения 22:00 в будни:
+-- Будильник 
+scripts.setTimer("alarmClock", "50 5 * * 1-5", 1) -- Сценарий №1. По будням в 5:50
+```
+
+```lua
+--crontab.lua
+local action = Event.Param
+
+if (action == "aqua_on") then
+  zigbee.set("0xA4C138E56B96596D", "state", "ON")
+elseif (action == "aqua_off") then
+  zigbee.set("0xA4C138E56B96596D", "state", "OFF")
+end
+
 ```
 
 ## Объекты
