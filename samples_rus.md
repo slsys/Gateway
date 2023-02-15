@@ -99,55 +99,6 @@ end
 zigbee.set("lamp_1", "state", value)
 ```
 
-## Таймеры
-### Запуск скрипта каждые 60 секунд
-```lua
-scripts.setTimer("getMoney", 60, "$")
-```
-### Запуск скрипта через 5 минут, однократно
-```lua
-scripts.setTimer("giveMoney", os.time() + 300)
-```
-### Запуск скрипта каждый день в 01:05
-```lua
-scripts.setTimer("earnMoney", "5 1 * * *")
-```
-### Сброс таймера для скрипта OneMinTimer.lua
-```lua
-scripts.setTimer("OneMinTimer", 0)
-```
-### Отправка данных каждую минуту на narodmon.ru
-```lua
-function SendNarodmon(name, value)
-  local MAC = "BC:DD:C2:D7:68:BC"
-  http.request("http://narodmon.ru/get?ID=" .. MAC .. "&" .. name .. "=" .. tostring(value))
-end  
-
-local value = zigbee.value("0x04CF8CDF3C771F6C", "illuminance")
-SendNarodmon("illuminance", value)
-```
-###  Задачи cron
-```lua
---init.lua
--- Аквариум 
-scripts.setTimer("crontab", "5 6 * * 1-5", "aqua_on") -- Время включения 6:05 в будни:
-scripts.setTimer("crontab", "0 22 * * 1-5", "aqua_off") -- Время выключения 22:00 в будни:
--- Будильник 
-scripts.setTimer("alarmClock", "50 5 * * 1-5", 1) -- Сценарий №1. По будням в 5:50
-```
-
-```lua
---crontab.lua
-local action = Event.Param
-
-if (action == "aqua_on") then
-  zigbee.set("0xA4C138E56B96596D", "state", "ON")
-elseif (action == "aqua_off") then
-  zigbee.set("0xA4C138E56B96596D", "state", "OFF")
-end
-
-```
-
 ## Объекты
 
 ## Zigbee
