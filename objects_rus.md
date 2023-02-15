@@ -45,7 +45,7 @@ obj.setOpt("security.status", "BOOL", true)
 obj.setScript('security.status', 'security_event.lua')
 -- security.status - имя объекта
 -- security_event.lua - имя файла скрипта с расширением
--- run_on_write - BOOL, false (default) = запуск при обновлении значения; true = запуск при каждом изменении + поднимается флаг W
+-- run_on_write - BOOL, false (default) = запуск при обновлении значения; true = запуск каждый раз при записи значения в объект + поднимается флаг W
 ```
 При изменении значения объекта  `security.status` будет вызываться скрипт `security_event.lua`.
 Для того, чтобы при изменении значения объекта `security.status` при установке шлюз не уходил в бесконечный цикл, есть возможность управлять обратной связью.  

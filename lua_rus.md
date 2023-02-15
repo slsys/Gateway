@@ -141,7 +141,7 @@ scripts.run(script[, Param])
 Получить скрипты с таймерами можно с помощью HTTP API:
 `/api/scripts`
 
-Типы таймеров:
+#### Типы таймеров:
 - Периодический. Выполняется каждые `X` секунд. `Event.Type = 5`
   ```lua
   scripts.setTimer(script, t[, Param])
@@ -158,12 +158,20 @@ scripts.run(script[, Param])
   -- Param - STR, аргументы, передаваемые в скрипт
   ```
 - Cron. `Event.Type = 6`. Добавлен в версии прошивки 2022.04.24d11. Синтаксис как у [UNIX cron](https://ru.wikipedia.org/wiki/Cron) 
+  ```lua
+  scripts.setTimer(script, crontab[, Param])
+  -- script - STR, имя файла скрипта, без расширения `lua`
+  -- crontab - STR, уставка времени в формате UNIX CRON 
+  ```
+#### [Примеры таймеров](/samples_rus.md#таймеры)
+
+#### Отмена таймеров
+
+Для отмены любого типа таймера задать уставку времени равную 0:
 ```lua
-scripts.setTimer(script, crontab[, Param])
+scripts.setTimer(script, 0)
 -- script - STR, имя файла скрипта, без расширения `lua`
--- crontab - STR, уставка времени в формате UNIX CRON 
 ```
-[Примеры](/samples_rus.md#таймеры)
 
 Если выполнить подряд несколько установок таймера для одного целевого скрипта, то настройка применяется из последней итерации.
 
@@ -199,7 +207,7 @@ obj.setOpt(name, type[, flagMQTT])
 -- type - STR, тип хранимых данных: STR, INT, BOOL, FLOAT, JSON
 -- flagMQTT - BOOL, флаг передачи уведомлений в MQTT
   -- false = передача выключена
-  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается сомволом N (Notify)
+  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается сомволом M (MQTT Notify)
 ```
 #### obj.set()
 Запись данных в объект, управление флагом обратной связи. При первом вызове - инициализация объекта.
@@ -244,7 +252,7 @@ obj.onChange(name, script.lua)
 obj.setScript(name, script.lua[, run_on_write])
 -- name - STR, имя объекта
 -- script.lua - STR, имя файла скрипта с расширением
--- run_on_write - BOOL, false (default) = запуск при обновлении значения; true = запуск при каждом изменении + поднимается флаг W
+-- run_on_write - BOOL, false (default) = запуск при обновлении значения; true = запуск каждый раз при записи значения в объект + поднимается флаг W
 ```
 #### obj.remove()
 Удаление объекта
@@ -362,9 +370,9 @@ zigbee.setModel("xBox", "ptvo.switch")
 ```lua
 zigbee.readAttr(device, epId, clusterId, AttrId[, manufId])
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - NUM, номер эндпоинта
--- clusterID - NUM, номер кластера
--- AttrId - NUM, номер атрибута
+-- epID - INT, номер эндпоинта
+-- clusterID - INT, номер кластера
+-- AttrId - INT, номер атрибута
 -- Например, вернуть атрибут swBuild в кластере genBasic в 1 эндпоинте:
 zigbee.readAttr("0x90FD9FFFFEF7E26D", 1, 0x4000, 0x0000)
 ```
@@ -375,9 +383,9 @@ zigbee.readAttr("0x90FD9FFFFEF7E26D", 1, 0x4000, 0x0000)
 ```lua
 zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - NUM, номер эндпоинта
--- clusterID - NUM, номер кластера
--- AttrId - NUM, номер атрибута
+-- epID - INT, номер эндпоинта
+-- clusterID - INT, номер кластера
+-- AttrId - INT, номер атрибута
 -- dataType - STR, тип данных
 -- value - значение атрибута
 ```
