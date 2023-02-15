@@ -710,9 +710,9 @@ gpio.pwm(3, 255/100*50)
 Управление звуком
 ```lua
 audio.playurl(url) -- проигрывание звука из URL
-audio.geturl() --- возвращает текущий URL
+audio.geturl() -- возвращает текущий URL
 audio.stop() -- остановить проигрывание
-audio.setvolume(volume_procent) -- установить уровень громкости
+audio.setvolume(volume_percent) -- установить уровень громкости
 audio.getvolume() -- возвращает текущий уровень громкости
 audio.getstatus() -- возвращает текущий статус
 ```
