@@ -105,7 +105,7 @@ telegram.send("SLS загружен!!!")
 Данные объекта в вызываемый скрипт передаются через событие с типом `SCRIPT_EVENT_TYPE_OBJ_CHANGE` и значением `2`. Получить данные можно, например, так:
 ```lua
 if Event.Type == 2 then
-  local Name = Event.Obj.Name -- имя объекта
+  local name = Event.Obj.Name -- имя объекта
   local Value = Event.Obj.Value -- значение 
   local OldValue = Event.Obj.OldValue -- предыдущее значение
   local Ack = Event.Obj.Ack -- статус флага обратной связи
@@ -194,8 +194,8 @@ scripts.setTimer(script, crontab[, Param])
 #### obj.setOpt()
 Инициализация объекта, изменения типа данных, записываемых в объект, управление флагом передачи уведомлений в MQTT
 ```lua
-obj.setOpt(Name, type[, flagMQTT])
--- Name - STR, имя объекта
+obj.setOpt(name, type[, flagMQTT])
+-- name - STR, имя объекта
 -- type - STR, тип хранимых данных: STR, INT, BOOL, FLOAT, JSON
 -- flagMQTT - BOOL, флаг передачи уведомлений в MQTT
   -- false = передача выключена
@@ -204,8 +204,8 @@ obj.setOpt(Name, type[, flagMQTT])
 #### obj.set()
 Запись данных в объект, управление флагом обратной связи. При первом вызове - инициализация объекта.
 ```lua
-obj.set(Name, value[, flagACK])
--- Name - STR, имя объекта
+obj.set(name, value[, flagACK])
+-- name - STR, имя объекта
 -- value - записываемые данные, любого типа
 -- flagACK - BOOL, флаг обратной связи
   -- true = включен. В таблице объектов отображается символом A (ACK)
@@ -214,8 +214,8 @@ obj.set(Name, value[, flagACK])
 #### obj.get()
 Получение данных, хранящихся в объекте
 ```lua
-obj.get(Name)
--- Name - STR, имя объекта
+obj.get(name)
+-- name - STR, имя объекта
 ```
 В объекте хранится текущее значение, предыдущее и состояние флага ACK. Также хранится тайм-штампы записи текущего значения  и предыдущего, которые можно получить следующей функцией. Для получения всех значений можно использовать такой код:
 ```lua
@@ -242,15 +242,15 @@ obj.onChange(name, script.lua)
 Привязка к объекту скрипта, который будет выполняться при каждом изменении значения объекта или при каждой его записи. Если объекта не существует, он будет создан.
 ```lua
 obj.setScript(name, script.lua[, run_on_write])
--- Name - STR, имя объекта
+-- name - STR, имя объекта
 -- script.lua - STR, имя файла скрипта с расширением
 -- run_on_write - BOOL, false (default) = запуск при обновлении значения; true = запуск при каждом изменении + поднимается флаг W
 ```
 #### obj.remove()
 Удаление объекта
 ```lua
-obj.remove("Name"(STR))
--- Name - имя объекта
+obj.remove(name)
+-- name - имя объекта
 ```
 ### Библиотека EVENT
 Библиотека `Event` служит для передачи данных в скрипт, в зависимости от того, из какой подсистемы он вызван.
@@ -292,7 +292,7 @@ obj.remove("Name"(STR))
 - `Event.Param` - аргументы
 
 #### Вызов по таймеру Cron 
-<!-- - `Event.Param` - аргументы -->
+- `Event.Param` - аргументы
 
 ### Библиотека ZIGBEE
 Служит для управления zigbee устройствами, зарегистрированными на шлюзе. Подробные примеры [здесь](/samples_rus.md#zigbee)
@@ -307,51 +307,49 @@ coord_status = zigbee.getStatus()
 #### zigbee.join()
 Включает режим сопряжения для подключения новых устройств
 ```lua
-zigbee.join(duration(INT)[, "router"(STR)])
--- duration - время в секундах, на которое включить Join
--- router - FriendlyName, ieeeAddr или nwkAddr устройства - роутера. Если опустить этот параметр, сопряжение будет открыто для всей сети
+zigbee.join(duration[, router])
+-- duration - INT, время в секундах, на которое включить Join
+-- router - STR, FriendlyName, ieeeAddr или nwkAddr устройства - роутера. Если опустить этот параметр, сопряжение будет открыто для всей сети
 ```
 #### zigbee.value()
 Возвращает значения состояния устройства из кэша 
 ```lua
-zigbee.value("device"(STR), "state"(STR))
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- state - состояние, значение которого необходимо получить
+zigbee.value(device, state)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- state - STR, состояние, значение которого необходимо получить
 ```
 #### zigbee.get()
 Вызывает функцию GET в конвертере. Возвращает `true` в случае успеха.
 ```lua
-zigbee.get("device"(STR), "state"(STR))
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- state - состояние, значение которого необходимо получить
+zigbee.get(device, state)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- state - STR, состояние, значение которого необходимо получить
 ```
 #### zigbee.set()
 Устанавливает значение состояния устройства
 ```lua
-zigbee.set("device"(STR), "stateName"(STR), stateValue)
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- stateName - имя состояния, значение которого необходимо изменить
+zigbee.set(device, stateName, stateValue)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- stateName - STR, имя состояния, значение которого необходимо изменить
 -- stateValue - значение состояние. Тип - свой для каждого значения. Например, для кнопки State:Action тип будет STR, а для яркости State:brightness тип будет INT 
 ```
 #### zigbee.setState()
 Устанавливает значение состояния устройства. Можно указать тип значения (по умолчанию STR) и необходимо ли выполнять события (с версии 2022.07.24d1, по умолчанию true) .
 В отличие от `zigbee.set()` позволяет создавать свои состояния, виртуальные. [Например](/samples_rus.md#Преобразование-показателей-давления-из-kPa-в-mmhg), для хранения данных какого-либо состояния, в альтернативных единицах измерения. 
 ```lua
-zigbee.setState("device"(STR), "stateName"(STR), stateValue[[, "type"(STR)], events(BOOL)])
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- stateName - имя состояния, значение которого необходимо изменить
+zigbee.setState(device, stateName, stateValue[[, type], events])
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- stateName - STR, имя состояния, значение которого необходимо изменить
 -- stateValue - значение состояние
--- type - тип значений состояния
--- events - выполнять события (по умолчанию true)
+-- type - STR, тип значений состояния
+-- events - BOOL, выполнять события (по умолчанию true)
 ```
-<!-- TODO - setState скудно описан. Разобраться. По идее нужен для создания кастомных стэйтов и вроде как устройств и управлении ими. При этом управляется также и через set(), но как-то криво, например: есть color_temp, создал color_temp1. При изменении color_temp1 через set() - меняется также и color_temp. Как удалить созданного стэйта. Разобраться с флагом events. Как читать состояние флага?  -->
-
 #### zigbee.setModel()
 Программное переназначение типа устройства. 
 ```lua
-zigbee.setModel("device"(STR), "ModelId"(STR))
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- ModelId - ModelId устройства, которое поддерживается шлюзом.
+zigbee.setModel(device, ModelId)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- ModelId - STR, ModelId устройства, которое поддерживается шлюзом.
 ```
 В некоторых случаях протокол взаимодействия новых устройств совпадает с теми, что уже поддерживаются шлюзом SLS. В таком случае можно при загрузке шлюза подменять идентификаторы, добавив в init.lua код:
 ```lua
@@ -362,59 +360,49 @@ zigbee.setModel("xBox", "ptvo.switch")
 #### zigbee.readAttr()
 Отправляет запрос на чтение атрибута в кластере.
 ```lua
-zigbee.readAttr("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER)[, manufId])
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - номер эндпоинта
--- clusterID - номер кластера
--- AttrId - номер атрибута
+zigbee.readAttr(device, epId, clusterId, AttrId[, manufId])
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - NUM, номер эндпоинта
+-- clusterID - NUM, номер кластера
+-- AttrId - NUM, номер атрибута
 -- Например, вернуть атрибут swBuild в кластере genBasic в 1 эндпоинте:
 zigbee.readAttr("0x90FD9FFFFEF7E26D", 1, 0x4000, 0x0000)
 ```
-> функционал и его описание в разработке <!-- todo -->
+> функционал и его описание в разработке <!-- TODO -->
 
 #### zigbee.writeAttr()
 Записывает значение атрибута в кластере.
 ```lua
-zigbee.writeAttr("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER), "dataType"(STR), value[, manufId])
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - номер эндпоинта
--- clusterID - номер кластера
--- AttrId - номер атрибута
--- dataType - тип данных
+zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - NUM, номер эндпоинта
+-- clusterID - NUM, номер кластера
+-- AttrId - NUM, номер атрибута
+-- dataType - STR, тип данных
 -- value - значение атрибута
 ```
-> функционал и его описание в разработке <!-- todo -->
+> функционал и его описание в разработке <!-- TODO -->
 
 #### zigbee.configReport()
 Конфигурирует репортинг атрибута в кластере.
 ```lua
-zigbee.configReport("device"(STR), epId(NUMBER), clusterId(NUMBER), AttrId(NUMBER), "dataType"(STR), minRepInt(INT), maxRepInt(INT), repChange(BOOL))
--- device - FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - номер эндпоинта
--- clusterID - номер кластера
--- AttrId - номер атрибута
--- dataType - тип данных
--- minRepInt
--- maxRepInt
--- repChange
+zigbee.configReport(device, epId, clusterId, AttrId, dataType, minRepInt, maxRepInt, repChange)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- epID - NUM, номер эндпоинта
+-- clusterID - NUM, номер кластера
+-- AttrId - NUM, номер атрибута
+-- dataType - STR, тип данных
+-- minRepInt - INT,
+-- maxRepInt - INT,
+-- repChange - BOOL,
 ```
-> функционал и его описание в разработке <!-- todo -->
-<!-- 
-#### zigbee.addInstallCode()
-todo - в разработке
-#### zigbee.configConv()
-todo - в разработке
-#### zigbee.setRetain()
-todo - в разработке
-#### zigbee.setsaveinterval()
-todo - в разработке
- -->
+> функционал и его описание в разработке <!-- TODO -->
 
 ### Библиотека MQTT
 #### mqtt.pub()
 Публикует на MQTT сервер в топик *topic* значение *payload*. 
 ```lua
-mqtt.pub("topic"(STR), "payload"(STR))
+mqtt.pub(topic, payload)
 ```
 Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
 ```lua
@@ -427,9 +415,9 @@ mqtt.pub('cmnd/sonoff5/power', 'toggle')
 #### mqtt.sub()
 Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
 ```lua
-mqtt.sub("topic"(STR), "objName"(STR))
--- topic - топик MQTT
--- objName - объект, в который записываются данные
+mqtt.sub(topic, objName)
+-- topic - STR, топик MQTT
+-- objName - STR, объект, в который записываются данные
 ```
 Пример подписки на топик с температурой, которую шлюз помещает в объект:
 ```lua
@@ -439,7 +427,7 @@ mqtt.sub('dev/sensor/temp', 'room_temp')
 #### mqtt.unSub()
 Отписывается от топика.
 ```lua
-mqtt.unSub("topic"(STR))
+mqtt.unSub(topic)
 ```
 Пример отписки от топика с температурой
 ```lua
@@ -449,11 +437,11 @@ mqtt.unSub('dev/sensor/temp')
 #### http.request2()
 Служит для отправки HTTP (HTTPS в разработке) запросов во внешние системы. Поддерживает методы GET и POST.
 ```lua
-http.request ("url"(STR)[:"port"(STR)], ["method"(STR), "headers"(STR), "body"(STR)]`)
--- url:port - URL адрес и порт целевого ресурса
--- method - метод POST или GET
--- headers - заголовки запроса
--- body - тело запроса
+http.request2 (url[:port], [method, headers, body])
+-- url:port - STR, URL адрес и порт целевого ресурса
+-- method - STR, метод POST или GET
+-- headers - STR, заголовки запроса
+-- body - STR, тело запроса
 ```
 [Примеры](/samples_rus.md#HTTP-запросы)
 Предыдущая версия функции: `http.request()` имеет такой же синтаксис и для обратной совместимости, также доступна.
@@ -463,35 +451,35 @@ http.request ("url"(STR)[:"port"(STR)], ["method"(STR), "headers"(STR), "body"(S
 #### telegram.settoken()
 Инициализирует токен
 ```lua
-telegram.settoken("token"(STR))
--- token - API-токен вашего бота
+telegram.settoken(token)
+-- token - STR, API-токен вашего бота
 ```
 #### telegram.setchat()
 Инициализирует чат, в который бот будет отправлять уведомления
 ```lua
-telegram.setchat("chatid"(STR))
--- chatid - ID чата, куда бот будет писать сообщения
+telegram.setchat(chatid)
+-- chatid - STR, ID чата, куда бот будет писать сообщения
 ```
 #### telegram.secure()
 Инициализирует протокол HTTPS.
 **Внимание! Включение этой опции отнимает большое количество свободной памяти! Возможны частые перезагрузки  шлюза!**
 ```lua
-telegram.secure(enable(BOOL))
--- enable - включить: true, выключить (по-умолчанию): false
+telegram.secure(enable)
+-- enable - BOOL, включить: true, выключить (по-умолчанию): false
 ```
 #### telegram.receive()
 Инициализирует обработку входящих сообщений
 ```lua
-telegram.receive(enable(BOOL))
--- enable - включить: true, выключить (по-умолчанию): false
+telegram.receive(enable)
+-- enable - BOOL, включить: true, выключить (по-умолчанию): false
 ```
 #### telegram.send()
 Отправляет сообщение.
 ```lua
-telegram.send("msg"(STR)[, "chatid"(STR), "parse_mode"])
--- msg - сообщение 
--- chatid - ID чата, куда бот будет писать сообщения
--- parse_mode - можно использовать для отправки ReplyKeyboard
+telegram.send(msg[, chatid, parse_mode])
+-- msg - STR, сообщение 
+-- chatid - STR, ID чата, куда бот будет писать сообщения
+-- parse_mode - STR, можно использовать для отправки ReplyKeyboard
 ```
 
 ### Библиотека OS
@@ -505,34 +493,30 @@ telegram.send("msg"(STR)[, "chatid"(STR), "parse_mode"])
 Возвращает время восхода солнца (часы, минуты). Для правильной работы требуется выполнить настройки *Settings -> Time & Location*
 ```lua
 os.sunrise([offset])
--- offset - позволяет добавить смещение в минутах к результату вывода
+-- offset - INT, позволяет добавить смещение в минутах к результату вывода
 -- Пример:
 sunriseH, sunriseM = os.sunrise()
 print("Восход солнца в " .. sunriseH .. ":" .. sunriseM )
---[[ Вывод 
-  Восход солнца в 10:55
---]]
+-->  Восход солнца в 10:55
 ```
 #### os.sunset([offset])
 Возвращает время заката солнца (часы, минуты). Для правильной работы требуется выполнить настройки *Settings -> Time & Location*
 ```lua
 os.sunset([offset])
--- offset - позволяет добавить смещение в минутах к результату вывода
--- Пример:
-sunsetH, sunsetM = os.sunset(69)
+-- offset - INT, позволяет добавить смещение в минутах к результату вывода
 ```
 #### os.setSleep()
 Включает и выключает режим сна для модема WiFi. По-умолчанию выключено. Также можно заставить систему заснуть глубоким сном на `time` секунд, тем самым снизив энергопотребление практически до нуля. В этом режиме не работает ничего, кроме таймера отсчета до окончания сна, по прошествии которого система перезагрузится. Это может использоваться при питании от аккумулятора.
 ```lua
-os.setSleep(enable(BOOL)[,time(INT)])
--- enable - включить = true, выключить = false спящий режим
--- time - время сна в сек.
+os.setSleep(enable[,time])
+-- enable - BOOL, включить = true, выключить = false спящий режим
+-- time - INT, время сна в сек.
 ```
 #### os.delay()
 Выполняет паузу выполнения скрипта на указанное время. Не рекомендуется делать паузу более чем на 1 секунду.
 ```lua
-os.delay(time(INT))
--- time - время паузы в милисекундах (1 сек = 1000 мс)
+os.delay(time)
+-- time - INT, время паузы в милисекундах (1 сек = 1000 мс)
 ```
 #### os.millis()
 Возвращает количество миллисекунд с момента загрузки системы. Вызывается без параметров.
@@ -542,9 +526,7 @@ os.delay(time(INT))
 ```lua
 -- пример кода
 print('Uptime: ' .. os.getUptime())
---[[ Пример вывода
-  Uptime: 11 days 17:43:03
---]]
+--> Пример вывода  Uptime: 11 days 17:43:03
 ```
 #### os.ntp()
 Возвращает статус подключение к серверу времени (NTP): `true` - синхронизация с сервером NTP выполнена успешно. Вызывается без параметров.
@@ -552,8 +534,8 @@ print('Uptime: ' .. os.getUptime())
 #### os.freeMem()
 Возвращает количество свободной памяти в байтах.
 ```lua
-os.freeMem(["type"(STR)])
--- type - heap, psram
+os.freeMem([type])
+-- type - STR, heap, psram
 -- без параметров возвращает объем FreeHeap
 ```
 #### os.save()
@@ -565,18 +547,18 @@ os.freeMem(["type"(STR)])
 #### os.ping()
 Отправляет запросы ICMP PING на тестируемый хост. Возвращает среднее время ответа или -1 при недоступности.
 ```lua
-os.ping("host"(STR)[, count(INT)])
--- host - IP или DNS адрес хоста
--- count - количество запрсов (по-умолчанию 1)
+os.ping(host[, count])
+-- host - STR, IP или DNS адрес хоста
+-- count - INT, количество запрсов (по-умолчанию 1)
 ```
 #### os.led()
 SLS шлюз может управлять различными  светодиодами. Это может быть подсветка корпуса Xiaomi, круглые платы с modkam.ru, либо индикационный многофункциональный светодиод шлюза SLS DIN MINI. В дополнение можно подключить обычную светодиодную ленту. Описание параметров:
 ```lua
-os.led(mode(STR), brightness(INT), r(INT), g(INT), b(INT)[, effect])
--- mode - режим. OFF - выключено, ON - включено, AUTO - индикация режимов/состояний шлюза (см. описаниее далее) 
--- brightness - яркость (целое, от 0 до 255)
--- r, g, b - цвет (целое, от 0 до 255 или -1, если цвет менять не требуется)
--- effect - включает эффекты в соответствии с таблицей
+os.led(mode, brightness, r, g, b[, effect])
+-- mode - STR, режим. OFF - выключено, ON - включено, AUTO - индикация режимов/состояний шлюза (см. описаниее далее) 
+-- brightness - INT, яркость (целое, от 0 до 255)
+-- r, g, b - INT, цвет (целое, от 0 до 255 или -1, если цвет менять не требуется)
+-- effect - INT, включает эффекты в соответствии с таблицей
 
 ``` 
 В режиме AUTO шлюз оповещает о своем состоянии по следующему алгоритму: 
@@ -594,59 +576,59 @@ os.led(mode(STR), brightness(INT), r(INT), g(INT), b(INT)[, effect])
 #### os.wdt()
 Включается и выключает WDT (Сторожевой таймер), может использоваться для отладки незапланированных перезагрузок.
 ```lua
-os.wdt(enable(BOOL))
--- enable - включить (true), выключить (false) 
+os.wdt(enable)
+-- enable - BOOL, включить (true), выключить (false) 
 ```
 #### os.udplogenable()
 Включает логирование через UDP. [Примеры получения лога](/faq_rus.md#включение-udp-log)
 ```lua
-os.udplogenable(enable(BOOL))
--- enable - включить UDP лог (true); выключить (false)
+os.udplogenable(enable)
+-- enable - BOOL, включить UDP лог (true); выключить (false)
 ```
 #### os.mountSD()
 Монтирует SD-карту
 ```lua
-os.mountSD(mount(BOOL))
--- mount - примонтировать = true; размонтировать = false
+os.mountSD(mount)
+-- mount - BOOL, примонтировать = true; размонтировать = false
 ```
 #### os.fileExists()
 Проверяет наличие файла, возвращает true/false
 ```lua
-os.fileExists("fileName"(STR))
--- fileName - имя проверяемого файла
+os.fileExists(fileName)
+-- fileName - STR, имя проверяемого файла
 ```
 #### os.fileSize()
 Возвращает размер файла
 ```lua
-os.fileSize("fileName"(STR))
--- fileName - имя проверяемого файла
+os.fileSize(fileName)
+-- fileName - STR, имя проверяемого файла
 ```
 #### os.fileRemove()
 Удаляет файл
 ```lua
-os.fileRemove("fileName"(STR))
--- fileName - имя удаляемого файла
+os.fileRemove(fileName)
+-- fileName - STR, имя удаляемого файла
 ```
 #### os.fileRename()
 Переименовывает файл
 ```lua
-os.fileRename("old"(STR), "new"(STR))
--- old - старое имя переимновываемого файла
--- new - новое имя переимновываемого файла
+os.fileRename(old, new)
+-- old - STR, старое имя переимновываемого файла
+-- new - STR, новое имя переимновываемого файла
 ```
 #### os.fileRead()
 Читает файл 
 ```lua
-os.fileRead("fileName"(STR))
--- fileName - имя целевого файла
+os.fileRead(fileName)
+-- fileName - STR, имя целевого файла
 ```
 #### os.fileWrite()
 Записывает данные в файл:
 ```lua
-os.fileWrite("fileName"(STR),"data"(STR)[, overwrite(BOOL)])
--- fileName - имя целевого файла
--- data - данные
--- overwrite - перезаписать файл (true)
+os.fileWrite(fileName,data[, overwrite])
+-- fileName - STR, имя целевого файла
+-- data - STR, данные
+-- overwrite - BOOL, перезаписать файл (true)
 -- Пример:
 os.fileWrite("/int/!file.db","привет\n",true)
 -- Для карты памяти необходимо использовать путь "/sd/file.txt"
@@ -654,8 +636,8 @@ os.fileWrite("/int/!file.db","привет\n",true)
 #### os.setAssets()
 Задает место хранения ресурсов web-интерфейса, для размещения на альтернативном web-сервере, например локальном. В разработке хранение web-ресурсов в хранилище SLS, для систем без выхода в интернет.
 ```lua
-os.setAssets("url"(STR))
--- url - источник ресурсов
+os.setAssets(url)
+-- url - STR, источник ресурсов
 ```
 ###  Библиотека GPIO
 Управление контактами ввода/вывода (GPIO) чипа ESP32.
@@ -699,7 +681,7 @@ os.delay(100)
 gpio.write(27, 0)
 ```
 
-#### PWM (ШИМ)
+### PWM (ШИМ)
 ШИМ-контроллер ESP32 имеет 16 независимых каналов, которые можно настроить для генерации ШИМ-сигналов с различными свойствами. Все выводы, которые могут выступать в качестве выходов, могут использоваться в качестве выводов ШИМ (GPIO с 34 по 39 не могут генерировать ШИМ).
 
 #### gpio.pwmSetup()
@@ -744,11 +726,11 @@ audio.getstatus() -- возвращает текущий статус
 ## Функции LUA SLS
 Функции LUA, встроенные в прошивку SLS, которые не объединены той или иной библиотекой.
 ### explode()
-Разбивает строку с помощью разделителя. Результат помещает в массив.
+Разбивает строку с помощью разделителя. Результат помещает в таблицу.
 ```lua
-explode("separator"(STR), "string"(STR))
--- string - строка, которую необходимо разбить
--- separator - символ разделителя
+explode(separator, string)
+-- string - STR, строка, которую необходимо разбить
+-- separator - STR, символ разделителя
 -- пример:
 local string = "param1|param2|param3"
 local t = explode("|", string)
@@ -764,6 +746,7 @@ local param3 = t[3]
 zigbee.join(255, "0x0000")
 ```
 и привязать его выполнение в init.lua
+<!-- TODO сменить на obj.setScript() -->
 ```lua
 obj.onChange("io.input0.value", "btn_sw1.lua")
 ```
