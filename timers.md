@@ -94,11 +94,13 @@ scripts.setTimer(script, 0)
 
 **scripts.getTimer()** 
 
-Возвращает оставшееся время таймера для скрипта с помощью функции. Для таймеров, кроме CRON. 
+Возвращает оставшееся время таймера для скрипта в секундах.
 ```lua
-scripts.getTimer(script)
+remain_seconds = scripts.getTimer(script)
 -- script - STR, имя проверяемого скрипта
+-- remain_seconds - INT, оставшееся время в сек. или 0 для Cron и если таймера нет
 ```
+
 
 ## Примеры
 ### Запуск скрипта getMoney.lua каждые 60 секунд
@@ -109,7 +111,7 @@ scripts.setTimer("getMoney", 60, "$")
 ```lua
 scripts.setTimer("giveMoney", os.time() + 300)
 ```
-###  Узнать когда запостится скрипт giveMoney.lua
+###  Узнать когда запустится скрипт giveMoney.lua
 ```lua
 print(scripts.getTimer("giveMoney"))
 ```
