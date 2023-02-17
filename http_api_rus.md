@@ -12,62 +12,71 @@
 
 ## Доступные команды HTTP API
 
+
 ### Zigbee
 
-#### Получить список устройств сети zigbee.
 
-`GET` `/api/zigbee/devices`
+#### Получить список устройств сети zigbee.
+```http
+GET /api/zigbee/devices
+```
 
 #### Запрос устройству XXX покинуть сеть zigbee
-
-`GET` `/api/zigbee/remove?dev=XXX`
+```http
+GET /api/zigbee/remove?dev=XXX
+```
 
 #### Запрос устройству XXX покинуть сеть Zigbee и безусловное удаление
-
-`GET` `/api/zigbee/remove?dev=XXX&force=true`
+```http
+GET /api/zigbee/remove?dev=XXX&force=true
+```
 
 #### Переименование  устройства в сети zigbee
-
-`GET` `/api/zigbee/rename?old=XXX&new=YYY`
+```http
+GET /api/zigbee/rename?old=XXX&new=YYY
+```
 
 ####  Управление режимом сопряжения
-
-`GET` `/api/zigbee/join?duration=255&target=XXX`
-
+```http
+GET /api/zigbee/join?duration=255&target=XXX
+```
 - duration: продолжительность режима. Значения больше 0 указывают период ожидания в секундах. Для выключения - 0. Параметр не обязательный.
 - target: разрешает сопряжение на конкретном роутере. Параметр не обязательный.
 
 #### Очистка NVRAM
 
 **Внимание! Запускать, только понимая, что вы делаете.**
-
-`GET` `/api/zigbee/clearnvram`
-
+```http
+GET /api/zigbee/clearnvram
+```
 Процесс занимает несколько минут. Информацию об очистке видно в логе. 
- 
 
 #### Запуск интервью на устройстве.
-
-`GET` `/api/zigbee?dev=0xABCD&action=setInterview&state=0`
+```http
+GET /api/zigbee?dev=0xABCD&action=setInterview&state=0
+```
 
 #### Получить список доступных сетей WiFi
-
-`GET` `/api/wifi?action=scanNetworks`
+```http
+GET /api/wifi?action=scanNetworks
+```
 
 ####  Получить текущее значение состояния из кэша
-
-`GET` `/api/zigbee?dev=0x2855&action=getStateValue&name=brightness`
+```http
+GET /api/zigbee?dev=0x2855&action=getStateValue&name=brightness
+```
 
 #### Отправить устройству команду чтения состояния
 
 Выполнить команду Get в конвертере
-
-`GET` `/api/zigbee?dev=0x2855&action=getState&name=brightness`
+```http
+GET /api/zigbee?dev=0x2855&action=getState&name=brightness
+```
 
 #### Записать значение состояния
-
-`GET` `/api/zigbee?dev=0x2855&action=setState&name=state&value=ON`
-
+```http
+GET /api/zigbee?dev=0x2855&action=setState&name=state&value=ON
+```
 Установка состояния `state`, равным `ON` для устройства с адресом `nwkAddr = 0x2855`.  
 
 Адрес может быть в формате `IEEE`, либо `FriendlyName`. Например:
@@ -75,16 +84,17 @@
 - `command` может быть `open`, `close`, `stop` и другие, в зависимости от типа устройства.
 
 ####  Настроить правило Simple Bind при изменении состояния
-
-`GET` `/api/zigbee?dev=0x1841&action=setSimpleBind&state=contact&value=test.lua` 
-
+```http
+GET /api/zigbee?dev=0x1841&action=setSimpleBind&state=contact&value=test.lua
+```
 привязывает скрипт `test.lua` на запуск при изменении состояния `contact`, на устройстве с адресом `nwkAddr = 0x1841`. Также поддерживается адрес `IEEE`, либо `FriendlyName`. Также в параметре `value` можно указать драгие доступные правила SB. Подробнее о  [SimpleBind](/simplebind_rus.md)
 
 ### Настройка лога
 
 #### Управление режимом логирования
-
-`GET` `/api/messages-history?action=`
+```http
+GET /api/messages-history?action=
+```
 Параметр `action` может принимать следующие значения:
 - `action=getBuffer`
 - `action=setLevel&value=1`  
@@ -92,7 +102,7 @@
 
 ### Управление Аудио
 
-Все команды `GET` 
+Все команды `GET`
 
 - `/api/audio?action=play&url=xxx` - проигрывание звука из URL
 - `/api/audio?action=geturl` - получить текущий URL
@@ -112,9 +122,19 @@
 
 ### Скрипты LUA 
 
-- `GET` `/api/scripts` - получить список скриптов с назначенными таймерами
-- `GET` `/api/scripts?action=evalFile&path=/test.lua` - запустить скрипт `test.lua`
-- `GET` `/api/scripts?action=evalCode&plain=print("ok!")` - запустить текст скрипта
+ Получить список скриптов с назначенными таймерами
+```http
+GET /api/scripts
+```
+
+Запустить скрипт `test.lua`
+```http
+GET /api/scripts?action=evalFile&path=/test.lua
+```
+Запустить текст скрипта
+```http
+GET /api/scripts?action=evalCode&plain=print("ok!")
+```
 
 ### [Хранилище](https://github.com/slsys/Gateway/blob/master/storage_rus.md#http-api)
 
@@ -123,18 +143,33 @@
 <!-- TODO - выделить в отдельный док -->
 
 #### Установить цвет светодиода
-
-`GET` `/api/led?red=5&green=5&blue=5&mode=manual`
-
+```http
+GET /api/led?red=5&green=5&blue=5&mode=manual
+```
 Альтернативный вариант управления череp [lua](/lua_rus.md#osled)
-
 
 ### [Объекты](/objects_rus.md) 
 
-- `GET` `/api/obj` - получить список объектов
-- `POST` `/api/obj?name=XXX&value=YYY` - установить значение `YYY` объекта `XXX`
-- `DELETE` `/api/obj?name=obj_name` - удалить объект с устройства
-- `GET` `/api/obj?name=XXX` - получить значение объекта `XXX`. Флаги возвращаются в поле `flags: flag_value`:
+Получить список объектов
+```http
+GET /api/obj
+```
+
+Установить значение `YYY` объекта `XXX`
+```http
+POST /api/obj?name=XXX&value=YYY
+```
+
+Удалить объект с устройства
+```http
+DELETE /api/obj?name=obj_name
+```
+
+Получить значение объекта `XXX`.
+```http
+GET /api/obj?name=XXX
+```
+ Флаги возвращаются в поле `flags: flag_value`:
   - `flag_value = 0: ACK=0; MQTT=0`
   - `flag_value = 1: ACK=0; MQTT=1`
   - `flag_value = 2: ACK=1; MQTT=0`
