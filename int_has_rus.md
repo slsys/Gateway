@@ -30,7 +30,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
 
 ### Датчик протечки (binary_sensor) SJCGQ11LM
 
-```yaml{% raw %}
+```yaml {% raw %}
 - platfyaml mqtt
   name: bathroom_leak
   availability_topic: "ZigbeeSLS/bridge/state"
@@ -49,7 +49,9 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
-  ```{% endraw %}
+  {% endraw %} 
+  ``` 
+  
 
 ### Датчик температуры/вланости (круглый сяоми, обычный sensor) WSDCGQ01LM
 
