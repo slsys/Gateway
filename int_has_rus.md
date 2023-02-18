@@ -19,11 +19,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
 В меню `Settings -> Link -> MQTT Setup` настроить:
 
 - включить чекбокс Home Assistant MQTT Discovery
-- указать топик SLS: `ZigbeeSLS`
 - указать топик НА: `homeassistant`
 
 ![Home Assistant MQTT Discovery](/img/int_ha_discovery.png)
 
+<!--
 ## Ручное добавление устройств
 
 Устройства Zigbee шлюза SLS можно добавить в Home Assistant вручную. Для этого в конфигурационный файл `configuration.yaml` нужно добавить соответствующие типу устройств настройки. Ниже приведены протестированные фрагменты  конфигурационного файла:
@@ -342,3 +342,4 @@ else:
 
 *PS: раздел в разработке.*
 {% endraw %}
+-->

@@ -334,8 +334,8 @@ result = obj.remove(name)
 Начиная с версии 2022.07.24d1.
 
 ```lua
--- пример
 coord_status = zigbee.getStatus()
+-- coord_status - INT, статус zigbee координатора. 9 - OK
 ```
 
 #### zigbee.join()
@@ -343,7 +343,7 @@ coord_status = zigbee.getStatus()
 Включает режим сопряжения для подключения новых устройств
 
 ```lua
-zigbee.join(duration[, router])
+zigbee.join(duration = 255[, router])
 -- duration - INT, время в секундах, на которое включить Join
 -- router - STR, FriendlyName, ieeeAddr или nwkAddr устройства - роутера. Если опустить этот параметр, сопряжение будет открыто для всей сети
 ```
@@ -353,9 +353,10 @@ zigbee.join(duration[, router])
 Возвращает значения состояния устройства из кэша
 
 ```lua
-zigbee.value(device, state)
+result = zigbee.value(device, state)
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
 -- state - STR, состояние, значение которого необходимо получить
+-- result - значение состояния
 ```
 
 #### zigbee.get()
@@ -363,9 +364,10 @@ zigbee.value(device, state)
 Вызывает функцию GET в конвертере. Возвращает `true` в случае успеха.
 
 ```lua
-zigbee.get(device, state)
+result = zigbee.get(device, state)
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
 -- state - STR, состояние, значение которого необходимо получить
+-- result - BOOL, true - успех, false - вероятно в конвертере нет команды GET 
 ```
 
 #### zigbee.set()
