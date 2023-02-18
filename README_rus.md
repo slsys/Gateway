@@ -1,8 +1,8 @@
-# [Go to the english version of the site](/readme.md)
+# SLS (Smart Logic System)
+
+[Go to the english version of the site](/readme.md)
 
 Поддержите проект: [https://boosty.to/slsys](https://boosty.to/slsys)
-
-## SLS (Smart Logic System)
 
 [SLS Сообщество](https://t.me/slsys) - 2800 участников сообщества, неравнодушных к миру SMART и желающих "оцифровать" свой собственный мир. В сообществе можно найти огромное количество полезной информации.
 
@@ -14,11 +14,11 @@
 
 [SLS Pro](/sls_pro_rus.md)  - готовые решения от разработчиков с официальной поддержкой и отличными [планами развития](/offer_rus.md).  
 
-### [SLS DIN MINI](/devices/din_mini_base_rus.md)
+## [SLS DIN MINI](/devices/din_mini_base_rus.md)
 
 Универсальный контроллер с  расширяемым функционалом, можно подключить два модуля расширения, например OpenTherm и Zigbee.  Это отличное и проверенное устройство от команды проекта. Является решением [SLS Pro](/sls_pro_rus.md).  
 
-### [SLS Zigbee](/basic_rus.md)
+## [SLS Zigbee](/basic_rus.md)
 
 В основе концепции SLS изначально лежал протокол Zigbee, под его задачи были реализованы [основные функции](/basic_rus.md), которые теперь можно использовать на любых шлюзах SLS.  
 Толчком для развития проекта в самостоятельный  продукт послужило множество  факторов:
