@@ -31,6 +31,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
 ### Датчик протечки (binary_sensor) SJCGQ11LM
 
 {% raw %}
+
 ```yaml
 - platfyaml mqtt
   name: bathroom_leak
@@ -42,7 +43,15 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     {% else %}
       {{'OFF'}}
     {% endif %}
-# Датчик протечки №1 (уровень заряда) SJCGQ11LM
+```
+
+  {% endraw %}
+
+### Датчик протечки №1 (уровень заряда) SJCGQ11LM
+
+{% raw %}
+
+```yaml
 - platform: mqtt
   name: bathroom_leak_1_battery
   icon: mdi:battery-high
@@ -50,10 +59,13 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
-  ``` 
+  ```
+
   {% endraw %}
 
-### Датчик температуры/вланости (круглый сяоми, обычный sensor) WSDCGQ01LM
+### Датчик температуры/влажности (круглый сяоми, обычный sensor) WSDCGQ01LM
+
+{% raw %}
 
 ```yaml
 - platform: mqtt # Температура
@@ -77,8 +89,12 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/bathroom_sensor"
   ```
+
+{% endraw %}
   
 ### Квадратный датчик с давлением (в дополнение к предыдущему) WSDCGQ11LM
+
+{% raw %}
 
 ```yaml
 - platform: mqtt # Давление
@@ -90,9 +106,13 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   value_template: "{{ (value_json.pressure | float * 7.501) | round | int }}"
  ```
 
+{% endraw %}
+
 ### Квадратная кнопка сяоми (binary_sensor) WXKG11LM
 
 Так как это именно кнопка, а не переключатель, то binary_sensor меняет свое состояние на очень короткий срок. Для работы с ним можно использовать автоматизацию типа этой (в данном случае при нажатии включается/отключается вентилятор):
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -108,7 +128,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   expire_after: 5
  ```
 
+{% endraw %}
+
 ### Подсветка шлюза (light)
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -125,7 +149,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   payload_off: '{"mode": "off"}'
 ```
 
+{% endraw %}
+
 ### Статус шлюза с аттрибутами (binary_sensor)
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -139,7 +167,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   json_attributes_template: "{{ value_json | tojson }}"
 ```
 
+{% endraw %}
+
 ### Режим сопряжения ZigBee/Bluetooth шлюза (switch)
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -154,7 +186,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   payload_off: "false"
 ```
 
+{% endraw %}
+
 ### Время работы шлюза (sensor)
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -166,20 +202,28 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   value_template: "{{ value_json.UptimeStr }}"
 ```
 
+{% endraw %}
+
 ![статус sls](/img/int_ha_status_sls.png)
 
 ### Двухканальное реле сяоми switch LLKZMK11LM
 
+{% raw %}
+
+#### Бойлер
+
 ```yaml
-### бойлер
 - platform: mqtt
   name: gas_boiler
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/gas_heating"
   value_template: "{{ value_json.state_l1 }}"
   command_topic: "ZigbeeSLS/gas_heating/set/state_l1"
-  
-### Насос теплого пола switch
+```
+
+#### Насос теплого пола switch
+
+```yaml
 - platform: mqtt
   name: warm_floor
   availability_topic: "ZigbeeSLS/bridge/state"
@@ -187,6 +231,8 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   value_template: "{{ value_json.state_l2 }}"
   command_topic: "ZigbeeSLS/gas_heating/set/state_l2"
  ```
+
+{% endraw %}
 
 Соответственно везде name и адреса топиков необходимо поменять на свои
 
