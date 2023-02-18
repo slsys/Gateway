@@ -12,6 +12,26 @@
 
 ## Доступные команды HTTP API
 
+### Система
+
+#### Управление режимом логирования
+
+```http
+GET /api/messages-history?action=
+```
+
+Параметр `action` может принимать следующие значения:
+
+- `action=getBuffer`
+- `action=setLevel&value=1`  
+- `action=getLevel`
+
+#### Перезагрузка шлюза
+
+```http
+GET /api/reboot
+```
+
 ### Zigbee
 
 #### Получить список устройств сети zigbee
@@ -104,20 +124,6 @@ GET /api/zigbee?dev=0x1841&action=setSimpleBind&state=contact&value=test.lua
 
 привязывает скрипт `test.lua` на запуск при изменении состояния `contact`, на устройстве с адресом `nwkAddr = 0x1841`. Также поддерживается адрес `IEEE`, либо `FriendlyName`. Также в параметре `value` можно указать драгие доступные правила SB. Подробнее о  [SimpleBind](/simplebind_rus.md)
 
-### Настройка лога
-
-#### Управление режимом логирования
-
-```http
-GET /api/messages-history?action=
-```
-
-Параметр `action` может принимать следующие значения:
-
-- `action=getBuffer`
-- `action=setLevel&value=1`  
-- `action=getLevel`
-
 ### Управление Аудио
 
 Все команды `GET`
@@ -158,7 +164,9 @@ GET /api/scripts?action=evalFile&path=/test.lua
 GET /api/scripts?action=evalCode&plain=print("ok!")
 ```
 
-### [Хранилище](https://github.com/slsys/Gateway/blob/master/storage_rus.md#http-api)
+### Хранилище
+
+Описание API команд для раюоты с хранилищем [здесь](https://github.com/slsys/Gateway/blob/master/storage_rus.md#http-api)
 
 ### Leds
 
