@@ -37,8 +37,10 @@ result = function(var1, var2[, var3])
 
 ---
 Примечания:
-draft - черновик или будет добавлено в будущем
-deprecated - будет удалено в будущем
+
+- draft - черновик или будет добавлено в будущем
+- deprecated - будет удалено в будущем
+
 >let's begin
 
 ## Асинхронное программирование
@@ -179,8 +181,6 @@ scripts.run(script[, Param])
 
 Объекты это универсальная сущность для хранения и обмена данными между подсистемами шлюза, например между скриптами. [Подробнее здесь](/objects_rus.md). [Примеры](/samples_rus.md).
 
-Синтаксис функций:
-
 #### obj.setOpt()
 
 Инициализация объекта, изменения типа данных, записываемых в объект, управление флагом передачи уведомлений в MQTT
@@ -265,7 +265,7 @@ obj.setScript(name, script.lua[, run_on_write])
 ```lua
 result = obj.remove(name)
 -- name - имя объекта
-result - BOOL, true - успех, false - объект не найден
+-- result - BOOL, true - успех, false - объект не найден
 ```
 
 ### Библиотека EVENT
@@ -411,7 +411,7 @@ zigbee.setModel("xBox", "ptvo.switch")
 
 **Данный функционал будет полезен пользователям генератора прошивок ptvo, кто самостоятельно изменит имя устройства на кастомное.**
 
-#### zigbee.readAttr()
+#### zigbee.readAttr() - draft
 
 Отправляет запрос на чтение атрибута в кластере.
 
@@ -425,9 +425,7 @@ zigbee.readAttr(device, epId, clusterId, AttrId[, manufId])
 zigbee.readAttr("0x90FD9FFFFEF7E26D", 1, 0x4000, 0x0000)
 ```
 
-> функционал и его описание в разработке <!-- TODO -->
-
-#### zigbee.writeAttr()
+#### zigbee.writeAttr() - draft
 
 Записывает значение атрибута в кластере.
 
@@ -441,9 +439,9 @@ zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
 -- value - значение атрибута
 ```
 
-> функционал и его описание в разработке <!-- TODO -->
+<!-- TODO функционал и его описание в разработке -->
 
-#### zigbee.configReport()
+#### zigbee.configReport() - draft
 
 Конфигурирует репортинг атрибута в кластере.
 
@@ -459,7 +457,7 @@ zigbee.configReport(device, epId, clusterId, AttrId, dataType, minRepInt, maxRep
 -- repChange - BOOL,
 ```
 
-> функционал и его описание в разработке <!-- TODO -->
+<!-- TODO функционал и его описание в разработке -->
 
 ### Библиотека MQTT
 
@@ -527,7 +525,7 @@ http.request2 (url[:port], [method, headers, body])
 
 [Примеры](/samples_rus.md#HTTP-запросы)
 
-Предыдущая версия функции: `http.request()` имеет такой же синтаксис и для обратной совместимости, также доступна.
+#### http.request() - deprecated
 
 ### Библиотека TELEGRAM
 
@@ -729,7 +727,9 @@ os.setAssets(url)
 -- url - STR, источник ресурсов
 ```
 
-#### [os. функции для работы с хранилищем](/storage_rus.md#скрипты-lua)
+#### os. функции для работы с хранилищем
+
+Описание функций для работы с хранилищем [здесь](/storage_rus.md#скрипты-lua)
 <!-- #### os.mountSD()
 Монтирует SD-карту
 ```lua
