@@ -60,7 +60,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   state_topic: "ZigbeeSLS/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
   ```
-
+  
   {% endraw %}
 
 ### Датчик температуры/влажности (круглый сяоми, обычный sensor) WSDCGQ01LM
