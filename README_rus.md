@@ -51,7 +51,7 @@
 
 ### [Таймеры](/timers_rus.md)
 
-### [Хранилище}](/storage_rus.md)
+### [Хранилище](/storage_rus.md)
 
 ### [FAQ (часто задаваемые вопросы)](/faq_rus.md)
 
