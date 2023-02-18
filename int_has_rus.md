@@ -32,8 +32,6 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
 
 ### Датчик протечки (binary_sensor) SJCGQ11LM
 
-
-
 ```yaml
 - platfyaml mqtt
   name: bathroom_leak
@@ -47,11 +45,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     {% endif %}
 ```
 
-  
-
 ### Датчик протечки №1 (уровень заряда) SJCGQ11LM
-
-
 
 ```yaml
 - platform: mqtt
@@ -61,13 +55,9 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/bathroom_leak_1"
   value_template: "{{ value_json.battery }}"
-  ```
+```
   
-  
-
 ### Датчик температуры/влажности (круглый сяоми, обычный sensor) WSDCGQ01LM
-
-
 
 ```yaml
 - platform: mqtt # Температура
@@ -90,13 +80,9 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   unit_of_measurement: "%"
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/bathroom_sensor"
-  ```
+```
 
-
-  
 ### Квадратный датчик с давлением (в дополнение к предыдущему) WSDCGQ11LM
-
-
 
 ```yaml
 - platform: mqtt # Давление
@@ -106,15 +92,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   availability_topic: "ZigbeeSLS/bridge/state"
   state_topic: "ZigbeeSLS/loggia_sensor"
   value_template: "{{ (value_json.pressure | float * 7.501) | round | int }}"
- ```
-
-
+```
 
 ### Квадратная кнопка сяоми (binary_sensor) WXKG11LM
 
 Так как это именно кнопка, а не переключатель, то binary_sensor меняет свое состояние на очень короткий срок. Для работы с ним можно использовать автоматизацию типа этой (в данном случае при нажатии включается/отключается вентилятор):
-
-
 
 ```yaml
 - platform: mqtt
@@ -128,13 +110,9 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
       {{'ON'}}
     {% endif %}
   expire_after: 5
- ```
-
-
+```
 
 ### Подсветка шлюза (light)
-
-
 
 ```yaml
 - platform: mqtt
@@ -151,11 +129,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   payload_off: '{"mode": "off"}'
 ```
 
-
-
 ### Статус шлюза с аттрибутами (binary_sensor)
-
-
 
 ```yaml
 - platform: mqtt
@@ -169,11 +143,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   json_attributes_template: "{{ value_json | tojson }}"
 ```
 
-
-
 ### Режим сопряжения ZigBee/Bluetooth шлюза (switch)
-
-
 
 ```yaml
 - platform: mqtt
@@ -188,11 +158,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   payload_off: "false"
 ```
 
-
-
 ### Время работы шлюза (sensor)
-
-
 
 ```yaml
 - platform: mqtt
@@ -204,13 +170,9 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   value_template: "{{ value_json.UptimeStr }}"
 ```
 
-
-
 ![статус sls](/img/int_ha_status_sls.png)
 
 ### Двухканальное реле сяоми switch LLKZMK11LM
-
-
 
 #### Бойлер
 
@@ -223,11 +185,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   command_topic: "ZigbeeSLS/gas_heating/set/state_l1"
 ```
 
-
-
 #### Насос теплого пола switch
-
-
 
 ```yaml
 - platform: mqtt
@@ -236,9 +194,7 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   state_topic: "ZigbeeSLS/gas_heating"
   value_template: "{{ value_json.state_l2 }}"
   command_topic: "ZigbeeSLS/gas_heating/set/state_l2"
- ```
-
-
+```
 
 Соответственно везде name и адреса топиков необходимо поменять на свои
 
@@ -270,8 +226,6 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
 
 ### Датчик движения/освещенности Xiaomi RTCGQ11LM
 
-
-
 ```yaml
 #Сенсор Движение Коридор
   - platform: mqtt
@@ -294,8 +248,6 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     value_template: "{{ value_json.illuminance }}"
     unit_of_measurement: 'lux'
 ```
-
-
 
 ### Датчик открытия окна Xiaomi MCCGQ01LM
 

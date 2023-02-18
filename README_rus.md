@@ -41,6 +41,8 @@
 
 ### [Web-интерфейс](/web_rus.md)
 
+### [Simple Bind](/simplebind_rus.md)
+
 ### [Поддержка Lua-скриптов](/lua_rus.md)
 
 ### [Описание HTTP API команд](/http_api_rus.md)
