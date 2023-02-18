@@ -221,7 +221,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
   command_topic: "ZigbeeSLS/gas_heating/set/state_l1"
 ```
 
+{% endraw %}
+
 #### Насос теплого пола switch
+
+{% raw %}
 
 ```yaml
 - platform: mqtt
@@ -260,18 +264,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     color_temp: true
     schema: json
     command_topic: "ZigbeeSLS/GardenBulbLeft/set"
-
-  - platform: mqtt
-    name: GardenBulbRight
-    state_topic: "ZigbeeSLS/GardenBulbRight"
-    availability_topic: "ZigbeeSLS/bridge/state"
-    brightness: true
-    color_temp: true
-    schema: json
-    command_topic: "ZigbeeSLS/GardenBulbRight/set”
 ```
 
 ### Датчик движения/освещенности Xiaomi RTCGQ11LM
+
+{% raw %}
 
 ```yaml
 #Сенсор Движение Коридор
@@ -296,7 +293,11 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     unit_of_measurement: 'lux'
 ```
 
+{% endraw %}
+
 ### Датчик открытия окна Xiaomi MCCGQ01LM
+
+{% raw %}
 
 ```yaml
 #Сенсор Дверь Улица
@@ -314,6 +315,8 @@ Home Assistant интегрируется с SLS по протоколу MQTT (M
     state_topic: "ZigbeeSLS/Sensor_Door_Uliza"
     value_template: "{{ value_json.contact }}"
 ```
+
+{% endraw %}
 
 ### Cкрипт переводит статус датчиков на off через требуемый таймаут
 
