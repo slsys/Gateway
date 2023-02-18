@@ -375,10 +375,11 @@ result = zigbee.get(device, state)
 Устанавливает значение состояния устройства
 
 ```lua
-zigbee.set(device, stateName, stateValue)
+result = zigbee.set(device, stateName, stateValue)
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
 -- stateName - STR, имя состояния, значение которого необходимо изменить
 -- stateValue - значение состояние. Тип - свой для каждого значения. Например, для кнопки State:Action тип будет STR, а для яркости State:brightness тип будет INT 
+-- result - NIL - устройство не найдено, BOOL, true - успех, false - ошибка в имени состояния и/или его значении
 ```
 
 #### zigbee.setState()
@@ -387,12 +388,13 @@ zigbee.set(device, stateName, stateValue)
 В отличие от `zigbee.set()` позволяет создавать свои состояния, виртуальные. [Например](/samples_rus.md#Преобразование-показателей-давления-из-kPa-в-mmhg), для хранения данных какого-либо состояния, в альтернативных единицах измерения.
 
 ```lua
-zigbee.setState(device, stateName, stateValue[[, type], events])
+result = zigbee.setState(device, stateName, stateValue[[, type], events])
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
 -- stateName - STR, имя состояния, значение которого необходимо изменить
 -- stateValue - значение состояние
 -- type - STR, тип значений состояния
 -- events - BOOL, выполнять события (по умолчанию true)
+-- result - BOOL,  true - успех, false - устройство не найдено
 ```
 
 #### zigbee.setModel()
@@ -441,8 +443,6 @@ zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
 -- value - значение атрибута
 ```
 
-<!-- TODO функционал и его описание в разработке -->
-
 #### zigbee.configReport() - draft
 
 Конфигурирует репортинг атрибута в кластере.
@@ -458,8 +458,6 @@ zigbee.configReport(device, epId, clusterId, AttrId, dataType, minRepInt, maxRep
 -- maxRepInt - INT,
 -- repChange - BOOL,
 ```
-
-<!-- TODO функционал и его описание в разработке -->
 
 ### Библиотека MQTT
 
