@@ -1,15 +1,20 @@
 # Хранилище
+
 Шлюз использует хранилище для хранения конфигов, скриптов, звуков и прочих файлов. Может использовать как внутренняя флеш-память так и внешняя на SD-картах. Записывать также можно через сценарии, [пример](https://github.com/slsys/Gateway/blob/master/samples_rus.md#сохранение-значений-в-json-через-lua).  
 
 ## Структура
+
 Хранилище использует префиксы для обозначения источника данных.
-* /int - для внутренней файловой системы, его использование не обязательно
-* /sd  - для SD-карты
+
+- /int - для внутренней файловой системы, его использование не обязательно
+- /sd  - для SD-карты
 
 ## Файловые системы
+
 Поддерживается несколько файловых систем для хранилища:
-* FAT - классическая файловая система
-* LFS - надежная файловая система для микроконтроллеров LittleFS, не повреждается при неожиданных отключениях питания (доступна с версии 2022.03.29d4)
+
+- FAT - классическая файловая система
+- LFS - надежная файловая система для микроконтроллеров LittleFS, не повреждается при неожиданных отключениях питания (доступна с версии 2022.03.29d4)
 
 Для выбора файловой системы используется разметка указанная в файле разделов при прошивке устройства.
 
@@ -20,37 +25,44 @@
 Большая часть команд возвращает объект JSON:
 
 При успехе:
+
 ```json
 {"success":true,"result":[]|{}}
 ```
 
 При ошибке
+
 ```json
 {"success":false}
 ```
 
 Пути могут обозначаться:
+
 - / или /int - внутренняя файловая система
 - /sd - SD-карта
 
-###  Получить список файлов
+### Получить список файлов
 
 ```http
 GET /api/storage?path=/
 ```
+
 JSON result:
+
 ```json
 [
   {"name":"test.txt","is_dir":false,"size":8},{"name":"testDir","is_dir":true}
 ]
 ```
+
 - `name` - имя файла или каталога
-- `is_dir` - true - каталог, false - файл 
+- `is_dir` - true - каталог, false - файл
 - `size` - размер файла в байтах
 
 ### Чтение содержимого файла
 
 Возвращает содержимое файла
+
 ```http
 GET /api/storage?path=/sd/test.txt
 ```
@@ -62,7 +74,9 @@ GET /api/storage?path=/sd/test.txt
 ```http
 POST /api/storage?path=/test.lua&plain=XXX
 ```
+
 Возвращает
+
 ```json
 {"success":true|false}
 ```
@@ -70,21 +84,26 @@ POST /api/storage?path=/test.lua&plain=XXX
 ### Удаление файла
 
 Удаляет файл
+
 ```http
 DELETE /api/storage?path=/test.txt
 ```
+
 Возвращает
+
 ```json
 {"success":true|false}
 ```
 
-###  Монтирование SD накопителя
+### Монтирование SD накопителя
 
 ```http
 GET /api/storage/sd?action=mount 
 GET /api/storage/sd?action=umount 
 ```
+
 Возвращает
+
 ```json
 {"success":true,"result":"mount|umount"}
 ```
@@ -92,25 +111,29 @@ GET /api/storage/sd?action=umount
 ### Информация о хранилище
 
 Возвращает информацию о внутреннем хранилище и SD-карте
+
 ```http
 GET /api/storage/info
 ```
+
 JSON result:
+
 ```json
 {
-	"int": {
-		"fs": "LFS",
-		"total": 4194304,
-		"free": 4030464
-	},
-	"sd": {
-		"size": 30953963520,
-		"total": 30918311936,
-		"free": 30918262784,
-		"status": "SDHC"
-	}
+  "int": {
+    "fs": "LFS",
+    "total": 4194304,
+    "free": 4030464
+    },
+  "sd": {
+    "size": 30953963520,
+    "total": 30918311936,
+    "free": 30918262784,
+    "status": "SDHC"
+    }
 }
 ```
+
 - int - внутренний накопитель
   - fs - файловая система
   - total - размер флэш в байтах
@@ -121,31 +144,38 @@ JSON result:
   - total - размер раздела в байтах
   - free - свободно байт
 
-
 ### Переименование файлов
 
 ```http
 GET /api/storage/rename?old=/file1.lua&new=/file2.lua
 ```
+
 Возвращает
+
 ```json
 {"success":true|false}
 ```
 
 ### Создать директорию
+
 ```http
 GET /api/storage/mkdir?path=/int/mydir
 ```
+
 Возвращает
+
 ```json
 {"success":true|false}
 ```
 
 ### Удалить директорию
+
 ```http
 GET /api/storage/rmdir?path=/int/mydir
 ```
+
 Возвращает
+
 ```json
 {"success":true|false}
 ```
@@ -153,12 +183,14 @@ GET /api/storage/rmdir?path=/int/mydir
 ## Скрипты [LUA](/lua_rus.md)
 
 Во всех операциях с файлами под именем подразумевается путь:
+
 - для int - `/file` или `/int/file`
 - для SD - `/sd/file`
 
 ### os.mountSD()
 
 Монтирует SD-карту
+
 ```lua
 result = os.mountSD(mount)
 -- mount - BOOL, примонтировать = true; размонтировать = false
@@ -168,6 +200,7 @@ result = os.mountSD(mount)
 ### os.fileExists()
 
 Проверяет наличие файла, возвращает true/false
+
 ```lua
 result = os.fileExists(fileName)
 -- fileName - STR, имя проверяемого файла
@@ -177,6 +210,7 @@ result = os.fileExists(fileName)
 ### os.fileSize()
 
 Возвращает размер файла
+
 ```lua
 result = os.fileSize(fileName)
 -- fileName - STR, имя проверяемого файла
@@ -186,6 +220,7 @@ result = os.fileSize(fileName)
 ### os.fileRemove()
 
 Удаляет файл
+
 ```lua
 result = os.fileRemove(fileName)
 -- fileName - STR, имя удаляемого файла
@@ -195,6 +230,7 @@ result = os.fileRemove(fileName)
 ### os.fileRename()
 
 Переименовывает файл
+
 ```lua
 result = os.fileRename(old, new)
 -- old - STR, старое имя переимновываемого файла
@@ -204,7 +240,8 @@ result = os.fileRename(old, new)
 
 ### os.fileRead()
 
-Читает файл 
+Читает файл
+
 ```lua
 result = os.fileRead(fileName)
 -- fileName - STR, имя целевого файла
@@ -214,6 +251,7 @@ result = os.fileRead(fileName)
 ### os.fileWrite()
 
 Записывает данные в файл:
+
 ```lua
 result = os.fileWrite(fileName,data[, overwrite])
 -- fileName - STR, имя целевого файла

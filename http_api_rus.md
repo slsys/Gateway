@@ -10,6 +10,22 @@
 
 `&token=e9d38bed.......f4ef49476a2ed9575`
 
+## Возвращаемые значения
+
+Большая часть команд возвращает объект JSON:
+
+При успехе:
+
+```json
+{"success":true,"result":[]|{}}
+```
+
+При ошибке
+
+```json
+{"success":false}
+```
+
 ## Доступные команды HTTP API
 
 ### Система
@@ -166,19 +182,68 @@ GET /api/scripts?action=evalCode&plain=print("ok!")
 
 ### Хранилище
 
-Описание API команд для раюоты с хранилищем [здесь](https://github.com/slsys/Gateway/blob/master/storage_rus.md#http-api)
+Описание API команд для работы с хранилищем [здесь](/storage_rus.md#http-api)
 
 ### Leds
 
-<!-- TODO - выделить в отдельный док -->
+Описание API команд для работы с LED [здесь](/led_control.md#http-api)
 
-#### Установить цвет светодиода
+<!-- TODO - выделить в отдельный док
+
+#### Получить текущий статус
 
 ```http
-GET /api/led?red=5&green=5&blue=5&mode=manual
+GET /api/led
 ```
 
-Альтернативный вариант управления череp [lua](/lua_rus.md#osled)
+```json
+{
+    "state":"OFF",
+    "brightness":255,
+    "color":{"r":0,"g":0,"b":0},
+    "color_mode":"rgb",
+    "mode":"auto"
+}
+```
+
+- `state` - STR, статус светодиода - `ON`/`OFF`
+- `brightness` - INT, яркость
+- `color` - объект со значениями цвета `RGB`
+- `color_mode` - цветовая модель (для совместимости с HA)
+- `mode` - режим (`AUTO`, `ON`, `OFF`)
+
+#### Управление
+
+Управление LED осуществляется передачей JSON объекта:
+
+```http
+GET /api/led?set=JSONObject
+```
+
+```json
+{
+    "mode": "on",
+    "brightness": 100,
+    "color":{
+        "r":255,
+        "g":150,
+        "b":200
+    },
+    "effect":10
+}
+```
+
+Любой из параметров `mode`, `brightness`, `color`, `effect` может отправляться как по отдельности, так и все вместе в одном запросе.
+
+В ответ возвращается [текущий статус](/http_api_rus.md#получить-текущий-статус):
+
+#### Включить LED с эффектом 10 и яркостью 50%
+
+```http
+GET /api/led?set={"brightness":128,"effect":10}
+```
+
+Альтернативный вариант управления через [lua](/lua_rus.md#osled) -->
 
 ### [Объекты](/objects_rus.md)
 
