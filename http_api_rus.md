@@ -188,63 +188,6 @@ GET /api/scripts?action=evalCode&plain=print("ok!")
 
 Описание API команд для работы с LED [здесь](/led_control.md#http-api)
 
-<!-- TODO - выделить в отдельный док
-
-#### Получить текущий статус
-
-```http
-GET /api/led
-```
-
-```json
-{
-    "state":"OFF",
-    "brightness":255,
-    "color":{"r":0,"g":0,"b":0},
-    "color_mode":"rgb",
-    "mode":"auto"
-}
-```
-
-- `state` - STR, статус светодиода - `ON`/`OFF`
-- `brightness` - INT, яркость
-- `color` - объект со значениями цвета `RGB`
-- `color_mode` - цветовая модель (для совместимости с HA)
-- `mode` - режим (`AUTO`, `ON`, `OFF`)
-
-#### Управление
-
-Управление LED осуществляется передачей JSON объекта:
-
-```http
-GET /api/led?set=JSONObject
-```
-
-```json
-{
-    "mode": "on",
-    "brightness": 100,
-    "color":{
-        "r":255,
-        "g":150,
-        "b":200
-    },
-    "effect":10
-}
-```
-
-Любой из параметров `mode`, `brightness`, `color`, `effect` может отправляться как по отдельности, так и все вместе в одном запросе.
-
-В ответ возвращается [текущий статус](/http_api_rus.md#получить-текущий-статус):
-
-#### Включить LED с эффектом 10 и яркостью 50%
-
-```http
-GET /api/led?set={"brightness":128,"effect":10}
-```
-
-Альтернативный вариант управления через [lua](/lua_rus.md#osled) -->
-
 ### [Объекты](/objects_rus.md)
 
 Получить список объектов
@@ -277,3 +220,40 @@ GET /api/obj?name=XXX
 - `flag_value = 1: ACK=0; MQTT=1`
 - `flag_value = 2: ACK=1; MQTT=0`
 - `flag_value = 3: ACK=1; MQTT=1`
+
+## Примеры
+
+### Отправк POST запроса
+
+```lua
+http.request2("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
+-- Альтернативный вариант:
+http.request("http://postman-echo.com:80/post?foo1=bar1", "POST", "Content-Type: text/text; charset=utf-8\r\n", "body") 
+```
+
+### Переключение gpio 12 для прошивки wifi-iot
+
+```lua
+http.request2("http://192.168.1.34/gpio?st=2&pin=12")
+```
+
+### Переключение реле sw1 в прошивке espHome
+
+```lua
+http.request2("http://192.168.1.71/switch/sw1/toggle", "POST") 
+```
+
+### Переключение gpio для MegaD при однократном нажатии btn_2 пульта Jager
+
+```lua
+if Event.State.Value == "btn_2_single"  then
+  http.request2("http://192.168.2.200/objects/?object=MegaD1-12&op=m&m=switch")
+end
+```
+
+### Запрос информации со стороннего ресурса
+
+```lua
+local myIP = http.request("http://wtfismyip.com/text")
+print("My IP: " .. myIP)
+```
