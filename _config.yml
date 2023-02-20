@@ -1,13 +1,5 @@
-<<<<<<< Updated upstream
 title: SLS
 description: Smart Logic System
 show_downloads: false
 #google_analytics:
-theme: jekyll-theme-cayman
-=======
-title: SLS Gateway
-description: Smart Logic System
-show_downloads: false
-#google_analytics:
 theme: jekyll-theme-leap-day
->>>>>>> Stashed changes
