@@ -1,11 +1,23 @@
-### 2023.02.15d10
+# История изменений
+
+## 2023.02.20d2
+
+- +Lua: Добавлено управление Yeelight устройствами: yeelight.send()
+- *Zigbee: Доработано MQTT Discovery для climate: preset & system_mode
+
+## 2023.02.15d10
+
 - +Lua: Добавлена функция определения оставшегося времени для таймера scripts.getTimer()
-### 2023.02.15d7
+
+## 2023.02.15d7
+
 - +Led: Добавлена индикация белым светом удержания сервисной кнопки в момент старта шлюза
 - *Lua: Исправлена ошибка проверки Cron таймеров, когда их больше одного
 - *API: Добавлен HTTP API для получения состояния таймеров: /api/scripts
 - +Zigbee: Поддержка для #273 Tuya Soil moisture & temperature sensor (QT-07S) (_TZE200_myd45weu / TS0601)
-### 2023.02.11d1
+
+## 2023.02.11d1
+
 - +HDL: Добавлена базовая поддержка HDL SmartBus протокола, поддерживаются реле, диммеры, датчики температуры, DLP термостаты
 - *MQTT: Добвлено отображение ошибки подключения на главной страницы
 - *OS: Отключено сохранение состояния статусных светодиодов
@@ -38,7 +50,9 @@
 - +Zigbee: Поддержка для #270 DIY TVOC/eCO2 monitor with oled display (efektalab / EFEKTA_pixelAQ)
 - +Zigbee: Поддержка для #271 DIY CO2 monitor with IPS display (efektalab / EFEKTA_iAQ)
 - +Zigbee: Поддержка для #272 Xiaomi Aqara Smart Radiator Thermostat E1 (SRTS-A01) (LUMI / lumi.airrtc.agl001)
-### 2023.01.08d1
+
+## 2023.01.08d1
+
 - +OS: Управление эффектами статусных светодидов в HA
 - *OS: Исправлена обратная связь при управлении стутусными светодиодами
 - +Zigbee: Добавлено определение новых прошивок 20221214, 20221220, 20221226
@@ -56,7 +70,9 @@
 - +Zigbee: Поддержка для #254 Aqara smart wall switch H1 EU (no neutral, double rocker) (WS-EUK02) (lumi.switch.l2aeu1)
 - +Zigbee: Поддержка для #255 Aqara smart wall switch H1 EU (with neutral, single rocker) (WS-EUK03) (lumi.switch.n1aeu1)
 - +Zigbee: Поддержка для #256 Aqara smart wall switch H1 EU (no neutral, single rocker) (WS-EUK01) (lumi.switch.l1aeu1)
-### 2022.12.31d2
+
+## 2022.12.31d2
+
 - +OS: Добавлена возможность передачи параметра page для UI
 - +OS: Добавлена возможность отключения аутентификации для UI
 - *OS: Исправлено HTTP API для управления светодиодом
@@ -74,7 +90,9 @@
 - +Zigbee: Новая модель для #209 Tuya Smart Human Presense Sensor (_TZE204_ztc6ggyl / TS0601)
 - +Zigbee: Поддержка для #251 Tuya MiBoxer Track RGB+CCT light (_TZB210_gdsxpa1z / TS0505B)
 - +Zigbee: Поддержка для #252 DIY CO2 Mini Monitor with TFT Display, outdoor temperature, date and time. (efektalab / EFEKTA_iAQ_S)
-### 2022.12.10d3
+
+## 2022.12.10d3
+
 - +Telegram: Добавлена возможность форматировать текст и вставлять клавиатуру: telegram.send(text[, chat[, param]])
 - +MQTT: Добавлена опция добавления FN в префикс Entity Name
 - *MQTT: Теперь имя устройства Zigbee пробрасывается в HA независимо от настройки Use FN
@@ -95,7 +113,9 @@
 - +Zigbee: Поддержка для #248 Tuya Led RGB-WW-CW Zigbee LED Spotlight (_TZ3210_leyz4rju / TS0505B)
 - +Zigbee: Поддержка для #249 Tuya CO2 sensor with display (_TZE200_ogkdpgy2 / TS0601)
 - +Zigbee: Поддержка для #250 Tuya Temperature & humidity external sensor with display (_TZE200_qyflbnbj / TS0601)
-### 2022.11.26d1
+
+## 2022.11.26d1
+
 - +OS: Добавлена возможность включить/отключить WiFi: os.wifi(true/false)
 - *OS: Улучшена работа с WiFi Mesh сетями
 - +MQTT: Discovery для шлюза
@@ -112,19 +132,21 @@
 - +Zigbee: Поддержка для #240 Sonoff Zigbee smart switch (no neutral) (ZBMINIL2) (SONOFF / ZBMINI-L)
 - +Zigbee: Поддержка для #241 Tuya Temperature & Humidity Sensor with display (_TZ2000_zsfvulde / TS0201, _TZ2000_a476raq2)
 
-### 2022.11.14d2
+## 2022.11.14d2
+
 - +Modbus: Добавлена поддержка Modbus RTU Slave
-> +LED: Добавлена поддержка эффектов для адресных светодиодов
+- +LED: Добавлена поддержка эффектов для адресных светодиодов
 - *LED: Исправлена ошибка с адресными светодиодами, когда их больше 1шт
 - *1-Wire: Исправлена проверка CRC
 - *IO: Добавлена программная подтяжка для сервисной кнопки
-> *Zigbee: Исправлен перезапуск интервью для Xiaomi устройств - **проверить интервью на своих**
+- *Zigbee: Исправлен перезапуск интервью для Xiaomi устройств
 - +Zigbee: Новая модель для #15 Tuya Zigbee Smart Socket EU Plug 16A Adapter (_TZ3000_hdopuwv6 / TS011F)
 - +Zigbee: Поддержка для #235 Tuya door sensor (_TZ3000_26fmupbb / TS0203)
 - +Zigbee: Поддержка для #236 Tuya Avatto 2 gang switch module w/o N (_TZ3000_llfaquvp / TS0012, _TZ3000_jl7qyupf / TS0012)
 - +Zigbee: Поддержка для #237 Xiaomi Aqara curtain driver E1 (ZNCLBL01LM) (LUMI / lumi.curtain.acn003, LUMI / lumi.curtain.agl001)
 
-### 2022.11.04d2
+## 2022.11.04d2
+
 - +OS: Добавлен вывод RTC в /api/time
 - *OS: Исправлена ошибка с галочкой DHCP после сброса настроек
 - +MQTT: Возможность изменить Discovery топик, по умолчанию: homeassistant
@@ -141,7 +163,8 @@
 - +Zigbee: Поддержка для #232 Lytko wall thermostat w/o display (Lytko / L101Z-SLI, Lytko / L101Z-DLI)
 - +Zigbee: Поддержка для #234 Xiaomi Aqara wireless remote switch H1 (double rocker) (WXKG15LM) (LUMI / lumi.remote.b28ac1)
 
-### 2022.08.13d8
+## 2022.08.13d8
+
 - *OS: Уменьшено количество сообщений логирования в режиме VERBOSE
 - *OS: В режиме авто изменена индикация в режиме точки доступа, добавлена индикация ошибки подключения к сети
 - +KNX: Добавлена поддержка интеграции с MQTT
@@ -171,7 +194,8 @@
 - +Zigbee: Поддержка для #214 Tuya Moes Smart Human Presense Sensor (_TZE200_ikvncluo / TS0601)
 - +Zigbee: Поддержка для #215 Aqara E1 door & window contact sensor (MCCGQ14LM) (LUMI / lumi.magnet.acn001)
 
-### 2022.06.06d3
+## 2022.06.06d3
+
 - +OS: Поддержка Ethernet POE плат TTGO (для Pro версии)
 - +OS: Возможность изменять параметры Serial портов (в конфиге)
 - +OS: Поддержка Serial2TCP сервера
@@ -194,7 +218,8 @@
 - +Zigbee: Поддержка для #199 Heiman Motion sensor (SMHM-I1) (GS / SMHM-I1)
 - +Zigbee: Поддержка для #200 Heiman Smart metering plug (SKHMP30-I1) (GS / SKHMP30-I1)
 
-### 2022.04.09d8
+## 2022.04.09d8
+
 - +OS: Добавлена Lua команда для монтирования SD-карты: result = os.mountSD(true/false)
 - *OS: Исправлена инициализация I2C
 - *Lua: Исправлена ошибка преобразования целых чисел в строки
@@ -204,14 +229,17 @@
 - +Zigbee: Поддержка для #194 OWON 32A/63A power circuit breaker (CB432) (OWON / CB432)
 - *Zigbee: Исправлена обратная связь для #66 Tuya Blitzwolf Smart Socket EU Plug 16A Adapter (BW SHP-15)
 
-### 2022.04.05d1
+## 2022.04.05d1
+
 - *Lua: Исправлена инициализация при отсутствии PSRAM
 
-### 2022.04.02d6
+## 2022.04.02d6
+
 - *Lua: Исправлен запуск функции scripts.setTimer()
 - *Zigbee: Исправлена выдача ошибки при загрузке устройств
 
-### 2022.04.01d7
+## 2022.04.01d7
+
 - +Storage: Добавлена поддержка SD карт
 - +Storage: Добавлена поддержка файловой системы LFS
 - *Storage: Исправлено отображение регистра имени файлов
@@ -233,7 +261,8 @@
 - +Zigbee: Исправлена работа #186 Tuya SOS Button (_TYZB01_abtyryba / TS0218)
 - +Zigbee: Добавлена новая модель для #1 Tuya Repeater (_TZ3000_m0vaazab / TS0207, _TZ3000_ufttklsz / TS0207, _TZ3000_5k5vh43t / TS0207)
 
-### 2022.01.30d1
+## 2022.01.30d1
+
 - +KNX: Реализована поддержка KNXnet/IP
 - *Lua: Обновлен до версии 5.4.4
 - +Lua: Реализованы гибкие таймеры скриптов: однократный и интервальный, старые скрипты OneMinTimer и OneSecTimer теперь не запускаются автоматически
@@ -259,12 +288,14 @@
 - +Zigbee: Поддержка для #168 Perenio Flood alarm device (PECLS01) (Perenio / PECLS01)
 - +Zigbee: Поддержка для #169 Perenio Socket Plug (PEHPL0X) (Perenio / PEHPL0X)
 
-### 2022.01.05d3
+## 2022.01.05d3
+
 - *Zigbee: Исправлены таймеры устройств
 - *Zigbee: Исправлена команды DataReq для Tuya
 - +Zigbee: Поддержка для #157 Tuya Lellki Wall socket 16A (WK34) (_TZ3000_ps3dmato / TS011F)
 
-### 2022.01.01d4
+## 2022.01.01d4
+
 - *OpenTherm Lua: Исправлен баг включения/выключения отопления и нагрева ГВС
 - +OpenTherm Lua: Добавлен строгий режим чтения данных
 - +OpenTherm Lua: Добавлена возможность чтения/записи прозвольных команд
@@ -298,14 +329,16 @@
 - +Zigbee: Поддержка для #154 Tuya Coolcam Smart Socket EU Plug 16A Adapter (NAS-WR01B) (_TZ3000_w0qqde0g / TS011F)
 - +Zigbee: Поддержка для #156 eCozy Smart heating thermostat (1TST-EU) (Thermostat)
 
-### 2021.11.02d3
+## 2021.11.02d3
+
 - *Полностью переписаны конвертеры для проводных выключателей Xiaomi/Aqara
 - +Все устройства Legrand переведены на новую систему конвертеров (https://slsys.io/action/supported_devices.html)
 - +Поддержка для #136 Legrand Netatmo wired shutter switch (067776) (Legrand / Netatmo wired shutter switch)
 - +Поддержка для #141 Aqara E1 1 gang switch (with neutral) (QBKG40LM) (lumi.switch.b1nc01)
 - +Поддержка для #142 Aqara E1 2 gang switch (with neutral) (QBKG41LM) (lumi.switch.b2nc01)
 
-### 2021.10.30d4
+## 2021.10.30d4
+
 - *Запрещено создавать состояния без имени
 - *Индикация нажатой сервисной кнопки в логе
 - *Изменения MQTT Discovery для поддержки новых версий HA

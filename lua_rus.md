@@ -712,77 +712,9 @@ os.led(mode, brightness, r, g, b[, effect])
 
 Подробнее о работе с LED [здесь](/led_control_rus.md)
 
-<!-- 
-SLS шлюз может управлять различными  светодиодами. Это может быть подсветка корпуса Xiaomi, круглые платы с modkam.ru, либо индикационный многофункциональный светодиод шлюза SLS DIN MINI. В дополнение можно подключить обычную светодиодную ленту. Описание параметров:
-
-В режиме AUTO шлюз оповещает о своем состоянии по следующему алгоритму:
-
-- зеленый горит - Join
-- синий переливается - режим AP
-- синий мигает - идет подключение к Wi-Fi
-- красный - ошибка подключения к Wi-Fi
-- белый горит - удержание сервисной кнопки в момент старта шлюза
-
-[Таблица эффектов](/led_effects.md)
-
-[Примеры для различных устройств](/samples_rus.md#Управление-адресными-светодиодами)
-
-Альтернативный вариант управления через [HTTP API](/http_api_rus.md#leds) -->
-
 #### os. функции для работы с хранилищем
 
 Описание функций для работы с хранилищем [здесь](/storage_rus.md#скрипты-lua)
-
-<!-- 
-#### os.mountSD()
-Монтирует SD-карту
-```lua
-os.mountSD(mount)
--- mount - BOOL, примонтировать = true; размонтировать = false
-```
-#### os.fileExists()
-Проверяет наличие файла, возвращает true/false
-```lua
-os.fileExists(fileName)
--- fileName - STR, имя проверяемого файла
-```
-#### os.fileSize()
-Возвращает размер файла
-```lua
-os.fileSize(fileName)
--- fileName - STR, имя проверяемого файла
-```
-#### os.fileRemove()
-Удаляет файл
-```lua
-os.fileRemove(fileName)
--- fileName - STR, имя удаляемого файла
-```
-#### os.fileRename()
-Переименовывает файл
-```lua
-os.fileRename(old, new)
--- old - STR, старое имя переимновываемого файла
--- new - STR, новое имя переимновываемого файла
-```
-#### os.fileRead()
-Читает файл 
-```lua
-os.fileRead(fileName)
--- fileName - STR, имя целевого файла
-```
-#### os.fileWrite()
-Записывает данные в файл:
-```lua
-os.fileWrite(fileName,data[, overwrite])
--- fileName - STR, имя целевого файла
--- data - STR, данные
--- overwrite - BOOL, перезаписать файл (true)
--- Пример:
-os.fileWrite("/int/!file.db","привет\n",true)
--- Для карты памяти необходимо использовать путь "/sd/file.txt"
-```
--->
 
 ### Библиотека GPIO
 
@@ -895,6 +827,20 @@ audio.getstatus() -- возвращает текущий статус
 #### net.remoteIP()  
 
 Возвращает внешний адрес SLS в сети интернет (если доступен). Выполняется без параметров.
+
+### Библиотека Yeelight
+
+#### yeelight.send()
+
+Управляет устройством Yeelight. [Описание протокола](https://www.yeelight.com/download/Yeelight_Inter-Operation_Spec.pdf)
+
+```lua
+result = yeelight.send(id, method, param)
+-- id - STR, IP адрес устройства
+-- method - STR, команда
+-- param - STR, параметры команды
+-- result - JSON строка, согласно описания протокола
+```
 
 ## Функции LUA SLS
 
