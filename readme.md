@@ -1,138 +1,62 @@
-[Перейти на русскую версию сайта](/README_rus.md)
+# SLS (Smart Logic System)
 
-Support the Project: https://boosty.to/slsys
+[Go to the english version of the site](/readme_eng.md)
 
-# Zigbee 
+Поддержите проект: [https://boosty.to/slsys](https://boosty.to/slsys)
 
-This product is designed to work with common ZigBee devices. The gateway is based on the controller [ESP32 from Espressif](https://www.espressif.com/sites/default/files/documentation/esp32-wrover_datasheet_en.pdf). The tandem of chips from Texas Instruments [ZIgbee CC2538](https://www.ti.com/product/CC2538?utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pfgo-wwe&utm_content=CC2538&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB37x__0Gm1rR2TUfCBETyuqrLjOtof6TuYSD3ZHzINYdNAbrXqfDxrwRoCpToQAvD_BwE&gclsrc=aw.ds) and amplifier [CC2592](https://www.ti.com/product/CC2592utm_source=google&utm_medium=cpc&utm_campaign=epd-null-null-GPN_EN-cpc-pf-google-wwe&utm_content=CC2592&ds_k=%7b_dssearchterm%7d&DCM=yes&gclid=CjwKCAiA35rxBRAWEiwADqB3776CVlMD1GHdk-unOn9R0YeMtlwAnjUvCIPuWvjhNqZRbiq6zy-ExoCxjYQAvD_BwE&gclsrc=aw.ds)
+[SLS Сообщество](https://t.me/slsys) - 2800 участников сообщества, неравнодушных к миру SMART и желающих "оцифровать" свой собственный мир. В сообществе можно найти огромное количество полезной информации.
 
-# General information
-The gateway acts as the coordinator of Zigbee and allows you to:
+[SLS Железо](/sls_dev_rus.md) - это железо, собираемое многотысячным сообществом любителей радиоэлектроники своими руками (DIY).
 
-1) Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](https://slsys.io/action/supported_devices.html). New equipment may be added after discussion with us.
+[SLS Прошивка](https://boosty.to/slsys) - универсальная прошивка, в которой реализована поддержка транспортных протоколов: [Zigbee](/basic_rus.md), Matter,  [OpenTherm](/devices/din_mini_boiler_rus.md), eBUS, [1-Wire](/devices/din_mini_boiler_rus.md), CAN, [DALI](/devices/din_mini_lighting_rus.md),  [DMX](/devices/din_mini_lighting_rus.md), [KNX](/knx_rus.md) и многих других.
 
+[SLS Облако](https://slsys.io/) -  облако, через которое можно в удобном виде получать статистику со всех своих шлюзов SLS, строить графики и интегрировать с голосовыми помощниками.
 
-2) Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
+[SLS Pro](/sls_pro_rus.md)  - готовые решения от разработчиков с официальной поддержкой и отличными [планами развития](/offer_rus.md).  
 
-3) Use common local automation systems, such as [MajorDomo](https://majordomohome.com/), [ioBroker Smarthome](https://www.iobroker.net), [HomeAssistant](https://www.home-assistant.io), [Node-Red](https://nodered.org), etc. For integration with these systems, the MQTT protocol is used. The structure of the MQTT protocol topics is identical to the [zigbee2mqtt project](https://www.zigbee2mqtt.io), therefore, to use and integrate the gateway, there is no need to learn the scripting languages ​​of the above systems, since the protocol is basically already available using extension modules.
+## [SLS DIN MINI](/devices/din_mini_base_rus.md)
 
+Универсальный контроллер с  расширяемым функционалом, можно подключить два модуля расширения, например OpenTherm и Zigbee.  Это отличное и проверенное устройство от команды проекта. Является решением [SLS Pro](/sls_pro_rus.md).  
 
-# Additional gateway features via the web interface
-1. Management and viewing of device information through the Web interface of the gateway at http://ipadress (port 80). The ability to display the power source, battery level, available [EndPoint devices](https://community.nxp.com/thread/332332) in the web interface.
+## [SLS Zigbee](/basic_rus.md)
 
-2. Creation of local automation within the gateway [SimpleBind](/simplebind_eng.md).
+В основе концепции SLS изначально лежал протокол Zigbee, под его задачи были реализованы [основные функции](/basic_rus.md), которые теперь можно использовать на любых шлюзах SLS.  
+Толчком для развития проекта в самостоятельный  продукт послужило множество  факторов:
 
-3. The ability to write scripts in [Lua](https://ru.wikipedia.org/wiki/Lua). 
+* доступность относительно недорогих и энергоэффективных беспроводных устройств Zigbee (SLS [поддерживает](https://slsys.io/ru/action/supported_devices) около 250 востребованных  различных устройств, при необходимости можно поддержать любые проверенные сообществами Zigbee устройства [z2m](https://www.zigbee2mqtt.io/supported-devices/), [blakadder](https://zigbee.blakadder.com/all.html)).
+* огромнейшее [сообщество](https://t.me/zigbeer) неравнодушных пользователей программных координаторов [Zigbee2mqtt](https://www.zigbee2mqtt.io/) и др. подобных решений,
+* стремление к популяризации DIY-собществ,  заинтересованных в стремлении разобраться в вопросах взамодействия протоколов и технологий,   побудить при стартовых нулевых навыках заинтересованного  самостоятельно изготовить устройство своими руками на основе проектов на сайте [modkam.ru](https://modkam.ru)
 
-4. The ability to create groups to manage multiple devices at the same time (in development).
+## SLS сегодня
 
-5. The ability to name the device. If you plan to use the gateway with local automation systems, it is recommended to check the box for sending addresses instead of devices.
+* Невероятно настраивамый и программируемый функционал на основе языка сценариев Lua
+* Возможность ручной тонкой  настройки оборудование.
+* Отсутствие привязки к облачным интерфейсам вендоров.
+* Возможность работы устройств и настройка автоматизаций  без использования облачных технологий.  
+* Огромное количество поддерживаемых проводных и [беспроводных](https://slsys.io/ru/action/supported_devices) устройств.
 
-5. Ability to remove the device.
+## Полезные ссылки
 
-6. The ability to display routes in the web-interface (in development).
+### [Первый запуск](/firststart_rus.md)
 
-8. The ability to establish direct connections [Bind](/bind_eng.md) between ZigBee devices without the participation of a coordinator to manage end devices.
+### [Web-интерфейс](/web_rus.md)
 
-9. Ability to control hardware [LEDs (address or RGB)] (/faq_eng.md).
+### [Simple Bind](/simplebind_rus.md)
 
-10. The ability to control sound (in the presence of a soldered amplifier) (in development)
+### [Поддержка Lua-скриптов](/lua_rus.md)
 
-11. Ability to change PanId and channel number.
+### [Описание HTTP API команд](/http_api_rus.md)
 
-12. The ability to specify the name of the gateway on the network.
+### [Управление LED](/led_control_rus.md)
 
-13. The ability to switch the gateway to the AP mode when the hardware button is pressed for 2-5 seconds after power is supplied.
+### [Объекты](/objects_rus.md)
 
-14. The list of supported devices is constantly updated (information is in the converters.txt file in the archive with firmware)
+### [Таймеры](/timers_rus.md)
 
+### [Хранилище](/storage_rus.md)
 
+### [FAQ (часто задаваемые вопросы)](/faq_rus.md)
 
-# Hardware
-The device can be [assembled independently](https://modkam.ru/?p=1342), or purchased on the [Telegram](https://t.me/avenit)
+### [Примеры типовых сценариев](/samples_rus.md)
 
-![home](/img/Mi_Gateway_Shield12.jpg)
-
-
-
-# Device firmware
-[Permanent link to device firmware](https://github.com/slsys/Gateway/tree/master/rom)
-
-[History of firmware changes](/rom/history.md)
-
-For firmware, run the appropriate batch file from the archive.
-At the first start, an access point is created with a name of the form zgwABCD, without a password.
-After connecting to it, the settings page automatically opens (if it didn’t open, you can go to the address 192.168.1.1) and register the connection to the access point and to the MQTT server (but you can also specify it later), press reboot and the gateway will connect to the access point and will start sending messages to MQTT. In case of problems with access to the captive portal, it is recommended to disable GPRS on Android smartphones. Firmware update can be done through the Web interface of the application.
-
-Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Versions are distinguished by the ability to update via OTA.
-
-
-# Useful links:
-
-
-## [First run](/firststart_eng.md)
-
-## [Web interface](/web_eng.md)
-
-
-## [SimpleBind](/simplebind_eng.md)
-
-## [Touchlink](/touchlink_eng.md)
-
-## [Binding](/bind_eng.md)
-
-
-## [Support for Lua scripts](/lua_eng.md)
-
-## [HTTP API description](/http_api_eng.md)
-
-## [Map zigbee network](/map_eng.md)
-
-## [FAQ (Frequently Asked Questions)](/faq_eng.md)
-
-## [zigbee2mqtt message structure](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html) (most commands supported)
-
-## [SLS zigbee2mqtt message structure](/slscommand_eng.md)
-
-## [Supported devices](https://slsys.io/action/supported_devices.html)
-
-## [Fundraising to buy equipment to add support](/donate_eng.md)
-
-## [Custom dashboard](/ui_eng.md)
-
-# Integrations
-
-Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated with any local or cloud automation system. The structure of topics almost completely repeats [zigbee2mqtt](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html). For ease of use, many drivers or integration modules have been developed for many systems.
-
-
-## [Integration with Majordomo](/int_majordomo_eng.md)
-
-## [Integration with HomeAssistant](/int_has_eng.md) 
-
-## [Integration with Node-Red](/int_nodered_eng.md) (under development)
-
-## [Integration with IObroker](/int_iob_eng.md) (under development)
-
-## [Integration with Alice Yandex](/int_yandex_eng.md) (under development)
-
-## [Integration with Google Home](/int_google_eng.md) (under construction)
-
-## [Integration with HomeKit](/int_homekit_eng.md) (under development)
-
-## [Integration with Domoticz](/int_domoticz_eng.md) (under development)
-
-
-# Useful links
-[Official chat of the project](https://t.me/slsys)
-
-[News group and new firmware versions](https://t.me/slssys)
-
-[List of supported devices](https://slsys.io/action/supported_devices.html)
-
-[How to build a gateway yourself](https://modkam.ru/?p=1342)
-
-[Where to purchase](https://t.me/avenit)
-
-[Partner chat to discuss Zigbee devices](https://t.me/zigbeer)
-
-[Russian Wiki on zigbee.wiki portal](https://zigbee.wiki/)
+### [Возможноcти интеграции](/integration_rus.md)
