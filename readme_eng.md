@@ -1,4 +1,4 @@
-[Перейти на русскую версию сайта](/README.md)
+[Перейти на русскую версию сайта](/)
 
 Support the Project: https://boosty.to/slsys
 
