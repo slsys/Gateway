@@ -830,9 +830,11 @@ audio.getstatus() -- возвращает текущий статус
 
 ### Библиотека Yeelight
 
+[Примеры](/samples_rus.md#библиотека-yeelight)
+
 #### yeelight.send()
 
-Управляет устройством Yeelight. [Описание протокола](https://www.yeelight.com/download/Yeelight_Inter-Operation_Spec.pdf)
+Управляет устройством Yeelight. [Описание протокола](https://www.yeelight.com/download/Yeelight_Inter-Operation_Spec.pdf). 
 
 ```lua
 result = yeelight.send(id, method, param)

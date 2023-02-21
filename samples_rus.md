@@ -195,6 +195,46 @@ local pressure = zigbee.value(tostring(Event.ieeeAddr), "pressure")
 zigbee.setState(Event.ieeeAddr, "pressure_mm", pressure * 7.5, "FLOAT")
 ```
 
+## Библиотека Yeelight
+
+Управляет устройством Yeelight. [Описание протокола](https://www.yeelight.com/download/Yeelight_Inter-Operation_Spec.pdf)
+
+### Получить текущий статус
+
+```lua
+result = yeelight.send("192.168.0.100", "get_prop", '["power","not_exist","bright"]')
+```
+
+Результат
+
+```json
+{"id":18,"result":{"on","","100"}}
+```
+
+### Переключить
+
+```lua
+result = yeelight.send("192.168.0.100", "toggle", '[]')
+```
+
+Результат
+
+```json
+{"method":"props","params":{"power":"off"}}
+```
+
+### Установить яркость
+
+```lua
+result = yeelight.send("192.168.0.100", "set_bright", '[100,"smooth",500]')
+```
+
+Результат
+
+```json
+{"method":"props","params":{"active_bright":100,"bright":100}}
+```
+
 ## Библиотека OS
 
 ### Получение текущего часа, времени и секунд, например для планировщика в таймере
