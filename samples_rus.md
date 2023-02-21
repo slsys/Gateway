@@ -29,6 +29,8 @@ obj.set("there.is.no.spoon", true, true)
 obj.onChange("io.input0.value", "btn_sw1.lua")
 ```
 
+---
+
 ## События
 
 ### Разбор всех свойств событий
@@ -117,6 +119,8 @@ end
 zigbee.set("lamp_1", "state", value)
 ```
 
+---
+
 ## Zigbee
 
 ### Включение режим сопряжения для подключения новых устройств, через роутер
@@ -194,6 +198,8 @@ os.save()
 local pressure = zigbee.value(tostring(Event.ieeeAddr), "pressure")
 zigbee.setState(Event.ieeeAddr, "pressure_mm", pressure * 7.5, "FLOAT")
 ```
+
+---
 
 ## Библиотека Yeelight
 
@@ -840,3 +846,5 @@ local free=http.request2("http://"..net.localIP().."/api/storage/info")
 
 print("http://"..net.localIP().."/api/storage?path="..fnjs)
 ```
+
+_PS. Документ в разработке_
