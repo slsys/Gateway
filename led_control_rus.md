@@ -80,7 +80,7 @@ JSON объект:
 
 В ответ возвращается [текущий статус](/led_control_rus.md#получить-текущий-статус):
 
-## Управление адресными светодиодами
+## Управление светодиодами
 
 ### Шлюз SLS в корпусе Xiaomi
 
@@ -88,11 +88,11 @@ JSON объект:
 
 ![luaIntLedGPIOSettings](/img/luaIntLedGPIOSettings.png)
 
-### Шлюз SLS DIN MINI (индикаторный светодиод)
+### Шлюз SLS DIN MINI (адресный индикаторный светодиод)
 
 На странице настроек `Settings -> Hardware` необходимо установить: `Led Red (or addr): 21`, указать количество светодиодов `Number addressable leds: 1`
 
-### Светодиодное кольцо Modkam
+### Кольцо Modkam с адресными светодиодами
 
 ![Светодиодное кольцо Modkam](https://modkam.ru/wp-content/uploads/2019/11/Mi_Gateway_Shield02.jpg).
 
