@@ -1,4 +1,4 @@
-[Перейти на русскую версию сайта](/)
+[Перейти на русскую версию сайта](/Gateway)
 
 Support the Project: https://boosty.to/slsys
 
