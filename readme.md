@@ -45,9 +45,9 @@
 
 ### [Возможноcти интеграции](/integration_rus.md)
 
-### [Поддержка Lua-скриптов](/lua_rus.md)
+### [Поддержка скриптов LUA](/lua_rus.md)
 
-### [Описание HTTP API команд](/http_api_rus.md)
+### [Описание HTTP API](/http_api_rus.md)
 
 ### [Управление LED](/led_control_rus.md)
 
