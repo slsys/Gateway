@@ -41,7 +41,9 @@
 
 ### [Web-интерфейс](/web_rus.md)
 
-### [Simple Bind](/simplebind_rus.md)
+### [Simple Bind. Автоматизации](/simplebind_rus.md)
+
+### [Возможноcти интеграции](/integration_rus.md)
 
 ### [Поддержка Lua-скриптов](/lua_rus.md)
 
@@ -55,8 +57,6 @@
 
 ### [Хранилище](/storage_rus.md)
 
-### [FAQ (часто задаваемые вопросы)](/faq_rus.md)
-
 ### [Примеры типовых сценариев](/samples_rus.md)
 
-### [Возможноcти интеграции](/integration_rus.md)
+### [FAQ (часто задаваемые вопросы)](/faq_rus.md)
