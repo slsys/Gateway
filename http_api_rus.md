@@ -180,46 +180,11 @@ GET /api/scripts?action=evalFile&path=/test.lua
 GET /api/scripts?action=evalCode&plain=print("ok!")
 ```
 
-### Хранилище
+### [Хранилище](/storage_rus.md#http-api)
 
-Описание API команд для работы с хранилищем [здесь](/storage_rus.md#http-api)
-
-### Leds
-
-Описание API команд для работы с LED [здесь](/led_control.md#http-api)
+### [LEDs](/led_control.md#http-api)
 
 ### [Объекты](/objects_rus.md)
-
-Получить список объектов
-
-```http
-GET /api/obj
-```
-
-Установить значение `YYY` объекта `XXX`
-
-```http
-POST /api/obj?name=XXX&value=YYY
-```
-
-Удалить объект с устройства
-
-```http
-DELETE /api/obj?name=obj_name
-```
-
-Получить значение объекта `XXX`.
-
-```http
-GET /api/obj?name=XXX
-```
-
- Флаги возвращаются в поле `flags: flag_value`:
-
-- `flag_value = 0: ACK=0; MQTT=0`
-- `flag_value = 1: ACK=0; MQTT=1`
-- `flag_value = 2: ACK=1; MQTT=0`
-- `flag_value = 3: ACK=1; MQTT=1`
 
 ## Примеры
 
