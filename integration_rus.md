@@ -12,5 +12,5 @@
 
 ## [Интеграция с Majordomo](/int_majordomo_rus.md) (интеграция приостановлена)
 
-## [Интеграция с Domoticz](https://github.com/william-aqn/slsys-domoticz) (в разработке)  <sub> (для большинства устройств поддерживается режим [Discovery](https://www.home-assistant.io/integrations/discovery/)) </sub>
+## [Интеграция с Domoticz](https://github.com/william-aqn/slsys-domoticz) (в разработке)  <sub> (для большинства устройств поддерживается режим [Discovery](https://www.domoticz.com/wiki/Zigbee2MQTT#Alternative_1:_Use_Domoticz_MQTT_Autodiscover)) </sub>
 
