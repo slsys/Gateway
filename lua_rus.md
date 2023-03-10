@@ -171,6 +171,8 @@ scripts.run(script[, Param])
 - [gpio.](/lua_rus.md#Библиотека-GPIO) - управление GPIO
 - [audio.](/lua_rus.md#Библиотека-audio) - управление встроенным в шлюза звуком
 - [net.](/lua_rus.md#Библиотека-net) - получение IP адресов шлюза
+- [yeelight.](/lua_rus.md#Библиотека-yeelight) - управление устройствами Yeelight
+- [cloud.](/lua_rus.md#Библиотека-cloud) - работа с облаком SLS `cloud.slsys.io`
 
 [Примеры использования](/samples_rus.md).
 
@@ -761,6 +763,19 @@ result = yeelight.send(id, method, param)
 -- method - STR, команда
 -- param - STR, параметры команды
 -- result - JSON строка, согласно описания протокола
+```
+
+---
+
+### Библиотека Cloud
+
+#### cloud.isConnected()
+
+Возвращает статус подключения к облаку SLS `cloud.slsys.io`
+
+```lua
+result = cloud.isConnected()
+-- result - BOOL, true шлюз подключен к облаку SLS
 ```
 
 ---
