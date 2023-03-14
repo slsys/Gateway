@@ -1,33 +1,5 @@
 # История изменений
 
-## 2023.03.09d4
-
-- +Lua: Добавлена функция cloud.isConnected()
-- *Zigbee: Исправлено MQTT Discovery для color / color_temp
-- +Zigbee: Поддержка для #276 Tuya Avatto 3 gang switch module w/o N (_TZ3000_ypgri8yz / TS0013)
-- +Zigbee: Поддержка для #277 Tuya Illuminance sensor (_TZE200_khx7nnka / TS0601)
-- +Zigbee: Поддержка для #278 Tuya RGB+CCT led controller (_TZ3210_klv2wul0 / TS0505B)
-
-## 2023.03.03d3
-
-- +Telegram: Добавлена возможность получения сообщений с каналов
-- +Zigbee: Новая модель для #201 TuYa Smart knob (ERS-10TZBVK-AA) (_TZ3000_qja6nq5z / TS004F)
-- +Zigbee: Поддержка для #274 Tuya Wall Thermostat (_TZE200_u9bfwha0 / TS0601)
-- +Zigbee: Поддержка для #275 DIY Temperature & humidity sensor (EfektaLab / EFEKTA_TH, EfektaLab / EFEKTA_TH_LR)
-
-## 2023.02.24d2
-
-- +Добавлена проверка на ввод некорректных пинов
-
-## 2023.02.20d2
-
-- +Lua: Добавлено управление Yeelight устройствами: yeelight.send()
-- *Zigbee: Доработано MQTT Discovery для climate: preset & system_mode
-
-## 2023.02.15d10
-
-- +Lua: Добавлена функция определения оставшегося времени для таймера scripts.getTimer()
-
 ## 2023.02.15d7
 
 - +Led: Добавлена индикация белым светом удержания сервисной кнопки в момент старта шлюза
