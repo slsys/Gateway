@@ -121,6 +121,125 @@ zigbee.set("lamp_1", "state", value)
 
 ---
 
+## Управление светом Zigbee
+
+Управление свойствами осветительных приборов: получить состояние, включить, выключить, изменить яркость/цвет/цветовую температуру, на примере лампы `TS0505B`
+
+### Получить яркость, цвет, температуру и статус
+
+- статус вкл/выкл - state = ON/OFF
+- яркость - brightness = 0..255
+- режим управления цветом - color_mode = xy (цвет) | color_temp (температура)
+- цветовая температура - color_temp = 153..500 по шкале Mired
+- цвет - color = значения XYHS в объекте JSON
+- скорость нарастания значения при изменении - transition = 1..255 сек
+
+```lua
+local device = "0xA4C138FD68EAA226"
+brightness = zigbee.value(device, "brightness")
+color_mode = zigbee.value(device, "color_mode")
+color = zigbee.value(device, "color")
+color_temp = zigbee.value(device, "color_temp")
+state = zigbee.value(device, "state")
+transition = zigbee.value(device, "transition")
+
+print("brightness\t", brightness)
+print("color_mode\t", color_mode)
+print("color\t\t", color)
+print("color_temp\t", color_temp)
+print("state\t\t", state)
+print("transition\t", transition)
+```
+
+Пример вывода
+
+```
+brightness		1
+color_mode		color_temp
+color			{"x":0.696955,"y":0.299588,"hue":328.8189,"saturation":0.716535}
+color_temp		295
+state			ON
+transition		0
+```
+
+### Включить, выключить, переключить
+
+Для управления статусом отправить в состояние `state`
+- `ON` - включить
+- `OFF` - выключить
+- `TOGGLE` - переключить
+
+При этом устройство включится со значениями яркости, цвета и температуры, установленными ранее.
+
+Также устройство включится, если отправить любое значение яркости > 0 и выключится если отправить яркость = 0.
+
+```lua
+local device = "0xA4C138FD68EAA226"
+zigbee.set(device, "state", "ON") -- включить 
+zigbee.set(device, "state", "OFF") -- выключить 
+zigbee.set(device, "state", "TOGGLE") -- переключить
+```
+
+### Изменить яркость
+
+```lua
+local device = "0xA4C138FD68EAA226"
+zigbee.set(device, "brightness", 25) -- установить яркость на 10%. Если лампа выключена - включится 
+zigbee.set(device, "brightness", 0) -- выключить 
+```
+
+### Изменить режим управления цветом
+
+Отправить в состояние `color_mode`
+- `color_temp` - цветовая температура
+- `xy` - цвет 
+
+```lua
+local device = "0xA4C138FD68EAA226"
+zigbee.set(device, "color_mode", "color_temp") -- установить режим управления цветом - по цветовой температуре
+```
+
+```lua
+local device = "0xA4C138FD68EAA226"
+zigbee.set(device, "color_mode", "xy") -- установить режим управления цветом - по цвету
+```
+
+### Изменить цветовую температуру
+
+Управление цветовой температурой осуществляется по шкале Mired. Для конвертации можно воспользоваться формулой:
+
+`color_temp_mired = 1000000 / color_temp_kelvin`
+
+```lua
+local device = "0xA4C138FD68EAA226"
+local color_temp = 1000000/4700 
+zigbee.set(device, "color_temp", color_temp) -- установить цаветовую температуру 4700 Кельвин
+```
+
+### Изменить цвет
+
+Для изменения цвета можно отправлять значения как в XYHS (XY), так и в RGB
+
+```lua
+local device = "0xA4C138FD68EAA226"
+local color_xyhs = '{"x":0.697,"y":0.300,"hue":328.82,"saturation":0.717}'
+zigbee.set(device, "color", color_xyhs)
+```
+
+```lua
+local device = "0xA4C138FD68EAA226"
+local color_xy = '{"x":0.697,"y":0.3}'
+zigbee.set(device, "color", color_xy)
+```
+
+```lua
+local device = "0xA4C138FD68EAA226"
+local color_rgb = '{"r":200,"g":0,"b":0}'
+zigbee.set(device, "color", color_rgb)
+```
+
+---
+
 ## Zigbee
 
 ### Включение режим сопряжения для подключения новых устройств, через роутер
