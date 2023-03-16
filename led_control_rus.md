@@ -96,7 +96,7 @@ JSON объект:
 
 ![Светодиодное кольцо Modkam](https://modkam.ru/wp-content/uploads/2019/11/Mi_Gateway_Shield02.jpg).
 
-На странице настроек `Settings -> Hardware` необходимо установить: `Led Red (or addr): 21`, указать количество светодиодов `Number addressable leds: 18`
+На странице настроек `Settings -> Hardware` необходимо установить: `Led Red (or addr): 27`, указать количество светодиодов `Number addressable leds: 18`
 
 ## Примеры
 
