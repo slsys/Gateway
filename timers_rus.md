@@ -100,7 +100,7 @@ scripts.setTimer(script, 0)
 
 ### [LUA](/lua_rus.md)
 
-#### scripts.getTimer()
+#### scripts.getTimer() (DRAFT)
 
 Возвращает оставшееся время таймера для скрипта в секундах.
 
