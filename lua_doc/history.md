@@ -1,5 +1,38 @@
 # История изменений
 
+## 2023.04.23d1
+
+- +DALI: Доработана отправка обработка обратной связи в MQTT
+- +HDL: Добавлена поддержка виртуального реле/диммера на 16 каналов
+- +HDL: Добавлена поддержка DLP кондиционеров
+- *KNX: Исправлена конвертация отрицательного значения для DPT_Value_Temp 
+- *MQTT: Добавлено дефолтное значение топика для Discovery если нет конфига
+- +OS: Добавлена HTTP API команда для перезагрузки: /api/reboot
+- +OS: Добавлена проверка на ввод некорректных пинов
+- +Lua: Добавлена функция определения оставшегося времени для таймера scripts.getTimer()
+- +Lua: Добавлено управление Yeelight устройствами: yeelight.send()
+- +Lua: Добавлена функция cloud.isConnected()
+- *Audio: Переработана инициализация, увеличен приоритет потока воспроизведения
+- *Audio: Добавлена возможность управлять включением усилителя: audio.amp()
+- +Telegram: Добавлена возможность получения сообщений с каналов
+- +Telegram: Добавлена команда сохранения, для избегания повтора входящего сообщения при перезагрузке: telegram.save()
+- *Telegram: Исправлена ошибка при опросе наличия новых сообщений
+- *Zigbee: Исправлена работа IAS кластера
+- *Zigbee: Доработано MQTT Discovery для climate: preset & system_mode
+- *Zigbee: Исправлено MQTT Discovery для color / color_temp
+- *Zigbee: Добавлено состояние interval для #238 DIY PTVO Led Inform
+- *Zigbee: Исправлен коэффициент для power в #90 Aqara power plug ZigBee EU (SP-EUC01)
+- *Zigbee: Исправлена возможная некорректная температура в #44 Tuya Moes BHT series Thermostat
+- +Zigbee: Новая модель для #201 TuYa Smart knob (ERS-10TZBVK-AA) (_TZ3000_qja6nq5z / TS004F)
+- +Zigbee: Поддержка для #274 Tuya Wall Thermostat (_TZE200_u9bfwha0 / TS0601)
+- +Zigbee: Поддержка для #275 DIY Temperature & humidity sensor (EfektaLab / EFEKTA_TH, EfektaLab / EFEKTA_TH_LR)
+- +Zigbee: Поддержка для #276 Tuya Avatto 3 gang switch module w/o N (_TZ3000_ypgri8yz / TS0013)
+- +Zigbee: Поддержка для #277 Tuya Illuminance sensor (_TZE200_khx7nnka / TS0601)
+- +Zigbee: Поддержка для #278 Tuya RGB+CCT led controller (_TZ3210_klv2wul0 / TS0505B)
+- +Zigbee: Поддержка для #280 Xiaomi Aqara smart smoke detector (JY-GZ-01AQ) (LUMI / lumi.sensor_smoke.acn03 )
+- +Zigbee: Поддержка для #281 Xiaomi Aqara knob H1 (ZNXNKG02LM) (LUMI / lumi.remote.rkba01)
+- +Zigbee: Поддержка для #282 Tuya Clamp meter (_TZE204_cjbofhxw / TS0601)
+
 ## 2023.02.15d7
 
 - +Led: Добавлена индикация белым светом удержания сервисной кнопки в момент старта шлюза
