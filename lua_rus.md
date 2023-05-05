@@ -342,7 +342,7 @@ zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
 -- epID - INT, номер эндпоинта
 -- clusterID - INT, номер кластера
 -- AttrId - INT, номер атрибута
--- dataType - STR, тип данных
+-- dataType - INT, тип данных. Например UINT8 - это 0x20
 -- value - значение атрибута
 ```
 
@@ -353,13 +353,13 @@ zigbee.writeAttr(device, epId, clusterId, AttrId, dataType, value[, manufId])
 ```lua
 zigbee.configReport(device, epId, clusterId, AttrId, dataType, minRepInt, maxRepInt, repChange)
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
--- epID - NUM, номер эндпоинта
--- clusterID - NUM, номер кластера
--- AttrId - NUM, номер атрибута
--- dataType - STR, тип данных
--- minRepInt - INT,
--- maxRepInt - INT,
--- repChange - BOOL,
+-- epID - INT, номер эндпоинта
+-- clusterID - INT, номер кластера. Например GEN_POWER_CFG - это 0x0001
+-- AttrId - INT, номер атрибута. Например BatteryVoltage - это 0x0020
+-- dataType - INT, тип данных. Например UINT8 - это 0x20
+-- minRepInt - INT, минимальный интервал отправки в сек
+-- maxRepInt - INT, максимальный интервал отправки в сек
+-- repChange - INT, минимальное значение, на которое должен измениться атрибут, для репортинга
 ```
 
 ---
