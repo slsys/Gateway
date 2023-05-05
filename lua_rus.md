@@ -362,6 +362,18 @@ zigbee.configReport(device, epId, clusterId, AttrId, dataType, minRepInt, maxRep
 -- repChange - INT, минимальное значение, на которое должен измениться атрибут, для репортинга
 ```
 
+Например:
+
+```lua 
+zigbee.configReport("0x90FD9FFFFEF7E26D", 1, 0x0001, 0x0021, 0x20, 1800, 3600, 1)
+-- 0x90FD9FFFFEF7E26D - ieeeAddr устройства 
+-- 1 - первый эндпоинт
+-- 0x0001 - кластер GEN_POWER_CFG
+-- 0x0021 - атрибут BatteryPercentageRemaining
+-- 0x20 - тип данных UINT8
+-- 1800, 3600, 1 - репортить от 30 мин до 1 часа при изменении атрибута на 1
+```
+
 ---
 
 ### Библиотека MQTT
