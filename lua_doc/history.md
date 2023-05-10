@@ -1,5 +1,33 @@
 # История изменений
 
+## 2023.05.09d2
+
+- *Zigbee: Исправлено MQTT Discovery для power_on_behavior
+- *Zigbee: Конвертер #47 удален, используйте #46 Heiman Smoke detector
+- *Zigbee: Добавлено состояние voltage для #280 Xiaomi Aqara smart smoke detector (JY-GZ-01AQ)
+- *Zigbee: Исправлено получение данных UART в #228 DIY PTVO Universal switch (PTVO) (ptvo.info / ptvo.switch)
+- *Zigbee: Переведен на новую систему конвертеров #46 Heiman Smoke sensor (GS / SSHM-I1)
+- *Zigbee: Переведен на новую систему конвертеров #193 Heiman Temperature & humidity sensor (HS1HT-N) (HEIMAN / HT-N)
+- *Zigbee: Переведен на новую систему конвертеров #197 Heiman Contact sensor (HS3DS) (HEIMAN / DoorSensor-N-3.0)
+- *Zigbee: Переведен на новую систему конвертеров #285 Heiman Gas sensor (HS3CG) (HEIMAN / GASSensor-N-3.0)
+- *Zigbee: Переведен на новую систему конвертеров #286 Heiman Smart siren (SRHMP-I1) (GS / SRHMP-I1)
+- *Zigbee: Переведен на новую систему конвертеров #287 Heiman Water leakage sensor (HS1WS-N) (HEIMAN / WaterSensor-N-3.0)
+- +Zigbee: Новая модель для #15 Tuya Zigbee Smart Socket EU Plug 16A Adapter (_TZ3000_gznh2xla / TS011F)
+- +Zigbee: Новая модель для #153 Tuya MOES TRV thermostat (HY369RT) (_TZE200_cpmgn2cf / TS0601)
+- +Zigbee: Новая модель для #179 Tuya RGB+CCT light bulb (_TZ3210_r5afgmkl / TS0505B)
+- +Zigbee: Новая модель для #193 Heiman Temperature & humidity sensor (HS1HT) (HEIMAN / TH-EM)
+- +Zigbee: Новая модель для #197 Heiman Contact sensor (HS1DS) (HEIMAN / DoorSensor-EM)
+- +Zigbee: Новая модель для #225 Tuya Avatto 1CH dimmer module with N (_TZ3210_k1msuvg6 / TS110E)
+- +Zigbee: Новая модель для #285 Heiman Gas sensor (HS1CG-E) (HEIMAN / GASSensor-EM)
+- +Zigbee: Новая модель для #285 Heiman Gas sensor (SGPHM-I1) (GS / SGPHM-I1)
+- +Zigbee: Новая модель для #285 Heiman Gas sensor (SGMHM-I1) (GS / SGMHM-I1)
+- +Zigbee: Новая модель для #286 Heiman Smart siren (HS2WD-E) (HEIMAN / WarningDevice)
+- +Zigbee: Новая модель для #286 Heiman Smart siren (HS2WD-E) (HEIMAN / WarningDevice-EF-3.0)
+- +Zigbee: Новая модель для #287 Heiman Water Leakage sensor (GS / SWHM-I1)
+- +Zigbee: Поддержка для #283 Tuya Avatto 1 gang switch module with N (_TZ3000_tqlv4ug4 / TS0001)
+- +Zigbee: Поддержка для #284 Tuya Avatto 2CH dimmer module with N (_TZ3210_wdexaypg / TS110E)
+- +Zigbee: Поддержка для #288 Sonoff Temperature and humidity sensor with screen (SNZB-02D) (SONOFF / SNZB-02D)
+
 ## 2023.04.23d1
 
 - +DALI: Доработана отправка обработка обратной связи в MQTT
