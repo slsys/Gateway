@@ -406,7 +406,7 @@ local minlightlevel = 300 -- зададим минимальный уровен�
 
 if (state) then telegram.send("Датчик движения ".. Event.FriendlyName  .." обнаружил активность") 
   
-if (lightlevel<minlightlevel) then 
+if (lightlevel < minlightlevel) then 
   zigbee.set("0x00124B001F7CA144", "state_l2", "ON")
   telegram.send("Свет в комнате ".. Event.FriendlyName  .." включили") 
 else
@@ -523,7 +523,7 @@ end
 
 ```lua
 if (Event.State.Value ~= Event.State.OldValue) then
-  if (Event.State.Value == 'true') then
+  if (Event.State.Value) then
     telegram.send("Дверь закрыта") 
   else
     telegram.send("Дверь открыта")
@@ -559,7 +559,7 @@ local gmt = 3
 local time = os.time()  
 local hour = (math.modf(time / 3600) + gmt) % 24  
 if hour >= 22 or hour < 6 then  
-  if Event.State.Value == "true" then  
+  if Event.State.Value then  
     gpio.pwm(0, 255)  
     gpio.pwm(1, 255)  
     gpio.pwm(2, 255)  
@@ -578,7 +578,7 @@ local gmt = 3
 local time = os.time()
 local hour = (math.modf(time / 3600) + gmt) % 24
 if hour >= 22 or hour <6 then
-  if Event.State.Value == "true" then
+  if Event.State.Value then
     mqtt.pub('ZigBeeSls/led', '{"mode":"manual","hex":"#FF0000"}')
   else
     mqtt.pub('ZigBeeSls/led', '{"mode": "off"}')
