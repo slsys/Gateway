@@ -1,4 +1,7 @@
 # Шлюз ModBus
+
+**Функционал поддерживается только для [Pro](/sls_pro_rus.md) версии.**
+
 Поддержка протоколов:
 * Modbus TCP Slave (с версии 2021.05.26d6 регистры хранения (holdings))
 * Modbus TCP Master (в разработке)
@@ -7,20 +10,24 @@
 * Modbus RTUoverTCP Master (в разработке)
 * Modbus RTUoverTCP Slave (в разработке)
 
-# Как работает
+## Как работает
 Шлюз обеспечивает связь регистра Modbus с объектом в шлюзе, что позволяет обеспечить двухстороннюю передачу данных.
 
-# TCP Slave
+## Modbus Master 
+Запускается через команду: *mb.startMaster()*
+
+## TCP Slave
 Запускается через команду: *mb.startTCPSlave()*.
 Используется стандартный TCP порт - 502.
 
-# RTU Slave
+## RTU Slave
 Запускается через команду: *mb.startRTUSlave(SlaveId)*, где SlaveId - идентификатор в сети Modbus RTU.
 Настройка параметров Serial интерфейса произодится в соответстующем разделе.
 
-# Примеры
+## Примеры
 Добавить в init.lua:
 ```lua
+require("mb")
 mb.startTCPSlave()
 
 mb.addReg(1, 'room_temperature', 100)
@@ -35,6 +42,7 @@ room_temperature - объект
 
 Конвертация значения регистра 0/1 в OFF/ON для управления Zigbee-реле с обратной связью:
 ```lua
+require("mb")
 --obj.onChange("relay1.state", "relay1.lua")
 if Event.State ~= nil then -- on state change
   --local val = 0 
