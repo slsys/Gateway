@@ -1,5 +1,25 @@
 # История изменений
 
+## 2023.07.23d1
+
+- +Modbus: Базовая реализация шлюза Modbus TCP/RTU Master
+- *Modbus: Улучшена стабильность работы Modbus RTU Slave
+- +OpenTherm: Добавлена функция сброса ошибки из скриптов: thermo.resetErrors()
+- +API: Добавлена HTTP API: /api/cloud
+- +HVAC: Поддержка кондиционеров Haier
+- *Cloud: Добавлена передача данных по Zigbee устройствам
+- *OS: Исравлена ошибка (Failed to fetch) возникающая в веб-браузере 
+- +Zigbee: Периодическая синхронизация времени для Tuya устройств
+- +Zigbee: Поддержка стандартного представления датчиков для #228 DIY PTVO Universal switch (PTVO) (ptvo.info / ptvo.switch)
+- *Zigbee: Исправлена работа #224 Tuya Temperature & humidity sensor with clock (_TZE200_locansqn / TS0601 )
+- *Zigbee: Исправлена работа #282 Tuya Clamp meter (_TZE204_cjbofhxw / TS0601)
+- +Zigbee: Новая модель для #284 Tuya Avatto 2CH dimmer module with N (_TZ3210_3mpwqzuu / TS110E)
+- +Zigbee: Поддержка для #289 Tuya LELLKI Power cord 4 sockets EU (with power monitoring) (WP30) (_TZ3000_c7nc9w3c / TS011F)
+- +Zigbee: Поддержка для #290 Tuya LoraTap Garage door opener with wireless sensor (GDC311ZBQ1) (_TZE200_wfxuhoea / TS0601)
+- +Zigbee: Поддержка для #291 DIY Efekta Temperature sensor (EfektaLab / EFEKTA_T8, EFEKTA_T8_LR)
+- +Zigbee: Поддержка для #292 DIY Efekta Plant Wattering Sensor with e-ink display (EfektaLab / EFEKTA_eFlora)
+- +Zigbee: Поддержка для #293 Tuya GiEX Water irrigation valve (QT06) (_TZE200_a7sghmms / TS0601)
+
 ## 2023.05.09d2
 
 - *Zigbee: Исправлено MQTT Discovery для power_on_behavior
