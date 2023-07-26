@@ -104,7 +104,7 @@ result = function(var1, var2[, var3])
 ```lua
 '#code', где code - тело скрипта
 --Например:
-scripts.setTimer('#zigbee.set("0x0123456789012345", "state", "ON")',10, "ку")
+scripts.setTimer('#zigbee.set("0x0123456789012345", "state", "ON")', 10, "ку")
 ```
 
 
