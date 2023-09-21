@@ -296,10 +296,10 @@ if Event.State.Value == "single" then
 Пример инициализации с сохранением данных
 
 ```lua
-local res= zigbee.setState("0x00124B001F7CA144", "prop_float", "FLOAT") 
-local res= zigbee.setState("0x00124B001F7CA144", "prop_bool", "BOOL") 
-local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "INT") 
-local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "STR") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_float", floatVal, "FLOAT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_bool", boolVal, "BOOL") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", intVal, "INT") 
+local res= zigbee.setState("0x00124B001F7CA144", "prop_int", "strVal", "STR") 
 os.save()
 ```
 
