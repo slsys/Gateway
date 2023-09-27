@@ -31,12 +31,12 @@
 init.lua:
 ```lua 
 --определяем режим работы портов
-gpio.addInput(32, gpio.INPUT, 0, "input1")                  -- Вход 1, gpio 32  (датчик заполненного сэптика)
-gpio.addInput(25, gpio.INPUT, 0, "input2")                  -- Вход 2, gpio 25  (геркон калитки)
-gpio.addInput(26, gpio.INPUT, 2, "input3")                  -- Вход 3, gpio 26  
-gpio.addInput(27, gpio.INPUT, 0, "input4", 100, 200, 300)   -- Вход 4, gpio 27   (геркон ворот)
-gpio.addInput(12, gpio.INPUT, 2, "input5")                  -- Вход 5, gpio 12
-gpio.addInput(13, gpio.INPUT, 2, "input6")                  -- Вход 6, gpio 13
+gpio.addInput(32, gpio.INPUT_PULLUP, 0, "input1")                  -- Вход 1, gpio 32  (датчик заполненного сэптика)
+gpio.addInput(25, gpio.INPUT_PULLUP, 0, "input2")                  -- Вход 2, gpio 25  (геркон калитки)
+gpio.addInput(26, gpio.INPUT_PULLUP, 2, "input3")                  -- Вход 3, gpio 26  
+gpio.addInput(27, gpio.INPUT_PULLUP, 0, "input4", 100, 200, 300)   -- Вход 4, gpio 27   (геркон ворот)
+gpio.addInput(12, gpio.INPUT_PULLUP, 2, "input5")                  -- Вход 5, gpio 12
+gpio.addInput(13, gpio.INPUT_PULLUP, 2, "input6")                  -- Вход 6, gpio 13
 ----------
 obj.setOpt('septik','STR',true) -- для удобства работы создадим объект septik и настроим отправку состояния в mqtt (true)
 ----------
@@ -101,7 +101,7 @@ gpio.write(27, 0)
 
 Включить режим входа MultiSwitch на 1 канале:
 ```lua
-gpio.addInput(32, gpio.INPUT, 2, "input1")
+gpio.addInput(32, gpio.INPUT_PULLUP, 2, "input1")
 ```
 
 Включить режим входа MultiSwitch на сервисной кнопке и изменить тайминги debounce, send и hold:
