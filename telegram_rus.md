@@ -102,10 +102,20 @@ telegram.send('hello world')
 
 ## Обработка входящих сообщений
 
+### События
+
+В скрипте обработки доступны слкдующие события:
+
+- `Event.Telegram.ChatId` - ID пользователя (chatid)
+- `Event.Telegram.Username` - логин
+- `Event.Telegram.Name` - Имя пользователя
+- `Event.Telegram.MessageId` - ID сообщения 
+- `Event.Telegram.Text` - текст сообщения
+
 Для обработки входящих сообщений необходимо создать файл `tlg.lua`. Пример файла:
 
 ```lua
-if ( Event.Telegram.Text=="Info") then dofile("/int/info.lua") end   -- при получениие сообщения, содержащего "Info" запускать сценарий info.lua
+if (Event.Telegram.Text=="Info") then dofile("/int/info.lua") end   -- при получениие сообщения, содержащего "Info" запускать сценарий info.lua
 ```
 
 Теперь при получении сообщения `Info` в просматриваемом чате будет запускаться скрипт /int/info.lua, в который можно поместить например отправку информации о шлюзе:
