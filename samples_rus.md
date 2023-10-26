@@ -23,7 +23,7 @@ local sunset_hour, sunset_min = os.sunset()
 local sunrise_hour, sunrise_min = os.sunrise()
 telegram.send("sunrise " .. sunset_hour .. ":" .. sunset_min)
 -- Инициализация объектов для обмена между скриптами --
-obj.setOpt("there.is.no.spoon", "BOOL")
+obj.setType("there.is.no.spoon", "BOOL")
 obj.set("there.is.no.spoon", true, true)
 -- Привязка скрипта btn_sw1.lua к событию нажатия аппаратной кнопки шлюза --
 obj.onChange("io.input0.value", "btn_sw1.lua")
@@ -830,8 +830,10 @@ if (Event.State.Value ~= Event.State.OldValue) then
   myevent = Event.ieeeAddr .. "." .. Event.State.Name
   remotedev = ar[search_value(ar, myevent)][2]
   remotetype =ar[search_value(ar, myevent)][3] 
-  obj.setOpt(remotedev .. "_cnt", "INT", true)
-  obj.setOpt(remotedev .. "_timer", "BOOL", true)
+  obj.setType(remotedev .. "_cnt", "INT")
+  obj.setType(remotedev .. "_timer", "BOOL")
+  obj.setShare(remotedev .. "_cnt", true)
+  obj.setShare(remotedev .. "_timer", true)
   timer=obj.get(remotedev .. "_timer")
   obj.set(remotedev .."_cnt", obj.get(remotedev .. "_cnt") + 1)  
   --проверяем, если скрипт был запущен давно и не сбросился
@@ -896,7 +898,8 @@ local parname = p[2]
 local state = zigbee.value(ieee, parname)
 local timer = obj.get(ieee .. "_" .. parname .. "_timer") 
 local  curr, prev = obj.getTime(ieee .. "_" .. parname .. "_timer")
-obj.setOpt(ieee .. "_" .. parname .. "_timer", "BOOL", true)
+obj.setType(ieee .. "_" .. parname .. "_timer", "BOOL")
+obj.setShare(ieee .. "_" .. parname .. "_timer", true)
 --сброс таймера, если по какойто причине таймер просрочен
 if (state == "ON" and timer == true and os.time() - curr > waittime + 10) then 
   obj.set(ieee .. "_" .. parname .. "_timer", false) 
