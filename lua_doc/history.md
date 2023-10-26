@@ -1,5 +1,54 @@
 # История изменений
 
+## 2023.10.25d1
+
+- +OS: Добавлена базовая поддержка ИБП для SLS Hub
+- *OS: Переработан протокол синхронизации времени
+- +OS: Добавлена поддержка апаратного сторожевого RTC таймера для SLS Hub
+- *OS: Исправлено отображение времени аптайма больше 49 дней
+- *OS: Улучшено автоматическое переключение WiFi/Ethernet при переподключении сетевого кабеля
+- *Lua: Обновлен до версии 5.4.6
+- *Lua: Ручное обновление NTP теперь работает, даже если автоматическое выключено
+- +Lua: Добавлена возможность указать необязательный адрес сервера NTP: os.ntp([server])
+- *Lua: Функция obj.setOpt() - теперь устаревшая, будет удалена в будущих версиях, заменена на obj.setType(name, type) и obj.setShare(name, mqtt) - управляет MQTT Notify
+- *Obj: Исправлена ошибка сброса флага M при установки типа значения
+- +MQTT: Добавлена возможность получать и задавать системный префикс: mqtt.prefix([topic])
+- *MQTT: При переподключении к брокеру, восстанавливаются кастомные подписки
+- *MQTT: Исправлено HA MQTT Discovery для термостатов
+- *Zigbee: Улучшен процесс интервью для конечных устройств Tuya 
+- *Zigbee: Исправлено отображение калибровки для #153 Tuya MOES TRV thermostat (HY369RT)
+- *Zigbee: Добавлено чтение настроек и конвертация значений корректировок для #301 DIY Air sensor (DIYRuZ / DIYRuZ_AirSense)
+- *Zigbee: Переведен на новую систему конвертеров #296 Philips Hue white A60 bulb E27/B22 (9290011370) (Plilips / LWB006, LWB014)
+- *Zigbee: Переведен на новую систему конвертеров #299 OSRAM Smart plug (AB3257001NJ) (Osram / Plug 01)
+- *Zigbee: Переведен на новую систему конвертеров #300 OSRAM LIGHTIFY LED Classic A60 clear (AC03641) (Osram / Classic A60 W Clear - LIGHTIFY)
+- *Zigbee: Переведен на новую систему конвертеров #301 DIY Air sensor (DIYRuZ / DIYRuZ_AirSense)
+- +Zigbee: Новая модель для #53 Tuya 4Ch relay (_TZ3000_u3oupgdy / TS0004)
+- +Zigbee: Новая модель для #61 Tuya Avatto 2 gang switch module with N (_TZ3000_zmy4lslw / TS0002)
+- +Zigbee: Новая модель для #53 Tuya 4Ch relay (_TZ3000_wkr3jqmr / TS0004)
+- +Zigbee: Новая модель для #211 Tuya Temperature & humidity sensor (IH-K009) (_TZ3000_0s1izerx / TS0201)
+- +Zigbee: Новая модель для #66 Tuya Smart Socket EU Plug 16A Adapter (BW SHP-15) (_TZ3000_okaz9tjs / TS011F)
+- +Zigbee: Новая модель для #285 Heiman Gas sensor (HS1CG-E, HS3CG, SGPHM-I1, SGMHM-I1) (HEIMAN / GASSensor-EF-3.0)
+- +Zigbee: Поддержка для #294 DIY Zigbee USB power control (@Novgorod73 / USBswitch)
+- +Zigbee: Поддержка для #295 Philips Hue white E14 (9290020399) (Plilips / LWE002)
+- +Zigbee: Поддержка для #297 Tuya Lellki Multiprise with 4 AC outlets and 2 USB super charging ports (16A) (WP33) (_TZ3000_air9m6af / TS011F)
+- +Zigbee: Поддержка для #298 OSRAM DALI dimmer for DALI-based luminaires (only one device) (4062172044776_1) (Osram Sylvania / Zigbee 3.0 DALI CONV LI)
+- +Zigbee: Поддержка для #302 Heiman Smart remote controller (HM1RC-2-E) (HEIMAN / RC-EF-3.0)
+- +Zigbee: Поддержка для #303 Tuya Water leakage sensor (_TZ3000_k4ej3ww2 / TS0207)
+- +Zigbee: Поддержка для #304 Tuya Avatto Wireless thermostat (ZWT198) (_TZE200_viy9ihs7 / TS0601)
+- +Zigbee: Поддержка для #305 Tuya Water leakage sensor (YXZBW-1) (_TZ3000_js34cuma / TS0207)
+- +Zigbee: Поддержка для #306 Tuya Din rail switch with power monitoring and threshold settings (SMKG-1KNL-EU-Z) (_TZ3000_qystbcjg / TS011F)
+- +Zigbee: Поддержка для #307 DIY Xiaomi Temperature & humidity sensor with display (LYWSD03MMC) (Xiaomi / LYWSD03MMC)
+- +Zigbee: Поддержка для #308 Tuya LoraTap Wireless switch with 6 buttons (SS9600ZB) (_TZ3000_iszegwpd / TS0046)
+- +Zigbee: Поддержка для #309 Gledopto DIN Rail triac AC dimmer (GL-SD-003P) (GLEDOPTO / GL-SD-003P)
+- +Zigbee: Поддержка для #310 Tuya Wireless switch with 6 buttons (SS9600ZB) (_TZE200_2m38mh6k / TS0601)
+- +Zigbee: Поддержка для #311 Heiman Temperature & humidity sensor with display (HS3HT) (HEIMAN / HS3HT-EFA-3.0)
+- +Zigbee: Поддержка для #312 Tuya EARU Din rail switch with power monitoring and threshold settings (EAKCB-T-M-Z) (_TZ3000_qystbcjg / TS011F)
+- +Zigbee: Поддержка для #313 Tuya BSEED Wall Thermostat (_TZE204_5toc8efa / TS0601)
+- +Zigbee: Поддержка для #314 Tuya iAlarm Infrared mtion sensor (SP02-ZB001) (_TZE200_mgxy2d9f / TS0601)
+- +Zigbee: Поддержка для #315 Tuya Fingerbot plus (_TZ3210_dse8ogfy / TS0001, _TZ3210_j4pdtz9v / TS0001)
+- +Zigbee: Поддержка для #316 DIY CO2 monitor with IPS display (efektalab / EFEKTA_iAQ2)
+- +Zigbee: Поддержка для #317 DIY CO2 monitor with IPS display (efektalab / EFEKTA_iAQ3)
+
 ## 2023.07.23d1
 
 - +Modbus: Базовая реализация шлюза Modbus TCP/RTU Master
