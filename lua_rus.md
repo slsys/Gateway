@@ -387,6 +387,20 @@ zigbee.configReport("0x90FD9FFFFEF7E26D", 1, 0x0001, 0x0021, 0x20, 1800, 3600, 1
 
 ### Библиотека MQTT
 
+#### mqtt.prefix()
+
+Получает или задает системный префикс, настроенный в меню `Settigs` -> `Link` -> `MQTT Setup`, поле `System prefix topic`
+
+```lua
+mqtt.prefix([topic])
+-- topic - STR, System prefix topic
+--
+-- Получить префикс
+local mqtt_prifix = mqtt.prefix()
+-- Задать префикс
+mqtt.prefix("newTopic")
+```
+
 #### mqtt.pub()
 
 Публикует на MQTT сервер в топик *topic* значение *payload*.
@@ -577,7 +591,19 @@ print('Uptime: ' .. os.getUptime())
 
 #### os.ntp()
 
-Возвращает статус подключение к серверу времени (NTP): `true` - синхронизация с сервером NTP выполнена успешно. Вызывается без параметров.
+Возвращает статус подключения к серверу времени (NTP): `true` - синхронизация с сервером NTP выполнена успешно. 
+
+```lua
+os.ntp([server])
+-- server - STR, адрес сервера NTP
+```
+
+Пример лога
+
+```log
+[11:01:50.374] [Time] Get time from NTP: pool.ntp.org, use TimeZone: UTC+5:00
+[11:01:52.422] [Time] NTP Updated! UnixTime: 1698300112, time: 26.10.2023 11:01:52, ms: 45
+```
 
 #### os.freeMem()
 
