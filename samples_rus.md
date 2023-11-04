@@ -310,7 +310,13 @@ os.save()
 ```lua
 -- kPa2mmhg.lua
 local pressure = zigbee.value(tostring(Event.ieeeAddr), "pressure")
-zigbee.setState(Event.ieeeAddr, "pressure_mm", pressure * 7.5, "FLOAT")
+zigbee.setState(Event.ieeeAddr, "pressure_mm", pressure * 0.75, "FLOAT")
+```
+
+Второй вариант. Сразу записать правило в такм виде:
+
+```lua
+#zigbee.setState(Event.ieeeAddr, "pressure_mm", zigbee.value(tostring(Event.ieeeAddr), "pressure") * 0.75, "FLOAT")
 ```
 
 ---
