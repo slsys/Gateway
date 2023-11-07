@@ -431,14 +431,26 @@ Zigbee DeviceState: 9 [ OK ]
 
 ## Программная перезагрузка координатора
 
-С помощью lua можно выполнить программную перезагрузку координатора
+### С помощью lua 
 
 ```lua
-gpio.mode(18, gpio.OUTPUT)
-gpio.write(18, 0)
-os.delay(100)
-gpio.write(18, 1)
 os.restart()
+```
+
+### С помощью HTTP API
+
+Необходимо выполнить запрос к API
+
+```http
+GET /api/reboot
+```
+
+### С помощью MQTT
+
+Необходимо в топик `System prefix topic/reboot` отправить `{}`
+
+```bash
+mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/reboot -m '{}'
 ```
 
 ---
