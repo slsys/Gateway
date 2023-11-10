@@ -1,5 +1,29 @@
 # История изменений
 
+## 2023.11.09d1
+
+- *OS: Исправлена ошибка получения времени с NTP сервера при отсутствии интернета
+- +Lua: Добавлена функция чтения произвольных данных из I2C устройств: os.readI2C(addr, offset)
+- +Lua: Добавлена функция записи произвольных данных в I2C устройства: os.writeI2C(addr, offset, data)
+- *Zigbee: Исправлено MQTT Discovery для presence
+- *Zigbee: Исправлена отправка DefaultRsp
+- *Zigbee: Полностью переработано конвертер для #272 Xiaomi Aqara Smart Radiator Thermostat E1 (SRTS-A01)
+- *Zigbee: Переведен на новую систему конвертеров #318 Sonoff Wireless button (SNZB-01) (SONOFF / WB01)
+- *Zigbee: Переведен на новую систему конвертеров #319 Sonoff Temperature and humidity sensor (SNZB-02) (SONOFF / TH01)
+- *Zigbee: Переведен на новую систему конвертеров #320 Sonoff Motion sensor (SNZB-03) (SONOFF / MS01, SONOFF / MSO1, SONOFF / ms01, SONOFF / 66666)
+- *Zigbee: Переведен на новую систему конвертеров #321 Sonoff Contact sensor (SNZB-04) (SONOFF / DS01)
+- *Zigbee: Переведен на новую систему конвертеров #322 Sonoff Zigbee DIY Smart Switch (BASICZBR3) (SONOFF / BASICZBR3)
+- *Zigbee: Переведен на новую систему конвертеров #323 Sonoff Zigbee smart plug (US version) (S31ZB) (SONOFF / S31 Lite zb)
+- *Zigbee: Переведен на новую систему конвертеров #324 Sonoff Zigbee two way smart switch (ZBMINI) (SONOFF / 01MINIZB)
+- *Zigbee: Переведен на новую систему конвертеров #329 Danalock BT/ZB smartlock (V3-BTZB/V3-BTZBE) (Danalock / V3-BTZB, Danalock / V3-BTZBE)
+- +Zigbee: Новая модель для #211 Tuya Temperature & humidity sensor (IH-K009) (_TZ3000_zl1kmjqx / TS0201)
+- +Zigbee: Поддержка для #325 Sonoff Wireless button (SNZB-01P) (SONOFF / SNZB-01P)
+- +Zigbee: Поддержка для #326 Sonoff Temperature and humidity sensor (SNZB-02P) (SONOFF / SNZB-02P)
+- +Zigbee: Поддержка для #327 Sonoff Smart curtain motor (ZBCurtain) (SONOFF / ZBCurtain)
+- +Zigbee: Поддержка для #330 IKEA TRADFRI open/close remote (E1766) (IKEA of Sweden / TRADFRI open/close remote)
+- +Zigbee: Поддержка для #331 IKEA FYRTUR block-out roller blind (E1757) (IKEA of Sweden / FYRTUR block-out roller blind)
+- +Zigbee: Поддержка для #332 IKEA KADRILJ roller blind (E1926) (IKEA of Sweden / KADRILJ roller blind)
+
 ## 2023.10.25d1
 
 - +OS: Добавлена базовая поддержка ИБП для SLS Hub
