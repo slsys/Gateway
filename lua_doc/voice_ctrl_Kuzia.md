@@ -49,7 +49,7 @@ https://addressSLS/api/scripts?token=e9d38bed.......f4ef49476a2ed9575&action=eva
 
 - addressSLS: ip:port или днс адрес шлюза, доступный из сети Интернет
 - token: токен шлюза из `Settings -> Users`
-- kuzia.lua: скрипт LUA для обработки запроса
+- [kuzia.lua](/lua_doc/voice_ctrl_Kuzia/kuzia.lua): скрипт LUA для обработки запроса
 - param: параметры, передаваемые в скрипт
   - device: ieee|nwk адрес или FN устройства
   - state: состояние для управления (state|brightness)
