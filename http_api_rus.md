@@ -222,3 +222,7 @@ end
 local myIP = http.request("http://wtfismyip.com/text")
 print("My IP: " .. myIP)
 ```
+
+### Отправка показаний счетчиков в управляющую компанию 
+
+[Здесь](https://github.com/tsurkan-av/SLS/blob/main/sendCountersToUK/Readme.md) описан способ отправки показаний в УК, не имеющей API для этого
