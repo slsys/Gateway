@@ -309,6 +309,51 @@ result = zigbee.setState(device, stateName, stateValue[[, type], events])
 -- result - BOOL,  true - успех, false - устройство не найдено
 ```
 
+##### Как удалить виртуальное состояние
+
+Вариант 1
+
+- обнулить конвертер: кнопка Reload converter Id на вкладке Info устройства
+- выполнить Action -> Save 2 раза для удаления из devices.json и devices.json.bak (устройства сохраняются 2 раза в час автоматически, поэтому если произойдет рестарт по питанию ранее 30 минут, то состояние не будет удалено)
+
+Выриант 2
+- удалить из devices.json и devices.json.bak и перезагрузить шлюз по питанию
+
+Пример с сотсоянием test
+
+До:
+
+```json
+"st": {
+      "backlight_mode": "OFF",
+      "child_lock": false,
+      "current": 0,
+      "last_seen": 1699669806,
+      "linkquality": 127,
+      "power": 0,
+      "power_on_behavior": "OFF",
+      "state": "OFF",
+      "test": "0",
+      "trSeqNum": 150,
+      "voltage": 225
+```
+
+После:
+
+```json
+"st": {
+      "backlight_mode": "OFF",
+      "child_lock": false,
+      "current": 0,
+      "last_seen": 1699669806,
+      "linkquality": 127,
+      "power": 0,
+      "power_on_behavior": "OFF",
+      "state": "OFF",
+      "trSeqNum": 150,
+      "voltage": 225
+```
+
 #### zigbee.setModel()
 
 Программное переназначение типа устройства.
