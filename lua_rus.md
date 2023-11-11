@@ -319,7 +319,7 @@ result = zigbee.setState(device, stateName, stateValue[[, type], events])
 Выриант 2
 - удалить из devices.json и devices.json.bak и перезагрузить шлюз по питанию
 
-Пример с сотсоянием test
+Пример с состоянием test
 
 До:
 
