@@ -24,30 +24,6 @@
 
 ---
 
-## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
-
-![](/img/dashboard4.jpg)
-
-[скачать](/dashboard/bootstrap4/ui.html)
-
----
-
-## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
-
-![](/img/dashboard41.jpg)
-
-[скачать](/dashboard/bootstrap41/ui.html)
-
----
-
-## Пример dashboard с использованием [Bootstrap3](https://www.w3schools.com/bootstrap/bootstrap_panels.asp)
-
-![](/img/dashboard3.jpg)
-
-[скачать](/dashboard/bootstrap3/ui.html)
-
----
-
 ## Пример dashboard от [Nick7zmail](https://t.me/nick7zmail)
 
 <!-- <img src="/img/dash_n7z_3.jpg" width="30%"> <img src="/img/dash_n7z_2.jpg" width="60%">
@@ -73,11 +49,32 @@
 
 ## Пример dashboard от [solominsn](https://t.me/solominsn)
 
->**solominsn**: Кстати, а кто нибудь пользуется UI? Мне понравился Gateway/dashboard/nick7zmail/ui.html, хотел не много код подправить для себя, а там код обфускатором прошли.
+>**solominsn**: Кстати, а кто-нибудь пользуется UI? Мне понравился Gateway/dashboard/nick7zmail/ui.html, хотел не много код подправить для себя, а там код обфускатором прошли.
 
->**solominsn**: я переписал не много этот код. Последняя версия bootstrap, свежий JS (думаю что все используют версию браузера не старше 2 лет). Не много упростил конфигирование.
+>**solominsn**: я переписал не много этот код. Последняя версия bootstrap, свежий JS (думаю что все используют версию браузера не старше 2 лет). Не много упростил конфигурирование.
 
 [Скачать](/dashboard/solominsn/ui_20221004.html)
 
 ---
 
+## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
+
+![](/img/dashboard4.jpg)
+
+[скачать](/dashboard/bootstrap4/ui.html)
+
+---
+
+## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
+
+![](/img/dashboard41.jpg)
+
+[скачать](/dashboard/bootstrap41/ui.html)
+
+---
+
+## Пример dashboard с использованием [Bootstrap3](https://www.w3schools.com/bootstrap/bootstrap_panels.asp)
+
+![](/img/dashboard3.jpg)
+
+[скачать](/dashboard/bootstrap3/ui.html)
