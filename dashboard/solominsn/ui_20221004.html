@@ -1,0 +1,403 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SLS Gateway: Dashboard </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="icon" href="https://cdn.slsys.io/assets/2022.01.29d1/favicon.png" type="image/x-icon">
+</head>
+
+<body id="page-top">
+
+  <style>
+    body {
+      box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+      background-color: #333;
+    }
+
+    main {
+      padding-top: 4.5rem !important;
+      min-height: 100vh !important;
+    }
+
+    .fa {
+      font-size: 13px;
+    }
+
+    .form-switch {
+      padding-bottom: 7px;
+    }
+
+    .card-cont {
+      padding-bottom: 15px;
+    }
+
+    .bages {
+      padding-bottom: 7px;
+    }
+  </style>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top px-4" style="background-color: #1e88e5;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">SLS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto">
+          <!--li class="nav-item"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li-->
+          <li class="nav-item">
+            <a class="nav-link active" href="/ui">UI</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/objects">Objects</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown00" data-bs-toggle="dropdown"
+              aria-expanded="false">Zigbee</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown00">
+              <a class="dropdown-item" href="/zigbee">Devices</a>
+              <a class="dropdown-item" href="/zigbee/join">Join</a>
+              <a class="dropdown-item" href="/zigbee/map">Map</a>
+              <!-- a class="dropdown-item" href="/zigbee/groups">Groups</a -->
+              <a class="dropdown-item" href="/zigbee/config">Config</a>
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#zb_reset_modal" href="#">
+                Reset to Default
+              </a>
+              <a class="dropdown-item" href="/zigbee/softreset">Soft Reset</a>
+              <a class="dropdown-item" href="/zigbee/startbsl">Start BSL</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/log">Log</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Settings
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/wifi">WiFi</a>
+              <a class="dropdown-item" href="/time">Time &amp; Location</a>
+              <a class="dropdown-item" href="/link">Link</a>
+              <a class="dropdown-item" href="/serial">Serial</a>
+              <a class="dropdown-item" href="/services">Services</a>
+              <a class="dropdown-item" href="/users">Users</a>
+              <a class="dropdown-item" href="/hw">Hardware</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Help
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdown02">
+              <a class="dropdown-item" href="https://github.com/slsys/Gateway/blob/master/readme.md" target="_blank">
+                GitHub
+              </a>
+              <a class="dropdown-item" href="https://t.me/slsys" target="_blank">
+                Telegram (Support, discussions)</a>
+              <a class="dropdown-item" href="https://mjdm.ru/forum/viewtopic.php?t=6700" target="_blank">Forum</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Actions
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="/scripts">Files</a>
+              <a class="dropdown-item" href="/backup">Backup</a>
+              <a class="dropdown-item" href="/update">Update Firmware</a>
+              <a class="dropdown-item" href="/save">Save</a>
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reboot_modal" href="#">
+                Reboot System
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="reboot_modal" tabindex="-1" aria-labelledby="reboot_modalLabel" style="display: none;"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reboot_modalLabel">Reboot</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+        </div>
+        <div class="modal-body"> Are you sure you want to reboot the device? </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="location.href='/reboot';">Reboot</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="zb_reset_modal" tabindex="-1" aria-labelledby="zb_reset_modalLabel" style="display: none;"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="zb_reset_modalLabel">Zigbee reset</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+        </div>
+        <div class="modal-body"> Are you sure you want to reset all zigbee devices? </div>
+        <div class="modal-footer"> <button type="button" class="btn btn-danger"
+            onclick="location.href='/zigbee/reset';">Reset</button> <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">Cancel</button> </div>
+      </div>
+    </div>
+  </div>
+
+  <main role="main" class="">
+    <div class="container-fluid flex-column">
+      <div class="row" id="rooms_cont">
+      </div>
+    </div>
+  </main>
+
+  <script>
+
+    // room - имя комнаты
+    // ieee - ieeeAddr со страницы девайсов
+    // prop - свойство, которое будет выводиться/управляться данным элементом (switch поддерживают только ON/OFF)
+    // title - заголовок девайса
+    // type - тип устройства (пока в наличии 4 типа:
+    // -- sensor - обыкновенный цифровой сенсор
+    // -- bin-sensor - двоичный сенсор (true/false дд, датчик положения, дачик открытия)
+    // -- switch - тумблер (ON/OFF)
+    // -- dimmer - слайдер
+    // icon - иконка девайса (пока поддерживается для sensor, bin-sendor, иконки брать тут https://fontawesome.com/v4.7.0/icons/)
+    // unit - единица измерения (для типа sensor)
+    // min - минимальное значение (для типа dimmer)
+    // max - максимальное значение (для типа dimmer)
+
+    const devices = [
+      { "ieee": "0x00158D0007F27E6B", "room": "Улица", "prop": "temperature", "title": "Температура", "type": "sensor", "icon": "fa-thermometer-half", "unit": "°C" },
+      { "ieee": "0x00158D0007F27E6B", "room": "Улица", "prop": "humidity", "title": "Влажность", "type": "sensor", "icon": "fa-tint", "unit": "%" },
+      { "ieee": "0x00158D0007F27E6B", "room": "Улица", "prop": "pressure_mmHg", "title": "Давление", "type": "sensor", "icon": "fa-gauge", "unit": "мм рт.ст." },
+
+      { "ieee": "0x00158D0007E3C7B9", "room": "Гостиная", "prop": "temperature", "title": "Температура", "type": "sensor", "icon": "fa-thermometer-half", "unit": "°C" },
+      { "ieee": "0x00158D0007E3C7B9", "room": "Гостиная", "prop": "humidity", "title": "Влажность", "type": "sensor", "icon": "fa-tint", "unit": "%" },
+      { "ieee": "0x00158D0007E3C7B9", "room": "Гостиная", "prop": "pressure_mmHg", "title": "Давление", "type": "sensor", "icon": "fa-gauge", "unit": "мм рт.ст." },
+      { "ieee": "0xA4C1385E536296F1", "room": "Гостиная", "prop": "state_l1", "title": "Люстра", "type": "switch" },
+      { "ieee": "0xA4C1385E536296F1", "room": "Гостиная", "prop": "state_l2", "title": "Над телевизором", "type": "switch" },
+      { "ieee": "0xA4C1385E536296F1", "room": "Гостиная", "prop": "state_l3", "title": "Над диваном", "type": "switch" },
+      { "ieee": "0xA4C1385E536296F1", "room": "Гостиная", "prop": "state_l4", "title": "Над столом", "type": "switch" },
+
+      // { "ieee": "", "room": "", "prop": "brightness", "title": "Яркость подсветки шкафа", "type": "dimmer", "min": 0, "max": 255 },
+    ];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const allDevicesInfo = await httpGet('/api/zigbee/devices');
+
+      const rooms = new Map();
+      devices.forEach((device) => {
+        if (rooms.has(device.room)) {
+          rooms.get(device.room).push(device);
+        } else {
+          rooms.set(device.room, [device]);
+        }
+      });
+
+      let roomId = 0;
+      rooms.forEach((roomDevices, roomTitle) => {
+        rooms_cont.insertAdjacentHTML('beforeend', createRoomHtml(roomId, roomTitle));
+        feedRoom(roomId, roomDevices, allDevicesInfo);
+        roomId++;
+      });
+
+      startWebSockets();
+    });
+
+    function createRoomHtml(roomId, roomTitle) {
+      const l = `
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 card-cont">
+          <div class="card h-100">
+            <div class="card-header">${roomTitle}</div>
+            <div class="card-body" id="room_${roomId}">
+              <div id="bages_${roomId}" class="bages">
+              </div>
+            </div>
+          </div>
+        </div>`
+      return l;
+    }
+
+    function feedRoom(roomId, roomDevices, allDevices) {
+      const badgesDiv = document.getElementById(`bages_${roomId}`);
+      const roomDiv = document.getElementById(`room_${roomId}`);
+
+      roomDevices.forEach((roomDevice, roomDeviceId) => {
+        const aDeviceInfo = allDevices.find((device) => roomDevice.ieee === device.ieeeAddr);
+        if (!aDeviceInfo) {
+          console.log('Unable to find device info for', roomDevice);
+          return;
+        }
+        roomDevice.id = `${roomId}_${roomDeviceId}`;
+        roomDevice.value = aDeviceInfo.st[roomDevice.prop];
+
+        switch (roomDevice.type) {
+          case 'sensor': {
+            const iconDom = roomDevice.icon ? `<i class="fa ${roomDevice.icon}" aria-hidden="true"></i>` : '';
+            const badgeDom = `
+              <div class="badge bg-secondary" title="${roomDevice.title}">
+                ${iconDom}
+                <div style="display:inline" id="dev_${roomDevice.id}">
+                  ${roomDevice.value}
+                </div>
+                ${roomDevice.unit}
+              </div>
+            `;
+            badgesDiv.insertAdjacentHTML('beforeend', badgeDom);
+            break;
+          }
+          case 'bin-sensor': {
+            const iconDom = roomDevice.icon ? `<i class="fa ${roomDevice.icon}" aria-hidden="true"></i>` : '';
+            const badgeDom = `
+              <div class="badge bg-${roomDevice.value ? 'warning' : 'secondary'}" id="dev_${roomDevice.id}" title="${roomDevice.title}">
+                ${iconDom}
+              </div>
+            `;
+            badgesDiv.insertAdjacentHTML('beforeend', badgeDom);
+            break;
+          }
+          case 'switch': {
+            const switchDom = `
+              <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="dev_${roomDevice.id}" ${roomDevice.value === 'ON' ? 'checked' : ''}>
+                <label class="form-check-label" for="dev_${roomDevice.id}">
+                  ${roomDevice.title}
+                </label>
+              </div>
+            `;
+
+            roomDiv.insertAdjacentHTML('beforeend', switchDom);
+            document.getElementById(`dev_${roomDevice.id}`).addEventListener('change', async function () {
+              this.disabled = true;
+              await setState(roomDevice.ieee, roomDevice.prop, this['checked'] ? 'ON' : 'OFF');
+              this.disabled = false;
+            });
+            break;
+          }
+          case 'dimmer': {
+            const rangeDom = `<input type="range" class="form-range" id="dev_${roomDevice.id}" value="${roomDevice.value}" min="${roomDevice.min}" max="${roomDevice.max}">`;
+
+            roomDiv.insertAdjacentHTML('beforeend', rangeDom);
+            document.getElementById(`dev_${roomDevice.id}`).addEventListener('change', async function () {
+              this.disabled = true;
+              await setState(roomDevice['ieee'], roomDevice['prop'], this.value);
+              this.disabled = false;
+            });
+            break;
+          }
+          default:
+            break;
+        }
+      });
+    }
+
+    function deviceUpdate(e) {
+      const device = devices.find((device) => e.payload.ieeeAddr === device.ieee && e.payload.name === device.prop);
+      if (device) {
+        device.value = e.payload.value;
+        switch (device.type) {
+          case 'sensor':
+            document.getElementById(`dev_${device.id}`).innerHTML = device.value;
+            break;
+          case 'bin-sensor':
+            if (device.value === true) {
+              document.getElementById(`dev_${device.id}`).classList.add('bg-warning');
+              document.getElementById(`dev_${device.id}`).classList.remove(`bg-secondary`);
+            } else {
+              document.getElementById(`dev_${device.id}`).classList.remove('bg-warning');
+              document.getElementById(`dev_${device.id}`).classList.add(`bg-secondary`);
+            }
+            break;
+          case 'switch':
+            document.getElementById(`dev_${device.id}`).checked = device.value === 'ON';
+            break;
+          case 'dimmer':
+            document.getElementById(`dev_${device.id}`).value = device.value;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    let startedWebSockets = false;
+    let wsSocket;
+    let wsTimer = 0;
+    function startWebSockets() {
+      let serverUrl = `ws://${window.location.hostname}:81/log`;
+      try {
+        console.log(`Connecting to ${serverUrl}`);
+        wsSocket = new WebSocket(serverUrl)
+      } catch (err) {
+        console.error(`Failed connecting to ${serverUrl}`, err);
+        return false;
+      }
+      wsSocket.binaryType = 'blob';
+      wsSocket.onopen = function (j) {
+        console.log('WS connected');
+        startedWebSockets = true;
+        clearTimeout(wsTimer);
+        subscribeToDevices();
+      };
+      wsSocket.onmessage = function (message) {
+        console.log(`WS data`);
+        const data = JSON.parse(message.data);
+        console.log(`Action: ${data.category} Data: `, data);
+        deviceUpdate(data);
+      }
+      wsSocket.onclose = function (j) {
+        startedWebSockets = false;
+        wsTimer = setTimeout('startWebSockets();', 5 * 1000);
+        console.log('WS disconnected');
+      }
+    }
+
+    function subscribeToDevices() {
+      console.log('Sending menu subscription request...');
+      wsSocket.send(JSON.stringify({
+        action: 'subscribe',
+        category: 'zigbee',
+      }));
+      return false;
+    }
+
+    async function httpGet(url) {
+      console.log('starting http get');
+      const response = await fetch(url);
+      if (response.status !== 200) {
+        throw new Error('Network response was not 200', response);
+      }
+      return response.json();
+    }
+
+    function setState(device, name, value) {
+      return httpGet(`/api/zigbee?dev=${device}&action=setState&name=${name}&value=${value}`);
+    }
+
+  </script>
+
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.js"
+    integrity="sha256-b6FZhfBs07Z8WHg4IG6V1PfDsOrbkQVabKBUzmlYbsU=" crossorigin="anonymous"></script>
+</body>
+
+</html>

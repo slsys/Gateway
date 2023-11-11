@@ -22,23 +22,62 @@
 </script>
 ```
 
+---
+
 ## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
 
 ![](/img/dashboard4.jpg)
 
 [скачать](/dashboard/bootstrap4/ui.html)
 
-## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content):
-[![](/img/dashboard41.jpg)
-скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/bootstrap41/ui.html)
+---
 
+## Пример dashboard с использованием [Bootstrap4](https://bootstrap-4.ru/docs/4.5/components/card/#content)
 
-## Пример dashboard с использованием [Bootstrap3](https://www.w3schools.com/bootstrap/bootstrap_panels.asp):
-[![](/img/dashboard3.jpg)
-скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/bootstrap3/ui.html)
+![](/img/dashboard41.jpg)
 
+[скачать](/dashboard/bootstrap41/ui.html)
 
-## Пример dashboard от Nick7zmail [Nick7zmail](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/nick7zmail/ui.html):
-<img src="/img/dash_n7z_3.jpg" width="30%"> <img src="/img/dash_n7z_2.jpg" width="60%">
-![](/img/dash_n7z_1.jpg)
-[скачать](https://raw.githubusercontent.com/slsys/Gateway/master/dashboard/nick7zmail/ui.html)
+---
+
+## Пример dashboard с использованием [Bootstrap3](https://www.w3schools.com/bootstrap/bootstrap_panels.asp)
+
+![](/img/dashboard3.jpg)
+
+[скачать](/dashboard/bootstrap3/ui.html)
+
+---
+
+## Пример dashboard от [Nick7zmail](https://t.me/nick7zmail)
+
+<!-- <img src="/img/dash_n7z_3.jpg" width="30%"> <img src="/img/dash_n7z_2.jpg" width="60%">
+<img src="/img/dash_n7z_1.jpg" width="92%"> -->
+
+![](/dashboard/nick7zmail/20220204.jpg)
+
+Скачать
+
+- [04.02.2022](/dashboard/nick7zmail/ui_20220204.html)
+- [11.01.2022](/dashboard/nick7zmail/ui_20220111.html)
+- [v1 ](/dashboard/nick7zmail/ui.html)
+
+---
+
+## Пример dashboard от [BalagurovAV](https://t.me/BalagurovAV)
+
+![](/dashboard/BalagurovAV/20231111.jpg)
+
+[Скачать](https://github.com/BalagurOFF/sls_ui.html)
+
+---
+
+## Пример dashboard от [solominsn](https://t.me/solominsn)
+
+>**solominsn**: Кстати, а кто нибудь пользуется UI? Мне понравился Gateway/dashboard/nick7zmail/ui.html, хотел не много код подправить для себя, а там код обфускатором прошли.
+
+>**solominsn**: я переписал не много этот код. Последняя версия bootstrap, свежий JS (думаю что все используют версию браузера не старше 2 лет). Не много упростил конфигирование.
+
+[Скачать](/dashboard/solominsn/ui_20221004.html)
+
+---
+

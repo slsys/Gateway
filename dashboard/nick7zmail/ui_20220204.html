@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="h-100">
+
+<!----описание----
+комнаты вписываются в файл ui.rooms.json в виде JSON строки
+пример файла ui.rooms.json
+(id комнат должны быть уникальны)
+
+[
+{"id": 0, "title":"Режимы"},
+{"id": 1, "title":"Гостиная"},
+{"id": 2, "title":"Кухня"},
+{"id": 3, "title":"Спальня"},
+{"id": 4, "title":"Ванная"},
+{"id": 5, "title":"Коридор"},
+{"id": 6, "title":"Лоджия"}
+]
+PS: Файл ui.rooms.json теперь может быть создан/исправлен через интерфейс
+
+Устройства, выводимые в интерфейс, размещаются в файле ui.devices.json в виде JSON строки.
+
+id - id девайса (уникальные во всём списке)
+room_id - id комнаты из списка выше
+ieee - ieeeAddr со страницы девайсов (object для использования объектов)
+prop - свойство, которое будет выводиться/управляться данным элементом (имя объекта, для использования совместно с object)
+title - заголовок девайса
+type - тип устройства (пока в наличии 4 типа):
+-- sensor - обыкновенный цифровой сенсор
+-- bin-sensor - двоичный сенсор (true/false дд, датчик положения, дачик открытия)
+-- value - любой сенсор с текстовым значением
+-- switch - тумблер
+-- dimmer - слайдер
+-- custom-switch - группа переключателей с заданными значениями
+icon - иконка девайса (пока поддерживается для sensor, bin-sensor, иконки брать тут https://fontawesome.com/v4.7.0/icons/)
+unit - единица измерения (для типа sensor)
+sw_type - тип выключателя (для типа switch)
+-- normal (default, ON/OFF)
+-- bool (true/false)
+-- bin (1/0)
+-- openable (OPEN/CLOSE)
+min - минимальное значение (для типа dimmer)
+max - максимальное значение (для типа dimmer)
+values - массив объектов (для типа custom-switch)
+-- name - имя на кнопке
+-- toSet - значение, которое будет передано в свойство (указанное в prop) при нажатии
+
+пример файла ui.devices.json
+[
+{"id": 1, "room_id":0, "ieee":"object", "prop":"gateway.security.status", "title":"Режим охраны", "type":"switch"},
+{"id": 2, "room_id":0, "ieee":"object", "prop":"gateway.eco.status", "title":"Режим экономии", "type":"switch"},
+{"id": 3, "room_id":0, "ieee":"object", "prop":"gateway.motion.status", "title":"Режим датчиков движения", "type":"custom-switch", "values":[{"name":"AUTO", "toSet":"auto"},{"name":"ECO", "toSet":"eco"},{"name":"OFF", "toSet":"off"}]},
+{"id": 11, "room_id":1, "ieee":"0x00158D00023D2E19", "prop":"temperature", "title":"Температура", "type":"sensor", "icon":"fa-thermometer-full", "unit":"°C"},
+{"id": 12, "room_id":1, "ieee":"0x00158D00023D2E19", "prop":"humidity", "title":"Влажность", "type":"sensor", "icon":"fa-tint", "unit":"%"},
+{"id": 13, "room_id":1, "ieee":"0x00158D0004863605", "prop":"state_right", "title":"Свет", "type":"switch"},
+{"id": 14, "room_id":1, "ieee":"0x00158D000396432E", "prop":"occupancy", "title":"Движение", "type":"bin-sensor", "icon":"fa-male", "unit":"%"},
+{"id": 21, "room_id":2, "ieee":"0x00124B001D43CE20", "prop":"state", "title":"Подсветка шкафа", "type":"switch"},
+{"id": 22, "room_id":2, "ieee":"0x00124B001D43CE20", "prop":"brightness", "title":"Яркость подсветки шкафа", "type":"dimmer", "min":0, "max":255},
+{"id": 23, "room_id":2, "ieee":"0x00124B001D43CE20", "prop":"brightness", "title":"Яркость подсветки шкафа", "type":"custom-switch", "values":[{"name":"0 %", "toSet":0},{"name":"30 %", "toSet":70},{"name":"60 %", "toSet":140},{"name":"100 %", "toSet":255}]}
+]
+
+Настройки (цвета карточек, текста и фона, а так же навигационные ссылки хранятся в файле ui.settings.json (автоматически генерируется при первом сохранении настроек из интерфейса)
+{"main_bg":"bg-secondary","body_shadow":"","card_text":"text-light","card_theme":"bg-dark", "nav_links":[{"name":"SLSAdmin", "href":"/"},{"name":"Устройства", "href":"/zigbee"}]}
+
+========= Поддержать разработку =========
+= https://www.tinkoff.ru/cf/21QTzZPdNho =
+=========================================
+
+----описание---->
+
+<head>
+	<meta charset="utf-8">
+	<title>SLS UI</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<meta name="description" content="SLS UI"><link rel="icon" href="https://cdn.slsys.io/assets/2021.01.10d1/favicon.png" type="image/x-icon">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	
+	<!--можно скачать к себе, чтобы грузилось локально...да и то что выше, в принципе тоже-->
+	<script defer="defer" src="https://cdn.slsys.io/assets/slsui/15022022/main.21f5f5e0.js"></script>
+	<link href="https://cdn.slsys.io/assets/slsui/15022022/main.65e029e8.css" rel="stylesheet"></script>
+
+</head>
+<body class="h-100">
+
+<main role="main" id="room_application" class="h-100"></main>
+
+<script>
+function d(a,b){var e=c();return d=function(f,g){f=f-0x7e;var h=e[f];return h;},d(a,b);}(function(e,f){var g=e();function P(e,f){return d(e- -0x398,f);}while(!![]){try{var h=-parseInt(P(-0x30b,-0x306))/0x1*(-parseInt(P(-0x2c5,-0x2c6))/0x2)+parseInt(P(-0x2dd,-0x301))/0x3*(-parseInt(P(-0x2d1,-0x2ba))/0x4)+-parseInt(P(-0x2d4,-0x2f9))/0x5*(-parseInt(P(-0x2ee,-0x2cb))/0x6)+parseInt(P(-0x319,-0x317))/0x7*(-parseInt(P(-0x2c3,-0x2c5))/0x8)+parseInt(P(-0x306,-0x30b))/0x9*(parseInt(P(-0x311,-0x2f5))/0xa)+parseInt(P(-0x2ce,-0x2b7))/0xb+parseInt(P(-0x317,-0x31a))/0xc;if(h===f)break;else g['push'](g['shift']());}catch(i){g['push'](g['shift']());}}}(c,0xf1e36));var b=(function(){var e=!![];return function(f,g){var h=e?function(){if(g){if('IoNdL'!=='IoNdL')h(i['ieee'],j['prop'],'OPEN');else{var i=g['apply'](f,arguments);return g=null,i;}}}:function(){};return e=![],h;};}()),a=b(this,function(){var f;try{var g=Function('return\x20(fu'+Q(0x451,0x442)+(Q(0x44d,0x435)+'ctor(\x22retu'+Q(0x43e,0x42f)+'\x20)')+');');f=g();}catch(n){f=window;}var h=f[Q(0x42b,0x43e)]=f['console']||{};function Q(e,f){return d(f-0x3a5,e);}var i=['log','warn','info','error','exception','table','trace'];for(var j=0x0;j<i['length'];j++){var k=b[Q(0x43c,0x457)+'r']['prototype'][Q(0x45b,0x430)](b),l=i[j],m=h[l]||k;k['__proto__']=b['bind'](b),k['toString']=m[Q(0x467,0x453)][Q(0x448,0x430)](m),h[l]=k;}});a();var dev_arr;setTimeout(function(e){var f=JSON['parse'](httpGet('/api/files'+'?path=/ui.'+'settings.j'+R(0x5b,0x4d)));dev_arr=JSON['parse'](httpGet('/api/files'+'?path=/ui.'+'devices.js'+'on'));var g=JSON['parse'](httpGet('/api/zigbe'+'e/devices'));function R(e,f){return d(e- -0x64,f);}for(let j=0x0;j<0x8;j++){document[R(0x69,0x88)+'ById'](R(0x61,0x80)+'heme-val'+j)['value']==f['card_theme']&&(document['getElement'+R(0x58,0x37)]('settings-t'+R(0x49,0x45)+j)[R(0x3b,0x17)]=!![]),document['getElement'+'ById']('settings-f'+'ont-val'+j)['value']==f['card_text']&&(document[R(0x69,0x6c)+R(0x58,0x4e)](R(0x6a,0x71)+'ont-val'+j)['checked']=!![]),document[R(0x69,0x60)+'ById']('settings-b'+'g-val'+j)['value']==f['main_bg']&&(R(0x40,0x4a)==='CXFig'?document['getElement'+R(0x58,0x58)]('settings-b'+'g-val'+j)['checked']=!![]:this['checked']?q(r['ieee'],s[R(0x64,0x8c)],'true'):t(u['ieee'],v['prop'],'false'));}for(let l=0x0;l<0x2;l++){document['getElement'+'ById'](R(0x20,0x16)+R(0x32,0x58)+l)['value']==f['body_shado'+'w']&&('mjHDI'==='mjHDI'?document['getElement'+'ById'](R(0x20,-0x6)+'hadow-val'+l)[R(0x3b,0x1f)]=!![]:g['getElement'+'ById']('dev_'+h['id'])['checked']=!![]);}var h=0x0;g['forEach'](function(n){if(n['st']['battery']){if(n['st']['battery']<0x28){let q='fa-battery'+'-quarter',r=S(0x370,0x391);text='battery\x20'+n['st']['battery']+'\x20%';if(n['st']['battery']<0xf){q='fa-battery'+S(0x3b4,0x3be),r='bg-danger',text=S(0x37d,0x39a)+'w';var o=0x1;}content='<li>\x0a\x20\x20\x20\x20\x09'+'<a\x20class=\x22'+'dropdown-i'+'tem\x20'+r+(S(0x3bb,0x3b5)+'tton\x22>\x0a\x20\x20\x20'+'\x20\x09<i\x20class'+'=\x22fa\x20fa-ex'+S(0x3b1,0x399)+'triangle\x22\x20'+S(0x3d4,0x3d5)+S(0x407,0x3db)+'/i>\x20')+n['friendly_n'+S(0x3c3,0x3c2)]+('\x20<i\x20class='+S(0x3d5,0x3bf))+q+(S(0x36f,0x387)+'den=\x22true\x22'+'>\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+'</i>\x20')+text+'\x20</a></li>',h++;let s=document[S(0x3c0,0x3d2)+'ById'](S(0x3eb,0x3d7)+'ts');s['insertAdja'+'centHTML'](S(0x3ad,0x3d9),content);}}function S(e,f){return R(f-0x369,e);}let p=document['getElement'+'ById'](S(0x3bc,0x3d7)+'ts_count');p[S(0x3e7,0x3c8)]=h,h>0x0&&(o==0x1?p['classList']['add'](S(0x3ab,0x3c6)):p['classList']['add']('bg-warning'));}),dev_arr['forEach'](function(n){if(n['type']=='switch'){if(!n[T(0x180,0x156)])n['sw_type']='normal';if(n['sw_type']=='normal')document['getElement'+'ById']('dev_'+n['id'])['addEventLi'+T(0x16b,0x15c)](T(0x1a0,0x1bd),function(){function U(e,f){return T(e- -0x2b6,f);}this[U(-0x13d,-0x135)]?httpReq(n['ieee'],n['prop'],'ON'):httpReq(n['ieee'],n['prop'],'OFF');});else{if(n[T(0x180,0x1ab)]=='bool')document['getElement'+'ById'](T(0x19c,0x171)+n['id'])[T(0x192,0x176)+'stener']('change',function(){function V(e,f){return T(e-0x1ae,f);}'uxEGJ'==='nighL'?g['getElement'+'ById'](V(0x34a,0x366)+h['id'])['checked']=![]:this['checked']?httpReq(n[V(0x357,0x356)],n['prop'],V(0x308,0x314)):httpReq(n['ieee'],n['prop'],'false');});else{if(n[T(0x180,0x160)]==T(0x176,0x196))document[T(0x1a7,0x1ae)+'ById']('dev_'+n['id'])['addEventLi'+T(0x16b,0x14f)]('change',function(){function W(e,f){return T(e- -0x2fd,f);}'ECnNv'==='HbeTy'?m['getElement'+'ById'](W(-0x161,-0x177)+n['id'])[W(-0x16b,-0x15d)+'stener']('change',function(){function X(e,f){return W(f-0xaa,e);}this[X(-0xc1,-0xda)]?A(B['ieee'],C['prop'],'true'):D(E['ieee'],F['prop'],'false');}):this['checked']?httpReq(n['ieee'],n['prop'],'1'):httpReq(n['ieee'],n['prop'],'0');});else n['sw_type']=='openable'&&document['getElement'+'ById']('dev_'+n['id'])['addEventLi'+'stener']('change',function(){function Y(e,f){return T(e- -0x261,f);}this['checked']?httpReq(n[Y(-0xb8,-0x9c)],n['prop'],'OPEN'):httpReq(n['ieee'],n['prop'],Y(-0xf8,-0xfa));});}}}n['type']=='dimmer'&&document['getElement'+T(0x196,0x184)]('dev_'+n['id'])['addEventLi'+'stener']('change',function(){function Z(e,f){return T(e-0xc6,f);}httpReq(n['ieee'],n['prop'],this[Z(0x25e,0x252)]);});function T(e,f){return R(e-0x13e,f);}n[T(0x17b,0x16e)]==T(0x1a3,0x1af)+T(0x178,0x180)&&n['values']['map']((o,p)=>{function a0(e,f){return T(f-0xe1,e);}document['getElement'+'ById']('dev_'+n['id']+'_'+p)[a0(0x250,0x273)+'stener']('change',function(){httpReq(n['ieee'],n['prop'],o['toSet']);});});}),startWebSockets();},0x1388);function devUpdate(e){dev_arr['forEach'](function(f){function a1(e,f){return d(f- -0x322,e);}e['payload']['ieeeAddr']==f['ieee']&&e[a1(-0x2a9,-0x2a4)]['name']==f[a1(-0x273,-0x25a)]&&f[a1(-0x271,-0x281)]=='sensor'&&(document['getElement'+'ById'](a1(-0x257,-0x260)+f['id'])[a1(-0x27d,-0x25f)]=e['payload']['value']);e['payload']['ieeeAddr']==f['ieee']&&e[a1(-0x2c5,-0x2a4)]['name']==f['prop']&&f['type']=='bin-sensor'&&('iVUlV'===a1(-0x292,-0x26d)?(console['log']('FOUND\x20BIN\x20'+'SENSOR'),e[a1(-0x28d,-0x2a4)]['value']==!![]?(document['getElement'+'ById']('dev_'+f['id'])[a1(-0x279,-0x257)]['contains']('bg-seconda'+'ry')==!![]&&document[a1(-0x273,-0x255)+'ById']('dev_'+f['id'])['classList']['remove']('bg-seconda'+'ry'),document['getElement'+'ById']('dev_'+f['id'])['classList']['add']('bg-warning')):(document['getElement'+'ById']('dev_'+f['id'])['classList']['contains'](a1(-0x2bb,-0x296))==!![]&&document['getElement'+'ById'](a1(-0x269,-0x260)+f['id'])['classList'][a1(-0x273,-0x29d)]('bg-warning'),document[a1(-0x237,-0x255)+'ById']('dev_'+f['id'])['classList'][a1(-0x274,-0x27b)](a1(-0x247,-0x273)+'ry'))):f='wss:');if(e['payload'][a1(-0x256,-0x27f)]==f['ieee']&&e[a1(-0x298,-0x2a4)]['name']==f['prop']&&f['type']==a1(-0x27d,-0x288)){if('ZNLoF'!=='ZNLoF')h(i[a1(-0x227,-0x253)],j[a1(-0x24a,-0x25a)],'false');else{if(f['sw_type']==a1(-0x23f,-0x262))e['payload']['value']=='true'?document['getElement'+'ById'](a1(-0x249,-0x260)+f['id'])['checked']=!![]:document['getElement'+'ById'](a1(-0x263,-0x260)+f['id'])['checked']=![];else{if(f['sw_type']=='bin')e['payload']['value']=='1'?document['getElement'+'ById'](a1(-0x24f,-0x260)+f['id'])['checked']=!![]:document['getElement'+a1(-0x265,-0x266)]('dev_'+f['id'])[a1(-0x299,-0x283)]=![];else f['sw_type']=='openable'?e[a1(-0x2ba,-0x2a4)]['value']=='OPEN'?document['getElement'+'ById']('dev_'+f['id'])[a1(-0x267,-0x283)]=!![]:document['getElement'+'ById'](a1(-0x25c,-0x260)+f['id'])[a1(-0x288,-0x283)]=![]:e['payload']['value']=='ON'?document['getElement'+'ById']('dev_'+f['id'])['checked']=!![]:document['getElement'+a1(-0x261,-0x266)](a1(-0x262,-0x260)+f['id'])['checked']=![];}}}e['payload']['ieeeAddr']==f['ieee']&&e['payload']['name']==f['prop']&&f['type']=='dimmer'&&(document['getElement'+'ById']('dev_'+f['id'])[a1(-0x27e,-0x264)]=e[a1(-0x29f,-0x2a4)]['value']);if(e[a1(-0x2a1,-0x29f)]==a1(-0x289,-0x299)){if(e[a1(-0x29f,-0x2a4)]['name']==f['prop']&&f['type']==a1(-0x265,-0x288)){if(f['sw_type']=='bool')a1(-0x24f,-0x26b)!=='sqaYg'?e['payload'][a1(-0x24e,-0x264)]=='true'?document['getElement'+'ById']('dev_'+f['id'])[a1(-0x2a1,-0x283)]=!![]:document['getElement'+'ById'](a1(-0x262,-0x260)+f['id'])['checked']=![]:g['getElement'+'ById'](a1(-0x273,-0x260)+h['id'])[a1(-0x2ad,-0x283)]=!![];else{if(f['sw_type']=='bin')e['payload']['value']=='1'?document['getElement'+'ById']('dev_'+f['id'])['checked']=!![]:document['getElement'+'ById']('dev_'+f['id'])['checked']=![];else{if(f['sw_type']=='openable'){if(a1(-0x26b,-0x28b)==='BtIia')e['payload']['value']=='OPEN'?document['getElement'+'ById']('dev_'+f['id'])['checked']=!![]:document[a1(-0x245,-0x255)+'ById'](a1(-0x288,-0x260)+f['id'])['checked']=![];else{o['log']('Conneting\x20'+'to\x20'+p);if(q['MozWebSock'+'et'])y=new z(A);else u[a1(-0x2a6,-0x27a)]&&(B=new C(D));}}else e['payload']['value']=='ON'?document['getElement'+a1(-0x27f,-0x266)](a1(-0x23d,-0x260)+f['id'])['checked']=!![]:document[a1(-0x24e,-0x255)+a1(-0x250,-0x266)]('dev_'+f['id'])['checked']=![];}}e['payload']['name']==f['prop']&&f['type']=='dimmer'&&(document[a1(-0x254,-0x255)+'ById']('dev_'+f['id'])['value']=e[a1(-0x2ca,-0x2a4)][a1(-0x27f,-0x264)]);}}});}var wsTimer=0x0,startedWebSockets=0x0;function c(){var a8=['\x22\x20type=\x22bu','startWebSo','constructo','stringify','send','iVUlV',':81/log','Skmhq','addEventLi','-empty','\x22fa\x20','2505cOjpob','ById','ame','value','son','bool','bg-danger','dev_','innerHTML','55gMUWZz','settings-t','change','5724hDalZE','prop','custom-swi','11460086XDcWJi','classList','onopen','getElement','settings-f','ieee','aria-hidde','log','panel_aler','34442ZtXgbL','beforeend','11758960bKRekH','n=\x22true\x22><','payload','7EHCDxa','true','1449432BNfipc','\x22\x20aria-hid','category','settings-s','remove','starting\x20h','6130wwxDmB','est...','objects','rn\x20this\x22)(','bind','bg-warning','37ZmesKq','oxKdj','CLOSE','{}.constru','stener','11331BVpZEc','Conneting\x20','clamation-','battery\x20lo','hadow-val','BtIia','status','console','switch','&value=','bin','nction()\x20','tch','checked','ame=','type','protocol','ieeeAddr','CXFig','data','sw_type','add','WebSocket','/api/obj?n','591258kiNXfr','responseTe','ckets();','heme-val','toString','bg-seconda'];c=function(){return a8;};return c();}function startWebSockets(){var f=window['location'],g;f[a2(0x9b,0x86)]==='https:'?'SgxoI'==='SgxoI'?serverUrl='wss:':g['getElement'+a2(0xb5,0xb3)](a2(0xbb,0xbb)+h['id'])['checked']=![]:serverUrl='ws:';serverUrl+='//'+f['hostname']+a2(0xaf,0x9c);try{console['log'](a2(0x8c,0x6f)+'to\x20'+serverUrl);if(window['MozWebSock'+'et'])'oxKdj'!==a2(0x87,0xb2)?h=new i(j):wsSocket=new MozWebSocket(serverUrl);else window['WebSocket']&&(wsSocket=new WebSocket(serverUrl));}catch(j){return console['log']('Failed\x20con'+'necting\x20to'+'\x20'+serverUrl),![];}wsSocket['binaryType']='blob';function a2(e,f){return d(e- -0x7,f);}wsSocket[a2(0xc5,0xea)]=function(k){'Lspbg'!=='Lspbg'?(j['log']('WS\x20connect'+'ed\x20(/)'),k=0x1,l(m),n()):(console['log']('WS\x20connect'+'ed\x20(/)'),startedWebSockets=0x1,clearTimeout(wsTimer),subscribeToDevices());},wsSocket['onmessage']=function(k){function a3(e,f){return a2(f-0x126,e);}if('miDYj'!=='OlHll'){console['log']('WS\x20data\x20(/'+')');var l;l=JSON['parse'](k[a3(0x1db,0x1c4)]),console['log']('Action:\x20'+l['category']+'\x20Data:\x20'+JSON['stringify'](l)),devUpdate(l);return;}else j[a3(0x1b9,0x19d)][a3(0x1eb,0x1dd)]=='1'?o['getElement'+'ById'](a3(0x1ea,0x1e1)+p['id'])['checked']=!![]:q[a3(0x1c8,0x1ec)+'ById'](a3(0x1b7,0x1e1)+r['id'])['checked']=![];},wsSocket['onclose']=function(k){startedWebSockets=0x0;function a4(e,f){return a2(f-0x2e7,e);}wsTimer=setTimeout(a4(0x3b2,0x391)+a4(0x367,0x38c),0x5*0x3e8),console['log']('WS\x20disconn'+'ected\x20(/)');return;};}function subscribeToDevices(){console[a5(0x219,0x22b)]('Sending\x20me'+'nu\x20subscri'+'ption\x20requ'+a5(0x1d7,0x1e2));var e;e=new Object(),e['action']='subscribe',e['category']='zigbee',wsSocket['send'](JSON[a5(0x1fa,0x20d)](e)),e['category']='objects',wsSocket['send'](JSON['stringify'](e));function a5(e,f){return d(f-0x15a,e);}return![];}function httpGet(e){console['log'](a6(0x1ed,0x216)+'ttp\x20get');var f=new XMLHttpRequest();f['open']('GET',e,![]),f['send']();function a6(e,f){return d(f-0x190,e);}return f[a6(0x249,0x228)]!=0xc8?![]:f['responseTe'+'xt'];}function httpReq(e,f,g){var h=new XMLHttpRequest();function a7(e,f){return d(e-0x174,f);}if(e=='object'){if('WXxFB'==='VfXVg')g['getElement'+a7(0x230,0x245)]('dev_'+h['id'])[a7(0x23f,0x257)]['remove']('bg-seconda'+'ry');else return h['open']('POST',a7(0x21d,0x1ff)+a7(0x214,0x225)+f+a7(0x20f,0x21e)+g,![]),h[a7(0x228,0x231)](null),h[a7(0x21f,0x1f6)+'xt'];}else return h['open']('GET','/api/zigbe'+'e?dev='+e+('&action=se'+'tState&nam'+'e=')+f+'&value='+g,![]),h[a7(0x228,0x20a)](null),h['responseTe'+'xt'];}
+</script>
+</body>
+</html>
