@@ -33,8 +33,8 @@
 
 Скачать
 
-- [04.02.2022](/dashboard/nick7zmail/ui_20220204.html)
-- [11.01.2022](/dashboard/nick7zmail/ui_20220111.html)
+- [15.02.2022](/dashboard/nick7zmail/ui_20220215.html). [Описание](https://t.me/slsys/91704) 
+- [11.01.2022](/dashboard/nick7zmail/ui_20220111.html). [Описание](https://t.me/slsys/88314)
 - [v1 ](/dashboard/nick7zmail/ui.html)
 
 ---
