@@ -1,8 +1,13 @@
-# Введение
+# Резервное копирование и восстановление файлов
+
 Иногда требуется скопировать все файлы из хранилища SLS. Следующие примеры позволяют выполнить данную задачу различными способами.
+
 ## Windows 
+
 ### Powershell
+
 Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `.\_back\date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на Windows 11, Powershell 5.1. **Внимание!** Обязательно указать token, даже при отключенной авторизации в шлюзе.
+
 ```powershell
 $slsIP = "192.168.1.247"
 $tokenSLS="e9d38bedb6412e.....ed9575"
@@ -32,9 +37,13 @@ if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false)
 	Write-Host "Error request for native backup: File Not Found"
 }
 ```
+
 ## Linux
+
 ### Bash + JQ
+
 Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `./date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на `Ubuntu 22.04.1 LTS` + `JQ 1.6`. **Внимание!** Обязательно указать token, даже при отключенной авторизации в шлюзе.
+
 ```shell
 slsIP=192.168.1.247
 tokenSLS="e9d38bedb6412e.....ed9575"
@@ -67,4 +76,62 @@ else
 	echo Error request for native backup: File Not Found
 fi
 
+```
+
+## Решения других пользователей
+
+### Пользователь из чата @slsys с ником Юр Доценко
+
+> Скрипт готов. Успешно гоняю файлы туда и обратно на SLS. Я отладил на MAC OS, то же самое, что и LINUX.
+
+```python
+import requests
+import os
+import json
+import urllib.parse
+
+def getFromSLS(url, folder):
+    r = requests.get(url + '/api/storage?path=/')
+    print(r.status_code)
+#    print(json.dumps(r.json(),indent=4))
+    dd = r.json()
+    dir = dd["result"]
+    for item in dir:
+        name = item['name']
+        print("==================" + name + "====================")
+        r = requests.get(url + '/api/storage?path=/' + name)
+        content = r.text.encode("ISO-8859-1", errors = 'replace').decode("UTF-8")
+        my_file = open(folder + name, "w")
+        my_file.write(content)
+        my_file.close()
+
+def pushToSLS(url, token, folder):
+    for fName in os.listdir(folder):
+        if fName.endswith(".json") or fName.endswith(".lua"):
+            pushFile(url, token, folder, fName)
+
+
+def pushFile(SLSurl, token, folder, name):
+    my_file = open(folder + name, "r")
+    content = my_file.read()
+    my_file.close()
+
+    print("===== " + name + " =====> " + SLSurl)
+    query = {'token': token,
+             'path': name,
+             'plain': content}
+    url = SLSurl + '/api/storage?' + urllib.parse.urlencode(query)
+    r = requests.post(url)
+    print(json.dumps(r.json()))
+
+
+if name == "__main__":
+    # Все файлы из SLS скопировать в указанную папку
+    #getFromSLS('http://din.xxxxxxxxxxxxxxx.keenetic.pro', "/Users/docn/Documents/SLS_files/test/")
+
+    # Конкретнфй файл скопировать на SLS
+    #pushFile("https://sls.xxxxxxxxxxxxxxxxx.keenetic.pro", "xxxxxxxxxxxxxxxx", "/Users/docn/Documents/SLS_files/sls_sls_files/", "termostatCR.lua")
+
+    # Перенести на SLS все LUA и JSON файлы из папки
+    pushToSLS("https://sls.xxxxxxxxxxxxxxxx.keenetic.pro", "xxxxxxxxxxxxxxxx", "/Users/docn/Documents/SLS_files/sls_sls_files/")
 ```
