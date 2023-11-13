@@ -82,7 +82,9 @@ fi
 
 ### Пользователь из чата @slsys с ником Юр Доценко
 
-> Скрипт готов. Успешно гоняю файлы туда и обратно на SLS. Я отладил на MAC OS, то же самое, что и LINUX.
+> Набор Python-скриптов для бэкапирования и восстановления всех или отдельных файлов SLS шлюза. В конце файла замените текстовые константы своими значениями token и URL шлюза. И раскоментируйте вызов нужной функции в зависимости от текущей задачи.
+
+> Успешно гоняю файлы туда и обратно на SLS. Я отладил на MAC OS, то же самое, что и LINUX.
 
 ```python
 import requests
@@ -90,20 +92,26 @@ import os
 import json
 import urllib.parse
 
-def getFromSLS(url, folder):
-    r = requests.get(url + '/api/storage?path=/')
+def getFromSLS(urlSLS, tokenSLS, folder):
+    r = requests.get(urlSLS + '/api/storage?path=/')
     print(r.status_code)
-#    print(json.dumps(r.json(),indent=4))
     dd = r.json()
     dir = dd["result"]
+
     for item in dir:
         name = item['name']
         print("==================" + name + "====================")
-        r = requests.get(url + '/api/storage?path=/' + name)
+        r = requests.get(urlSLS + '/api/storage?token='+ tokenSLS + '&path=/' + name)
         content = r.text.encode("ISO-8859-1", errors = 'replace').decode("UTF-8")
         my_file = open(folder + name, "w")
         my_file.write(content)
         my_file.close()
+    print("================== native backup ====================")
+    r = requests.post(urlSLS + '/api/backup?token='+ tokenSLS + '&action=create&config=1&zigbee=1')
+    content = r.text.encode("ISO-8859-1", errors='replace').decode("UTF-8")
+    my_file = open(folder + 'native_backup', "w")
+    my_file.write(content)
+    my_file.close()
 
 def pushToSLS(url, token, folder):
     for fName in os.listdir(folder):
@@ -126,12 +134,13 @@ def pushFile(SLSurl, token, folder, name):
 
 
 if name == "__main__":
+    tokenSLS = "f6fxxxxxxxxxxxxxxxxxxxxx72"
     # Все файлы из SLS скопировать в указанную папку
-    #getFromSLS('http://din.xxxxxxxxxxxxxxx.keenetic.pro', "/Users/docn/Documents/SLS_files/test/")
+    getFromSLS('https://sls.xxxxxxxxxxx.keenetic.pro', tokenSLS, "/Users/docn/Documents/SLS_files/test/")
 
     # Конкретнфй файл скопировать на SLS
-    #pushFile("https://sls.xxxxxxxxxxxxxxxxx.keenetic.pro", "xxxxxxxxxxxxxxxx", "/Users/docn/Documents/SLS_files/sls_sls_files/", "termostatCR.lua")
+    #pushFile("https://sls.xxxxxxxxxxx.keenetic.pro", tokenSLS, "/Users/docn/Documents/SLS_files/test/", "test.lua")
 
     # Перенести на SLS все LUA и JSON файлы из папки
-    pushToSLS("https://sls.xxxxxxxxxxxxxxxx.keenetic.pro", "xxxxxxxxxxxxxxxx", "/Users/docn/Documents/SLS_files/sls_sls_files/")
+    #pushToSLS("https://sls.xxxxxxxxxxx.keenetic.pro", tokenSLS, "/Users/docn/Documents/SLS_files/sls_sls_files/")
 ```
