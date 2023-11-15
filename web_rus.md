@@ -103,11 +103,11 @@ ZigbeeSLS/0xA4C138E143F426BA/model_name TS0201
 - Add options states to payload
   - отправка дополнительных состояний
   - выкл:
-    ```json
+    ```js
     ZigbeeSLS/0xA4C138AAA29895A8 {"current":0,"energy":0,"linkquality":123,"power":0,"state":"ON","test":"0","voltage":225}
     ```
   - вкл:
-    ```json
+    ```js
     ZigbeeSLS/0xA4C138AAA29895A8 {"backlight_mode":"OFF","child_lock":false,"current":0,"energy":0,"last_seen":1700015792,"linkquality":123,"power":0,"power_on_behavior":"OFF","state":"ON","test":"0","voltage":231,"friendly_name":"pig_slow-cooker","model_name":"TS011F"}
     ```
 
