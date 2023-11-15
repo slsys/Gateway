@@ -67,17 +67,17 @@ Web интерфейс необходим для первоначальной к
 
 - MQTT Send Raw Command
   - Все атрибуты отправляются в сыром виде
-```
+```bash
 ZigbeeSLS/0xA4C138E143F426BA//2/MS_TEMPERATURE_MEASUREMENT/REPORT {"raw":"0000297E09","0000":{"type":41,"raw":"7E09","value":2430,"len":2},"trSeqNum":53,"linkquality":43}
 ```
 - MQTT Send parsed JSON (Default)
   - Все атрибуты отправляются одним пакетом в формате JSON
-```json
+```bash
 ZigbeeSLS/0xA4C138E143F426BA {"alarm_humidity":"off","alarm_humidity_max":90,"alarm_humidity_min":30,"alarm_temperature":"off","alarm_temperature_max":40,"alarm_temperature_min":10,"battery":30,"humidity":48.8,"last_seen":1700015809,"linkquality":43,"temperature":24.8,"voltage":2.8,"friendly_name":"dht_bedroom","model_name":"TS0201"}
   ```
 - MQTT Send parsed Attributes
   - Каждый атрибут в отдельном пакете:
-```
+```bash
   ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity off
 ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity_max 90
 ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity_min 30
@@ -103,11 +103,11 @@ ZigbeeSLS/0xA4C138E143F426BA/model_name TS0201
 - Add options states to payload
   - отправка дополнительных состояний
   - выкл:
-    ```js
+    ```bash
     ZigbeeSLS/0xA4C138AAA29895A8 {"current":0,"energy":0,"linkquality":123,"power":0,"state":"ON","test":"0","voltage":225}
     ```
   - вкл:
-    ```js
+    ```bash
     ZigbeeSLS/0xA4C138AAA29895A8 {"backlight_mode":"OFF","child_lock":false,"current":0,"energy":0,"last_seen":1700015792,"linkquality":123,"power":0,"power_on_behavior":"OFF","state":"ON","test":"0","voltage":231,"friendly_name":"pig_slow-cooker","model_name":"TS011F"}
     ```
 
