@@ -60,8 +60,63 @@ Web интерфейс необходим для первоначальной к
 ![Main menu - Config](/img/zigbee-config.png)
 
 1. `Channel` - Выбор номера частотного канала, на котором будет работать сеть Zigbee (Значение по умолчанию - `11`)
-1. `PanId` - Настройка идентификатора сети Zegbee (Personal area network ID - PAN ID)
-1. `MQTT messages options` - Возможность выбора формата передаваемых данных MQTT.
+2. `PanId` - Настройка идентификатора сети Zegbee (Personal area network ID - PAN ID)
+3. `MQTT messages options` - Возможность выбора формата передаваемых данных MQTT
+
+#### MQTT messages options
+
+- MQTT Send Raw Command
+  - Все атрибуты отправляются в сыром виде
+```
+ZigbeeSLS/0xA4C138E143F426BA//2/MS_TEMPERATURE_MEASUREMENT/REPORT {"raw":"0000297E09","0000":{"type":41,"raw":"7E09","value":2430,"len":2},"trSeqNum":53,"linkquality":43}
+```
+- MQTT Send parsed JSON (Default)
+  - Все атрибуты отправляются одним пакетом в формате JSON
+```json
+ZigbeeSLS/0xA4C138E143F426BA {"alarm_humidity":"off","alarm_humidity_max":90,"alarm_humidity_min":30,"alarm_temperature":"off","alarm_temperature_max":40,"alarm_temperature_min":10,"battery":30,"humidity":48.8,"last_seen":1700015809,"linkquality":43,"temperature":24.8,"voltage":2.8,"friendly_name":"dht_bedroom","model_name":"TS0201"}
+  ```
+- MQTT Send parsed Attributes
+  - Каждый атрибут в отдельном пакете:
+```
+  ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity off
+ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity_max 90
+ZigbeeSLS/0xA4C138E143F426BA/alarm_humidity_min 30
+ZigbeeSLS/0xA4C138E143F426BA/alarm_temperature off
+ZigbeeSLS/0xA4C138E143F426BA/alarm_temperature_max 40
+ZigbeeSLS/0xA4C138E143F426BA/alarm_temperature_min 10
+ZigbeeSLS/0xA4C138E143F426BA/battery 30
+ZigbeeSLS/0xA4C138E143F426BA/humidity 44.6
+ZigbeeSLS/0xA4C138E143F426BA/last_seen 1700016518
+ZigbeeSLS/0xA4C138E143F426BA/linkquality 43
+ZigbeeSLS/0xA4C138E143F426BA/temperature 24.50
+ZigbeeSLS/0xA4C138E143F426BA/voltage 2.8
+ZigbeeSLS/0xA4C138E143F426BA/friendly_name dht_bedroom
+ZigbeeSLS/0xA4C138E143F426BA/model_name TS0201
+ ```
+- Use FriendlyName (for MQTT Topic & HA Entity ID)
+  - Если указано, то топики именуются `friendly_name`: `ZigbeeSLS/dht_bedroom`
+  - Иначе топики именуются `ieeeAddr`: `ZigbeeSLS/0xA4C138E143F426BA`
+- Send Cache States (Default)
+  - Отправка данных из кэша SLS
+- Clear States
+  - Очистка состояния при отправке. Требуется для правильной работы некоторых автоматизаций. Например, кнопка с несколькими значениями состояния `action`: если данная опция выключена и кнопка шлет одно состояние `single` то автоматизация, которая контролирует его изменение работать не будет.
+- Add options states to payload
+  - отправка дополнительных состояний
+  - выкл:
+    ```json
+    ZigbeeSLS/0xA4C138AAA29895A8 {"current":0,"energy":0,"linkquality":123,"power":0,"state":"ON","test":"0","voltage":225}
+    ```
+  - вкл:
+    ```json
+    ZigbeeSLS/0xA4C138AAA29895A8 {"backlight_mode":"OFF","child_lock":false,"current":0,"energy":0,"last_seen":1700015792,"linkquality":123,"power":0,"power_on_behavior":"OFF","state":"ON","test":"0","voltage":231,"friendly_name":"pig_slow-cooker","model_name":"TS011F"}
+    ```
+
+- Add transaction number to payload
+  - отправка `trSeqNum`: номер транзакции
+- Add model name to json payload
+  - отправка `model_name`: `ModelId` на вкладке `Info` устройства
+- Add last seen to json payload
+  - отправка `last_seen`: unixtime последнего появления устройства в сети
 
 ### Reset to Default
 Сброс к "заводским настройкам"
