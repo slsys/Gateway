@@ -1,0 +1,3 @@
+# TouchLink
+
+The zigbee protocol provides device management without a coordinator. TouchLink technology allows you to create a separate zigbee network between two devices. For communication supporting technology devices, you should familiarize yourself with the documentation. Ikea stores sell Tradfri lamp and remote control kits that support this pairing. Usually to pair the lamp and the remote control, you need to bring the remote control to the included light and press the pairing button. After some time, the lamp will blink with increasing frequency. After some time, the blinking will stop, the devices will need to create their own network and register for device events.
