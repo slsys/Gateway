@@ -152,6 +152,26 @@ export default defineConfig({
           next: 'Следующая страница'
         },
         outline:{label:'На странице:'},
+        search: {
+          provider: 'local',
+          options: {
+            translations: {
+              button: {
+                buttonText: 'Поиск',
+                buttonAriaLabel: 'Найти',
+              },
+              modal: {
+                noResultsText: 'Ничего не найдено',
+                resetButtonTitle: 'Сбросить',
+                footer: {
+                  selectText: 'Выбрать',
+                  navigateText: 'Навигация',
+                  closeText: 'Закрыть',
+                }
+              }
+            }
+          }
+        },        
         nav: [
           { text: 'Домашняя', link: '/' },
           { text: 'Документация', link: '/basic' },
