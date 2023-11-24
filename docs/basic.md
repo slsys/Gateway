@@ -40,11 +40,11 @@ SLS-шлюз с поддержкой Zigbee выполняет роль коор
 
 Устройство можно [собрать самостоятельно](https://modkam.ru/?p=1342), или приобрести [Telegram](https://t.me/avenit)
 
-![home](/img/Mi_Gateway_Shield12.jpg)
+![home](img/Mi_Gateway_Shield12.jpg)
 
 # Прошивка устройства
 
-[Постоянная ссылка на прошивку устроуства](https://github.com/slsys/Gateway/tree/master/rom)
+[Постоянная ссылка на прошивку устроуства](https://githАппаратная/imub.com/slsys/Gateway/tree/master/rom)
 
 [Подробная инструкция по перепрошивке](flashing_rus.md)
 

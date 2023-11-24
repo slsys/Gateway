@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "SLS Smart Home",
   description: "SLS Smart Home documentation",
+  base: '/docs/',
   //ignoreDeadLinks: true,
   cleanUrls: true,
   themeConfig: {
@@ -35,7 +36,7 @@ export default defineConfig({
               { text: 'Yandex', link: '/integrations/yandex' },
             ]
           },
-          //{ text: 'FAQ (вопросы и ответы)', link: '/faq' },
+          { text: 'FAQ (вопросы и ответы)', link: '/faq' },
         ]
       },
       {
@@ -53,7 +54,7 @@ export default defineConfig({
           { text: 'Хранилище', link: '/storage' },
           { text: 'Бэкап и восстановление', link: '/backup' },
           { text: 'Управление LED', link: '/led_control' },
-          //{ text: 'SLS Cloud', link: '/cloud' },
+          { text: 'SLS Cloud', link: '/cloud' },
           { text: 'SLS Pro', link: '/sls_pro' },
         ]
       },
