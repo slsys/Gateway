@@ -7,10 +7,14 @@ export default defineConfig({
   base: '/docs/',
   //ignoreDeadLinks: true,
   cleanUrls: true,
+  lastUpdated: true,
   themeConfig: {
     logo: {
       light: '/img/sls.svg',
       dark: '/img/sls_light.svg'
+    },
+    /*editLink: {
+      pattern: 'https://github.com/slsys/Gateway/edit/master/:path'
     },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -104,7 +108,7 @@ export default defineConfig({
         ]
       }
     ],
-    outline:{label:'На странице:'},
+    outline:{label:'На странице:'},*/
     socialLinks: [
       { icon: 'github', link: 'https://github.com/slsys/Gateway/' },
       { icon: 
@@ -133,12 +137,212 @@ export default defineConfig({
   locales: {
     root: {
       label: 'Русский',
-      lang: 'ru'
+      lang: 'ru',
+      themeConfig:
+      {
+        editLink: {
+          pattern: 'https://github.com/slsys/Gateway/edit/master/:path',
+          text: 'Редактировать в GitHub'
+        },
+        lastUpdated: {
+          text: 'Обновлено',
+        },
+        docFooter: {
+          prev: 'Предыдущая страница',
+          next: 'Следующая страница'
+        },
+        outline:{label:'На странице:'},
+        nav: [
+          { text: 'Домашняя', link: '/' },
+          { text: 'Документация', link: '/basic' },
+          { text: 'Команда', link: '/team' },
+          //{ text: 'FAQ (вопросы и ответы)', link: '/faq' },
+        ],
+        sidebar: [
+          {
+            text: 'Введение',
+            items: [
+              { text: 'Общие сведения', link: '/basic' },
+              { text: 'Первый запуск', link: '/firststart' },
+              {
+                text: 'Возможности интеграции',
+                //collapsed: false,
+                items: [
+                  { text: 'Home Assistant', link: '/integrations/has' },
+                  { text: 'Majordomo', link: '/integrations/majordomo' },
+                  { text: 'Telegram', link: '/telegram' },
+                  { text: 'Yandex', link: '/integrations/yandex' },
+                ]
+              },
+              { text: 'FAQ (вопросы и ответы)', link: '/faq' },
+            ]
+          },
+          {
+            text: 'Возможности',
+            items: [
+              { text: 'Web-интерфейс', link: '/web' },
+              { text: 'Кастомная визуализация', link: '/ui' },
+              { text: 'Конвертеры устройств', link: '/zigbee_converters' },
+              { text: 'Объекты', link: '/objects' },
+              { text: 'Таймеры', link: '/timers' },
+              { text: 'Сценарии', link: '/scenes' },
+              { text: 'Карта сети', link: '/map' },
+              { text: 'Binding', link: '/bind' },
+              { text: 'Touchlink', link: '/touchlink' },
+              { text: 'Хранилище', link: '/storage' },
+              { text: 'Бэкап и восстановление', link: '/backup' },
+              { text: 'Управление LED', link: '/led_control' },
+              { text: 'SLS Cloud', link: '/cloud' },
+              { text: 'SLS Pro', link: '/sls_pro' },
+            ]
+          },
+          {
+            text: 'Протокол',
+            items: [
+              {
+                text: 'HTTP API',
+                link: '/http_api',
+                items: [
+                  
+                  
+                ]
+              },          
+              {
+                text: 'MQTT',
+                items: [
+                  { text: 'Структура сообщений (z2m)', link: 'https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html' },
+                  { text: 'Дополнительные комнады', link: '/slscommand' },
+                ]
+              }, 
+            ]
+          },      
+          {
+            text: 'Оборудование',
+            items: [
+              { text: 'Шлюзы', link: '/sls_dev' },
+              { text: 'Обновление координатора', link: '/update_coordinator' },
+              { text: 'KNX', link: '/knx' },
+              { text: '1-wire', link: '/1wire' },
+              { text: 'ModBus', link: '/modbus' },
+              { text: 'OpenTherm', link: '/ot_boiler_compatibility' },
+              
+            ]
+          },
+          {
+            text: 'Скрипты и сценарии',
+            items: [
+              { text: 'Simple Bind. Автоматизации', link: '/simplebind' },
+              { text: 'Поддержка скриптов LUA', link: '/lua' },
+              { text: 'Примеры сценариев', link: '/samples' },
+              { text: 'Использование GPIO', link: '/gpio_sample' },
+              { text: 'MQTT', link: '/mqtt' },
+              { text: 'Термоголовка', link: '/trv_ext_temp' },
+              { text: 'Управление котлами', link: '/heating_сurve' },
+              
+            ]
+          }
+        ],
+      }
     },
     en: {
       label: 'English',
       lang: 'en', // optional, will be added  as `lang` attribute on `html` tag
-      link: '/en/' // default /fr/ -- shows on navbar translations menu, can be external
+      link: '/en/', // default /fr/ -- shows on navbar translations menu, can be external
+      themeConfig:
+      {
+        editLink: {
+          pattern: 'https://github.com/slsys/Gateway/edit/master/:path'
+        },
+        nav: [
+          { text: 'Home', link: '/en' },
+          { text: 'Documentation', link: '/en/basic' },
+          { text: 'Team', link: '/en/team' },
+        ],
+        sidebar: [
+          {
+            text: 'Intro',
+            items: [
+              { text: 'Basic', link: '/en/basic' },
+              { text: 'First start', link: '/en/firststart' },
+              {
+                text: 'Integrations',
+                //collapsed: false,
+                items: [
+                  { text: 'Home Assistant', link: '/en/integrations/has' },
+                  { text: 'Majordomo', link: '/en/integrations/majordomo' },
+                  { text: 'Telegram', link: '/en/telegram' },
+                  { text: 'Yandex', link: '/en/integrations/yandex' },
+                ]
+              },
+              { text: 'FAQ (answers and questions)', link: '/en/faq' },
+            ]
+          },
+          {
+            text: 'Abilities',
+            items: [
+              { text: 'Web-interface', link: '/en/web' },
+              { text: 'Custom visualization', link: '/en/ui' },
+              { text: 'Device converters', link: '/en/zigbee_converters' },
+              { text: 'Objects', link: '/en/objects' },
+              { text: 'Timers', link: '/en/timers' },
+              { text: 'Scenes', link: '/en/scenes' },
+              { text: 'Network map', link: '/en/map' },
+              { text: 'Binding', link: '/en/bind' },
+              { text: 'Touchlink', link: '/en/touchlink' },
+              { text: 'Storage', link: '/en/storage' },
+              { text: 'Backup and recovery', link: '/en/backup' },
+              { text: 'LED control', link: '/en/led_control' },
+              { text: 'SLS Cloud', link: '/en/cloud' },
+              { text: 'SLS Pro', link: '/en/sls_pro' },
+            ]
+          },
+          {
+            text: 'Protocol',
+            items: [
+              {
+                text: 'HTTP API',
+                link: '/en/http_api',
+                items: [
+                  
+                  
+                ]
+              },          
+              {
+                text: 'MQTT',
+                items: [
+                  { text: 'Message structure (z2m)', link: 'https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html' },
+                  { text: 'Additional commands', link: '/en/slscommand' },
+                ]
+              }, 
+            ]
+          },      
+          {
+            text: 'Hardware',
+            items: [
+              { text: 'Gateways', link: '/en/sls_dev' },
+              { text: 'Coordinator update', link: '/en/update_coordinator' },
+              { text: 'KNX', link: '/en/knx' },
+              { text: '1-wire', link: '/en/1wire' },
+              { text: 'ModBus', link: '/en/modbus' },
+              { text: 'OpenTherm', link: '/en/ot_boiler_compatibility' },
+              
+            ]
+          },
+          {
+            text: 'Scripts and scenarios',
+            items: [
+              { text: 'Simple Bind Automation', link: '/en/simplebind' },
+              { text: 'LUA Script support', link: '/en/lua' },
+              { text: 'Example scripts', link: '/en/samples' },
+              { text: 'GPIO use', link: '/en/gpio_sample' },
+              { text: 'MQTT', link: '/en/mqtt' },
+              { text: 'Thermal head', link: '/en/trv_ext_temp' },
+              { text: 'Boiler control', link: '/en/heating_сurve' },
+              
+            ]
+          }
+        ]
+      }
     }
   }
 })

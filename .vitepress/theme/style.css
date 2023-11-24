@@ -136,13 +136,4 @@
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
-/**
-.VPNav {
-  background: #1e88e5;
-  text-color: white;
-}
 
-.dark .VPNav {
-  background: #0d375c;
-}
-**/
