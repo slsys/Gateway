@@ -39,7 +39,7 @@
 
 ## Пример dashboard от [BalagurovAV](https://t.me/BalagurovAV)
 
-![](https://github.com/slsys/Gateway/dashboard/BalagurovAV/20231111.jpg)
+![](/dashboard/BalagurovAV/20231111.jpg)
 
 [Скачать](https://github.com/BalagurOFF/sls_ui.html)
 
