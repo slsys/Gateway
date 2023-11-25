@@ -435,67 +435,7 @@ zigbee.configReport("0x90FD9FFFFEF7E26D", 1, 0x0001, 0x0021, 0x20, 1800, 3600, 1
 
 ### Библиотека MQTT
 
-#### mqtt.prefix()
-
-Получает или задает системный префикс, настроенный в меню `Settings` -> `Link` -> `MQTT Setup`, поле `System prefix topic`
-
-```lua
-mqtt.prefix([topic])
--- topic - STR, System prefix topic
---
--- Получить префикс
-local mqtt_prifix = mqtt.prefix()
--- Задать префикс
-mqtt.prefix("newTopic")
-```
-
-#### mqtt.pub()
-
-Публикует на MQTT сервер в топик _topic_ значение _payload_.
-
-```lua
-mqtt.pub(topic, payload)
-```
-
-Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
-
-```lua
-mqtt.pub('cmnd/sonoff5/power', 'toggle')
-```
-
-#### mqtt.connected()
-
-Возвращает статус подключение к брокеру MQTT. Выполняется без параметров.
-
-#### mqtt.sub()
-
-Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
-
-```lua
-mqtt.sub(topic, objName)
--- topic - STR, топик MQTT
--- objName - STR, объект, в который записываются данные
-```
-
-Пример подписки на топик с температурой, которую шлюз помещает в объект:
-
-```lua
-mqtt.sub('dev/sensor/temp', 'room_temp')
-```
-
-#### mqtt.unSub()
-
-Отписывается от топика.
-
-```lua
-mqtt.unSub(topic)
-```
-
-Пример отписки от топика с температурой
-
-```lua
-mqtt.unSub('dev/sensor/temp')
-```
+Подробное описание [здесь](/mqtt.md)
 
 ---
 
