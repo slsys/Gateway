@@ -4,6 +4,17 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "SLS Smart Home",
   description: "SLS Smart Home documentation",
+  head: [
+    ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/img/sls.svg"}],
+    ['link', { rel: "icon", type: "image/svg", sizes: "32x32", href: "/img/sls.svg"}],
+    ['link', { rel: "icon", type: "image/svg", sizes: "16x16", href: "/img/sls.svg"}],
+//    ['link', { rel: "manifest", href: "/assets/favicons/site.webmanifest"}],
+//    ['link', { rel: "mask-icon", href: "/assets/favicons/safari-pinned-tab.svg", color: "#3a0839"}],
+    ['link', { rel: "shortcut icon", href: "/img/sls.svg"}],
+    ['meta', { name: "msapplication-TileColor", content: "#ffffff"}],
+//    ['meta', { name: "msapplication-config", content: "/assets/favicons/browserconfig.xml"}],
+    ['meta', { name: "theme-color", content: "#ffffff"}],
+  ],
   base: '/docs/',
   //ignoreDeadLinks: true,
   cleanUrls: true,

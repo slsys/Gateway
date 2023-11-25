@@ -8,6 +8,7 @@ hero:
   name: "SLS Smart Home"
   text: "Документация SLS-шлюза"
   tagline: Переработанная и улучшенная версия документации проекта
+  #image: /img/sls_color.svg
   #actions:
   #  - theme: brand
   #    text: Lua
