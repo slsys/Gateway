@@ -37,65 +37,73 @@ https://cloud.slsys.io/monitoring?device={TOKEN}
 
 Вы можете включить подключение к облаку в настройках `Settings -> Link -> Cloud Setup`.
 
-Возможно отключение отправки данных по устройствам и прием команд управления из облака.
+Возможно отключение отправки данных по устройствам и прием команд управления из облака. Также здесь можно получить API токен.
 
 ![](/img/cloud.png)
 
 ## HTTP API
 
-### Получение данных об устройстве по его токену
+### Получение данных об устройстве по его токену. Метод GET
 
 ```http
-GET https://cloud.slsys.io/api/device/{TOKEN}
+https://cloud.slsys.io/api/device/TOKEN
 ```
 
-### Проверяем есть ли данный email, если нет - отправляет код подтверждения на него, который необходим для регистрации
+### Проверяем есть ли данный email
+
+Если нет - отправляет код подтверждения на него, который необходим для регистрации. Методы GET/POST
 
 ```http
-<!--GET/POST-->
 https://cloud.slsys.io/api/user/check
 ```
 
 Параметры:
 
-  email (*)
+- email (*)
   
 ### Регистрирует новый аккаунт
 
+Методы GET/POST
+
 ```http
-GET/POST https://cloud.slsys.io/api/user/reg
+https://cloud.slsys.io/api/user/reg
 ```
 
-email (*)
+Параметры:
 
-email_code (*)
-
-name (*)  
-
-password (*)
+- email (*)
+- email_code (*)
+- name (*)  
+- password (*)
 
 Возвращает ok при успешной регистрации
 
 ### Вход в аккаунт
 
+Методы GET/POST
+
 ```http
-GET/POST https://cloud.slsys.io/api/user/reg
+https://cloud.slsys.io/api/user/reg
 ```
 
-email (*)
+Параметры:
 
-password (*)  
-
-application - Идентификатор приложения для сессии, по умолчанию default
+- email (*)
+- password (*)  
+- application - Идентификатор приложения для сессии, по умолчанию default
 
 Возвращает sid при успешном входе
 
 ### Получение данных по аккаунту (email и name)
 
+Методы GET/POST
+
 ```http
-GET/POST https://cloud.slsys.io/api/user/profile
+https://cloud.slsys.io/api/user/profile
 ```
 
-access_token (*)  
+Параметры:
+
+- access_token (*)  
 
 Возвращает информацию профиля
