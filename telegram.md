@@ -153,7 +153,7 @@ telegram.send('hello world')
 Для обработки входящих сообщений необходимо создать файл `tlg.lua`. Пример файла:
 
 ```lua
-if (Event.Telegram.Text=="Info") then dofile("/int/info.lua") end   -- при получениие сообщения, содержащего "Info" запускать сценарий info.lua
+if (Event.Telegram.Text=="Info") then dofile("/int/info.lua") end   -- при получении сообщения, содержащего "Info" запускать сценарий info.lua
 ```
 
 Теперь при получении сообщения `Info` в просматриваемом чате будет запускаться скрипт /int/info.lua, в который можно поместить например отправку информации о шлюзе:
