@@ -52,7 +52,8 @@ GET https://cloud.slsys.io/api/device/{TOKEN}
 ### Проверяем есть ли данный email, если нет - отправляет код подтверждения на него, который необходим для регистрации
 
 ```http
-GET/POST https://cloud.slsys.io/api/user/check
+<!--GET/POST-->
+https://cloud.slsys.io/api/user/check
 ```
 
 Параметры:
