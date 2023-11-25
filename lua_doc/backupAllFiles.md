@@ -138,7 +138,7 @@ if name == "__main__":
     # Все файлы из SLS скопировать в указанную папку
     getFromSLS('https://sls.xxxxxxxxxxx.keenetic.pro', tokenSLS, "/Users/docn/Documents/SLS_files/test/")
 
-    # Конкретнфй файл скопировать на SLS
+    # Конкретный файл скопировать на SLS
     #pushFile("https://sls.xxxxxxxxxxx.keenetic.pro", tokenSLS, "/Users/docn/Documents/SLS_files/test/", "test.lua")
 
     # Перенести на SLS все LUA и JSON файлы из папки
