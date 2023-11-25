@@ -138,7 +138,7 @@ GET /api/zigbee?dev=0x2855&action=setState&name=state&value=ON
 GET /api/zigbee?dev=0x1841&action=setSimpleBind&state=contact&value=test.lua
 ```
 
-привязывает скрипт `test.lua` на запуск при изменении состояния `contact`, на устройстве с адресом `nwkAddr = 0x1841`. Также поддерживается адрес `IEEE`, либо `FriendlyName`. Также в параметре `value` можно указать драгие доступные правила SB. Подробнее о [SimpleBind](/simplebind.md)
+привязывает скрипт `test.lua` на запуск при изменении состояния `contact`, на устройстве с адресом `nwkAddr = 0x1841`. Также поддерживается адрес `IEEE`, либо `FriendlyName`. Также в параметре `value` можно указать другие доступные правила SB. Подробнее о [SimpleBind](/simplebind.md)
 
 ### Управление Аудио
 

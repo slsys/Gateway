@@ -4,41 +4,64 @@
 
 ## Работа с MQTT из скриптов
 
-**mqtt.pub()**
+### mqtt.prefix()
 
-Синтаксис: mqtt.pub(topic, payload)
+Получает или задает системный префикс, настроенный в меню `Settings -> Link -> MQTT Setup`, поле `System prefix topic`
 
-Публикует на MQTT сервер в топик topic значение payload.
+```lua
+mqtt.prefix([topic])
+-- topic - STR, System prefix topic
+--
+-- Получить префикс
+local mqtt_prifix = mqtt.prefix()
+-- Задать префикс
+mqtt.prefix("newTopic")
+```
 
-Пример управления реле на прошивке Tasmota - cmnd/имя устройства/имя реле
+### mqtt.connected()
+
+Возвращает статус подключение к брокеру MQTT. Выполняется без параметров.
+
+### mqtt.pub()
+
+Публикует на MQTT сервер в топик _topic_ значение _payload_.
+
+```lua
+mqtt.pub(topic, payload)
+```
+
+Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
+
 ```lua
 mqtt.pub('cmnd/sonoff5/power', 'toggle')
 ```
 
-**mqtt.sub**
+### mqtt.sub()
 
-Синтаксис: mqtt.sub(Topic, ObjName)
+Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
 
-Подписывается на топик и помещает полученые значения в объект.
-
-Можно вызывать повторно с другим именем объекта, для его изменения.
+```lua
+mqtt.sub(topic, objName)
+-- topic - STR, топик MQTT
+-- objName - STR, объект, в который записываются данные
+```
 
 Пример подписки на топик с температурой, которую шлюз помещает в объект:
+
 ```lua
 mqtt.sub('dev/sensor/temp', 'room_temp')
 ```
 
-**mqtt.unSub**
-
-Синтаксис: mqtt.unSub(Topic)
+### mqtt.unSub()
 
 Отписывается от топика.
 
 ```lua
-mqtt.unSub('dev/sensor/temp')
+mqtt.unSub(topic)
 ```
 
-**mqtt.connected()**
+Пример отписки от топика с температурой
 
-Проверяет подключение к брокеру
-
+```lua
+mqtt.unSub('dev/sensor/temp')
+```

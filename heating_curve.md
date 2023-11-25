@@ -1,12 +1,11 @@
-# Вступление
-Это заготовка статьи.
+# Управление котлом по кривым отопления (DRAFT)
 
-# Управление котлом по кривым отопления
 Это заготовка статьи.
 
 Управление по заданному массиву ПЗА
 
 Сценарий:
+
 ```lua
 --функция для поиска уставки в кривой отопления
 function getust(tbl, val)
@@ -42,15 +41,15 @@ local krivaya = {
 local ul  = '1w.28-96A907D6013C/temperature'  						  --датчик ds18b2, подключенный к SLS DIN MIN
 local ul_temp, prev_ul_temp = obj.get(ul)    						  --получение старого и нового значения уличной температуры
 local new_ust, prev_ust = obj.get('thermo.boiler.target_temperature') --получение текущего значения уставки 
-local ul_ot, prev_ul_ot = obj.get('thermo.boiler.temperature_outside')--получение уличной темпетуры с котла по ОТ
+local ul_ot, prev_ul_ot = obj.get('thermo.boiler.temperature_outside')--получение уличной температуры с котла по ОТ
 
 --берем средние значения уличной температуры
 local ul_average=math.average({ul_temp,ul_ot,temp_veranda})
 local temp_average, prev_temp_average   	  = obj.get("average_temp")
 
---вводим коээфициент теплоекмости
+--вводим коэффициент теплоемкости
 local k=1.1
-local ust=getust(krivaya, ul_temp)*k   --рассчет необходимой температуры для внесения уставки
+local ust=getust(krivaya, ul_temp)*k   --расчет необходимой температуры для внесения уставки
 
 --меняем уставку при необходимости 
 if (ust~=new_ust) then
@@ -60,7 +59,8 @@ end
   
 ```
 
-Управление по апроксимированным кривым отопления ПЗА от @Deimon9603 на основе [статьи](https://wdn.su/blog/1154) 
+Управление по аппроксимированным кривым отопления ПЗА от @Deimon9603 на основе [статьи](https://wdn.su/blog/1154)
+
 ```lua
 local ul  = "1w.28-D16D2A4E2001/temperature"    --установленный на улице датчик температуры  
 local ul_temp = obj.get(ul)  
@@ -82,11 +82,11 @@ if ust ~= new_ust then
 end
 ```
 
-# Управление PID-регулированием
+## Управление PID-регулированием
+
 Это заготовка статьи.
 
-
-# Полезные ссылки: 
+## Полезные ссылки
 
 [Логика управления котлом Vaillant](https://wdn.su/blog/1154)
 

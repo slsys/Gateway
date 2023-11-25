@@ -21,7 +21,7 @@
 ```lua
 scripts.setTimer(script, os.time() + t[, Param])
 -- script - STR, имя файла скрипта, без расширения `lua`
--- os.time() - функциия LUA, возвращает UNIX время на текущий момент в сек.
+-- os.time() - функция LUA, возвращает UNIX время на текущий момент в сек.
 -- t - INT, уставка времени в сек.
 -- Param - STR, аргументы, передаваемые в скрипт
 ```
@@ -231,14 +231,14 @@ if (alarmType == 0) then -- 0 = инициализация
   scripts.setTimer("alarmClock", cronTab, 1) -- настройка на запуск по Cron на время cronTab
 elseif (alarmType == 1) then -- первый - включить ночник
   scripts.setTimer("alarmClock", timeLight1, 2) -- запуск данного скрипта через 10 минут на вкл света на 50%
-  zigbee.set("lmp_bedroom-nightlight", "brightness", 1) -- включить ночник через якость = 1
+  zigbee.set("lmp_bedroom-nightlight", "brightness", 1) -- включить ночник через яркость = 1
 elseif (alarmType == 2) then
   scripts.setTimer("alarmClock", timeLight2, 3) -- запуск данного скрипта через 10 минут на вкл света на max
-  zigbee.set("lmp_bedroom", "brightness", 100) -- включить Люстру через якость = 50%
+  zigbee.set("lmp_bedroom", "brightness", 100) -- включить Люстру через яркость = 50%
 elseif (alarmType == 3) then
   scripts.setTimer("alarmClock", cronTab, 1) -- настройка на запуск по Cron на время cronTab
   zigbee.set("lmp_bedroom-nightlight", "state", "OFF") -- выключить ночник
-  zigbee.set("lmp_bedroom", "brightness", 255) -- включить Люстру через якость = 100%
+  zigbee.set("lmp_bedroom", "brightness", 255) -- включить Люстру через яркость = 100%
 end
 ```
 

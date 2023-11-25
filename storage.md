@@ -234,8 +234,8 @@ result = os.fileRemove(fileName)
 
 ```lua
 result = os.fileRename(old, new)
--- old - STR, старое имя переимновываемого файла
--- new - STR, новое имя переимновываемого файла
+-- old - STR, старое имя переименовываемого файла
+-- new - STR, новое имя переименовываемого файла
 -- result - BOOL, true - успех, false - ошибка (например, нет файла)
 ```
 

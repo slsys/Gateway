@@ -435,67 +435,7 @@ zigbee.configReport("0x90FD9FFFFEF7E26D", 1, 0x0001, 0x0021, 0x20, 1800, 3600, 1
 
 ### Библиотека MQTT
 
-#### mqtt.prefix()
-
-Получает или задает системный префикс, настроенный в меню `Settigs` -> `Link` -> `MQTT Setup`, поле `System prefix topic`
-
-```lua
-mqtt.prefix([topic])
--- topic - STR, System prefix topic
---
--- Получить префикс
-local mqtt_prifix = mqtt.prefix()
--- Задать префикс
-mqtt.prefix("newTopic")
-```
-
-#### mqtt.pub()
-
-Публикует на MQTT сервер в топик _topic_ значение _payload_.
-
-```lua
-mqtt.pub(topic, payload)
-```
-
-Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
-
-```lua
-mqtt.pub('cmnd/sonoff5/power', 'toggle')
-```
-
-#### mqtt.connected()
-
-Возвращает статус подключение к брокеру MQTT. Выполняется без параметров.
-
-#### mqtt.sub()
-
-Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
-
-```lua
-mqtt.sub(topic, objName)
--- topic - STR, топик MQTT
--- objName - STR, объект, в который записываются данные
-```
-
-Пример подписки на топик с температурой, которую шлюз помещает в объект:
-
-```lua
-mqtt.sub('dev/sensor/temp', 'room_temp')
-```
-
-#### mqtt.unSub()
-
-Отписывается от топика.
-
-```lua
-mqtt.unSub(topic)
-```
-
-Пример отписки от топика с температурой
-
-```lua
-mqtt.unSub('dev/sensor/temp')
-```
+Подробное описание [здесь](/mqtt.md)
 
 ---
 
@@ -523,54 +463,6 @@ http.request2 (url[:port], [method, headers, body])
 
 [Подробное описание здесь](/telegram.md)
 
-#### telegram.settoken()
-
-Инициализирует токен
-
-```lua
-telegram.settoken(token)
--- token - STR, API-токен вашего бота
-```
-
-#### telegram.setchat()
-
-Инициализирует чат, в который бот будет отправлять уведомления
-
-```lua
-telegram.setchat(chatid)
--- chatid - STR, ID чата, куда бот будет писать сообщения
-```
-
-#### telegram.secure()
-
-Инициализирует протокол HTTPS.
-**Внимание! Включение этой опции отнимает большое количество свободной памяти! Возможны частые перезагрузки шлюза!**
-
-```lua
-telegram.secure(enable)
--- enable - BOOL, включить: true, выключить (по-умолчанию): false
-```
-
-#### telegram.receive()
-
-Инициализирует обработку входящих сообщений
-
-```lua
-telegram.receive(enable)
--- enable - BOOL, включить: true, выключить (по-умолчанию): false
-```
-
-#### telegram.send()
-
-Отправляет сообщение.
-
-```lua
-telegram.send(msg[, chatid, parse_mode])
--- msg - STR, сообщение
--- chatid - STR, ID чата, куда бот будет писать сообщения
--- parse_mode - STR, можно использовать для отправки ReplyKeyboard
-```
-
 ---
 
 ### Библиотека OS
@@ -583,7 +475,7 @@ telegram.send(msg[, chatid, parse_mode])
 
 #### os.sunrise([offset])
 
-Возвращает время восхода солнца (часы, минуты). Для правильной работы требуется выполнить настройки _Settings -> Time & Location_
+Возвращает время восхода солнца (часы, минуты). Для правильной работы требуется выполнить настройки `Settings -> Time & Location`
 
 ```lua
 os.sunrise([offset])
@@ -596,7 +488,7 @@ print("Восход солнца в " .. sunriseH .. ":" .. sunriseM )
 
 #### os.sunset([offset])
 
-Возвращает время заката солнца (часы, минуты). Для правильной работы требуется выполнить настройки _Settings -> Time & Location_
+Возвращает время заката солнца (часы, минуты). Для правильной работы требуется выполнить настройки `Settings -> Time & Location`
 
 ```lua
 os.sunset([offset])
@@ -619,7 +511,7 @@ os.setSleep(enable[,time])
 
 ```lua
 os.delay(time)
--- time - INT, время паузы в милисекундах (1 сек = 1000 мс)
+-- time - INT, время паузы в миллисекундах (1 сек = 1000 мс)
 ```
 
 #### os.millis()
@@ -678,7 +570,7 @@ os.freeMem([type])
 ```lua
 os.ping(host[, count])
 -- host - STR, IP или DNS адрес хоста
--- count - INT, количество запрсов (по-умолчанию 1)
+-- count - INT, количество запросов (по-умолчанию 1)
 ```
 
 #### os.wdt()
@@ -712,7 +604,7 @@ os.setAssets(url)
 
 ```lua
 os.led(mode, brightness, r, g, b[, effect])
--- mode - STR, режим. OFF - выключено, ON - включено, AUTO - индикация режимов/состояний шлюза (см. описаниее далее)
+-- mode - STR, режим. OFF - выключено, ON - включено, AUTO - индикация режимов/состояний шлюза (см. описание далее)
 -- brightness - INT, яркость (целое, от 0 до 255)
 -- r, g, b - INT, цвет (целое, от 0 до 255 или -1, если цвет менять не требуется)
 -- effect - INT, включает эффекты в соответствии с таблицей
@@ -912,9 +804,9 @@ zigbee.join(255, "0x0000")
 obj.setScript("io.input0.value", "btn_sw1.lua")
 ```
 
-- где `io.input0.value` - номер обрататываемого порта (в примере указана кнопка для круглого шлюза)
+- где `io.input0.value` - номер обрабатываемого порта (в примере указана кнопка для круглого шлюза)
 
-Более подробно вопрос с обрабокой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
+Более подробно вопрос с обработкой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
 
 ---
 

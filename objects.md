@@ -92,7 +92,7 @@ obj.setShare(name, mqtt)
 -- name - STR, имя объекта
 -- mqtt - BOOL, флаг передачи уведомлений в MQTT
   -- false = передача выключена
-  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается сомволом M (MQTT Notify)
+  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается символом M (MQTT Notify)
 ```
 
 #### obj.setOpt() - deprecated
@@ -105,7 +105,7 @@ obj.setOpt(name, type[, flagMQTT])
 -- type - STR, тип хранимых данных: STR, INT, BOOL, FLOAT, JSON
 -- flagMQTT - BOOL, флаг передачи уведомлений в MQTT
   -- false = передача выключена
-  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается сомволом M (MQTT Notify)
+  -- true = передача включена. В таблице объектов (WebUI/Objects) отображается символом M (MQTT Notify)
 ```
 
 #### obj.set()
@@ -262,7 +262,7 @@ if current_status == true then
 else
   status = "false"
 end
--- отправляем уведомление только  в случае изменения значений с признаком ackw
+-- отправляем уведомление только  в случае изменения значений с признаком ack
 if ack == true then
   telegram.send("wsecurity status is " .. status)
 end

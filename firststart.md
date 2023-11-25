@@ -26,7 +26,7 @@
 
 ![captivate2](/img/slshome.png)
 
-Далее, через меню `Settings -> Link -> MQTT Setup` необходимо прописать адрес вашего MQTT сервера mosqutto. Не забудьте установить галочку `Enable` под `MQTT Setup`.
+Далее, через меню `Settings -> Link -> MQTT Setup` необходимо прописать адрес вашего MQTT сервера mosquitto. Не забудьте установить галочку `Enable` под `MQTT Setup`.
 
 ![zigbee](/img/slssetupmqtt.png)
 
