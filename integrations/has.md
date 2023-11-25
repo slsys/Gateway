@@ -4,11 +4,11 @@
 
 ![koridor](/img/koridor.png)
 
-## Подготовительные меропрития
+## Подготовительные мероприятия
 
 Home Assistant интегрируется с SLS по протоколу MQTT (MQ Telemetry Transport).
 
-Необходимо подготовить mosqutto брокер на [raspberry Pi](https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi), [linux](https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/) или [Windows](https://mosquitto.org/download/)
+Необходимо подготовить mosquitto брокер на [raspberry Pi](https://robot-on.ru/articles/ystanovka-mqtt-brokera-mosquitto-raspberry-orange-pi), [linux](https://smartideal.net/ustanovka-i-zapusk-mqtt-brokera-mosquitto/) или [Windows](https://mosquitto.org/download/)
 
 ## Discovery
 
