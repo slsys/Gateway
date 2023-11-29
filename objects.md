@@ -293,6 +293,13 @@ local curr, prev = obj.getTime("security.status")
 print("Время предыдущего изменения:" .. prev .. ", И последнего: " .. curr .. " длительность события: " .. curr-prev)
 ```
 
+### Инкрементирование значения объекта каждую секунду
+
+```lua
+obj.set('reg1', 0)
+scripts.setTimer("#obj.set('reg1', obj.get('reg1')+1)", 1)
+```
+
 ---
 
 ## Сетевые объекты
