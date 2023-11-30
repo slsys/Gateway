@@ -28,7 +28,7 @@
 
 Далее, через меню `Settings -> Link -> MQTT Setup` необходимо прописать адрес вашего MQTT сервера mosquitto. Не забудьте установить галочку `Enable` под `MQTT Setup`.
 
-![zigbee](/img/slssetupmqtt.png)
+![mqtt](/img/int_ha_discovery.png)
 
 Далее, из меню вкладки `Settings -> Hardware` необходимо выбрать подключенные gpio. Следует обязательно настроить GPIO `Zigbee` и `Service Button Pin` Ниже в примере указаны настройки для круглой платы
 
