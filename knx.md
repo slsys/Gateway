@@ -61,6 +61,8 @@ knx.discovery()
 ### Поддерживаемые типы данных
 
 - 1.001 DPT_Switch (Off / On)
+- 1.008 DPT_UpDown (Up / Down)
+- 1.017 DPT_Trigger
 - 3.007 DPT_Control_Dimming
 - 5.000 DPT_1ByteUInt (Базовый тип, целое число 0 .. 255)
 - 5.001 DPT_Scaling (Диапазон 0 .. 100 %)
