@@ -168,10 +168,10 @@ GET /api/zigbee?dev=0x1841&action=setSimpleBind&state=contact&value=test.lua
 GET /api/scripts
 ```
 
-Запустить скрипт `test.lua`
+Запустить скрипт `test.lua` с параметром `parameter`
 
 ```http
-GET /api/scripts?action=evalFile&path=test.lua&param=parametr
+GET /api/scripts?action=evalFile&path=test.lua&param=parameter
 ```
 
 Запустить текст скрипта
