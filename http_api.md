@@ -171,7 +171,7 @@ GET /api/scripts
 Запустить скрипт `test.lua`
 
 ```http
-GET /api/scripts?action=evalFile&path=/test.lua
+GET /api/scripts?action=evalFile&path=test.lua&param=parametr
 ```
 
 Запустить текст скрипта
