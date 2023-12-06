@@ -1,7 +1,7 @@
 # Модуль управления освещением
 
 **Функционал поддерживается только для [Pro](/sls_pro.md) версии.**
-Модуль предназначен для установки в контролер [SLS DIN Mini](https://github.com/slsys/Gateway/blob/master/devices/din_mini_base_rus.md).
+Модуль предназначен для установки в контролер [SLS DIN Mini](../din_mini_base_rus.md).
 
 Модуль добавляет следующую функциональность:
 
