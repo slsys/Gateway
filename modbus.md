@@ -4,10 +4,10 @@
 
 ## Поддержка протоколов:
 
-- Modbus TCP Slave (с версии 2021.05.26d6 регистры хранения (holdings))
-- Modbus TCP Master (в разработке)
-- Modbus RTU Master (в разработке)
-- Modbus RTU Slave (с версии 2021.05.26d6 регистры хранения (holdings))
+- Modbus TCP Slave
+- Modbus TCP Master
+- Modbus RTU Master
+- Modbus RTU Slave
 - Modbus RTUoverTCP Master (в разработке)
 - Modbus RTUoverTCP Slave (в разработке)
 
@@ -20,6 +20,7 @@
 - Настройка интервала опроса для каждого регистра
 - Добавление устройств, регистров, чтение и запись значений из скриптов
 - Настройка преобразований: множитель, смещение, округление, точность
+
 
 - Поддержка разных форматов хранения: u16, s16, u32, s32, float  (в разработке)
 - Поддержка чтения массивов данных (в разработке)
@@ -86,7 +87,7 @@ result = mb.addReg(devName, regName, regId[, regType[, interval[, format = 0[, c
 -- regName - STR, имя регистра
 -- regId - INT, ID регистра
 -- regType - указывается без кавычек: mb.Holding, mb.Coil, mb.Discrete, mb.Input
--- format - пока доступен u16
+-- format - пока доступен mb.u16
 -- interval - FLOAT, интервал опроса в секундах, можно дробное число, например 0.5, по умолчанию 60
 -- count - INT, по умолчанию 1
 -- scale - FLOAT, множитель к значению, по умолчанию 1
