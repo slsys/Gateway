@@ -1,4 +1,4 @@
-name: Deploy SLS
+name: Deploy SLS DOCs
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -38,21 +37,30 @@ jobs:
       - name: Build with VitePress
         run: |
           npm run docs:build
-          touch .vitepress/dist/.nojekyll
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@master
         with:
+          name: dists
           path: .vitepress/dist
-
   # Deployment job
-#  deploy:
-#    environment:
-#      name: github-pages
-#      url: ${{ steps.deployment.outputs.page_url }}
-#    needs: build
-#    runs-on: ubuntu-latest
-#    name: Deploy
-#    steps:
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v2
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy checkout
+        uses: actions/checkout@master
+      - name: Download artifact 
+        uses: actions/download-artifact@master
+        with:
+          name: dists
+          path: .vitepress/dist
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'placeholder'      
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts      
+      - name: Deploy with rsync
+        run: rsync -avz .vitepress/dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/cms2/docs/     
