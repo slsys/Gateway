@@ -1,4 +1,4 @@
-name: Deploy SLS docs
+name: Deploy SLS
 
 on:
   push:
@@ -22,24 +22,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Проверка
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
-      - name: Установка NodeJS
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
-      - name: Установка страниц
+      - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Установка зависимостей
+      - name: Install dependencies
         run: npm ci
-      - name: Компиляция на VitePress
+      - name: Build with VitePress
         run: |
           npm run docs:build
           touch .vitepress/dist/.nojekyll
-      - name: Архивирование
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: .vitepress/dist
@@ -54,5 +54,5 @@ jobs:
 #    name: Deploy
 #    steps:
 #      - name: Deploy to GitHub Pages
-#       id: deployment
+#        id: deployment
 #        uses: actions/deploy-pages@v2
