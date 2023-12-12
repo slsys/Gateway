@@ -1,3 +1,5 @@
+[![Deploy SLS](https://github.com/slsys/Gateway/actions/workflows/deploy.yml/badge.svg)](https://github.com/slsys/Gateway/actions/workflows/deploy.yml)
+
 # SLS (Smart Logic System)
 
 Поддержите проект: [https://boosty.to/slsys](https://boosty.to/slsys)
