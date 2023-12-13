@@ -209,7 +209,7 @@ DEBUG=zigbee-herdsman:adapter:zStack:znp*,zigbee-herdsman:controller* npm start
 
 MQTT:
 
-Необходимо отправить в JSON значение в топик ZigBeeGW/led следующего содержания:
+Необходимо отправить JSON значение в топик ZigBeeGW/led/set следующего содержания:
 
 ```json
 { "mode": "manual", "hex": "#FFFFFF" }
