@@ -8,7 +8,7 @@
 
 ![SLSIR](/img/gw1-500x500.png)
 
-## SLS Ethernet Gateway (в разработке)
+## SLS Ethernet Gateway
 
 ![SLSETH](/img/gw-eth.jpg)
 
