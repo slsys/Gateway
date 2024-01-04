@@ -132,9 +132,7 @@
 
 ## Вопрос: Как прошить CC2652
 
-[BSL Прошивка для модуля Rf-Star CC2652P (20220219 стабильная)](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_20220219.hex)
-
-[BSL Прошивка для модуля Rf-Star CC2652P (20221226 тестовая)](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_20221226.hex)
+[BSL Прошивка для модуля Rf-Star CC2652P (20230507 стабильная](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_20230507.hex)
 
 ---
 
