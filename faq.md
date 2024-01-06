@@ -101,6 +101,21 @@
 
 [Видео-инструкция обновления прошивки по воздуху](https://www.youtube.com/watch?v=5VKNBCV6M4U)
 
+Текстовая инструкция обновления прошивки zigbee-модуля по воздуху(описана процедура, для шлюза, купленного у автора SLS)
+1.  Скачиваем утилиту [ZigStarGW-MT](https://github.com/xyzroe/ZigStarGW-MT/releases)
+2.  Скачиваем прошивку из каталога [rom](https://github.com/slsys/Gateway/tree/master/rom)
+3.  Делаем бекап настроек sls `Actions -> Backup`
+4.  Проверяем номера пинов `Setting -> Hardware (Zigbee RST Pin:18, Zigbee BSL Pin:19)`
+5.  Перевести шлюз в режим bridge `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))`, поставить, сохранить, нажать ребут
+6.  Запускаем ZigStarGW-MT выставляем ip шлюза в виде `<адрес_шлюза_в_вашей_сети>:8881`
+7.  Нажимаем read для сохранения содержимого NVRAM в файл, задаем имя резервной копии
+8.  Включаем bsl в SLS `Zigbee -> Start BSL`
+9.  Выбираем скачанный файл в ZigStarGW-MT `select file -> ...`
+10.  Устанавливаем ТОЛЬКО галочки Erase, Write, Verify, остальное - снимаем
+11. Нажимаем старт и ждем до появления надписи `All is Ok. Restarting zigbee` внизу окна
+12. Нажимаем write для восстановления содержимого NVRAM из файла бекапа, выбираем файл, созданный в п 6
+13. Выключаем режим bridge SLS `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))` снять, сохранить, нажать ребут
+
 ---
 
 ## Вопрос: Как прошить CC2530
