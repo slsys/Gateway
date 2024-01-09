@@ -67,7 +67,7 @@
 
 ## Вопрос: Как прошить ESP32
 
-[Актуальная инструкция](/flashing.md)
+[Актуальная инструкция](/flashing.md#прошивка-микроконтроллера-esp32)
 
 Для первоначальной прошивки:
 
@@ -101,20 +101,21 @@
 
 [Видео-инструкция обновления прошивки по воздуху](https://www.youtube.com/watch?v=5VKNBCV6M4U)
 
-Текстовая инструкция обновления прошивки zigbee-модуля по воздуху(описана процедура, для шлюза, купленного у автора SLS)
-1.  Скачиваем утилиту [ZigStarGW-MT](https://github.com/xyzroe/ZigStarGW-MT/releases)
-2.  Скачиваем прошивку из каталога [rom](https://github.com/slsys/Gateway/tree/master/rom)
-3.  Делаем бекап настроек sls `Actions -> Backup`
-4.  Проверяем номера пинов `Setting -> Hardware (Zigbee RST Pin:18, Zigbee BSL Pin:19)`
-5.  Перевести шлюз в режим bridge `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))`, поставить, сохранить, нажать ребут
-6.  Запускаем ZigStarGW-MT выставляем ip шлюза в виде `<адрес_шлюза_в_вашей_сети>:8881`
-7.  Нажимаем read для сохранения содержимого NVRAM в файл, задаем имя резервной копии
-8.  Включаем bsl в SLS `Zigbee -> Start BSL`
-9.  Выбираем скачанный файл в ZigStarGW-MT `select file -> ...`
-10.  Устанавливаем ТОЛЬКО галочки Erase, Write, Verify, остальное - снимаем
-11. Нажимаем старт и ждем до появления надписи `All is Ok. Restarting zigbee` внизу окна
-12. Нажимаем write для восстановления содержимого NVRAM из файла бекапа, выбираем файл, созданный в п 6
-13. Выключаем режим bridge SLS `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))` снять, сохранить, нажать ребут
+Текстовая инструкция обновления прошивки zigbee-модуля по воздуху (актуально для шлюза, купленного у разработчика SLS)
+
+1. Скачать утилиту [ZigStarGW-MT](https://github.com/xyzroe/ZigStarGW-MT/releases)
+2. Скачать прошивку из каталога [rom](https://github.com/slsys/Gateway/tree/master/rom)
+3. Сделать резервную копию настроек `Actions -> Backup`
+4. Проверить номера пинов `Setting -> Hardware (Zigbee RST Pin:18, Zigbee BSL Pin:19)`
+5. Перевести шлюз в режим bridge `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))`, поставить, сохранить, нажать ребут
+6. Запустить `ZigStarGW-MT` указать адрес шлюза вида `<адрес_шлюза_в_вашей_сети>:8881`
+7. Нажать кнопку  `Read` для сохранения содержимого NVRAM в файл, указать имя файла резервной копии
+8. Включить BSL в SLS `Zigbee -> Start BSL`
+9. Выбрать скачанный файл прошивки в ZigStarGW-MT `select file -> ...`
+10. Установить ТОЛЬКО галочки `Erase`, `Write`, `Verify`, остальные - снимаем
+11. Нажать `Start` 
+12. После появления сообщения `All is Ok. Restarting zigbee` внизу окна, нажать `write` для восстановления содержимого NVRAM  и выбрать файл резервной копии, созданный в п 6.
+13. Выключить режим bridge SLS `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))` снять, сохранить, нажать reboot
 
 ---
 
@@ -122,6 +123,9 @@
 
 Ответ:
 
+[Актуальная инструкция](/flashing.md#прошивка-zigbee-модуля)
+
+<!--
 [Инструкция](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B0-cc2531cc2530)
 
 Для прошивки через CC Debugger:
@@ -132,22 +136,36 @@
 
 [Прошивка для модуля CC2530 с усилителем СС2592](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.0.x/bin/CC2530_CC2592_20190523.zip)
 
+-->
+
 ---
 
 ## Вопрос: Как прошить CC2538
 
 Ответ:
 
+[Актуальная инструкция](/flashing.md#прошивка-zigbee-модуля)
+
+<!--
+
 [Инструкция 1](https://modkam.ru/?p=1188)
 [Инструкция 2](https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC-%D1%81%D1%812538-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-j-link)
 
 [BSL Прошивка для модуля CC2538 с усилителем СС2592](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20211222.hex)
 
+-->
+
 ---
 
 ## Вопрос: Как прошить CC2652
 
+[Актуальная инструкция](/flashing.md#прошивка-zigbee-модуля)
+
+<!--
+
 [BSL Прошивка для модуля Rf-Star CC2652P (20230507 стабильная](https://github.com/slsys/Gateway/blob/master/rom/CC1352P2_CC2652P_launchpad_coordinator_20230507.hex)
+
+-->
 
 ---
 
