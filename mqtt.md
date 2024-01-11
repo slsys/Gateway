@@ -41,15 +41,22 @@ mqtt.pub('cmnd/sonoff5/power', 'toggle')
 Подписывается на топик и помещает полученные значения в объект. Можно вызывать повторно с другим именем объекта, для его изменения.
 
 ```lua
-mqtt.sub(topic, objName)
+mqtt.sub(topic, objName[, objType])
 -- topic - STR, топик MQTT
 -- objName - STR, объект, в который записываются данные
+-- objType - STR, тип значения объекта
 ```
 
 Пример подписки на топик с температурой, которую шлюз помещает в объект:
 
 ```lua
 mqtt.sub('dev/sensor/temp', 'room_temp')
+```
+
+с указанием типа объекта:
+
+```lua
+mqtt.sub('dev/sensor/temp', 'room_temp', 'INT')
 ```
 
 ### mqtt.unSub()
