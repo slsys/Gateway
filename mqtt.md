@@ -44,7 +44,7 @@ mqtt.pub('cmnd/sonoff5/power', 'toggle')
 mqtt.sub(topic, objName[, objType])
 -- topic - STR, топик MQTT
 -- objName - STR, объект, в который записываются данные
--- objType - STR, тип значения объекта
+-- objType - STR, тип значения объекта. По-умолчанию STR
 ```
 
 Пример подписки на топик с температурой, которую шлюз помещает в объект:
