@@ -1,5 +1,51 @@
 # История изменений
 
+## 2023.12.31d7
+
+- *OS: Обновлен ESP-IDF
+- *OS: Исправлено переключение между Eth/WiFi
+- *OS: Теперь сканируются скрытые сети в HTTP API /api/net?action=scanWiFi
+- +OS: Новое HTTP API для получения информации о системе /api/info
+- +OS: Новое HTTP API для получения сетевых параметров /api/net
+- *OS: Исправлена ошибка работы WS в многопоточном режиме, могла приводить к перезагрузкам
+- +Obj: Добавлен веб-интерфейс добавления, редактирования и удаления объектов
+- *Obj: Исправлено отображение невалидных значений объектов в веб-интерфейсе
+- *Obj: Исправлено экранирование значений при выводе списка объектов в /api/obj
+- *Obj: Теперь применяется глобальный MQTT Retain флаг
+- *Obj: Исправлена ошибка при get пустого объекта через MQTT
+- *Obj: Исправлен возврат предыдущего значения в obj.get() и obj.getTime()
+- *Obj: Исправлен возврат nil в obj.get() и obj.getTime() когда объект не существует
+- *Obj: Исправлено отображение списка объектов, после удаления объектов
+- *Obj: События изменения Type, Share, OnScript и удаления объекта теперь отправляются в WS
+- *Lua: Увеличена размерность float
+- +Lua: Добавлена возможность сразу указать тип значения при подписке: mqtt.sub(topic, objName[, objType])
+- *Telegram: Исправлена передача Event.Telegram.ChatId
+- *HVAC: Для Haier исправлена интеграция в MQTT
+- *ModBus: Исправлена работа RTU Master
+- *ModBus: В MQTT передается только измененное значение
+- *ModBus: Добавлено скалирование, смещение, округление, отсечение лишней дробной части
+- +1-Wire: Добавлено определение клонов датчиков, отображение разрядности
+- *1-Wire: Количество отображаемых датчиков увеличено до 20
+- *1-Wire: Исправлена передача некорректных значений 85 градусов
+- *KNX: Исправлено декодирование DPT_Value_Temp
+- +KNX: Добавлена поддержка DPT_UpDown и DPT_Trigger
+- +UPS: Добавлен веб-интерфейс мониторинга и управления
+- *Web: Переход на Bootstrap 5
+- *Zigbee: Исправлено MQTT Discovery для presence
+- *Zigbee: Исправлена обработка отрицательной температуры для #242 Tuya Temperature & humidity sensor with display (ZG-227ZL)
+- *Zigbee: Улучшено переключение режимов в #30 DIY Doorphone controller (ZIntercom)
+- *Zigbee: Исправлено изменение minimum_range, maximum_range, detection_delay для #209 Tuya Smart Human Presense Sensor
+- *Zigbee: Исправлен тип питания #240 Sonoff Zigbee smart switch (no neutral) (ZBMINIL2)
+- *Zigbee: Исправлен тип питания #324 Sonoff Zigbee two way smart switch (ZBMINI)
+- +Zigbee: Новая модель для #230 Tuya DIN Rail Energy meter with Relay (DDS238-2) (_TZE204_bkkmqmyo / TS0601)
+- +Zigbee: Новая модель для #239 Tuya Temperature & Humidity Sensor (_TZ3000_xr3htd96 / TS0201)
+- +Zigbee: Поддержка для #333 Xiaomi Aqara T1 smart LED bulb (ZNLDP13LM) (LUMI / lumi.light.acn014, LUMI / lumi.light.cwac02)
+- +Zigbee: Поддержка для #334 DIY Watermeter (DIY / Watermeter_TLSR8258)
+- +Zigbee: Поддержка для #335 Tuya 3 gang wall switch with N (_TZ3000_lmcp6b0a / TS0003)
+- +Zigbee: Поддержка для #336 Xiaomi Aqara P1 human body movement and illuminance sensor (RTCGQ14LM) (LUMI / lumi.motion.ac02)
+- +Zigbee: Поддержка для #337 DIY IKEA VINDRIKTNING - PM2.5, PM10, PM1 sensor (IKEA_VINDRIKTNING) (DIY / IKEA_VINDRIKTNING_EFEKTA, IKEA_VINDRIKTNING_EFEKTA II, IKEA_VINDRIKTNING_EFEKTA III)
+- +Zigbee: Поддержка для #338 Tuya mmWave Radar with illuminance sensor (GS200) (_TZE204_yensya2c / TS0601)
+
 ## 2023.11.09d1
 
 - *OS: Исправлена ошибка получения времени с NTP сервера при отсутствии интернета
