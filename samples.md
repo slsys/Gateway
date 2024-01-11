@@ -119,6 +119,10 @@ end
 zigbee.set("lamp_1", "state", value)
 ```
 
+#### Делаем управление кнопкой LED
+
+[Статья](https://kusheev.com/archives/1758) пользователя [Сергей Кушеев](https://t.me/immortal_serg) 
+
 ---
 
 ## Управление светом Zigbee
@@ -962,6 +966,12 @@ scripts.setTimer("toggle_timer2", 0)
 ## Отправка показаний счетчиков в управляющую компанию
 
 [Здесь](https://github.com/tsurkan-av/SLS/blob/main/sendCountersToUK/Readme.md) описан способ отправки показаний в УК, не имеющей API для этого
+
+## Вариант функций для автоматизаций SimpleBind
+
+Статья пользователя [Сергей Кушеев](https://t.me/immortal_serg)
+
+[SLS шлюз. Автоматизация. Пишем управление устройствами.](https://kusheev.com/archives/1768)
 
 ## Сохранение значений в json через lua
 
