@@ -13,7 +13,7 @@
 3. Поддержка 1-Wire
 4. Поддержка [KNX](/knx.md)
 5. Поддержка [DALI](/devices/din_mini_lighting_rus.md)
-6. Поддержка [OpenTherm/eBUS](/devices/din_mini_boiler_rus.md)
+6. Поддержка [OpenTherm](/devices/din_mini_boiler_rus.md) / eBUS (в разработке)
 7. Поддержка [Modbus](/modbus.md)
 8. Поддержка CAN (данный функционал в разработке)
 9. Поддержка DMX (данный функционал в разработке)
