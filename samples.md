@@ -967,6 +967,16 @@ scripts.setTimer("toggle_timer2", 0)
 
 [Здесь](https://github.com/tsurkan-av/SLS/blob/main/sendCountersToUK/Readme.md) описан способ отправки показаний в УК, не имеющей API для этого
 
+## Контроль присутствия людей на основе сетевых устройств
+
+### Контроль регистрации устройств в сети роутеров Keenetic 
+
+Описание [здесь](/lua_doc/luaPersonesTracker.md)
+
+### Контроль устройств посредством команды ping роутеров Mikrotik
+
+Описание [здесь](https://telegra.ph/Avtomatizacii-v-umnom-dome-2-SLS-MQTT-Mikrotik-01-17)  
+
 ## Вариант функций для автоматизаций SimpleBind
 
 Статья пользователя [Сергей Кушеев](https://t.me/immortal_serg)
