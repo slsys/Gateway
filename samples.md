@@ -971,11 +971,15 @@ scripts.setTimer("toggle_timer2", 0)
 
 ### Контроль регистрации устройств в сети роутеров Keenetic 
 
-Описание [здесь](/lua_doc/luaPersonesTracker.md)
+Статья пользователя [Алексей Цуркан](https://t.me/tsurkan_av)
+
+[SLS Device Tracker](/lua_doc/luaPersonesTracker.md)
 
 ### Контроль устройств посредством команды ping роутеров Mikrotik
 
-Описание [здесь](https://telegra.ph/Avtomatizacii-v-umnom-dome-2-SLS-MQTT-Mikrotik-01-17)  
+Статья пользователя [Alexander Posazhennikov](https://t.me/Posazhennikov)
+
+[Автоматизации в умном доме 2. SLS, MQTT, Mikrotik](https://telegra.ph/Avtomatizacii-v-umnom-dome-2-SLS-MQTT-Mikrotik-01-17)  
 
 ## Вариант функций для автоматизаций SimpleBind
 
