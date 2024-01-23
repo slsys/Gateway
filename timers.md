@@ -41,10 +41,22 @@ scripts.setTimer(script, t[, Param])
 
 ### CRON
 
-Таймер такой же и с таким же синтаксисом как [UNIX cron](https://ru.wikipedia.org/wiki/Cron). Единственное отличие: расписание может быть только одно для одного скрипта. Добавлен в версии прошивки 2022.04.24d11. `Event.Type = 6`.
+Таймер такой же и с таким же синтаксисом как [UNIX cron](https://ru.wikipedia.org/wiki/Cron). Единственное отличие: расписание может быть только одно для одного скрипта. Добавлен в версии прошивки 2022.04.24d11. `Event.Type = 6`. Протестировать и собрать нужный crontab можно [здесь](https://crontab.guru) 
+
+**Начиная с прошивки 2024.01.22d4 CRON управляется отдельно и может быть несколько расписаний на один скрипт, также сохраняются привязанные к скрипту периодический или однократный таймеры**
+
+Устанавливается командой `scripts.addCron()`; удаляется командой `scripts.removeCron()`. Описание команд см. далее.
+
 Инициализация:
 
 ```lua
+-- draft 
+scripts.addCron(script, crontab[, Param])
+-- script - STR, имя файла скрипта, без расширения `lua`
+-- crontab - STR, уставка времени в формате UNIX CRON
+-- Param - STR, аргументы, передаваемые в скрипт
+
+-- deprecated 
 scripts.setTimer(script, crontab[, Param])
 -- script - STR, имя файла скрипта, без расширения `lua`
 -- crontab - STR, уставка времени в формате UNIX CRON
@@ -53,11 +65,16 @@ scripts.setTimer(script, crontab[, Param])
 
 ## Отмена таймеров
 
-Для отмены любого типа таймера достаточно задать уставку времени равную 0:
+Для отмены любого типа таймера достаточно задать уставку времени равную 0. При этом, начиная с прошивки 2024.01.22d4, расписания CRON сохраняются. Удаляются они командой `scripts.removeCron()` :
 
 ```lua
 scripts.setTimer(script, 0)
 -- script - STR, имя файла скрипта, без расширения `lua`
+
+-- удаление CRON
+scripts.removeCron(script, cron)
+-- script - STR, имя файла скрипта, без расширения `lua`
+-- cron - STR, расписание CRON, например "50 5 * * 1-5"
 ```
 
 ## API для работы с таймерами
@@ -81,8 +98,14 @@ scripts.setTimer(script, 0)
     },
     {
       "name": "alarmClock",
-      "ts": 1676518562,
-      "cron": "50 5 * * 1-5"
+      "ts": 0,
+      "interval": 3600,
+      "timeout": 1705991567,
+      "cron": [
+          "50 5 * * 1-5",
+          "0 6 * * 1-5",
+          "2 6 * * 1-5"
+      ]
     },
     {
       "name": "tables",
@@ -99,6 +122,7 @@ scripts.setTimer(script, 0)
 - `result` - перечень скриптов с назначенными таймерами
   - `name` - имя скрипта
   - `interval` - интервал периодического таймера
+  - `cron` - расписания CRON 
   - `ts` - последнее время запуска скрипта
   - `timeout` - время последней сработки интервального таймера или время когда должен сработать фиксированный таймер
 
@@ -138,12 +162,20 @@ print(scripts.getTimer("giveMoney"))
 
 ```lua
 scripts.setTimer("earnMoney", "5 1 * * 1-5")
+-- или 
+scripts.addCron("earnMoney", "5 1 * * 1-5")
 ```
 
 ### Сброс таймера для скрипта OneMinTimer.lua
 
 ```lua
 scripts.setTimer("OneMinTimer", 0)
+```
+
+### Сброс таймера CRON для скрипта earnMoney.lua
+
+```lua
+scripts.removeCron("earnMoney", "5 1 * * 1-5")
 ```
 
 ### Определить тип таймера
@@ -180,20 +212,28 @@ SendNarodmon("illuminance", value)
 ```lua
 -- init.lua
 -- Аквариум
-scripts.setTimer("aquarium", "0 6 * * 1-5", 16) -- Время включения 6:00 в будни. В параметр передаем число часов, через которое выключить
+scripts.addCron("aquarium", "0 6 * * 1-5") -- Время включения 6:00 в будни
+scripts.addCron("aquarium", "0 20 * * 1-5") -- Время выключения 20:00 в будни
 ```
 
 Вариант обработки таймера
 
 ```lua
 -- aquarium.lua
-if (Event.Type == 6) then -- скрипт вызван по CRON
+if (Event.Time.hour = 6 and Event.Time.min = 0) then
   zigbee.set("0xA4C138E56B96596D", "state", "ON") -- включить
-  scripts.setTimer("aquarium", os.time() + Event.Param * 3600) -- настроить скрипт на запуска через кол-во часов переданных аргументом
-elseif (Event.Type == 4) then
+elseif (Event.Time.hour = 20 and Event.Time.min = 0) then
   zigbee.set("0xA4C138E56B96596D", "state", "OFF") -- выключить
-  scripts.setTimer("aquarium", "0 6 * * 1-5", 16) -- установить таймер для следующего включения света
 end
+```
+
+### Включение, выключение света в аквариуме без скрипта
+
+```lua
+-- init.lua
+-- Аквариум
+scripts.addCron('#zigbee.set("0xA4C138E56B96596D", "state", "ON")', "0 6 * * 1-5") -- Время включения 6:00 в будни
+scripts.addCron('#zigbee.set("0xA4C138E56B96596D", "state", "OFF")', "0 20 * * 1-5") -- Время выключения 20:00 в будни
 ```
 
 ### Будильник
@@ -207,11 +247,34 @@ end
 Инициализация:
 
 ```lua
+scripts.addCron("alarmClock", "50 5 * * 1-5")
+scripts.addCron("alarmClock", "0 6 * * 1-5")
+scripts.addCron("alarmClock", "2 6 * * 1-5")
+```
+
+<!--
+```lua
 scripts.setTimer("alarmClock", 60, 0)
 ```
+-->
 
 Обработка:
 
+```lua
+-- "50 5 * * 1-5"
+if (Event.Time.hour = 5 and Event.Time.min = 50) then
+  zigbee.set("lmp_bedroom-nightlight-papa", "brightness", 1) -- включить ночник через якость = 1
+-- "0 6 * * 1-5"
+elseif (Event.Time.hour = 6 and Event.Time.min = 0) then
+  zigbee.set("lmp_bedroom", "brightness", 100) -- включить Люстру через якость = 50%
+-- "2 6 * * 1-5"
+elseif (Event.Time.hour = 6 and Event.Time.min = 2) then
+  zigbee.set("lmp_bedroom-nightlight-papa", "state", "OFF") -- выключить ночник
+  zigbee.set("lmp_bedroom", "brightness", 255) -- включить Люстру через якость = 100%
+end
+```
+
+<!--
 ```lua
 -- Будильник
 --[[ Формат вызова в init.lua: scripts.setTimer("alarmClock", 60, 0)
@@ -241,5 +304,6 @@ elseif (alarmType == 3) then
   zigbee.set("lmp_bedroom", "brightness", 255) -- включить Люстру через яркость = 100%
 end
 ```
+-->
 
 **Внимание, скрипты OneMinTimer.lua и OneSecTimer.lua, начиная с версии прошивки 2022.01.30d1, не запускаются автоматически!!!**
