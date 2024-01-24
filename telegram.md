@@ -97,7 +97,7 @@ telegram.receive(mode[, period])
 Отправляет сообщение.
 
 ```lua
-telegram.send(msg[[,chat_id],parse_mode])
+telegram.send(msg[,chat_id[,parse_mode]])
 -- msg - STR - текст сообщения
 -- chat_id - STR - целевой chat id, если нужно отправить на chat id отличный от заданного telegram.setchat()
 -- parse_mode - STR - для отправки кнопок ReplyKeyboard
