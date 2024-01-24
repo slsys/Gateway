@@ -72,9 +72,9 @@ scripts.setTimer(script, 0)
 -- script - STR, имя файла скрипта, без расширения `lua`
 
 -- удаление CRON
-scripts.removeCron(script, cron)
+scripts.removeCron(script[, cron])
 -- script - STR, имя файла скрипта, без расширения `lua`
--- cron - STR, расписание CRON, например "50 5 * * 1-5"
+-- cron - STR, расписание CRON, которое необходимо удалить, например "50 5 * * 1-5". Если не указывать - удалит все расписания CRON 
 ```
 
 ## API для работы с таймерами
@@ -158,12 +158,11 @@ scripts.setTimer("giveMoney", os.time() + 300)
 print(scripts.getTimer("giveMoney"))
 ```
 
-### Запуск скрипта earnMoney.lua каждый будний день в 01:05
+### Запуск скрипта earnMoney.lua каждый будний день в 01:05 и в 11:15
 
 ```lua
-scripts.setTimer("earnMoney", "5 1 * * 1-5")
--- или 
 scripts.addCron("earnMoney", "5 1 * * 1-5")
+scripts.addCron("earnMoney", "15 11 * * 1-5")
 ```
 
 ### Сброс таймера для скрипта OneMinTimer.lua
@@ -172,10 +171,16 @@ scripts.addCron("earnMoney", "5 1 * * 1-5")
 scripts.setTimer("OneMinTimer", 0)
 ```
 
-### Сброс таймера CRON для скрипта earnMoney.lua
+### Сброс таймера CRON на 01:05 для скрипта earnMoney.lua
 
 ```lua
 scripts.removeCron("earnMoney", "5 1 * * 1-5")
+```
+
+### Сброс всех расписаний CRON для скрипта earnMoney.lua
+
+```lua
+scripts.removeCron("earnMoney")
 ```
 
 ### Определить тип таймера
