@@ -262,13 +262,13 @@ scripts.setTimer("alarmClock", 60, 0)
 
 ```lua
 -- "50 5 * * 1-5"
-if (Event.Time.hour = 5 and Event.Time.min = 50) then
+if (Event.Time.hour == 5 and Event.Time.min == 50) then
   zigbee.set("lmp_bedroom-nightlight-papa", "brightness", 1) -- включить ночник через якость = 1
 -- "0 6 * * 1-5"
-elseif (Event.Time.hour = 6 and Event.Time.min = 0) then
+elseif (Event.Time.hour == 6 and Event.Time.min == 0) then
   zigbee.set("lmp_bedroom", "brightness", 100) -- включить Люстру через якость = 50%
 -- "2 6 * * 1-5"
-elseif (Event.Time.hour = 6 and Event.Time.min = 2) then
+elseif (Event.Time.hour == 6 and Event.Time.min == 2) then
   zigbee.set("lmp_bedroom-nightlight-papa", "state", "OFF") -- выключить ночник
   zigbee.set("lmp_bedroom", "brightness", 255) -- включить Люстру через якость = 100%
 end
