@@ -4,8 +4,8 @@
 
 Файл актуальной прошивки для своего модуля можно взять здесь:
 
-- для модулей 2562 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.x.0/bin)
-- для модулей 2530 - 2538 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.0.x/bin)
+- для модулей CC2652 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.x.0/bin)
+- для модулей CC2530 - CC2538 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.0.x/bin)
 
 или [здесь](https://github.com/slsys/Gateway/tree/master/rom/)
 
@@ -22,10 +22,10 @@
 
 <!--
 
-## Прошивка трансивера сс2538 + сс2592
+## Прошивка модуля CC2538
 
-Первым делом после сборки модуля необходимо прошить трансивер.
-Скачать последнюю прошивку сс2538 + сс2591 можно [тут](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20201010.hex). Готовый шлюз обычно поставляется с прошитым модулем. Более подробно информация разобрана в статье на сайте [modkam.ru](https://modkam.ru/?p=1188)
+Первым делом после сборки модуля необходимо прошить модуль.
+Скачать последнюю прошивку СС2538 можно [тут](https://github.com/slsys/Gateway/blob/master/rom/JH_2538_2592_ZNP_UART_20201010.hex). Готовый шлюз обычно поставляется с прошитым модулем. Более подробно информация разобрана в статье на сайте [modkam.ru](https://modkam.ru/?p=1188)
 
 -->
 
