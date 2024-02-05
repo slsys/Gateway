@@ -66,15 +66,17 @@ require("mb")
 Добавляет устройство. Существующее устройство изменяет. <!-- возвращает -->
 
 ```lua
-result = mb.addDev(devName, slaveId, portName)
+result = mb.addDev(devName, slaveId, portName[,reqTimeout = 10[,readTimeout = 500]])
 -- dev - STR, имя устройства
 -- slaveId - INT, ID устройства 
 -- portName - STR, Serial: s1 или s2; TCP: address[:502]
+-- reqTimeout - INT, таймаут между запросами, по-умолчанию 10 сек.
+-- readTimeout - INT, время ожидания ответа от устройства, по-умолчанию 500 мс.
 ```
 
 ```lua
 require("mb")
-mb.addDev("Датчик", 5, "10.0.1.10")
+mb.addDev("Датчик", 5, "10.0.1.10", 20, 1000)
 ```
 
 ### mb.addReg()
