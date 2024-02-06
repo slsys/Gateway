@@ -225,9 +225,9 @@ scripts.addCron("aquarium", "0 20 * * 1-5") -- Время выключения 2
 
 ```lua
 -- aquarium.lua
-if (Event.Time.hour = 6 and Event.Time.min = 0) then
+if (Event.Time.hour == 6 and Event.Time.min == 0) then
   zigbee.set("0xA4C138E56B96596D", "state", "ON") -- включить
-elseif (Event.Time.hour = 20 and Event.Time.min = 0) then
+elseif (Event.Time.hour == 20 and Event.Time.min == 0) then
   zigbee.set("0xA4C138E56B96596D", "state", "OFF") -- выключить
 end
 ```
