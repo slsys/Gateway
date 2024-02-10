@@ -4,7 +4,7 @@
 
 ![SLSETH](/img/gw-eth.jpg)
 
-## [SLS DIN MINI](/devices/din_mini_base_rus) и модули расширения
+## [SLS DIN MINI](/devices/din_mini_base_rus.md) и модули расширения
 
 ![SLSDIN](/img/slsmini.jpg)
 
