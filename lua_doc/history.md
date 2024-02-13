@@ -1,5 +1,36 @@
 # История изменений
 
+## 2024.02.11d3
+
+- *OS: Исправлено отображение метки времени в окне лога
+- *Obj: Исправлено отображение значения объекта с кавычками при его редактировании
+- +KNX: Добавлена поддержка DPT_SceneControl
+- *DALI: Улучшена обратная связь при диммировании с других контроллеров
+- +Modbus: Добавлена поддержка форматов s16, u32, s32, f32
+- +Modbus: Теперь можно задавать таймаут между опросами и время на ожидание ответа от устройства через mb.addDev()
+- *ModBus: Исправлена обработка транзакций для Modbus TCP Master
+- +Lua: Добавлена возможность добавить несколько CRON-расписаний скрипту, а так удалять их
+- *Lua: Исправлена ошибка обработки параметра периодичности в Cron планировщике, которая приводила к частичному зависанию
+- *Lua: Исправлена возможность сразу указать тип значения при подписке: mqtt.sub(topic, objName[, objType])
+- +Zigbee: Реализовано автоматическое определение конвертеров неизвестных устройств для стандартных кластеров (PowerCfg, Temperature, Humidity, Pressure, CO2, Illuminance, OnOff, LevelControl, LightingColorControl)
+- +Zigbee: Добавлено MQTT Discovery для состояний pm1, pm10, pm25, voc_index, voc_index
+- *Zigbee: Улучшена работа штор
+- *Zigbee: Исправлена ошибка отправки DefaultRsp при отключенном MQTT
+- *Zigbee: Исправлено отображение картинок для старых конвертеров
+- +Zigbee: Добавлено состояние power_outage_memory для #129 Aqara smart LED bulb (ZNLDP12LM)
+- *Zigbee: Исправлена идентификация для #309 Gledopto DIN Rail triac AC dimmer (GL-SD-003P)
+- *Zigbee: Исправлена ошибка обработки события release после hold для #77 Aqara D1 single gang smart wall switch (no neutral wire) (QBKG21LM)
+- *Zigbee: Исправлена ошибка обработки события release после hold для #107 Aqara double key wired wall switch without neutral wire (QBKG03LM)
+- *Zigbee: Переведен на новую систему конвертеров #350 Philips Hue dimmer switch (324131092621) (Philips / RWL020, RWL021)
+- +Zigbee: Новая модель для #42 Tuya relay module 16A (_TZ3000_skueekg3 / TS0001)
+- +Zigbee: Новая модель для #72 Tuya Thermostatic radiator valve (SEA-TRV) (_TZE200_3yp57tby / TS0601)
+- +Zigbee: Поддержка для #339 Tuya Temperature & humidity sensor (_TZE200_yjjdcqsq / TS0601)
+- +Zigbee: Поддержка для #340 Tuya Eysltime Door sensor (YZZBD-1) (_TZ3000_lvd0uvsp / TS0203)
+- +Zigbee: Поддержка для #341 Tuya Moes Temperature & humidity sensor (ZSS-S01-TH) (_TZ3000_f2bw0b6k / TS0201)
+- +Zigbee: Поддержка для #342 Tuya Moes Door sensor (ZSS-S01-GWM-C) (_TZ3000_8yhypbo7 / TS0203)
+- +Zigbee: Поддержка для #343 Efekta Smart temperature sensor (EfektaLab / EFEKTA_T1_v2, EFEKTA_T1_v2_LR)
+- +Zigbee: Поддержка для #344 Tuya TRV Thermostat (TRV606) (_TZE200_dv8abrrz / TS0601)
+
 ## 2023.12.31d7
 
 - *OS: Обновлен ESP-IDF
