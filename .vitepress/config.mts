@@ -114,7 +114,7 @@ export default defineConfig({
           { text: 'Использование GPIO', link: '/gpio_sample' },
           { text: 'MQTT', link: '/mqtt' },
           { text: 'Термоголовка', link: '/trv_ext_temp' },
-          { text: 'Управление котлами', link: '/heating_сurve' },
+          { text: 'Управление котлами', link: '/heating_curve' },
           
         ]
       }
