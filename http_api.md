@@ -50,6 +50,8 @@ GET /api/reboot
 
 ### Zigbee
 
+Команды zigbee API не доступны в режиме моста.
+
 #### Получить список устройств сети zigbee
 
 ```http
