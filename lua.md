@@ -575,13 +575,23 @@ os.ping(host[, count])
 -- count - INT, количество запросов (по-умолчанию 1)
 ```
 
-#### os.wdt()
+#### os.wdtesp()
 
 Включается и выключает WDT (Сторожевой таймер), может использоваться для отладки незапланированных перезагрузок.
 
 ```lua
-os.wdt(enable)
+os.wdtesp(enable)
 -- enable - BOOL, включить (true), выключить (false)
+```
+
+#### os.wdt()
+
+Управляет сторожевым таймером в модуле (RTC + WDT) SLS Hub
+
+```lua
+os.wdt([time, enable])
+-- enable - BOOL, включить (true), выключить (false)
+-- time - INT, время в сек., на которое включается WDT 
 ```
 
 #### os.udplogenable()
