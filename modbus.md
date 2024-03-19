@@ -69,7 +69,7 @@ result = mb.addDev(devName, slaveId, portName[,reqTimeout = 10[,readTimeout = 50
 -- dev - STR, имя устройства
 -- slaveId - INT, ID устройства 
 -- portName - STR, Serial: s1 или s2; TCP: address[:502]
--- reqTimeout - INT, таймаут между запросами, по-умолчанию 10 сек.
+-- reqTimeout - INT, таймаут между запросами, по-умолчанию 10 мс.
 -- readTimeout - INT, время ожидания ответа от устройства, по-умолчанию 500 мс.
 ```
 
