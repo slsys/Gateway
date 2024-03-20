@@ -106,15 +106,16 @@ mb.addReg("Датчик", "Сенсор", 100, mb.Holding, 30)
 Получает значение регистра из кэша.
 
 ```lua
-mb.valueReg(devName, regName)
+ret = mb.valueReg(devName, regName)
+-- ret - STR, значение регистра
 -- devName - STR, имя устройства
 -- regName - STR, имя регистра
 ```
 
 ```lua
 require("mb")
-local sensorVal = mb.valueReg("Датчик", "Сенсор")
-print(sensorVal)
+local ret = mb.valueReg("Датчик", "Сенсор")
+print(ret)
 ```
 
 ### mb.readReg()
@@ -122,15 +123,16 @@ print(sensorVal)
 Получает значение регистра чтением его немедленно.
 
 ```lua
-mb.readReg(devName, regName)
+ret = mb.readReg(devName, regName)
+-- ret - BOOL, статус чтения
 -- devName - STR, имя устройства
 -- regName - STR, имя регистра
 ```
 
 ```lua
 require("mb")
-local sensor = mb.readReg("Датчик", "Сенсор")
-print(sensor)
+local ret = mb.readReg("Датчик", "Сенсор")
+print(ret)
 ```
 
 ###  mb.writeReg()
@@ -138,7 +140,8 @@ print(sensor)
 Записывает значение в регистр.
 
 ```lua
-result = mb.writeReg(devName, regName, value)
+ret = mb.writeReg(devName, regName, value)
+-- ret - BOOL, статус записи
 -- devName - STR, имя устройства
 -- regName - STR, имя регистра
 -- value - записываемое значение
@@ -146,8 +149,8 @@ result = mb.writeReg(devName, regName, value)
 
 ```lua
 require("mb")
-local result = mb.writeReg("Датчик", "Сенсор", 22.7)
-print(sensor)
+local ret = mb.writeReg("Датчик", "Сенсор", 22.7)
+print(ret)
 ```
 
 ## Modbus Slave
