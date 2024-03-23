@@ -1,6 +1,6 @@
 # Интеграция с Home Assistant
 
-Шлюз SLS может быть легко интегрирован с системой домашней автоматизации [Home Assistant](www.home-assistant.io).
+Шлюз SLS может быть легко интегрирован с системой домашней автоматизации [Home Assistant](https://www.home-assistant.io/).
 
 ![koridor](/img/koridor.png)
 
