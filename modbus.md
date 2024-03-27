@@ -197,7 +197,7 @@ mb.addSlaveReg(1, 'room_temperature', 100)
 
 ## MQTT
 
-### Чтение регистра
+### Подписка на изменения регистра
 
 Топик `zgwXXXX/mb/{dev}/{reg}`
 
@@ -211,6 +211,14 @@ mosquitto_sub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/сенс
 
 ```bash
 mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/set/сенсор -m 123
+```
+
+### Чтение регистра (внеочередное)
+
+Чтение значения в топик `zgwXXXX/mb/{dev}/get/{reg}` 
+
+```bash
+mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/get/сенсор
 ```
 
 ## Примеры
