@@ -215,7 +215,7 @@ mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/set/се
 
 ### Чтение регистра (внеочередное)
 
-Чтение значения в топик `zgwXXXX/mb/{dev}/get/{reg}` 
+Записать пустое значение в топик `zgwXXXX/mb/{dev}/get/{reg}` 
 
 ```bash
 mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/get/сенсор
