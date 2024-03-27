@@ -218,7 +218,7 @@ mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/set/се
 Записать пустое значение в топик `zgwXXXX/mb/{dev}/get/{reg}` 
 
 ```bash
-mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/get/сенсор
+mosquitto_pub -h localhost -u mqtt -P mqtt -t ZigbeeSLS/mb/датчик/get/сенсор -n
 ```
 
 ## Примеры
