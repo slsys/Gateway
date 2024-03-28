@@ -32,8 +32,7 @@
 Запускается через команду LUA:
 
 ```lua
-require("mb")
-mb.startMaster()
+mb.startMaster([useMQTT = false])
 ```
 
 После запуска команды появляется меню управления Modbus
