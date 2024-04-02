@@ -43,7 +43,7 @@ arr = nil -- cleanup
 -- принимаю статус вызвавшего устройства
 local srcStateCurr
 if Event.State then
-  srcStateCurr = Event.State.Value 
+  srcStateCurr = tostring(Event.State.Value) 
 end
 local scriptName = (explode(".", Event.Name))[1] -- имя данного скрипта
 -- проверяю кто вызвал (а-ля switch-case)
