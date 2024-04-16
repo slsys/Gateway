@@ -1,5 +1,34 @@
 # История изменений
 
+## 2024.04.16d1
+
+- +OS: Добавлена возможность ручной установки времени: os.setTime(unixtime)
+- *OS: Добавлено отображение типа MCU и фрагментации памяти
+- *Modbus: Улучшена обработка таймаутов ожидания данных
+- +DALI: Добавлены команды storefadetime, storefaderate, queryfadetimerate
+- +DALI: Улучшено управление светильниками из веб-интерфейса
+- +DALI: Добавлена возможность управления через JSON запросы в MQTT с сохранением последней яркости
+- +Zigbee: Добавлено состояние online для устройств
+- +Zigbee: Добавлен автоматический опрос роутеров если они не репортят самостоятельно
+- +Zigbee: Добавлены настройки глобальных таймаутов для роутеров и конечных устройств
+- *Zigbee: Исправлено HA MQTT Discovery для light (Обновите HA!)
+- *Zigbee: Исправлен краш при загрузке устройства с флагом необходимости конфигурации
+- *Zigbee: Исправлено изменение preset для #117 Tuya Wall Thermostat (_TZE200_ye5jkfsb / TS0601)
+- *Zigbee: Исправлено изменение preset для #274 Tuya Wall Thermostat (_TZE200_u9bfwha0 / TS0601)
+- *Zigbee: Исправлена работа состояний smoke и smoke_density для #280 Xiaomi Aqara smart smoke detector (JY-GZ-01AQ)
+- *Zigbee: Улучшена точность состояний energy, current и temperature для #247 Tuya 3-phase clamp power meter (TS0601_3_phase_clamp_meter)
+- *Zigbee: Добавлены состояния light_type, brightness_max, countdown, power_on_behavior, backlight_mode для #27 Tuya Dimmer Switch
+- +Zigbee: Новая модель для #27 Tuya Dimmer Switch (_TZE200_w4cryh2i / TS0601)
+- +Zigbee: Поддержка для #345 Tuya Bidirectional energy meter with 80A current clamp (PJ-1203A) (_TZE204_81yrt3lo / TS0601)
+- +Zigbee: Поддержка для #346 Smart energy monitor for 1P+N system (SPM01-U01) (BITUO TECHNIK / SPM01X001)
+- +Zigbee: Поддержка для #347 Smart energy monitor for 3P+N system (SPM02-U01) (BITUO TECHNIK / SPM02X001)
+- +Zigbee: Поддержка для #348 Gledopto USB LED bar RGB+CCT (pro) (GL-LB-001P) (GLEDOPTO / GL-LB-001P)
+- +Zigbee: Поддержка для #349 Sonoff Human Presence Sensor (SNZB-06P) (SONOFF / SNZB-06P)
+- +Zigbee: Поддержка для #360 DIY Bacchus Presence_Sensor (bacchus.presence) (Bacchus / bacchus.presence )
+- +Zigbee: Поддержка для #361 DIY Bacchus Presence & Illuminance Sensor v2 (Presence_Sensor_v2) (Bacchus / Presence_Sensor_v2)
+- +Zigbee: Поддержка для #362 Tuya Smart energy monitor for 3P+N system (SPM02V2) (_TZE204_v9hkz2yn / TS0601, _TZE200_v9hkz2yn)
+- +Zigbee: Поддержка для #363 Aqara Smart natural gas detector (JT-BZ-01AQ/A) (LUMI / lumi.sensor_gas.acn02)
+
 ## 2024.02.11d3
 
 - *OS: Исправлено отображение метки времени в окне лога
