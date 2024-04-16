@@ -366,6 +366,21 @@ result = zigbee.setState(device, stateName, stateValue[[, type], events])
       "voltage": 225
 ```
 
+#### zigbee.setTimeout()
+
+Изменяет таймаут опроса отдельного устройства для определения состояния **online**. Глобально таймауты задаются в меню Zigbee -> Config:
+
+- Routers global timeout - период опроса роутеров (по умолчанию 10 минут)
+- EndDevices global timeout - период опроса конечных устройств (по умолчанию 25 часов)
+
+```lua
+zigbee.setTimeout(device, timeout)
+-- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
+-- timeout - INT, тамаут опроса в секундах
+```
+
+_Для сохранения настройки после перезагрузки, добавить в init.lua._ 
+
 #### zigbee.setModel()
 
 Программное переназначение типа устройства.
