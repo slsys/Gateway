@@ -376,7 +376,7 @@ result = zigbee.setState(device, stateName, stateValue[[, type], events])
 ```lua
 zigbee.setTimeout(device, timeout)
 -- device - STR, FriendlyName, ieeeAddr или nwkAddr устройства
--- timeout - INT, тамаут опроса в секундах
+-- timeout - INT, таймаут опроса в секундах
 ```
 
 _Для сохранения настройки после перезагрузки, добавить в init.lua._ 
@@ -496,6 +496,15 @@ http.request2 (url[:port], [method, headers, body])
 #### os.time()
 
 Возвращает Unix время. Вызывается без параметров.
+
+#### os.setTime()
+
+Устанавливает время шлюза
+
+```lua
+os.setTime(unixtime)
+-- unixtime - STR, время в формате unixtime
+```
 
 #### os.sunrise([offset])
 
