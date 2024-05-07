@@ -981,6 +981,33 @@ scripts.setTimer("toggle_timer2", 0)
 
 [Автоматизации в умном доме 2. SLS, MQTT, Mikrotik](https://telegra.ph/Avtomatizacii-v-umnom-dome-2-SLS-MQTT-Mikrotik-01-17)  
 
+### Контроль устройств в сети роутеров Mikrotik на базе DHCP 
+
+Решение пользователя `Nekto Ivanov`. Ищите его в основной группе Telegram. Контакт у него засекречен)
+
+Решение позволяет контролировать регистрацию устройств на DHCP сервере роутера Mikrotik. RouterOS позволяет вызывать скрипт при регистрации и при удалении регистрации вызывать скрипт, который передаст данный об отключенном или подключенном устройстве в SLS посредством HTTP API. Скрипт: 
+
+```bash
+:if ($leaseBound = 1) do={
+ /ip dhcp-server lease;
+ /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Online+$leaseActIP+$leaseActMAC" keep-result=no
+} else={
+ /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Offline+$leaseActIP+$leaseActMAC" keep-result=no
+}
+```
+
+необходимо вставить в окно Lease Script в свойствах DHCP сервера Mikrotik.
+Таким образом, при каждой регистрации и её удалении в SLS будет вызываться скрипт `presense.lua`, в который будет передан параметр вида 
+- Online+IP+MAC при подключении устройства
+- Offline+IP+MAC при отключении устройства
+Внутри скрипта LUA этот параметр можно принять посредством переменной события `Event.Param` и обработать по своему усмотрению. Например отправить в Telegram:
+
+```lua
+telegram.send(Event.Param)
+```
+
+Следует отметить, что событие регистрации возникает сразу при подключении, а событие удаления регистрации в пределах времени TTL записи DHCP (10 мин).
+
 ## Вариант функций для автоматизаций SimpleBind
 
 Статья пользователя [Сергей Кушеев](https://t.me/immortal_serg)
