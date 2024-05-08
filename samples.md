@@ -989,8 +989,7 @@ scripts.setTimer("toggle_timer2", 0)
 
 ```bash
 :if ($leaseBound = 1) do={
- /ip dhcp-server lease;
- /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Online+$leaseActIP+$leaseActMAC" keep-result=no
+  /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Online+$leaseActIP+$leaseActMAC" keep-result=no
 } else={
  /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Offline+$leaseActIP+$leaseActMAC" keep-result=no
 }
@@ -998,15 +997,39 @@ scripts.setTimer("toggle_timer2", 0)
 
 необходимо вставить в окно Lease Script в свойствах DHCP сервера Mikrotik.
 Таким образом, при каждой регистрации и её удалении в SLS будет вызываться скрипт `presense.lua`, в который будет передан параметр вида 
-- Online+IP+MAC при подключении устройства
-- Offline+IP+MAC при отключении устройства
+- `Online+IP+MAC` при подключении устройства
+- `Offline+IP+MAC` при отключении устройства
+
+![](/img/devTrecker_dhcp1.png)
+
 Внутри скрипта LUA этот параметр можно принять посредством переменной события `Event.Param` и обработать по своему усмотрению. Например отправить в Telegram:
 
 ```lua
 telegram.send(Event.Param)
 ```
 
-Следует отметить, что событие регистрации возникает сразу при подключении, а событие удаления регистрации в пределах времени TTL записи DHCP (10 мин).
+Для того чтобы в SLS прилетали регистрации только нужных устройство можно добавить их выборку посредством [регулярного выражения](https://wiki.mikrotik.com/wiki/Manual:Regular_Expressions). Например, так мы выделим IP адреса из диапазона 10-19:
+
+```
+^192\\.168\\.0\\.[1].\$
+```
+
+```bash
+:if ($leaseActIP~"^192\\.168\\.0\\.[1].\$") do={
+  :if ($leaseBound = 1) do={
+    /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Online+$leaseActIP+$leaseActMAC" keep-result=no
+  } else={
+   /tool fetch url="http://192.168.0.2/api/scripts?action=evalFile&path=presense.lua&param=Offline+$leaseActIP+$leaseActMAC" keep-result=no
+  }
+}
+```
+
+Следует отметить, что событие регистрации возникает сразу при подключении, а событие удаления регистрации в пределах времени TTL записи DHCP (10 мин). Для "важных" устройств это время можно уменьшить. Для этого нужно открыть запись аренды (Lease), сделать её статической (Make static), закрыть/открыть и тогда появится возможность для этой записи установить TTL отличный от заданного на уровне сервера:
+![](/img/devTrecker_dhcp2.png)
+
+При этом, устройство с данным MAC адресом, будет всегда получать зафиксированный  IP адрес.
+
+Также, замечено, что некоторые устройства могут некорректно продлевать аренду адреса. При этом могут возникать ложные срабатывания скрипта. В таком случае воспользуйтесь решением выше.
 
 ## Вариант функций для автоматизаций SimpleBind
 
