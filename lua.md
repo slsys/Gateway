@@ -768,6 +768,36 @@ gpio.pwmSetup(3, 32)
 gpio.pwm(3, 255/100*50)
 ```
 
+<!-- 
+#### gpio.pwmSetup()
+
+Настройка ШИМ
+
+```lua
+gpio.pwmSetup(pin[, freq = 5000[, resolution = 8]])
+-- pin: номер контакта
+-- resolution: разрешение 1-16 bits
+-- freq: частота
+```
+
+#### gpio.pwm()
+
+Управление ШИМ
+
+```lua
+gpio.pwm(pin, value)
+-- pin: номер контакта
+-- value: значение ШИМ
+```
+
+Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
+
+```lua
+gpio.pwmSetup(32)
+gpio.pwm(32, 255/100*50)
+```
+ -->
+
 ---
 
 ### Библиотека AUDIO
