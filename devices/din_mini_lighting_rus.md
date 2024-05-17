@@ -188,22 +188,22 @@ dali.cmd('storemin', { addrtype = 'short', address = 1 })
 
 ## Управление через MQTT
 
-Текущее состояние устройст приходил в виде JSON в топики вида xxx/dali/{addrtype}
+Текущее состояние устройств приходит в виде JSON в топики вида *xxx/dali/{addrtype}*
 
 Управление состоянием устройства:
-Топик: xxx/dali/{addrtype}/set/state ON/OFF/TOGGLE
+Топик: *xxx/dali/{addrtype}/set/state* ON/OFF/TOGGLE
 
 Управление яркостью устройства:
-Топик: xxx/dali/{addrtype}/set/brightness 0..255
+Топик: *xxx/dali/{addrtype}/set/brightness* 0..255
 
 Отправка произвольных комманд:
-Топик: xxx/dali/{addrtype}/cmd/{cmd}
+Топик: *xxx/dali/{addrtype}/cmd/{cmd}*
 
 Сообщение (опционально): value
 
 где xxx - префикс шлюза
 
-Результат отправки команды публикуется в топике xxx/dali/result
+Результат отправки команды публикуется в топике *xxx/dali/result*
 
 Отправка команды изменения яркости на 30 на устройство с коротким адресом 5:
 
