@@ -198,9 +198,9 @@ function setState(device, name, value) {
 
 Скачать
 
-- [15.02.2022](https://github.com/slsys/Gateway/dashboard/nick7zmail/ui_20220215.html). [Описание](https://t.me/slsys/91704)
-- [11.01.2022](https://github.com/slsys/Gateway/dashboard/nick7zmail/ui_20220111.html). [Описание](https://t.me/slsys/88314)
-- [v1 ](https://github.com/slsys/Gateway/dashboard/nick7zmail/ui.html)
+- [15.02.2022](https://github.com/slsys/Gateway/blob/master/dashboard/nick7zmail/ui_20220215.html). [Описание](https://t.me/slsys/91704)
+- [11.01.2022](https://github.com/slsys/Gateway/blob/master/dashboard/nick7zmail/ui_20220111.html). [Описание](https://t.me/slsys/88314)
+- [v1 ](https://github.com/slsys/Gateway/blob/master/dashboard/nick7zmail/ui.html)
 
 ---
 
@@ -218,7 +218,7 @@ function setState(device, name, value) {
 
 > **solominsn**: я переписал не много этот код. Последняя версия bootstrap, свежий JS (думаю что все используют версию браузера не старше 2 лет). Не много упростил конфигурирование.
 
-[Скачать](https://github.com/slsys/Gateway/dashboard/solominsn/ui_20221004.html)
+[Скачать](https://github.com/slsys/Gateway/blob/master/dashboard/solominsn/ui_20221004.html)
 
 ---
 
@@ -226,7 +226,7 @@ function setState(device, name, value) {
 
 ![](/img/dashboard4.jpg)
 
-[скачать](https://github.com/slsys/Gateway/dashboard/bootstrap4/ui.html)
+[скачать](https://github.com/slsys/Gateway/blob/master/dashboard/bootstrap4/ui.html)
 
 ---
 
@@ -234,7 +234,7 @@ function setState(device, name, value) {
 
 ![](/img/dashboard41.jpg)
 
-[скачать](https://github.com/slsys/Gateway/dashboard/bootstrap41/ui.html)
+[скачать](https://github.com/slsys/Gateway/blob/master/dashboard/bootstrap41/ui.html)
 
 ---
 
@@ -242,4 +242,4 @@ function setState(device, name, value) {
 
 ![](/img/dashboard3.jpg)
 
-[скачать](https://github.com/slsys/Gateway/dashboard/bootstrap3/ui.html)
+[скачать](https://github.com/slsys/Gateway/blob/master/dashboard/bootstrap3/ui.html)
