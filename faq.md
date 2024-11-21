@@ -117,16 +117,17 @@ http://192.168.100.1/store?domain_name=zgwXXXX&dhcp=true
 1. Скачать утилиту [ZigStarGW-MT](https://github.com/xyzroe/ZigStarGW-MT/releases)
 2. Скачать прошивку из каталога [rom](https://github.com/slsys/Gateway/tree/master/rom)
 3. Сделать резервную копию настроек `Actions -> Backup`
-4. Проверить номера пинов `Setting -> Hardware (Zigbee RST Pin:18, Zigbee BSL Pin:19)`
+4. Проверить номера пинов `Setting -> Hardware (Zigbee RST Pin, Zigbee BSL Pin)`
 5. Перевести шлюз в режим bridge `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))`, поставить, сохранить, нажать ребут
 6. Запустить `ZigStarGW-MT` указать адрес шлюза вида `<адрес_шлюза_в_вашей_сети>:8881`
-7. Нажать кнопку  `Read` для сохранения содержимого NVRAM в файл, указать имя файла резервной копии
-8. Включить BSL в SLS `Zigbee -> Start BSL`
-9. Выбрать скачанный файл прошивки в ZigStarGW-MT `select file -> ...`
-10. Установить ТОЛЬКО галочки `Erase`, `Write`, `Verify`, остальные - снимаем
-11. Нажать `Start` 
-12. После появления сообщения `All is Ok. Restarting zigbee` внизу окна, нажать `write` для восстановления содержимого NVRAM  и выбрать файл резервной копии, созданный в п 6.
-13. Выключить режим bridge SLS `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))` снять, сохранить, нажать reboot
+7. Нажать кнопку `Read` для сохранения содержимого NVRAM в файл, указать имя файла резервной копии
+8. Выбрать скачанный файл прошивки в ZigStarGW-MT `select file -> ...`
+9. Установить ТОЛЬКО галочки `Erase`, `Write`, `Verify`, `Auto BSL`, остальные - снимаем
+10. Нажать `Start` 
+11. После появления сообщения `All is Ok. Restarting zigbee` внизу окна, нажать `write` для восстановления содержимого NVRAM  и выбрать файл резервной копии, созданный в п 6.
+12. Выключить режим bridge SLS `Settings -> Services (Zigbee TCP bridge (s1, port: 8881))` снять, сохранить, нажать reboot
+
+![ZigStar-GW](/img/ZigStar-GW.png)
 
 ---
 
