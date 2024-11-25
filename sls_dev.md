@@ -1,6 +1,6 @@
 # Поддерживаемое "железо":
 
-## SLS Hub
+## [SLS Hub](/devices/hub_base.md)
 
 ![SLSETH](/img/gw-eth.jpg)
 
