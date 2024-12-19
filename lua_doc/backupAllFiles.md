@@ -49,7 +49,7 @@ if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false)
 slsIP=192.168.1.247
 tokenSLS="e9d38bedb6412e.....ed9575"
 backupPath="/var/backups/$slsIP/$(date +%Y%m%d_%H%M)"
-fileSLSBackup=backup_$backupPath.sls
+fileSLSBackup=native.backup
 mkdir -p $backupPath
 # backup all Files
 url="$slsIP/api/storage?token=$tokenSLS&path=/"
@@ -60,7 +60,7 @@ if [[ $(echo $result | jq ".success")  = "true" ]]; then
 		if [[ $(echo $i | jq -c -r ".is_dir") = "false" ]]; then
 			f=$(echo $i | jq -c -r ".name")
 			echo $f
-			curl -o ./$backupPath/$f $url$f 2>/dev/null
+			curl -o $backupPath/$f $url$f 2>/dev/null
 			#break
 		fi
 	done
@@ -70,8 +70,8 @@ fi
 # native backup
 url=$slsIP/api/backup
 get="token=$tokenSLS&action=create&config=1&zigbee=1"
-curl -d $get -o ./$backupPath/$fileSLSBackup $url 2>/dev/null
-if [ -f "./$backupPath/$fileSLSBackup" ]; then
+curl -d $get -o $backupPath/$fileSLSBackup $url 2>/dev/null
+if [ -f "$backupPath/$fileSLSBackup" ]; then
 	echo $fileSLSBackup
 else
 	echo Error request for native backup: File Not Found
