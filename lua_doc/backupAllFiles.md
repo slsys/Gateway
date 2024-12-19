@@ -47,10 +47,10 @@ if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false)
 ```shell
 slsIP=192.168.1.247
 tokenSLS="e9d38bedb6412e.....ed9575"
-backupPath=$(date +%Y%m%d_%H%M)
+backupPath=/var/backups/sls1/$(date +%Y%m%d_%H%M)
 fileSLSBackup=backup_$backupPath.sls
-mkdir $backupPath
-# bakcup all Files
+mkdir -p $backupPath
+# backup all Files
 url="$slsIP/api/storage?token=$tokenSLS&path=/"
 result=$(curl $url 2>/dev/null)
 if [[ $(echo $result | jq ".success")  = "true" ]]; then 
