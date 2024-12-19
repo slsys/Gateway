@@ -45,9 +45,10 @@ if ((Test-Path -Path $($pathBackup + $fileSLSBackup) -PathType Leaf) -ne $false)
 Скрипт копирует все файлы внутреннего хранилища, а также родной backup SLS в подкаталог `./date_time` каталога, из которого запущен сценарий. Разрабатывался и тестировался на `Ubuntu 22.04.1 LTS` + `JQ 1.6`. **Внимание!** Обязательно указать token, даже при отключенной авторизации в шлюзе.
 
 ```shell
+#!/bin/bash
 slsIP=192.168.1.247
 tokenSLS="e9d38bedb6412e.....ed9575"
-backupPath=/var/backups/sls1/$(date +%Y%m%d_%H%M)
+backupPath="/var/backups/$slsIP/$(date +%Y%m%d_%H%M)"
 fileSLSBackup=backup_$backupPath.sls
 mkdir -p $backupPath
 # backup all Files
