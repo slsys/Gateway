@@ -1,1 +1,113 @@
+# Работа с IO/GPIO
 
+## IO
+
+При работе с модулем `io` в LUA обязательно загружать библиотеку командой:
+
+```lua
+require "io"
+```
+
+### io.begin()
+
+Инициализирует модуль `io`. Выполняется в `init.lua`
+
+```lua
+io.begin(use_mqtt)
+-- use_mqtt: BOOL - использование MQTT:
+  -- true - использовать
+  -- false - не использовать
+```
+
+После инициализации в веб интерфейсе управления появится меню IO
+
+![](/img/io_web.png)
+
+## GPIO
+
+Управление контактами ввода/вывода (GPIO) чипа ESP32.
+
+#### gpio.mode()
+
+Управление режимом контакта:
+
+- gpio.INPUT: ввод
+- gpio.OUTPUT: вывод
+- gpio.INPUT_PULLUP: подтянуть к VCC
+- gpio.INPUT_PULLDOWN: подтянуть к GND
+
+```lua
+gpio.mode(pin, mode)
+-- pin: номер контакта
+-- mode: режим контакта - gpio.INPUT, gpio.INPUT_PULLUP, gpio.INPUT_PULLDOWN, gpio.OUTPUT
+```
+
+#### gpio.read()
+
+Чтение сигнала с GPIO
+
+```lua
+gpio.read(pin[, ADC)
+-- pin: номер контакта
+-- ADC: true - чтение ADC; false - чтение цифрового сигнала
+```
+
+Задать каналу 2 режим входа, получить его значение:
+
+```lua
+gpio.mode(25, gpio.INPUT)
+local value = gpio.read(25)
+print(value)
+```
+
+#### gpio.write()
+
+Запись уровня в GPIO
+
+```lua
+gpio.write(pin, level)
+-- pin: номер контакта
+-- level: уровень - gpio.HIGH - высокий, gpio.LOW - низкий
+```
+
+Например, задать каналу 4 режим выхода и включить его на 100мс:
+
+```lua
+gpio.mode(27, gpio.OUTPUT)
+gpio.write(27, 1)
+os.delay(100)
+gpio.write(27, 0)
+```
+
+### PWM (ШИМ)
+
+ШИМ-контроллер ESP32 имеет 16 независимых каналов, которые можно настроить для генерации ШИМ-сигналов с различными свойствами. Все выводы, которые могут выступать в качестве выходов, могут использоваться в качестве выводов ШИМ (GPIO с 34 по 39 не могут генерировать ШИМ).
+
+#### gpio.pwmSetup()
+
+Настройка ШИМ
+
+```lua
+gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
+-- chanel: канал ШИМ - 0-15
+-- pin: номер контакта
+-- resolution: разрешение 1-16 bits
+-- freq: частота
+```
+
+#### gpio.pwm()
+
+Управление ШИМ
+
+```lua
+gpio.pwm(channel, value)
+-- channel: канал 0-15
+-- value: значение ШИМ
+```
+
+Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
+
+```lua
+gpio.pwmSetup(3, 32)
+gpio.pwm(3, 255/100*50)
+```
