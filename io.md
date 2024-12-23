@@ -67,7 +67,7 @@ io.addGPIOInput(Name, pin, pinMode, pinType[, debounceDelay[, sendDelay[, holdDe
 Например, создание входа для геркона
 
 ```lua
-addGPIOInput("gerkon", 28, pio.INPUT_PULLUP, 2)
+io.addGPIOInput("gerkon", 28, gpio.INPUT_PULLUP, 2)
 ```
 
 ### io.get()
