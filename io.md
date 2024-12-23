@@ -34,10 +34,26 @@ io.begin(use_mqtt)
 Создает выход
 
 ```lua
-io.addGPIOOutput(name, pin)
+io.addGPIOOutput(name, pin[, ioOutputType = 0])
 -- name - STR, имя выхода
 -- pin - INT, номер контакта
+-- ioOutputType - INT, тип выхода:
+  -- SWITCH = 0
+  -- PWM = 1
 ```
+
+Типы выходов:
+
+- SWITCH. В данном режиме пин имеет одно состояние `state` со значениями ON или OFF 
+- PWM. В данном режиме пин имеет состояния:
+  - brightness
+  - state
+  - pwm_freq 100-15000
+  - pwm_res 8-12
+  - pwm_min 1-max
+  - pwm_max min-phys_max
+  - pwm_raw
+  - brightness_scale
 
 ### io.addGPIOInput()
 
@@ -53,8 +69,8 @@ io.addGPIOInput(Name, pin, pinMode, pinType[, debounceDelay[, sendDelay[, holdDe
   -- gpio.INPUT_PULLDOWN: подтянуть к GND
 -- pinType - INT, тип входа (см. далее в таблице)
 -- debounceDelay - INT, защита от дребезга контакта. По умолчанию = 50 мс
--- sendDelay - INT, ??? По умолчанию = 300 мс
--- holdDelay - INT, ??? По умолчанию = 1000 мс
+-- sendDelay - INT, время ожидания второго/следующего клика. По умолчанию = 300 мс
+-- holdDelay - INT, время когда фиксируется долгое удержание. По умолчанию = 1000 мс
 ```
 
 | mode | Режим | Описание |
