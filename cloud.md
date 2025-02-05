@@ -107,6 +107,20 @@ https://cloud.slsys.io/api/user/profile
 
 Параметры:
 
-- access_token (*)  
+- access_token (*)
 
-Возвращает информацию профиля
+Возвращает name и email
+
+### Получение списка привязанных контроллеров
+
+Методы GET/POST
+
+```http
+https://cloud.slsys.io/api/device/list
+```
+
+Параметры:
+
+- access_token (*)
+
+Возвращает список контроллеров
