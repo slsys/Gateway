@@ -86,7 +86,7 @@ https://cloud.slsys.io/api/user/reg
 Методы GET/POST
 
 ```http
-https://cloud.slsys.io/api/user/reg
+https://cloud.slsys.io/api/user/auth
 ```
 
 Параметры:
