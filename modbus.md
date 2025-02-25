@@ -161,6 +161,26 @@ local ret = mb.writeReg("Датчик", "Сенсор", 22.7)
 print(ret)
 ```
 
+### mb.setAction() [с версии 2025.02.25d1]
+
+Привязывает объект, в который будет записываться значение при изменении регистра или скрипт который будет вызываться.
+
+При вызове скрипта генерируется событие Event.Type = 8, при котором доступны Event.SlaveId, Event.DevName, Event.RegName, Event.Value
+
+```lua
+ret = mb.setAction(devName, regName, value)
+-- ret - BOOL, статус привязки
+-- devName - STR, имя устройства
+-- regName - STR, имя регистра
+-- action  - STR имя объекта или файла скрипта (с расширением .lua)
+```
+
+```lua
+require("mb")
+local ret = mb.setAction("Датчик", "Сенсор", "sensor_value")
+print(ret)
+```
+
 ## Modbus Slave
 
 Шлюз обеспечивает связь регистра Modbus с объектом в шлюзе, что позволяет обеспечить двухстороннюю передачу данных.
