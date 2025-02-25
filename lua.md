@@ -223,6 +223,7 @@ scripts.run(script[, Param])
 5. [Таймер периодический.](/lua.md#Вызов-по-периодическому-таймеру) `SCRIPT_EVENT_TYPE_INTERVAL`
 6. [Таймер Cron.](/lua.md#Вызов-по-таймеру-Cron) `SCRIPT_EVENT_TYPE_CRON`
 7. [Вызов из LUA командой scripts.run()](/lua.md#scriptsrun) `SCRIPT_EVENT_TYPE_RUN`
+8. [Вызов по изменению регистра Modbus из команды mb.setAction()](/modbus.md#mbsetaction) `SCRIPT_EVENT_TYPE_MB_REG_UPDATE` (с версии 2025.02.25d1) 
 
 #### Свойства событий
 
