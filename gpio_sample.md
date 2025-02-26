@@ -11,23 +11,27 @@ GPIO входы [6-ти канального модуля расширения](
    Пример скрипта init.lua
 
 ```lua
-gpio.addInput(25, gpio.INPUT, 2, "input2")      -- задаем режим работы входа 2 для GPIO32 контроллера (калитка)
-gpio.addInput(27, gpio.INPUT, 2, "input4")      -- задаем режим работы входа 4 для GPIO32 контроллера (ворота)
-obj.setOpt('vorota','STR',true)                 -- создаем объект с состоянием отслеживаемого объекта
-obj.setOpt('kalitka','STR',true)                -- создаем объект с состоянием отслеживаемого объекта
-obj.onChange('io.input2.value', 'vorota.lua')   -- задаем имя скрипта, которое будет запускаться при изменении значения входа
-obj.onChange('io.input4.value', 'vorota.lua')   -- задаем имя скрипта, которое будет запускаться при изменении значения входа
+require "io"
+
+io.addGPIOInput("input2", 25, gpio.INPUT, 2)     -- задаем режим работы входа 2 для GPIO32 контроллера (калитка)
+io.addGPIOInput("input4", 27, gpio.INPUT, 2)     -- задаем режим работы входа 4 для GPIO32 контроллера (ворота)
+obj.setType('vorota', 'STR')                     -- создаем объект с состоянием отслеживаемого объекта
+obj.setType('kalitka', 'STR')                    -- создаем объект с состоянием отслеживаемого объекта
+obj.setScript('io.input2.value', 'vorota.lua')   -- задаем имя скрипта, которое будет запускаться при изменении значения входа
+obj.setScript('io.input4.value', 'vorota.lua')   -- задаем имя скрипта, которое будет запускаться при изменении значения входа
 ```
 
 3. Пример скрипта vorota.lua
 
 ```lua
+require "io"
+
 if Event.Type == 2 then                             -- тип события, вызываемого при изменении объекта
   local Name = Event.Obj.Name                       -- имя объекта, который  вызвал скрипт
   local Value = Event.Obj.Value                     -- текущее значение объекта
   local OldValue = Event.Obj.OldValue               -- предыдущее значение объекта
-  local vorota = gpio.read(27)                      -- получим состояние GPIO в моменте
-  local kalitka = gpio.read(25)                     -- получим состояние GPIO в моменте
+  local vorota = io.get("input4", "value")          -- получим состояние GPIO в моменте
+  local kalitka = io.get("input2", "value")         -- получим состояние GPIO в моменте
   local sunset_hour, sunset_min = os.sunset()       -- задаем время заката
   local sunrise_hour, sunrise_min = os.sunrise()    -- задаем время рассвета
 
