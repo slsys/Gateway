@@ -893,10 +893,22 @@ zigbee.join(255, "0x0000")
 и привязать его выполнение в init.lua
 
 ```lua
-obj.setScript("io.input0.value", "btn_sw1.lua")
+require "io"
+io.begin(true)
+io.addGPIOInput("service_button", 34, gpio.INPUT_PULLUP, 2)
+obj.onChange("io.service_button.value", "btn_sw1.lua", true)
 ```
+- 
+где
+- `33` - номер обрабатываемого порта (в примере указана кнопка для круглого шлюза типа Modcam)
+- `io.service_button.value` - название объекта, в который передается событие нажатия на кнопку
 
-- где `io.input0.value` - номер обрабатываемого порта (в примере указана кнопка для круглого шлюза)
+Порты устройств
+Устройство | номер порта | 
+--- | --- | 
+Круглый шлюза типа Modcam | 33 | 
+SLSHub | 34 |
+
 
 Более подробно вопрос с обработкой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
 
