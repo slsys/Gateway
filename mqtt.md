@@ -24,10 +24,10 @@ mqtt.prefix("newTopic")
 
 ### mqtt.pub()
 
-Публикует на MQTT сервер в топик _topic_ значение _payload_.
+Публикует на MQTT сервер в топик _topic_ значение _payload_. Опционально можно указать retain флаг.
 
 ```lua
-mqtt.pub(topic, payload)
+mqtt.pub(STR topic, STR payload[, BOOL retain = false])
 ```
 
 Пример управления реле на прошивке Tasmota - `cmnd/имя устройства/имя реле`
