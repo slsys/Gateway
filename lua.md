@@ -219,9 +219,9 @@ scripts.run(script[, Param])
 1. [Вызов по изменению состояния привязанного сенсора](/lua.md#вызов-из-sb-rule). Правило Simple Bind. `SCRIPT_EVENT_TYPE_STATE_UPDATE`
 2. [Вызов по изменению объекта](/objects.md#lua). `SCRIPT_EVENT_TYPE_OBJ_CHANGE`
 3. [Вызов по входящему сообщению Telegram](/telegram.md) `SCRIPT_EVENT_TYPE_TLG_MESSAGE`
-4. [Таймер однократный.](/lua.md#вызов-по-однократному-таймеру) `SCRIPT_EVENT_TYPE_TIMEOUT`
-5. [Таймер периодический.](/lua.md#вызов-по-периодическому-таймеру) `SCRIPT_EVENT_TYPE_INTERVAL`
-6. [Таймер Cron.](/lua.md#вызов-по-таймеру-Cron) `SCRIPT_EVENT_TYPE_CRON`
+4. [Таймер однократный.](/lua.md#вызов-по-однократному-таимеру) `SCRIPT_EVENT_TYPE_TIMEOUT`
+5. [Таймер периодический.](/lua.md#вызов-по-периодическому-таимеру) `SCRIPT_EVENT_TYPE_INTERVAL`
+6. [Таймер Cron.](/lua.md#вызов-по-таимеру-cron) `SCRIPT_EVENT_TYPE_CRON`
 7. [Вызов из LUA командой scripts.run()](/lua.md#scriptsrun) `SCRIPT_EVENT_TYPE_RUN`
 8. [Вызов по изменению регистра Modbus из команды mb.setAction()](/modbus.md#mbsetaction) `SCRIPT_EVENT_TYPE_MB_REG_UPDATE` (с версии 2025.02.25d1) 
 
