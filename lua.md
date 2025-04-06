@@ -199,12 +199,12 @@ scripts.run(script[, Param])
 - [mqtt.](/lua.md#библиотека-mqtt) - работа с MQTT брокером
 - [http.](/lua.md#библиотека-http) - взаимодействие с внешними системами по HTTP
 - [telegram.](/lua.md#библиотека-telegram) - отправка уведомлений и управление шлюзом. [Подробнее здесь](/telegram.md)
-- [os.](/lua.md#Библиотека-os) - взаимодействие с операционной системой шлюза. [Работа с хранилищем](/storage.md)
-- [gpio.](/lua.md#Библиотека-GPIO) - управление GPIO
-- [audio.](/lua.md#Библиотека-audio) - управление встроенным в шлюза звуком
-- [net.](/lua.md#Библиотека-net) - получение IP адресов шлюза
-- [yeelight.](/lua.md#Библиотека-yeelight) - управление устройствами Yeelight
-- [cloud.](/lua.md#Библиотека-cloud) - работа с облаком SLS `cloud.slsys.io`
+- [os.](/lua.md#библиотека-os) - взаимодействие с операционной системой шлюза. [Работа с хранилищем](/storage.md)
+- [gpio.](/lua.md#библиотека-gpio) - управление GPIO
+- [audio.](/lua.md#библиотека-audio) - управление встроенным в шлюза звуком
+- [net.](/lua.md#библиотека-net) - получение IP адресов шлюза
+- [yeelight.](/lua.md#библиотека-yeelight) - управление устройствами Yeelight
+- [cloud.](/lua.md#библиотека-cloud) - работа с облаком SLS `cloud.slsys.io`
 
 [Примеры использования](/samples.md).
 
@@ -216,12 +216,12 @@ scripts.run(script[, Param])
 
 События различаются типом `Event.Type`. В скрипт передается числовое значение типа события, позволяющее определить источник вызова и получить различные параметры:
 
-1. [Вызов по изменению состояния привязанного сенсора](/lua.md#Вызов-из-SB-Rule). Правило Simple Bind. `SCRIPT_EVENT_TYPE_STATE_UPDATE`
+1. [Вызов по изменению состояния привязанного сенсора](/lua.md#вызов-из-sb-rule). Правило Simple Bind. `SCRIPT_EVENT_TYPE_STATE_UPDATE`
 2. [Вызов по изменению объекта](/objects.md#lua). `SCRIPT_EVENT_TYPE_OBJ_CHANGE`
 3. [Вызов по входящему сообщению Telegram](/telegram.md) `SCRIPT_EVENT_TYPE_TLG_MESSAGE`
-4. [Таймер однократный.](/lua.md#Вызов-по-однократному-таймеру) `SCRIPT_EVENT_TYPE_TIMEOUT`
-5. [Таймер периодический.](/lua.md#Вызов-по-периодическому-таймеру) `SCRIPT_EVENT_TYPE_INTERVAL`
-6. [Таймер Cron.](/lua.md#Вызов-по-таймеру-Cron) `SCRIPT_EVENT_TYPE_CRON`
+4. [Таймер однократный.](/lua.md#вызов-по-однократному-таймеру) `SCRIPT_EVENT_TYPE_TIMEOUT`
+5. [Таймер периодический.](/lua.md#вызов-по-периодическому-таймеру) `SCRIPT_EVENT_TYPE_INTERVAL`
+6. [Таймер Cron.](/lua.md#вызов-по-таймеру-Cron) `SCRIPT_EVENT_TYPE_CRON`
 7. [Вызов из LUA командой scripts.run()](/lua.md#scriptsrun) `SCRIPT_EVENT_TYPE_RUN`
 8. [Вызов по изменению регистра Modbus из команды mb.setAction()](/modbus.md#mbsetaction) `SCRIPT_EVENT_TYPE_MB_REG_UPDATE` (с версии 2025.02.25d1) 
 
@@ -494,7 +494,7 @@ http.request2 (url[:port], [method, headers, body])
 -- body - STR, тело запроса
 ```
 
-[Примеры](/samples.md#HTTP-запросы)
+[Примеры](/samples.md#включение-звука-дверного-звонка-по-событию-звуковои-фаил-лежит-в-открытои-сети)
 
 #### http.request() - deprecated
 
@@ -508,7 +508,7 @@ http.request2 (url[:port], [method, headers, body])
 
 ### Библиотека OS
 
-[Примеры](/samples.md#Библиотека-OS)
+[Примеры](/samples.md#библиотека-os)
 
 #### os.time()
 
