@@ -254,10 +254,10 @@ result = os.fileRead(fileName)
 Записывает данные в файл:
 
 ```lua
-result = os.fileWrite(fileName,data[, overwrite])
+result = os.fileWrite(fileName,data[, append])
 -- fileName - STR, имя целевого файла
 -- data - STR, данные
--- overwrite - BOOL, перезаписать файл (true)
+-- append - BOOL, дописать файл (true)
 -- result - BOOL, true - успех, false - ошибка (например, нет файла)
 -- Пример:
 os.fileWrite("/int/!file.db","привет\n",true)
