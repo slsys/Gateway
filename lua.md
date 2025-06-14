@@ -908,9 +908,9 @@ obj.onChange("io.service_button.value", "btn_sw1.lua", true)
 Порты устройств
 Устройство | номер порта | 
 --- | --- | 
-Круглый шлюза типа Modkam | 33 | 
-SLSHub | 34 |
-
+SLS Modkam, Classic, DIN Mini | 33 | 
+SLS Hub, Hub Max | 34 |
+SLS IO, PLC, PLC Max, 4R, 8R | 34 |
 
 Более подробно вопрос с обработкой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
 
