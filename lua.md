@@ -910,7 +910,7 @@ obj.onChange("io.service_button.value", "btn_sw1.lua", true)
 --- | --- | 
 SLS Modkam, Classic, DIN Mini | 33 | 
 SLS Hub, Hub Max | 34 |
-SLS IO, PLC, PLC Max, 4R, 8R | 34 |
+SLS IO, PLC, PLC Max, 4R, 8R | 16 |
 
 Более подробно вопрос с обработкой событий gpio разобран в разделе [Модуля ввода-вывода](/devices/din_mini_io_rus.md)
 
