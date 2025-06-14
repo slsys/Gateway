@@ -181,6 +181,8 @@ dofile(scriptPath)
 
 #### scripts.run()
 
+Выполняет скрипт в фоновом режиме.
+
 ```lua
 scripts.run(script[, Param])
 -- script - STR, имя файла скрипта, без расширения `lua`
