@@ -11,7 +11,7 @@
 - Modbus RTUoverTCP Master (в разработке)
 - Modbus RTUoverTCP Slave (в разработке)
 
-для RTU требуется адаптер RS485
+Для Modbus RTU требуется адаптер RS-485, который есть встроенный на PLC Max и модулем на DIN Mini и Hub Max.
 
 ## Функционал
 
