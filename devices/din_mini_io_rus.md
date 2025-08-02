@@ -6,9 +6,9 @@
 
 Возможны следующие режимы работы каналов:
 
-- Вход: сухой контакт (Срабатывает при замыкании входа на GND)
+- Вход: сухой контакт с опторазвязкой (Срабатывает при замыкании входа на GND)
 
-- Выход: транзисторный с поддержкой ШИМ (Ток течет между GND питания и выходом)
+- Выход: транзисторный 0.5A с поддержкой ШИМ (Замыкает выход на GND, ток течет между VIN питания и выходом)
 
 ## Выбор аппаратного режима работы порта
 
@@ -137,6 +137,21 @@ io.addGPIOInput("in3", 26, gpio.INPUT_PULLUP, 2)
 io.addGPIOInput("in4", 27, gpio.INPUT_PULLUP, 2)
 io.addGPIOInput("in5", 12, gpio.INPUT_PULLUP, 2)
 io.addGPIOInput("in6", 13, gpio.INPUT_PULLUP, 2)
+```
+
+Добавить все выходы модуля в режиме реле:
+
+```lua
+require "io"
+
+io.begin(false)
+
+io.addGPIOOutput("out1", 32)
+io.addGPIOOutput("out2", 25)
+io.addGPIOOutput("out3", 26)
+io.addGPIOOutput("out4", 27)
+io.addGPIOOutput("out5", 12)
+io.addGPIOOutput("out6", 13)
 ```
 
 ## Полезные ссылки
