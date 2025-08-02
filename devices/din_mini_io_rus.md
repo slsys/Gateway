@@ -8,7 +8,7 @@
 
 - Вход: сухой контакт (Срабатывает при замыкании входа на GND)
 
-- Выход: транзисторный с поддержкой ШИМ (Ток течет между + питания и выходом)
+- Выход: транзисторный с поддержкой ШИМ (Ток течет между GND питания и выходом)
 
 ## Выбор аппаратного режима работы порта
 
@@ -31,7 +31,7 @@
 - Канал 5: GPIO12
 - Канал 6: GPIO13
 
-Определение режима прописывается командой `gpio.addInput(GPIO, [gpio.INPUT,gpio.OUTPUT] , mode, "name")` через редактор скриптов в файле _init.lua_, процедура проводится однократно.
+Определение режима прописывается командой `io.addGPIOInput("name", GPIO, [gpio.INPUT,gpio.OUTPUT] , mode)` через редактор скриптов в файле _init.lua_, процедура проводится однократно.
 init.lua:
 
 ```lua
@@ -127,12 +127,16 @@ gpio.addInput(33, gpio.INPUT_PULLUP, 2, "input0", 100, 500, 2000)
 Добавить все входы модуля в режиме MultiSwitch:
 
 ```lua
-gpio.addInput(32, gpio.INPUT_PULLUP, 2, "input1")
-gpio.addInput(25, gpio.INPUT_PULLUP, 2, "input2")
-gpio.addInput(26, gpio.INPUT_PULLUP, 2, "input3")
-gpio.addInput(27, gpio.INPUT_PULLUP, 2, "input4")
-gpio.addInput(12, gpio.INPUT_PULLUP, 2, "input5")
-gpio.addInput(13, gpio.INPUT_PULLUP, 2, "input6")
+require "io"
+
+io.begin(false)
+
+io.addGPIOInput("in1", 32, gpio.INPUT_PULLUP, 2)
+io.addGPIOInput("in2", 25, gpio.INPUT_PULLUP, 2)
+io.addGPIOInput("in3", 26, gpio.INPUT_PULLUP, 2)
+io.addGPIOInput("in4", 27, gpio.INPUT_PULLUP, 2)
+io.addGPIOInput("in5", 12, gpio.INPUT_PULLUP, 2)
+io.addGPIOInput("in6", 13, gpio.INPUT_PULLUP, 2)
 ```
 
 ## Полезные ссылки
