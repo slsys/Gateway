@@ -4,7 +4,7 @@
 
 Файл актуальной прошивки для своего модуля можно взять здесь:
 
-- для модулей CC2652 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.x.0/bin)
+- для модулей CC2652 [здесь](https://github.com/Koenkk/Z-Stack-firmware/releases)
 - для модулей CC2530 - CC2538 [здесь](https://github.com/Koenkk/Z-Stack-firmware/tree/master/coordinator/Z-Stack_3.0.x/bin)
 
 или [здесь](https://github.com/slsys/Gateway/tree/master/rom/)
