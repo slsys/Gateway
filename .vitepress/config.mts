@@ -186,6 +186,7 @@ export default defineConfig({
         nav: [
           { text: 'Домашняя', link: '/' },
           { text: 'Документация', link: '/basic' },
+          { text: 'Устройства', link: '/devices' },
           { text: 'Команда', link: '/team' },
           //{ text: 'FAQ (вопросы и ответы)', link: '/faq' },
         ],
@@ -373,6 +374,17 @@ export default defineConfig({
             ]
           }
         ]
+      }
+    }
+  },
+  vite: {
+    server: {
+      proxy: {
+        '/ru/ajax/supported_devices': {
+          target: 'https://slsys.io',
+          changeOrigin: true,
+          secure: true,
+        }
       }
     }
   }
