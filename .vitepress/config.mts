@@ -186,7 +186,7 @@ export default defineConfig({
         nav: [
           { text: 'Домашняя', link: '/' },
           { text: 'Документация', link: '/basic' },
-          { text: 'Устройства', link: '/devices' },
+          { text: 'Устройства', link: '/supported_devices' },
           { text: 'Команда', link: '/team' },
           //{ text: 'FAQ (вопросы и ответы)', link: '/faq' },
         ],
@@ -288,6 +288,7 @@ export default defineConfig({
         nav: [
           { text: 'Home', link: '/en' },
           { text: 'Documentation', link: '/en/basic' },
+          { text: 'Devices', link: '/en/supported_devices' },
           { text: 'Team', link: '/en/team' },
         ],
         sidebar: [

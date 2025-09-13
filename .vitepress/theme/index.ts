@@ -2,7 +2,7 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import Devices from '../../Devices.vue'
+import Devices from '../../Components/Devices/Devices.vue'
 import './style.css'
 
 export default {

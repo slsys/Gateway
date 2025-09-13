@@ -2,5 +2,3 @@
 layout: devices
 sidebar: false
 ---
-
-

@@ -1,0 +1,11 @@
+{
+  "filterPlaceholder": "Фильтр по названию...",
+  "converter": "Конвертер",
+  "manufacturer": "Производитель",
+  "description": "Описание",
+  "loadMore": "Загрузить ещё",
+  "noMoreItems": "Нет больше",
+  "allVendors": "Все производители",
+  "noGroup": "Без группировки",
+  "groupByVendor": "По производителю"
+}

@@ -1,0 +1,11 @@
+{
+  "filterPlaceholder": "Filter by title...",
+  "converter": "Converter",
+  "manufacturer": "Manufacturer",
+  "description": "Description",
+  "loadMore": "Load more",
+  "noMoreItems": "No more items",
+  "allVendors": "All vendors",
+  "noGroup": "No grouping",
+  "groupByVendor": "By vendor"
+}

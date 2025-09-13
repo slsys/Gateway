@@ -8,16 +8,16 @@
       <input
           type="text"
           v-model="search"
-          placeholder="Filter by title..."
+          :placeholder="t('filterPlaceholder')"
           class="filter-input"
       />
       <select v-model="vendorFilter" class="filter-select">
-        <option value="">All vendors</option>
+        <option value="">{{ t('allVendors') }}</option>
         <option v-for="(vendor, id) in vendors" :key="id" :value="id">{{ vendor.TITLE }}</option>
       </select>
       <select v-model="groupBy" class="filter-select">
-        <option value="none">No grouping</option>
-        <option value="vendor">Group by VENDOR</option>
+        <option value="none">{{ t('noGroup') }}</option>
+        <option value="vendor">{{ t('groupByVendor') }}</option>
       </select>
     </div>
 
@@ -76,9 +76,9 @@
 
     <!-- loader / manual control -->
     <div class="bottom">
-      <button v-if="!autoLoad && hasMore && !loading" @click="loadPage" class="btn">Load more</button>
+      <button v-if="!autoLoad && hasMore && !loading" @click="loadPage" class="btn">{{ t('loadMore') }}</button>
       <div v-if="loading && items.length > 0" class="mini-loader">Loading...</div>
-      <div v-if="!hasMore && items.length > 0" class="end">No more items</div>
+      <div v-if="!hasMore && items.length > 0" class="end">{{ t('noMoreItems') }}</div>
     </div>
 
     <div ref="sentinel" class="sentinel" aria-hidden="true"></div>
@@ -91,9 +91,9 @@
           <div class="modal-body">
             <img :src="getImageUrl(modalData)" alt="" class="modal-image"/>
             <div class="modal-info">
-              <p><strong>Конвертер:</strong> {{ modalData.TITLE }}</p>
-              <p><strong>Производитель:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR].TITLE : modalData.VENDOR }}</p>
-              <p><strong>Описание:</strong> {{ modalData.DESCRIPTION }}</p>
+              <p><strong>{{ t('converter') }}:</strong> {{ modalData.TITLE }}</p>
+              <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR].TITLE : modalData.VENDOR }}</p>
+              <p><strong>{{ t('description') }}:</strong> {{ modalData.DESCRIPTION }}</p>
             </div>
           </div>
         </div>
@@ -105,6 +105,15 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import en from './locales/en.json'
+import ru from './locales/ru.json'
+
+import { useData } from 'vitepress'
+const { lang } = useData()
+const t = (key) => {
+  const dict = lang.value.startsWith('ru') ? ru : en
+  return dict[key] || key
+}
 
 const props = defineProps({
   pageSize: { type: Number, default: 20 },
@@ -136,7 +145,7 @@ const filteredItems = computed(() => {
     base = base.filter((it) => {
       const modelMatch = (it.MODEL || '').toLowerCase().includes(search.value.toLowerCase())
       const zigbeeMatch = Array.isArray(it.ZIGBEE_MODELS) &&
-        it.ZIGBEE_MODELS.some(z => (z.ModelId || '').toLowerCase().includes(search.value.toLowerCase()))
+        it.ZIGBEE_MODELS.some(z => (z.modelId || '').toLowerCase().includes(search.value.toLowerCase()))
       return modelMatch || zigbeeMatch
     })
   }
@@ -278,11 +287,13 @@ watch(() => props.autoLoad, (v) => {
   display:flex;
   gap:12px;
   margin-bottom:16px;
+  justify-content: flex-end;
 }
 .filter-input, .filter-select {
   padding:6px 10px;
   border:1px solid #ccc;
   border-radius:6px;
+  min-width: 180px;
 }
 .group { margin-bottom: 24px; }
 .group-title { font-size: 20px; margin: 12px 0; }
@@ -294,9 +305,11 @@ watch(() => props.autoLoad, (v) => {
   gap:16px;
 }
 .card{
-  background:white;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text);
   border-radius:10px;
   overflow:hidden;
+  border: 1px solid var(--vp-c-divider, rgba(255,255,255,0.1));
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
@@ -308,7 +321,7 @@ watch(() => props.autoLoad, (v) => {
 .card-image{  object-fit:cover; display:block ; padding: 40px 20px}
 .body{ padding:12px }
 .title{ font-size:16px; margin:0 0 8px }
-.desc{ font-size:13px; color:#444; margin:0 }
+.desc{ font-size:13px; color: var(--vp-c-text-soft, var(--vp-c-text)); margin:0 }
 .skeleton{ animation: pulse 1.2s infinite; background:linear-gradient(90deg,#f5f5f5,#efefef,#f5f5f5) }
 .skeleton .image{ height:140px; background:#eee }
 .skeleton .title{ height:18px; width:60%; background:#e7e7e7; margin-bottom:8px }
@@ -329,7 +342,8 @@ watch(() => props.autoLoad, (v) => {
   z-index: 1000;
 }
 .modal-content {
-  background: white;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text);
   padding: 20px;
   max-height: 80vh;
   overflow: auto;
@@ -362,4 +376,24 @@ watch(() => props.autoLoad, (v) => {
 .modal-title { font-size: 1.5em; margin-bottom: 16px; }
 .modal-body { display: flex; align-items: flex-start; gap: 20px; }
 .modal-info { flex: 1; }
+
+.model-ids {
+  margin-top: 8px;
+}
+.badge {
+  display: inline-block;
+  background: var(--vp-c-divider, #ddd);
+  color: var(--vp-c-text);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+.states .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
 </style>
