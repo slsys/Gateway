@@ -30,8 +30,8 @@
             {{ groupKey }}
           </span>
         </h2>
-        <div class="grid">
-          <article v-for="item in groupData.items" :key="item.id" class="card" @click="openModal(item.ID)">
+        <transition-group name="card" tag="div" class="grid">
+          <article v-for="item in groupData.items" :key="item.id + '-' + item.TITLE" class="card" @click="openModal(item.TITLE)">
             <img
                 :src="getImageUrl(item)"
                 :alt="item.name || 'image'"
@@ -41,15 +41,16 @@
             <div class="body">
               <h3 class="title">{{ item.MODEL }}</h3>
               <p class="desc">{{ item.DESCRIPTION || 'No description' }}</p>
+              <span v-if="item.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
             </div>
           </article>
-        </div>
+        </transition-group>
       </div>
     </div>
 
     <!-- Ungrouped cards -->
-    <div v-else class="grid">
-      <!-- skeletons while first page loads -->
+    <transition-group v-else name="card" tag="div" class="grid">
+      <!-- skeletons while loading -->
       <template v-if="loading && items.length === 0">
         <div v-for="n in pageSize" :key="`skeleton-${n}`" class="card skeleton">
           <div class="image"></div>
@@ -60,7 +61,7 @@
         </div>
       </template>
 
-      <article v-for="item in filteredItems" :key="item.id" class="card" @click="openModal(item.ID)">
+      <article v-for="item in filteredItems" :key="item.id + '-' + item.TITLE" class="card" @click="openModal(item.TITLE)">
         <img
             :src="getImageUrl(item)"
             :alt="item.MODEL || 'image'"
@@ -70,15 +71,14 @@
         <div class="body">
           <h3 class="title">{{ item.MODEL }}</h3>
           <p class="desc">{{ item.DESCRIPTION || 'No description' }}</p>
+          <span v-if="item.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
         </div>
       </article>
-    </div>
+    </transition-group>
 
-    <!-- loader / manual control -->
+    <!-- loader -->
     <div class="bottom">
-      <button v-if="!autoLoad && hasMore && !loading" @click="loadPage" class="btn">{{ t('loadMore') }}</button>
       <div v-if="loading && items.length > 0" class="mini-loader">Loading...</div>
-      <div v-if="!hasMore && items.length > 0" class="end">{{ t('noMoreItems') }}</div>
     </div>
 
     <div ref="sentinel" class="sentinel" aria-hidden="true"></div>
@@ -87,14 +87,30 @@
       <div class="modal-content">
         <button class="close-btn" @click="closeModal">×</button>
         <div v-if="modalData">
-          <h3 class="modal-title">{{ modalData.MODEL }}</h3>
+          <div class="modal-header">
+            <span class="modal-title-text">{{ modalData.MODEL }}</span>
+            <span v-if="modalData.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
+          </div>
           <div class="modal-body">
             <img :src="getImageUrl(modalData)" alt="" class="modal-image"/>
             <div class="modal-info">
               <p><strong>{{ t('converter') }}:</strong> {{ modalData.TITLE }}</p>
               <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR].TITLE : modalData.VENDOR }}</p>
               <p><strong>{{ t('description') }}:</strong> {{ modalData.DESCRIPTION }}</p>
+              <div v-if="Array.isArray(modalData.EXPOSES) && modalData.EXPOSES.length" class="states">
+                <strong>{{ t('states') }}:</strong>
+                <span v-for="state in modalData.EXPOSES" :key="state" class="badge">{{ state }}</span>
+              </div>
+              <p v-if="modalData.UPDATED_IN"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData.UPDATED_IN }}</p>
             </div>
+          </div>
+          <div v-if="decodedPairing" class="pairing">
+            <p><strong>{{ t('pairing') }}:</strong></p>
+            <div v-html="decodedPairing"></div>
+          </div>
+          <div v-if="decodedNotes" class="notes">
+            <p><strong>{{ t('notes') }}:</strong></p>
+            <div v-html="decodedNotes"></div>
           </div>
         </div>
         <div v-else>Loading...</div>
@@ -105,6 +121,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { marked } from 'marked'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
 
@@ -122,12 +139,9 @@ const props = defineProps({
 })
 
 const items = ref([])
-const page = ref(1)
 const loading = ref(false)
 const error = ref('')
-const hasMore = ref(true)
 const sentinel = ref(null)
-let observer = null
 
 // filters
 const search = ref('')
@@ -145,7 +159,10 @@ const filteredItems = computed(() => {
     base = base.filter((it) => {
       const modelMatch = (it.MODEL || '').toLowerCase().includes(search.value.toLowerCase())
       const zigbeeMatch = Array.isArray(it.ZIGBEE_MODELS) &&
-        it.ZIGBEE_MODELS.some(z => (z.modelId || '').toLowerCase().includes(search.value.toLowerCase()))
+        it.ZIGBEE_MODELS.some(z =>
+          (z.modelId || '').toLowerCase().includes(search.value.toLowerCase()) ||
+          (z.manufId || '').toLowerCase().includes(search.value.toLowerCase())
+        )
       return modelMatch || zigbeeMatch
     })
   }
@@ -192,18 +209,11 @@ async function fetchVendors() {
 }
 
 async function loadPage() {
-  if (loading.value || !hasMore.value) return
-  if (page.value > props.maxPages) {
-    hasMore.value = false
-    return
-  }
-
   loading.value = true
   error.value = ''
   try {
     const data = await fetchData()
     items.value = data
-    hasMore.value = false// API возвращает всё сразу
   } catch (err) {
     console.error(err)
     error.value = err.message || 'Failed to load data'
@@ -212,37 +222,13 @@ async function loadPage() {
   }
 }
 
-function setupObserver() {
-  if (!props.autoLoad) return
-  if (!('IntersectionObserver' in window)) return
-
-  observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting && hasMore.value && !loading.value) {
-        loadPage()
-      }
-    }
-  }, {
-    root: null,
-    rootMargin: '300px',
-    threshold: 0.1,
-  })
-
-  if (sentinel.value) observer.observe(sentinel.value)
-}
-
-function teardownObserver() {
-  if (observer && sentinel.value) observer.unobserve(sentinel.value)
-  observer = null
-}
-
-async function openModal(id) {
-  const resp = await fetch(`/ru/ajax/supported_devices?op=get_device&id=${id}`)
+async function openModal(title) {
+  const resp = await fetch(`/ru/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`)
   const json = await resp.json()
   modalData.value = json.data
   showModal.value = true
   const url = new URL(window.location)
-  url.searchParams.set('device', id)
+  url.searchParams.set('device', title)
   history.pushState({}, '', url)
 }
 function closeModal() {
@@ -252,22 +238,66 @@ function closeModal() {
   history.pushState({}, '', url)
 }
 
+const decodedNotes = computed(() => {
+  const notes = modalData.value && modalData.value.NOTES
+  if (!notes || Object.keys(notes).length === 0) return ''
+
+  // current locale key (e.g. 'ru' or 'en')
+  const cur = lang.value
+  const curVal = notes[cur]
+  if (curVal && String(curVal).trim() !== '') {
+    try { return decodeURIComponent(escape(atob(curVal))) } catch (e) { /* fall through to fallback */ }
+  }
+
+  // prefer English as a fallback if available and non-empty
+  if (notes.en && String(notes.en).trim() !== '') {
+    try { return decodeURIComponent(escape(atob(notes.en))) } catch (e) { /* fall through */ }
+  }
+
+  // otherwise pick first non-empty locale value
+  for (const k of Object.keys(notes)) {
+    const v = notes[k]
+    if (v && String(v).trim() !== '') {
+      try { return decodeURIComponent(escape(atob(v))) } catch (e) { /* try next */ }
+    }
+  }
+
+  return ''
+})
+
+const decodedPairing = computed(() => {
+  const notes = modalData.value && modalData.value.PAIRING_NOTES
+  if (!notes || Object.keys(notes).length === 0) return ''
+
+  const cur = lang.value
+  const curVal = notes[cur]
+  let decoded = ''
+  if (curVal && String(curVal).trim() !== '') {
+    try { decoded = decodeURIComponent(escape(atob(curVal))) } catch (e) { /* fallback */ }
+  }
+
+  if (!decoded && notes.en && String(notes.en).trim() !== '') {
+    try { decoded = decodeURIComponent(escape(atob(notes.en))) } catch (e) { /* fallback */ }
+  }
+
+  if (!decoded) {
+    for (const k of Object.keys(notes)) {
+      const v = notes[k]
+      if (v && String(v).trim() !== '') {
+        try { decoded = decodeURIComponent(escape(atob(v))) ; break } catch (e) { /* try next */ }
+      }
+    }
+  }
+
+  return decoded ? marked(decoded) : ''
+})
+
 onMounted(async () => {
   await fetchVendors()
   await loadPage()
   const params = new URLSearchParams(window.location.search)
   const dev = params.get('device')
   if (dev) openModal(dev)
-  setupObserver()
-})
-
-onBeforeUnmount(() => {
-  teardownObserver()
-})
-
-watch(() => props.autoLoad, (v) => {
-  teardownObserver()
-  if (v) setupObserver()
 })
 </script>
 
@@ -299,12 +329,13 @@ watch(() => props.autoLoad, (v) => {
 .group-title { font-size: 20px; margin: 12px 0; }
 .btn{ padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:transparent; cursor:pointer }
 .error{ color: #b00020 }
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap:16px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  transition: all 0.3s ease;
 }
-.card{
+.card {
   background: var(--vp-c-bg);
   color: var(--vp-c-text);
   border-radius:10px;
@@ -313,7 +344,8 @@ watch(() => props.autoLoad, (v) => {
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
-  transition: transform 0.3s;
+  transition: transform 0.3s, opacity 0.3s, all 0.3s;
+  position: relative; /* ensure child absolute positioning works */
 }
 .card:hover {
   transform: scale(1.05);
@@ -329,6 +361,12 @@ watch(() => props.autoLoad, (v) => {
 .mini-loader{ text-align:center; padding:12px }
 .end{ text-align:center; padding:12px; color:#666 }
 .sentinel{ height:1px }
+
+.card .in-lab {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
 
 @keyframes pulse{ 0%{opacity:1}50%{opacity:0.6}100%{opacity:1} }
 
@@ -358,8 +396,10 @@ watch(() => props.autoLoad, (v) => {
   border: none;
   font-size: 24px;
   cursor: pointer;
+  z-index: 1001; /* ensure it's above content */
 }
 .modal-image {
+  width: 300px;
   max-width: 100%;
   margin-bottom: 16px;
 }
@@ -373,7 +413,16 @@ watch(() => props.autoLoad, (v) => {
   margin-right: 8px;
   object-fit: contain;
 }
-.modal-title { font-size: 1.5em; margin-bottom: 16px; }
+.modal-header {
+  display: flex;
+  align-items: center; /* vertically center title and badge */
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.modal-title-text {
+  display: inline-block;
+  font-size: 1.5em; /* revert to previous size */
+}
 .modal-body { display: flex; align-items: flex-start; gap: 20px; }
 .modal-info { flex: 1; }
 
@@ -387,13 +436,77 @@ watch(() => props.autoLoad, (v) => {
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
-  margin-right: 4px;
-  margin-bottom: 4px;
 }
 .states .badges {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   margin-top: 4px;
+}
+.notes { margin-top: 8px; }
+.pairing { margin-top: 8px; }
+
+.states {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.states strong {
+  margin-right: 6px;
+}
+/* .in-lab badge style for both cards and modal header */
+.in-lab {
+  background-color: #4CAF50;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.dark .in-lab {
+  background-color: #2E7D32; /* darker green for dark mode */
+}
+</style>
+
+<style scoped>
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-input, .filter-select {
+    min-width: auto;
+    width: 100%;
+  }
+  .modal-body {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .modal-info {
+    width: 100%;
+    order: -1; /* move info block above the image */
+    margin-bottom: 16px;
+  }
+  .modal-image {
+    width: 70%;
+    max-width: 250px;
+  }
+}
+</style>
+
+<style scoped>
+.grid, .group {
+  transition: all 0.3s ease;
+}
+.card {
+  transition: transform 0.3s, opacity 0.3s;
+}
+.card-enter-active, .card-leave-active {
+  transition: all 0.3s ease;
+}
+.card-enter-from, .card-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
 }
 </style>

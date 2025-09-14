@@ -3,9 +3,11 @@
   "converter": "Конвертер",
   "manufacturer": "Производитель",
   "description": "Описание",
-  "loadMore": "Загрузить ещё",
-  "noMoreItems": "Нет больше",
   "allVendors": "Все производители",
   "noGroup": "Без группировки",
-  "groupByVendor": "По производителю"
+  "groupByVendor": "По производителю",
+  "states": "Состояния",
+  "updatedInFirmware": "Обновлено в прошивке",
+  "pairing": "Сопряжение",
+  "notes": "Заметки"
 }
