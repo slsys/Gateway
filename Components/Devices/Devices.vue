@@ -13,7 +13,7 @@
       />
       <select v-model="vendorFilter" class="filter-select">
         <option value="">{{ t('allVendors') }}</option>
-        <option v-for="(vendor, id) in vendors" :key="id" :value="id">{{ vendor.TITLE }}</option>
+        <option v-for="(vendor, id) in vendors" :key="id" :value="id">{{ vendor['TITLE'] }}</option>
       </select>
       <select v-model="groupBy" class="filter-select">
         <option value="none">{{ t('noGroup') }}</option>
@@ -31,7 +31,7 @@
           </span>
         </h2>
         <transition-group name="card" tag="div" class="grid">
-          <article v-for="item in groupData.items" :key="item.id + '-' + item.TITLE" class="card" @click="openModal(item.TITLE)">
+          <article v-for="item in groupData.items" :key="item.id + '-' + item['TITLE']" class="card" @click="openModal(item['TITLE'])">
             <img
                 :src="getImageUrl(item)"
                 :alt="item.name || 'image'"
@@ -39,9 +39,9 @@
                 class="card-image"
             />
             <div class="body">
-              <h3 class="title">{{ item.MODEL }}</h3>
-              <p class="desc">{{ item.DESCRIPTION || 'No description' }}</p>
-              <span v-if="item.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
+              <h3 class="title">{{ item['MODEL'] }}</h3>
+              <p class="desc">{{ item['DESCRIPTION'] || 'No description' }}</p>
+              <span v-if="item['HAVE_IN_LAB'] === '1'" class="badge in-lab">In lab</span>
             </div>
           </article>
         </transition-group>
@@ -61,17 +61,17 @@
         </div>
       </template>
 
-      <article v-for="item in filteredItems" :key="item.id + '-' + item.TITLE" class="card" @click="openModal(item.TITLE)">
+      <article v-for="item in filteredItems" :key="item.id + '-' + item['TITLE']" class="card" @click="openModal(item['TITLE'])">
         <img
             :src="getImageUrl(item)"
-            :alt="item.MODEL || 'image'"
+            :alt="item['MODEL'] || 'image'"
             loading="lazy"
             class="card-image"
         />
         <div class="body">
-          <h3 class="title">{{ item.MODEL }}</h3>
-          <p class="desc">{{ item.DESCRIPTION || 'No description' }}</p>
-          <span v-if="item.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
+          <h3 class="title">{{ item['MODEL'] }}</h3>
+          <p class="desc">{{ item['DESCRIPTION'] || 'No description' }}</p>
+          <span v-if="item['HAVE_IN_LAB'] === '1'" class="badge in-lab">In lab</span>
         </div>
       </article>
     </transition-group>
@@ -88,20 +88,20 @@
         <button class="close-btn" @click="closeModal">×</button>
         <div v-if="modalData">
           <div class="modal-header">
-            <span class="modal-title-text">{{ modalData.MODEL }}</span>
-            <span v-if="modalData.HAVE_IN_LAB === '1'" class="badge in-lab">In lab</span>
+            <span class="modal-title-text">{{ modalData['MODEL'] }}</span>
+            <span v-if="modalData['HAVE_IN_LAB'] === '1'" class="badge in-lab">In lab</span>
           </div>
           <div class="modal-body">
             <img :src="getImageUrl(modalData)" alt="" class="modal-image"/>
             <div class="modal-info">
-              <p><strong>{{ t('converter') }}:</strong> {{ modalData.TITLE }}</p>
-              <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR].TITLE : modalData.VENDOR }}</p>
-              <p><strong>{{ t('description') }}:</strong> {{ modalData.DESCRIPTION }}</p>
-              <div v-if="Array.isArray(modalData.EXPOSES) && modalData.EXPOSES.length" class="states">
+              <p><strong>{{ t('converter') }}:</strong> {{ modalData['TITLE'] }}</p>
+              <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR]['TITLE'] : modalData.VENDOR }}</p>
+              <p><strong>{{ t('description') }}:</strong> {{ modalData['DESCRIPTION'] }}</p>
+              <div v-if="Array.isArray(modalData['EXPOSES']) && modalData['EXPOSES'].length" class="states">
                 <strong>{{ t('states') }}:</strong>
-                <span v-for="state in modalData.EXPOSES" :key="state" class="badge">{{ state }}</span>
+                <span v-for="state in modalData['EXPOSES']" :key="state" class="badge">{{ state }}</span>
               </div>
-              <p v-if="modalData.UPDATED_IN"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData.UPDATED_IN }}</p>
+              <p v-if="modalData['UPDATED_IN']"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData['UPDATED_IN'] }}</p>
             </div>
           </div>
           <div v-if="decodedPairing" class="pairing">
@@ -120,7 +120,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { marked } from 'marked'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
@@ -157,17 +157,17 @@ const filteredItems = computed(() => {
   let base = items.value
   if (search.value) {
     base = base.filter((it) => {
-      const modelMatch = (it.MODEL || '').toLowerCase().includes(search.value.toLowerCase())
-      const zigbeeMatch = Array.isArray(it.ZIGBEE_MODELS) &&
-        it.ZIGBEE_MODELS.some(z =>
-          (z.modelId || '').toLowerCase().includes(search.value.toLowerCase()) ||
-          (z.manufId || '').toLowerCase().includes(search.value.toLowerCase())
+      const modelMatch = (it['MODEL'] || '').toLowerCase().includes(search.value.toLowerCase())
+      const zigbeeMatch = Array.isArray(it['ZIGBEE_MODELS']) &&
+        it['ZIGBEE_MODELS'].some(z =>
+          (z['modelId'] || '').toLowerCase().includes(search.value.toLowerCase()) ||
+          (z['manufId'] || '').toLowerCase().includes(search.value.toLowerCase())
         )
       return modelMatch || zigbeeMatch
     })
   }
   if (vendorFilter.value) {
-    base = base.filter(it => String(it.VENDOR) === String(vendorFilter.value))
+    base = base.filter(it => String(it['VENDOR']) === String(vendorFilter.value))
   }
   return base
 })
@@ -175,9 +175,9 @@ const filteredItems = computed(() => {
 const groupedItems = computed(() => {
   if (groupBy.value === 'vendor') {
     return filteredItems.value.reduce((acc, item) => {
-      const vendorObj = vendors.value[item.VENDOR]
-      const key = vendorObj ? vendorObj.TITLE : 'Unknown'
-      if (!acc[key]) acc[key] = { items: [], picture: vendorObj ? vendorObj.PICTURE : '' }
+      const vendorObj = vendors.value[item['VENDOR']]
+      const key = vendorObj ? vendorObj['TITLE'] : 'Unknown'
+      if (!acc[key]) acc[key] = { items: [], picture: vendorObj ? vendorObj['PICTURE'] : '' }
       acc[key].items.push(item)
       return acc
     }, {})
@@ -186,7 +186,7 @@ const groupedItems = computed(() => {
 })
 
 function getImageUrl(item) {
-  return `https://slsys.io/${item.PICTURE}`
+  return `https://slsys.io/${item['PICTURE']}`
 }
 
 async function fetchData() {
@@ -203,7 +203,7 @@ async function fetchVendors() {
   const json = await resp.json()
   if (!json.data) throw new Error('Unexpected response format')
   vendors.value = json.data.reduce((acc, v) => {
-    acc[v.ID] = v
+    acc[v['ID']] = v
     return acc
   }, {})
 }
@@ -212,8 +212,7 @@ async function loadPage() {
   loading.value = true
   error.value = ''
   try {
-    const data = await fetchData()
-    items.value = data
+    items.value = await fetchData()
   } catch (err) {
     console.error(err)
     error.value = err.message || 'Failed to load data'
@@ -239,26 +238,32 @@ function closeModal() {
 }
 
 const decodedNotes = computed(() => {
-  const notes = modalData.value && modalData.value.NOTES
+  const notes = modalData.value && modalData.value['NOTES']
   if (!notes || Object.keys(notes).length === 0) return ''
 
-  // current locale key (e.g. 'ru' or 'en')
   const cur = lang.value
   const curVal = notes[cur]
   if (curVal && String(curVal).trim() !== '') {
-    try { return decodeURIComponent(escape(atob(curVal))) } catch (e) { /* fall through to fallback */ }
+    try {
+      const bytes = Uint8Array.from(atob(curVal), c => c.charCodeAt(0))
+      return new TextDecoder().decode(bytes)
+    } catch (e) {}
   }
 
-  // prefer English as a fallback if available and non-empty
   if (notes.en && String(notes.en).trim() !== '') {
-    try { return decodeURIComponent(escape(atob(notes.en))) } catch (e) { /* fall through */ }
+    try {
+      const bytes = Uint8Array.from(atob(notes.en), c => c.charCodeAt(0))
+      return new TextDecoder().decode(bytes)
+    } catch (e) {}
   }
 
-  // otherwise pick first non-empty locale value
   for (const k of Object.keys(notes)) {
     const v = notes[k]
     if (v && String(v).trim() !== '') {
-      try { return decodeURIComponent(escape(atob(v))) } catch (e) { /* try next */ }
+      try {
+        const bytes = Uint8Array.from(atob(v), c => c.charCodeAt(0))
+        return new TextDecoder().decode(bytes)
+      } catch (e) {}
     }
   }
 
@@ -266,25 +271,35 @@ const decodedNotes = computed(() => {
 })
 
 const decodedPairing = computed(() => {
-  const notes = modalData.value && modalData.value.PAIRING_NOTES
+  const notes = modalData.value && modalData.value['PAIRING_NOTES']
   if (!notes || Object.keys(notes).length === 0) return ''
 
   const cur = lang.value
   const curVal = notes[cur]
   let decoded = ''
   if (curVal && String(curVal).trim() !== '') {
-    try { decoded = decodeURIComponent(escape(atob(curVal))) } catch (e) { /* fallback */ }
+    try {
+      const bytes = Uint8Array.from(atob(curVal), c => c.charCodeAt(0))
+      decoded = new TextDecoder().decode(bytes)
+    } catch (e) {}
   }
 
   if (!decoded && notes.en && String(notes.en).trim() !== '') {
-    try { decoded = decodeURIComponent(escape(atob(notes.en))) } catch (e) { /* fallback */ }
+    try {
+      const bytes = Uint8Array.from(atob(notes.en), c => c.charCodeAt(0))
+      decoded = new TextDecoder().decode(bytes)
+    } catch (e) {}
   }
 
   if (!decoded) {
     for (const k of Object.keys(notes)) {
       const v = notes[k]
       if (v && String(v).trim() !== '') {
-        try { decoded = decodeURIComponent(escape(atob(v))) ; break } catch (e) { /* try next */ }
+        try {
+          const bytes = Uint8Array.from(atob(v), c => c.charCodeAt(0))
+          decoded = new TextDecoder().decode(bytes)
+          break
+        } catch (e) {}
       }
     }
   }
@@ -297,7 +312,7 @@ onMounted(async () => {
   await loadPage()
   const params = new URLSearchParams(window.location.search)
   const dev = params.get('device')
-  if (dev) openModal(dev)
+  if (dev) await openModal(dev)
 })
 </script>
 
@@ -327,8 +342,6 @@ onMounted(async () => {
 }
 .group { margin-bottom: 24px; }
 .group-title { font-size: 20px; margin: 12px 0; }
-.btn{ padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:transparent; cursor:pointer }
-.error{ color: #b00020 }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -337,10 +350,10 @@ onMounted(async () => {
 }
 .card {
   background: var(--vp-c-bg);
-  color: var(--vp-c-text);
+  color: var(--vp-c-text-1);
   border-radius:10px;
   overflow:hidden;
-  border: 1px solid var(--vp-c-divider, rgba(255,255,255,0.1));
+  border: 1px solid var(--vp-c-divider);
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
@@ -353,13 +366,12 @@ onMounted(async () => {
 .card-image{  object-fit:cover; display:block ; padding: 40px 20px}
 .body{ padding:12px }
 .title{ font-size:16px; margin:0 0 8px }
-.desc{ font-size:13px; color: var(--vp-c-text-soft, var(--vp-c-text)); margin:0 }
+.desc{ font-size:13px; color: var(--vp-c-text-2); margin:0 }
 .skeleton{ animation: pulse 1.2s infinite; background:linear-gradient(90deg,#f5f5f5,#efefef,#f5f5f5) }
-.skeleton .image{ height:140px; background:#eee }
+.skeleton .image{ height:240px; background:#eee }
 .skeleton .title{ height:18px; width:60%; background:#e7e7e7; margin-bottom:8px }
 .skeleton .desc{ height:12px; width:100%; background:#e7e7e7 }
 .mini-loader{ text-align:center; padding:12px }
-.end{ text-align:center; padding:12px; color:#666 }
 .sentinel{ height:1px }
 
 .card .in-lab {
@@ -381,7 +393,7 @@ onMounted(async () => {
 }
 .modal-content {
   background: var(--vp-c-bg);
-  color: var(--vp-c-text);
+  color: var(--vp-c-text-1);
   padding: 20px;
   max-height: 80vh;
   overflow: auto;
@@ -426,18 +438,15 @@ onMounted(async () => {
 .modal-body { display: flex; align-items: flex-start; gap: 20px; }
 .modal-info { flex: 1; }
 
-.model-ids {
-  margin-top: 8px;
-}
 .badge {
   display: inline-block;
-  background: var(--vp-c-divider, #ddd);
-  color: var(--vp-c-text);
+  background: var(--vp-c-divider);
+  color: var(--vp-c-text-1);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
 }
-.states .badges {
+.states {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -466,6 +475,14 @@ onMounted(async () => {
 .dark .in-lab {
   background-color: #2E7D32; /* darker green for dark mode */
 }
+
+/* Added animation styles for filtering and grouping transitions */
+.grid, .group {
+  transition: all 0.3s ease;
+}
+.card {
+  transition: transform 0.3s, opacity 0.3s;
+}
 </style>
 
 <style scoped>
@@ -482,31 +499,16 @@ onMounted(async () => {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+    gap: 20px;
   }
   .modal-info {
     width: 100%;
-    order: -1; /* move info block above the image */
+    order: -1;
     margin-bottom: 16px;
   }
   .modal-image {
     width: 70%;
     max-width: 250px;
   }
-}
-</style>
-
-<style scoped>
-.grid, .group {
-  transition: all 0.3s ease;
-}
-.card {
-  transition: transform 0.3s, opacity 0.3s;
-}
-.card-enter-active, .card-leave-active {
-  transition: all 0.3s ease;
-}
-.card-enter-from, .card-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
 }
 </style>
