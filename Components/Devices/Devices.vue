@@ -32,6 +32,7 @@
         </h2>
         <transition-group name="card" tag="div" class="grid">
           <article v-for="item in groupData.items" :key="item.id + '-' + item['TITLE']" class="card" @click="openModal(item['TITLE'])">
+            <span class="badge title-badge">#{{ item['TITLE'] }}</span>
             <img
                 :src="getImageUrl(item)"
                 :alt="item.name || 'image'"
@@ -62,6 +63,7 @@
       </template>
 
       <article v-for="item in filteredItems" :key="item.id + '-' + item['TITLE']" class="card" @click="openModal(item['TITLE'])">
+        <span class="badge title-badge">#{{ item['TITLE'] }}</span>
         <img
             :src="getImageUrl(item)"
             :alt="item['MODEL'] || 'image'"
@@ -83,7 +85,7 @@
 
     <div ref="sentinel" class="sentinel" aria-hidden="true"></div>
 
-    <div v-if="showModal" class="modal-backdrop">
+    <div v-if="showModal" class="modal-backdrop" @click.self="closeModal">
       <div class="modal-content">
         <button class="close-btn" @click="closeModal">×</button>
         <div v-if="modalData">
@@ -359,6 +361,7 @@ onMounted(async () => {
   flex-direction:column;
   transition: transform 0.3s, opacity 0.3s, all 0.3s;
   position: relative; /* ensure child absolute positioning works */
+  cursor: pointer;
 }
 .card:hover {
   transform: scale(1.05);
@@ -378,6 +381,17 @@ onMounted(async () => {
   position: absolute;
   top: 8px;
   right: 8px;
+}
+
+.card .title-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 @keyframes pulse{ 0%{opacity:1}50%{opacity:0.6}100%{opacity:1} }
@@ -402,13 +416,12 @@ onMounted(async () => {
 }
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  z-index: 1001; /* ensure it's above content */
 }
 .modal-image {
   width: 300px;
