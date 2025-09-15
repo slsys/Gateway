@@ -578,6 +578,8 @@ onMounted(async () => {
   .modal-image {
     width: 100%;
     max-width: none;
+    height: 180px; /* reduced height for mobile */
+    object-fit: contain;
     margin-bottom: 16px;
   }
   .modal-info {
