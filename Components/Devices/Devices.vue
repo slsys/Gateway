@@ -103,6 +103,12 @@
                 <strong>{{ t('states') }}:</strong>
                 <span v-for="state in modalData['EXPOSES']" :key="state" class="badge">{{ state }}</span>
               </div>
+              <div v-if="Array.isArray(modalData['ZIGBEE_MODELS']) && modalData['ZIGBEE_MODELS'].length" class="states">
+                <strong>Zigbee модели:</strong>
+                <span v-for="(zb, idx) in modalData['ZIGBEE_MODELS']" :key="idx" class="badge">
+                  {{ zb['manufId'] }} / {{ zb['modelId'] }}
+                </span>
+              </div>
               <p v-if="modalData['UPDATED_IN']"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData['UPDATED_IN'] }}</p>
               <div v-if="Array.isArray(modalData['BUY_LINKS']) && modalData['BUY_LINKS'].length" class="buy-links">
                 <strong>{{ t('buyLinks') }}:</strong>
@@ -480,23 +486,19 @@ onMounted(async () => {
   border-radius: 4px;
   font-size: 12px;
 }
+.notes { margin-top: 8px; }
+.pairing { margin-top: 8px; }
+
 .states {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   margin-top: 4px;
-}
-.notes { margin-top: 8px; }
-.pairing { margin-top: 8px; }
-
-.states {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
+  align-items: center; /* align badges with header */
 }
 .states strong {
   margin-right: 6px;
+  width: auto; /* allow badges to be inline with text */
 }
 /* .in-lab badge style for both cards and modal header */
 .in-lab {
