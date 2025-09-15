@@ -85,51 +85,53 @@
 
     <div ref="sentinel" class="sentinel" aria-hidden="true"></div>
 
-    <div v-if="showModal" class="modal-backdrop" @click.self="closeModal">
-      <div class="modal-content">
-        <button class="close-btn" @click="closeModal">×</button>
-        <div v-if="modalData">
-          <div class="modal-header">
-            <span class="modal-title-text">{{ modalData['MODEL'] }}</span>
-            <span v-if="modalData['HAVE_IN_LAB'] === '1'" class="badge in-lab">In lab</span>
-          </div>
-          <div class="modal-body">
-            <img :src="getImageUrl(modalData)" alt="" class="modal-image"/>
-            <div class="modal-info">
-              <p><strong>{{ t('converter') }}:</strong> {{ modalData['TITLE'] }}</p>
-              <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR]['TITLE'] : modalData.VENDOR }}</p>
-              <p><strong>{{ t('description') }}:</strong> {{ modalData['DESCRIPTION'] }}</p>
-              <div v-if="Array.isArray(modalData['EXPOSES']) && modalData['EXPOSES'].length" class="states">
-                <strong>{{ t('states') }}:</strong>
-                <span v-for="state in modalData['EXPOSES']" :key="state" class="badge">{{ state }}</span>
-              </div>
-              <div v-if="Array.isArray(modalData['ZIGBEE_MODELS']) && modalData['ZIGBEE_MODELS'].length" class="states">
-                <strong>Zigbee модели:</strong>
-                <span v-for="(zb, idx) in modalData['ZIGBEE_MODELS']" :key="idx" class="badge">
-                  {{ zb['manufId'] }} / {{ zb['modelId'] }}
-                </span>
-              </div>
-              <p v-if="modalData['UPDATED_IN']"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData['UPDATED_IN'] }}</p>
-              <div v-if="Array.isArray(modalData['BUY_LINKS']) && modalData['BUY_LINKS'].length" class="buy-links">
-                <strong>{{ t('buyLinks') }}:</strong>
-                <a v-for="(link, idx) in modalData['BUY_LINKS']" :key="idx" :href="link.url" target="_blank" rel="noopener" class="buy-button-inline">
-                  {{ link.name && link.name.trim() !== '' ? link.name : t('buy') }}
-                </a>
+    <transition name="modal-fade">
+      <div v-if="showModal" class="modal-backdrop" @click.self="closeModal">
+        <div class="modal-content">
+          <button class="close-btn" @click="closeModal">×</button>
+          <div v-if="modalData">
+            <div class="modal-header">
+              <span class="modal-title-text">{{ modalData['MODEL'] }}</span>
+              <span v-if="modalData['HAVE_IN_LAB'] === '1'" class="badge in-lab">In lab</span>
+            </div>
+            <div class="modal-body">
+              <img :src="getImageUrl(modalData)" alt="" class="modal-image"/>
+              <div class="modal-info">
+                <p><strong>{{ t('converter') }}:</strong> {{ modalData['TITLE'] }}</p>
+                <p><strong>{{ t('manufacturer') }}:</strong> {{ vendors[modalData.VENDOR] ? vendors[modalData.VENDOR]['TITLE'] : modalData.VENDOR }}</p>
+                <p><strong>{{ t('description') }}:</strong> {{ modalData['DESCRIPTION'] }}</p>
+                <div v-if="Array.isArray(modalData['EXPOSES']) && modalData['EXPOSES'].length" class="states">
+                  <strong>{{ t('states') }}:</strong>
+                  <span v-for="state in modalData['EXPOSES']" :key="state" class="badge">{{ state }}</span>
+                </div>
+                <div v-if="Array.isArray(modalData['ZIGBEE_MODELS']) && modalData['ZIGBEE_MODELS'].length" class="states">
+                  <strong>Zigbee модели:</strong>
+                  <span v-for="(zb, idx) in modalData['ZIGBEE_MODELS']" :key="idx" class="badge">
+                    {{ zb['manufId'] }} / {{ zb['modelId'] }}
+                  </span>
+                </div>
+                <p v-if="modalData['UPDATED_IN']"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData['UPDATED_IN'] }}</p>
+                <div v-if="Array.isArray(modalData['BUY_LINKS']) && modalData['BUY_LINKS'].length" class="buy-links">
+                  <strong>{{ t('buyLinks') }}:</strong>
+                  <a v-for="(link, idx) in modalData['BUY_LINKS']" :key="idx" :href="link.url" target="_blank" rel="noopener" class="buy-button-inline">
+                    {{ link.name && link.name.trim() !== '' ? link.name : t('buy') }}
+                  </a>
+                </div>
               </div>
             </div>
+            <div v-if="decodedPairing" class="pairing">
+              <p><strong>{{ t('pairing') }}:</strong></p>
+              <div v-html="decodedPairing"></div>
+            </div>
+            <div v-if="decodedNotes" class="notes">
+              <p><strong>{{ t('notes') }}:</strong></p>
+              <div v-html="decodedNotes"></div>
+            </div>
           </div>
-          <div v-if="decodedPairing" class="pairing">
-            <p><strong>{{ t('pairing') }}:</strong></p>
-            <div v-html="decodedPairing"></div>
-          </div>
-          <div v-if="decodedNotes" class="notes">
-            <p><strong>{{ t('notes') }}:</strong></p>
-            <div v-html="decodedNotes"></div>
-          </div>
+          <div v-else>Loading...</div>
         </div>
-        <div v-else>Loading...</div>
       </div>
-    </div>
+    </transition>
   </section>
 </template>
 
@@ -539,6 +541,14 @@ onMounted(async () => {
   background: var(--vp-c-brand);
   color: white;
 }
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
 
 @media (max-width: 600px) {
   .filters {
@@ -566,4 +576,5 @@ onMounted(async () => {
   }
 }
 </style>
+
 
