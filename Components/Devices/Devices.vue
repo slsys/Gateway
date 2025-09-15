@@ -242,12 +242,14 @@ async function openModal(title) {
   const json = await resp.json()
   modalData.value = json.data
   showModal.value = true
+  document.body.classList.add('modal-open')
   const url = new URL(window.location)
   url.searchParams.set('device', title)
   history.pushState({}, '', url)
 }
 function closeModal() {
   showModal.value = false
+  document.body.classList.remove('modal-open')
   const url = new URL(window.location)
   url.searchParams.delete('device')
   history.pushState({}, '', url)
@@ -574,6 +576,18 @@ onMounted(async () => {
     width: 70%;
     max-width: 250px;
   }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .card {
+    min-height: 180px;
+    padding: 8px;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 </style>
 
