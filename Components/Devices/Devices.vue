@@ -561,20 +561,29 @@ onMounted(async () => {
     min-width: auto;
     width: 100%;
   }
+  .modal-content {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+    padding: 16px;
+    box-sizing: border-box;
+  }
   .modal-body {
-    display: flex;
     flex-direction: column-reverse;
-    align-items: center;
-    gap: 20px;
+    align-items: stretch;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .modal-image {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 16px;
   }
   .modal-info {
     width: 100%;
     order: -1;
     margin-bottom: 16px;
-  }
-  .modal-image {
-    width: 70%;
-    max-width: 250px;
   }
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
