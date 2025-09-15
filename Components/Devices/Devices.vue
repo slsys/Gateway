@@ -104,6 +104,12 @@
                 <span v-for="state in modalData['EXPOSES']" :key="state" class="badge">{{ state }}</span>
               </div>
               <p v-if="modalData['UPDATED_IN']"><strong>{{ t('updatedInFirmware') }}:</strong> {{ modalData['UPDATED_IN'] }}</p>
+              <div v-if="Array.isArray(modalData['BUY_LINKS']) && modalData['BUY_LINKS'].length" class="buy-links">
+                <strong>{{ t('buyLinks') }}:</strong>
+                <a v-for="(link, idx) in modalData['BUY_LINKS']" :key="idx" :href="link.url" target="_blank" rel="noopener" class="buy-button-inline">
+                  {{ link.name && link.name.trim() !== '' ? link.name : t('buy') }}
+                </a>
+              </div>
             </div>
           </div>
           <div v-if="decodedPairing" class="pairing">
@@ -370,10 +376,25 @@ onMounted(async () => {
 .body{ padding:12px }
 .title{ font-size:16px; margin:0 0 8px }
 .desc{ font-size:13px; color: var(--vp-c-text-2); margin:0 }
-.skeleton{ animation: pulse 1.2s infinite; background:linear-gradient(90deg,#f5f5f5,#efefef,#f5f5f5) }
-.skeleton .image{ height:240px; background:#eee }
-.skeleton .title{ height:18px; width:60%; background:#e7e7e7; margin-bottom:8px }
-.skeleton .desc{ height:12px; width:100%; background:#e7e7e7 }
+.skeleton {
+  animation: pulse 1.2s infinite;
+  background: linear-gradient(90deg, var(--vp-c-bg-alt), var(--vp-c-bg), var(--vp-c-bg-alt));
+}
+.skeleton .image {
+  height: 240px;
+  background: var(--vp-c-bg-alt);
+}
+.skeleton .title {
+  height: 18px;
+  width: 60%;
+  background: var(--vp-c-bg-alt);
+  margin-bottom: 8px;
+}
+.skeleton .desc {
+  height: 12px;
+  width: 100%;
+  background: var(--vp-c-bg-alt);
+}
 .mini-loader{ text-align:center; padding:12px }
 .sentinel{ height:1px }
 
@@ -496,9 +517,27 @@ onMounted(async () => {
 .card {
   transition: transform 0.3s, opacity 0.3s;
 }
-</style>
+.buy-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.buy-button-inline {
+  border: 1px solid var(--vp-c-brand);
+  color: var(--vp-c-brand);
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.2s, color 0.2s;
+}
+.buy-button-inline:hover {
+  background: var(--vp-c-brand);
+  color: white;
+}
 
-<style scoped>
 @media (max-width: 600px) {
   .filters {
     flex-direction: column;
@@ -525,3 +564,4 @@ onMounted(async () => {
   }
 }
 </style>
+
