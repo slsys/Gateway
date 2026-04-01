@@ -98,8 +98,8 @@ gpio.write(27, 1)
 
 ```lua
 gpio.mode(32, gpio.OUTPUT)
-gpio.pwmsetup(3, 32)
-gpio.pwm(3, 255/100*50)
+gpio.pwmsetup(32)
+gpio.pwm(32, 255/100*50)
 ```
 
 Задать каналу 4 режим выхода и включить его на 100мс:
