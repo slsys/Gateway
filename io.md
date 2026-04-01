@@ -25,7 +25,7 @@ io.begin(use_mqtt)
 
 Здесь:
 
-- Ident - имя пина, которое назначено при его создании
+- Ident - имя (ioName) пина, которое назначено при его создании
 - Info - состояние пина
 - Last Active Time - время, прошедшее с последнего изменения состояния пина
 
@@ -34,12 +34,16 @@ io.begin(use_mqtt)
 Создает выход
 
 ```lua
-io.addGPIOOutput(name, pin[, ioOutputType = 0])
--- name - STR, имя выхода
+io.addGPIOOutput(ioName, pin[, ioOutputType = 0[, power_on_behavior = "OFF"[, invert = false]]])
+-- ioName - STR, имя выхода
 -- pin - INT, номер контакта
 -- ioOutputType - INT, тип выхода:
   -- SWITCH = 0
   -- PWM = 1
+-- power_on_behavior - STR, состояние входа при инициализации
+  -- OFF - выключено, по умолчанию
+  -- ON - включен
+-- invert - BOOL, инвертирование выхода, отключено по умолчанию
 ```
 
 Типы выходов:
@@ -48,20 +52,21 @@ io.addGPIOOutput(name, pin[, ioOutputType = 0])
 - PWM. В данном режиме пин имеет состояния:
   - brightness
   - state
-  - pwm_freq 100-15000
-  - pwm_res 8-12
-  - pwm_min 1-max
-  - pwm_max min-phys_max
-  - pwm_raw
-  - brightness_scale
+  - pwm_freq = 3000 (100-15000)
+  - pwm_res = 12 (8-12)
+  - pwm_min = 1 (1-max)
+  - pwm_max = 4096 (min-phys_max)
+  - pwm_raw = 0
+  - brightness_scale = 255
+  - brightness_step = 10
 
 ### io.addGPIOInput()
 
 Создает вход
 
 ```lua
-io.addGPIOInput(Name, pin, pinMode, pinType[, debounceDelay[, sendDelay[, holdDelay]]])
--- name - STR, имя входа
+io.addGPIOInput(ioName, pin, pinMode, pinType[, debounceDelay[, sendDelay[, holdDelay]]])
+-- ioName - STR, имя входа
 -- pin - INT, номер контакта
 -- pinMode - STR, режим работы входа:
   -- gpio.INPUT: ввод
@@ -87,22 +92,30 @@ io.addGPIOInput(Name, pin, pinMode, pinType[, debounceDelay[, sendDelay[, holdDe
 io.addGPIOInput("gerkon", 28, gpio.INPUT_PULLUP, 2)
 ```
 
+### io.addExtAnalogInput()
+
+```lua
+io.addExtAnalogInput(ioName, pin[, ioAnalogInputType = 0[, ioInterval = 5]])
+-- ioName - STR, имя входа
+-- pin - INT, номер контакта
+```
+
 ### io.get()
 
 ```lua
-value = io.get(objName, stateName)
+value = io.get(ioName, stateName)
 ```
 
 ### io.set()
 
 ```lua
-io.set(objName, stateName, value)
+io.set(ioName, stateName, value)
 ```
 
 
 ## GPIO
 
-Управление контактами ввода/вывода (GPIO) чипа ESP32.
+Прямое управление контактами ввода/вывода (GPIO) чипа ESP32.
 
 #### gpio.mode()
 
@@ -165,8 +178,7 @@ gpio.write(27, 0)
 Настройка ШИМ
 
 ```lua
-gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
--- chanel: канал ШИМ - 0-15
+gpio.pwmSetup(pin[, freq = 5000[, resolution = 8]])
 -- pin: номер контакта
 -- resolution: разрешение 1-16 bits
 -- freq: частота
@@ -177,14 +189,15 @@ gpio.pwmSetup(channel, pin[, freq = 5000[, resolution = 8]])
 Управление ШИМ
 
 ```lua
-gpio.pwm(channel, value)
--- channel: канал 0-15
+gpio.pwm(pin, value)
+-- pin: номер контакта
 -- value: значение ШИМ
 ```
 
-Например, задать каналу 1 режим выхода и включить ШИМ со скважностью 50%
+Например, задать 32 пину режим выхода и включить ШИМ со скважностью 50%
 
 ```lua
-gpio.pwmSetup(3, 32)
-gpio.pwm(3, 255/100*50)
+gpio.mode(32, gpio.OUTPUT)
+gpio.pwmSetup(32)
+gpio.pwm(32, 255/100*50)
 ```
