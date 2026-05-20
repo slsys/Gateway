@@ -12,5 +12,7 @@
   "buyLinks": "Links",
   "buy": "Buy",
   "pairing": "Pairing",
-  "notes": "Notes"
+  "notes": "Notes",
+  "loadMore": "Load more",
+  "unknownVendor": "Unknown vendor"
 }

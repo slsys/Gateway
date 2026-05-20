@@ -1,0 +1,16 @@
+{
+  "name": "SLS Gate",
+  "version": "2025.12.20d1",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "../bin/sls-gate-2025.12.20d1-esp32.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

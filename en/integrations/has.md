@@ -1,6 +1,6 @@
 # Integration with Home-Assistant
 
-The SLS Gateway can be easily integrated with the [Home Assistant](www.home-assistant.io) home automation system. For integration, the software [zigbee2mqtt](https://www.zigbee2mqtt.io) can be used together with various versions of zigbee dongles, or the ready-made Smart Logic System (SLS) Zigbee BLE gateway.
+The SLS Gateway can be easily integrated with the [Home Assistant](https://www.home-assistant.io) home automation system. For integration, the software [zigbee2mqtt](https://www.zigbee2mqtt.io) can be used together with various versions of zigbee dongles, or the ready-made Smart Logic System (SLS) Zigbee BLE gateway.
 
 ![koridor](/img/koridor.png)
 

@@ -13,9 +13,9 @@ Instruction:
 	python cc2538-bsl.py -p "\\.\COM2" -r old_firmware.bin
 	```
 	You may need to change COM2 to correct one - see the device manager.
-5. If the firmware was read and nothing was interrupted, you can flash the new firmware [JH_2538_2592_ZNP_UART_20201010.hex](/rom/JH_2538_2592_ZNP_UART_20201010.hex) using the following command 
+5. If the firmware was read and nothing was interrupted, you can flash the new firmware [JH_2538_2592_ZNP_UART_20211222.hex](/rom/JH_2538_2592_ZNP_UART_20211222.hex) using the following command 
 	```
-	python cc2538-bsl.py -p "\\.\COM2" -e -w -v JH_2538_2592_ZNP_UART_20201010.hex
+	python cc2538-bsl.py -p "\\.\COM2" -e -w -v JH_2538_2592_ZNP_UART_20211222.hex
 	```
 6. Unsolder the wiring from PA7, re-solder the ESP/MOD jumpers back to ESP, restore the ESP power line.
 

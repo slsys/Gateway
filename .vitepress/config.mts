@@ -16,7 +16,7 @@ export default defineConfig({
     ['meta', { name: "theme-color", content: "#ffffff"}],
   ],
   base: '/docs/',
-  //ignoreDeadLinks: true,
+  ignoreDeadLinks: true,
   cleanUrls: true,
   lastUpdated: true,
   themeConfig: {
@@ -390,4 +390,3 @@ export default defineConfig({
     }
   }
 })
-

@@ -137,3 +137,28 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+.sidebar-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  padding: 0 5px;
+  height: 16px;
+  border-radius: 4px;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+
+.sidebar-badge-new {
+  color: #116329;
+  background: #dafbe1;
+}
+
+.dark .sidebar-badge-new {
+  color: #7ee787;
+  background: rgba(46, 160, 67, 0.22);
+}

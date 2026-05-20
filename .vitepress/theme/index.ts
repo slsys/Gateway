@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Devices from '../../Components/Devices/Devices.vue'
+import FirmwareUploader from '../../Components/FirmwareUploader/FirmwareUploader.vue'
 import './style.css'
 
 export default {
@@ -14,5 +15,6 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     app.component('devices', Devices)
+    app.component('FirmwareUploader', FirmwareUploader)
   }
 } satisfies Theme
