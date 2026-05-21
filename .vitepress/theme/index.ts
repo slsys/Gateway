@@ -1,16 +1,21 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
+import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Devices from '../../Components/Devices/Devices.vue'
 import FirmwareUploader from '../../Components/FirmwareUploader/FirmwareUploader.vue'
+import SlsDeviceHero from './SlsDeviceHero.vue'
 import './style.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
+    const { frontmatter } = useData()
+
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
+      'home-hero-before': () => frontmatter.value.slsDeviceHero ? h(SlsDeviceHero) : null
     })
   },
   enhanceApp({ app, router, siteData }) {

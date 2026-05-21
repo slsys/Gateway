@@ -162,3 +162,123 @@
   color: #7ee787;
   background: rgba(46, 160, 67, 0.22);
 }
+
+.VPNav,
+.VPNavBar.home,
+.VPNavBar.home.top,
+.VPNavBar.home.top .title,
+.VPNavBar.home.top .content-body {
+  background-color: var(--vp-nav-bg-color) !important;
+  transition: none !important;
+}
+
+.VPNavBar.home.top .divider-line {
+  background-color: var(--vp-c-gutter) !important;
+  transition: none !important;
+}
+
+.VPHome .VPFeature {
+  transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.VPHome .VPFeature:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: scale(1.05);
+  box-shadow: var(--vp-shadow-3);
+}
+
+.sls-home-block {
+  width: min(1120px, calc(100% - 48px));
+  margin: 56px auto 0;
+}
+
+.sls-home-block__heading {
+  margin-bottom: 20px;
+}
+
+.sls-home-block__heading p {
+  margin: 0 0 8px;
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.sls-home-block__heading h2 {
+  margin: 0;
+  color: var(--vp-c-text-1);
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.sls-home-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sls-home-steps a {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.sls-home-steps a {
+  display: block;
+  padding: 24px;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.sls-home-steps a:hover {
+  border-color: var(--vp-c-brand-1);
+  transform: scale(1.03);
+  box-shadow: var(--vp-shadow-3);
+}
+
+.sls-home-steps span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  font-weight: 800;
+}
+
+.sls-home-steps h3 {
+  margin: 0 0 10px;
+  color: var(--vp-c-text-1);
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.sls-home-steps p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+@media (max-width: 767px) {
+  .sls-home-block {
+    width: min(100% - 32px, 1120px);
+    margin-top: 40px;
+  }
+
+  .sls-home-block__heading h2 {
+    font-size: 24px;
+  }
+
+  .sls-home-steps {
+    grid-template-columns: 1fr;
+  }
+}
