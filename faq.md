@@ -371,13 +371,13 @@ pause
 На любой машине должна быть запушена утилита [netcat](https://ru.wikipedia.org/wiki/Netcat)
 
 ```bash
-nc -ulnk 45678
+nc -ulnk 8881
 ```
 
 или для [Windows](https://github.com/slsys/Gateway/raw/master/rom/netcat/nc111nt.zip)
 
 ```bash
-nc -ulnp 45678
+nc -ulnp 8881
 ```
 
 Или скриптом на python sls_udp_log.py:
@@ -388,7 +388,7 @@ nc -ulnp 45678
 import socket
 
 UDP_IP = "0.0.0.0"
-UDP_PORT = 45678
+UDP_PORT = 8881
 
 sock = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
 sock.bind( (UDP_IP, UDP_PORT) )
