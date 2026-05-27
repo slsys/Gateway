@@ -561,8 +561,8 @@ serial:
 
 Здесь собраны полезные ссылки:
 
-Docs: ссылка на [документацию](https://slsys.io/docs/basic)
+Docs: ссылка на [документацию](/basic)
 
 Telegram (Support, discussions): ссылка на [Telegram канал проекта](https://t.me/slsys)
 
-Supported devices: ссылка на [справочник ](https://slsys.io/ru/action/supported_devices)поддерживаемых устройств.
+Supported devices: ссылка на [справочник ](/supported_devices)поддерживаемых устройств.

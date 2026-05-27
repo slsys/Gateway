@@ -8,7 +8,7 @@ This product is designed to work with common ZigBee devices. The gateway is base
 
 The gateway acts as the coordinator of Zigbee and allows you to:
 
-1. Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](https://slsys.io/action/supported_devices.html). New equipment may be added after discussion with us.
+1. Use most of the available Zigbee equipment. A list of supported and tested equipment is available at [link](/en/supported_devices). New equipment may be added after discussion with us.
 
 2. Abandon the need to use cloud device manufacturers. As an alternative, it is proposed to use the cloud service [Smart Logic System](https://cloud.slsys.io), or native applications for Android and Apple iPhone (under development).
 
@@ -84,7 +84,7 @@ Note: there are two firmware versions, for chips with 4mb and 16mb FLASH RAM. Ve
 
 ## [SLS zigbee2mqtt message structure](/slscommand.md)
 
-## [Supported devices](https://slsys.io/action/supported_devices.html)
+## [Supported devices](/en/supported_devices)
 
 ## [Fundraising to buy equipment to add support](/donate.md)
 
@@ -100,7 +100,7 @@ Thanks to the use of the MQTT protocol, the SLS ZG gateway can be integrated wit
 
 [News group and new firmware versions](https://t.me/slssys)
 
-[List of supported devices](https://slsys.io/action/supported_devices.html)
+[List of supported devices](/en/supported_devices)
 
 [How to build a gateway yourself](https://modkam.ru/?p=1342)
 

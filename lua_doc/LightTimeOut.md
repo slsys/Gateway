@@ -22,7 +22,7 @@
 
 ```lua
 -- LightTimeOut.lua --
--- Взято с https://slsys.io/docs/lua_doc/luaMainDoorLight , модифицировано под задачи mxid://@azata:gazizova.net 
+-- Взято с https://slsys.io/lua_doc/luaMainDoorLight , модифицировано под задачи mxid://@azata:gazizova.net
 -- Пример правил Simple Bind: LightTimeOut.lua,2|sw|sportzal
 -- или можно только с одним параметром: LightTimeOut.lua,2
 -- разбираю аргументы 

@@ -120,6 +120,7 @@ const vendorFilter = ref('')
 
 const showModal = ref(false)
 const modalData = ref(null)
+const CMS_ORIGIN = (import.meta.env.VITE_SLS_CMS_ORIGIN || 'https://api.slsys.io').replace(/\/$/, '')
 
 const t = (key) => {
   const dict = lang.value.startsWith('ru') ? ru : en
@@ -203,7 +204,7 @@ const decodedPairing = computed(() => {
 })
 
 function assetUrl(path) {
-  return `https://slsys.io/${path}`
+  return `${CMS_ORIGIN}/${path}`
 }
 
 function getImageUrl(item) {
@@ -215,7 +216,7 @@ function deviceKey(item) {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(url)
+  const response = await fetch(new URL(url, CMS_ORIGIN))
   if (!response.ok) {
     throw new Error(`Server error: ${response.status}`)
   }

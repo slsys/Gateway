@@ -41,17 +41,17 @@ features:
     <h2>From gateway setup to first devices</h2>
   </div>
   <div class="sls-home-steps">
-    <a href="/docs/en/firststart">
+    <a href="/en/firststart">
       <span>1</span>
       <h3>Start the gateway</h3>
       <p>Connect, sign in for the first time, and configure the network.</p>
     </a>
-    <a href="/docs/en/web">
+    <a href="/en/web">
       <span>2</span>
       <h3>Open the web UI</h3>
       <p>Control panel, settings, devices, and service actions.</p>
     </a>
-    <a href="/docs/en/supported_devices">
+    <a href="/en/supported_devices">
       <span>3</span>
       <h3>Add devices</h3>
       <p>Check compatibility and pair Zigbee devices.</p>

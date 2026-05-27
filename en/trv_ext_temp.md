@@ -26,7 +26,7 @@ end
 Note update `trv = "0x84FD27FFFE2Dxxxx"` with ieeeAddr of your thermostat.
 Note update `ext_temperature = obj.get("room1.temperature")` with your object name.
 
-4. If you are using [this thermostat](https://slsys.io/action/supported_devices.html?device=65) 
+4. If you are using [this thermostat](/en/supported_devices?device=65)
 note it does not report the current temperature (`local_temperature`) itself for now (30.10.2021).
 I recommend to add the following code to the minute timer `OneMinTimer.lua`:
 ```

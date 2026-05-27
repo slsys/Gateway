@@ -42,17 +42,17 @@ features:
     <h2>От подключения до первых устройств</h2>
   </div>
   <div class="sls-home-steps">
-    <a href="/docs/firststart">
+    <a href="/firststart">
       <span>1</span>
       <h3>Запустите шлюз</h3>
       <p>Подключение, первый вход и базовая настройка сети.</p>
     </a>
-    <a href="/docs/web">
+    <a href="/web">
       <span>2</span>
       <h3>Откройте web-интерфейс</h3>
       <p>Панель управления, настройки, устройства и сервисные действия.</p>
     </a>
-    <a href="/docs/supported_devices">
+    <a href="/supported_devices">
       <span>3</span>
       <h3>Добавьте устройства</h3>
       <p>Проверьте совместимость и подключите Zigbee-устройства.</p>

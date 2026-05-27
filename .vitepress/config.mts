@@ -15,7 +15,7 @@ export default defineConfig({
 //    ['meta', { name: "msapplication-config", content: "/assets/favicons/browserconfig.xml"}],
     ['meta', { name: "theme-color", content: "#ffffff"}],
   ],
-  base: '/docs/',
+  base: '/',
   ignoreDeadLinks: true,
   cleanUrls: true,
   lastUpdated: true,
@@ -382,7 +382,7 @@ export default defineConfig({
     server: {
       proxy: {
         '/ru/ajax/supported_devices': {
-          target: 'https://slsys.io',
+          target: 'https://api.slsys.io',
           changeOrigin: true,
           secure: true,
         }
