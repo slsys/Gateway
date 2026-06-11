@@ -844,7 +844,6 @@ onBeforeUnmount(() => {
 .device-access-panel__count-badge {
   align-items: center;
   background: linear-gradient(180deg, rgba(126, 135, 255, 0.16), rgba(126, 135, 255, 0.08));
-  box-shadow: inset 0 0 0 1px rgba(126, 135, 255, 0.16);
   border-radius: 999px;
   color: #4457c2;
   display: inline-flex;
@@ -864,7 +863,7 @@ onBeforeUnmount(() => {
   color: var(--vp-c-brand-1);
   cursor: pointer;
   font: inherit;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.35;
   padding: 0;
@@ -916,7 +915,7 @@ onBeforeUnmount(() => {
   align-items: center;
   background: linear-gradient(180deg, rgba(126, 135, 255, 0.12), rgba(126, 135, 255, 0.06));
   border-radius: 999px;
-  border: 1px solid #e6e3ff;
+  border: 1px solid rgba(126, 135, 255, 0.14);
   color: #4963d3;
   display: flex;
   flex: 0 0 44px;
@@ -972,13 +971,13 @@ onBeforeUnmount(() => {
 }
 
 .device-comment-card__author-badge {
-  background: #edf8e8;
+  background: #e6f3e4;
   border-radius: 999px;
-  color: #2f8a36;
-  font-size: 12px;
-  font-weight: 600;
+  color: #2a7d35;
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1.2;
-  padding: 4px 10px;
+  padding: 3px 8px;
 }
 
 .device-comment-card__rating-inline,
@@ -988,6 +987,7 @@ onBeforeUnmount(() => {
 
 .device-comment-card__rating-inline {
   color: #f5b400;
+  font-size: 14px;
 }
 
 .device-comment-card__time {
