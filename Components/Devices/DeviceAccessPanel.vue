@@ -48,7 +48,12 @@
         :class="{ 'device-comments-list__item--own': isOwnComment(comment) }"
       >
         <div class="device-comments-list__avatar">
-          <img v-if="comment.avatarUrl" :src="comment.avatarUrl" :alt="comment.USER_NAME || comment.USER_EMAIL" loading="lazy" />
+          <img
+            v-if="getCommentAvatarUrl(comment)"
+            :src="getCommentAvatarUrl(comment) || undefined"
+            :alt="comment.USER_NAME || comment.USER_EMAIL"
+            loading="lazy"
+          />
           <span v-else>{{ getUserInitials(comment.USER_NAME || comment.USER_EMAIL) }}</span>
         </div>
         <div class="device-comments-list__body">
@@ -382,6 +387,18 @@ function getUserInitials(name: string) {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() || '')
     .join('')
+}
+
+function getCommentAvatarUrl(comment: NormalizedDeviceComment) {
+  if (comment.avatarUrl) {
+    return comment.avatarUrl
+  }
+
+  if (isOwnComment(comment) && user.value?.avatarUrl) {
+    return user.value.avatarUrl
+  }
+
+  return null
 }
 
 function isOwnComment(comment: NormalizedDeviceComment) {
