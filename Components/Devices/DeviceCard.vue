@@ -18,16 +18,15 @@
       <h3 class="device-card-title">{{ item['MODEL'] }}</h3>
       <p class="device-card-desc">{{ item['DESCRIPTION'] || fallbackDescription }}</p>
       <div v-if="showMeta" class="device-card-meta">
-        <template v-if="ratingAverage !== null && ratingsCount > 0">
+        <template v-if="ratingAverage !== null">
           <span class="device-card-meta__rating">★ {{ ratingAverage.toFixed(1) }}</span>
+          <span class="device-card-meta__divider">·</span>
           <span class="device-card-meta__comments-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M5 6.5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9l-4 3v-3H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="device-card-meta__text">{{ ratingsCount }}</span>
-          <span class="device-card-meta__divider">/</span>
-          <span class="device-card-meta__text">{{ unratedCount }}</span>
+          <span class="device-card-meta__text">{{ commentsCount }}</span>
         </template>
         <template v-else-if="commentsCount > 0">
           <span class="device-card-meta__comments-icon" aria-hidden="true">
@@ -57,11 +56,6 @@ defineEmits<{
 }>()
 
 const commentsCount = computed(() => Number(props.item.COMMENTS_COUNT || 0))
-const ratingsCount = computed(() => {
-  const numeric = Number(props.item.RATINGS_COUNT)
-  return Number.isFinite(numeric) && numeric > 0 ? numeric : 0
-})
-const unratedCount = computed(() => Math.max(commentsCount.value - ratingsCount.value, 0))
 const ratingAverage = computed(() => {
   const numeric = Number(props.item.RATING_AVG)
   return Number.isFinite(numeric) && numeric > 0 ? numeric : null
