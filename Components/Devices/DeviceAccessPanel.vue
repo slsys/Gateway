@@ -517,13 +517,10 @@ function getUserInitials(name: string) {
 }
 
 function getAvatarFallbackStyle(name: string) {
-  const seed = Array.from(name || props.t('commentAnonymous'))
-    .reduce((sum, char) => sum + char.charCodeAt(0), 0)
-  const hue = seed % 360
-
   return {
-    background: `hsl(${hue} 62% 48%)`,
-    color: '#fff',
+    background: '#f4f2ff',
+    border: '2px solid #e6e2ff',
+    color: '#3f56c8',
   }
 }
 
@@ -909,18 +906,18 @@ onBeforeUnmount(() => {
 
 .device-comment-card__avatar {
   align-items: center;
-  background: linear-gradient(180deg, rgba(126, 135, 255, 0.16), rgba(126, 135, 255, 0.08));
+  background: #f4f2ff;
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1px rgba(126, 135, 255, 0.16);
-  color: #4963d3;
+  border: 2px solid #e6e2ff;
+  color: #3f56c8;
   display: flex;
-  flex: 0 0 44px;
-  font-size: 14px;
+  flex: 0 0 58px;
+  font-size: 18px;
   font-weight: 700;
-  height: 44px;
+  height: 58px;
   justify-content: center;
   overflow: hidden;
-  width: 44px;
+  width: 58px;
 }
 
 .device-comment-card__avatar > span {
@@ -935,9 +932,9 @@ onBeforeUnmount(() => {
 .device-comment-card__avatar img {
   display: block;
   border-radius: inherit;
-  height: 44px;
+  height: 58px;
   object-fit: cover;
-  width: 44px;
+  width: 58px;
 }
 
 .device-comment-card__body {
@@ -960,13 +957,20 @@ onBeforeUnmount(() => {
   gap: 8px;
 }
 
+.device-comment-card__author-line strong {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
 .device-comment-card__author-badge {
   background: #edf8e8;
   border-radius: 999px;
   color: #2f8a36;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 4px 10px;
+  line-height: 1.2;
+  padding: 4px 12px;
 }
 
 .device-comment-card__rating-inline,
