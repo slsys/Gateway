@@ -53,7 +53,7 @@
 
             <template v-if="editingCommentId === item.comment.id">
               <div class="device-comment-edit device-comment-form">
-                <div class="device-rating-editor">
+                <div v-if="item.comment.parent_id === null" class="device-rating-editor">
                   <button
                     v-for="value in 5"
                     :key="`edit-rating-${item.comment.id}-${value}`"
@@ -141,6 +141,27 @@
               </div>
 
               <div class="device-comment-actions-row">
+                <button
+                  v-if="status === 'authenticated'"
+                  type="button"
+                  class="device-comment-link"
+                  @click="toggleReplyForm(item.comment.id)"
+                >
+                  {{ activeReplyAnchorId === item.comment.id ? t('commentCancel') : t('commentReply') }}
+                </button>
+
+                <div v-if="canManageComment(item.comment)" class="device-comment-actions device-comment-actions--inline">
+                  <button type="button" class="device-comment-link" @click="startEdit(item.comment)">{{ t('commentEdit') }}</button>
+                  <button
+                    type="button"
+                    class="device-comment-link device-comment-link--danger"
+                    :disabled="deletingCommentId === item.comment.id"
+                    @click="removeComment(item.comment)"
+                  >
+                    {{ deletingCommentId === item.comment.id ? t('commentDeleting') : t('commentDelete') }}
+                  </button>
+                </div>
+
                 <div class="device-comment-votes">
                   <button
                     type="button"
@@ -161,27 +182,6 @@
                   >
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2 2 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a10 10 0 0 0-.443.05 9.4 9.4 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a9 9 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.2 2.2 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.9.9 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/></svg>
                     <span>{{ item.comment.dislikes_count }}</span>
-                  </button>
-                </div>
-
-                <button
-                  v-if="status === 'authenticated'"
-                  type="button"
-                  class="device-comment-link"
-                  @click="toggleReplyForm(item.comment.id)"
-                >
-                  {{ activeReplyAnchorId === item.comment.id ? t('commentCancel') : t('commentReply') }}
-                </button>
-
-                <div v-if="canManageComment(item.comment)" class="device-comment-actions device-comment-actions--inline">
-                  <button type="button" class="device-comment-link" @click="startEdit(item.comment)">{{ t('commentEdit') }}</button>
-                  <button
-                    type="button"
-                    class="device-comment-link device-comment-link--danger"
-                    :disabled="deletingCommentId === item.comment.id"
-                    @click="removeComment(item.comment)"
-                  >
-                    {{ deletingCommentId === item.comment.id ? t('commentDeleting') : t('commentDelete') }}
                   </button>
                 </div>
               </div>
@@ -232,7 +232,11 @@
     </div>
     <p v-else class="device-access-panel__empty">{{ t('commentsEmpty') }}</p>
 
-    <form v-if="status === 'authenticated' && activeReplyAnchorId === null" class="device-comment-form" @submit.prevent="submitComment">
+    <form
+      v-if="status === 'authenticated' && activeReplyAnchorId === null && editingCommentId === null"
+      class="device-comment-form"
+      @submit.prevent="submitComment"
+    >
       <label class="device-comment-form__label" for="device-comment-message">{{ t('commentFormLabel') }}</label>
       <textarea
         id="device-comment-message"
@@ -659,6 +663,7 @@ function toggleReplyForm(commentId: number) {
     cancelReplyForm()
     return
   }
+  cancelEdit()
   activeReplyAnchorId.value = commentId
   activeReplyParentId.value = commentId
   replyDraft.value = ''
@@ -674,9 +679,10 @@ function cancelReplyForm() {
 }
 
 function startEdit(comment: CommunityComment) {
+  cancelReplyForm()
   editingCommentId.value = comment.id
   editDraftBody.value = comment.body
-  editDraftRating.value = comment.rating
+  editDraftRating.value = comment.parent_id === null ? comment.rating : null
   clearEditFiles()
   actionMessage.value = ''
 }
@@ -764,6 +770,12 @@ async function removeComment(comment: CommunityComment) {
   actionMessage.value = ''
   try {
     await deleteDeviceComment(comment.id)
+    if (activeReplyAnchorId.value === comment.id || activeReplyParentId.value === comment.id) {
+      cancelReplyForm()
+    }
+    if (editingCommentId.value === comment.id) {
+      cancelEdit()
+    }
     actionMessage.value = props.t('commentDeleteSuccess')
     await refreshComments()
   } catch (err) {
@@ -830,16 +842,17 @@ onBeforeUnmount(() => {
 
 .device-access-panel__count-badge {
   align-items: center;
-  background: rgba(126, 135, 255, 0.16);
+  background: linear-gradient(180deg, rgba(126, 135, 255, 0.16), rgba(126, 135, 255, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(126, 135, 255, 0.16);
   border-radius: 999px;
   color: #4457c2;
   display: inline-flex;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   justify-content: center;
-  min-height: 28px;
+  min-height: 24px;
   min-width: 28px;
-  padding: 2px 10px;
+  padding: 1px 10px;
 }
 
 .device-access-panel__retry,
@@ -958,8 +971,15 @@ onBeforeUnmount(() => {
 
 .device-comment-card__rating-inline,
 .device-comment-card__time {
-  color: var(--vp-c-text-2);
   font-size: 12px;
+}
+
+.device-comment-card__rating-inline {
+  color: #f5b400;
+}
+
+.device-comment-card__time {
+  color: var(--vp-c-text-2);
 }
 
 .device-comment-card__text {
@@ -1045,12 +1065,17 @@ onBeforeUnmount(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+  justify-content: flex-start;
   margin-top: 10px;
 }
 
 .device-comment-actions {
   display: inline-flex;
   gap: 12px;
+}
+
+.device-comment-votes {
+  margin-left: auto;
 }
 
 .device-comment-form,
