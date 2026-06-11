@@ -89,6 +89,7 @@
     <DeviceRequestModal
       :show="showRequestModal"
       :prefill="requestPrefill"
+      :prefill-warnings="requestPrefillWarnings"
       :t="t"
       @close="closeRequestModal"
     />
@@ -108,6 +109,7 @@ import DeviceRequestModal from './DeviceRequestModal.vue'
 import {
   createEmptyDeviceRequestPrefill,
   getDeviceRequestPrefillFromSearch,
+  type DeviceRequestPrefill,
 } from './helpers/deviceRequestPrefill'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
@@ -138,7 +140,8 @@ const vendorFilter = ref('')
 const showModal = ref(false)
 const modalData = ref<DeviceItem | null>(null)
 const showRequestModal = ref(false)
-const requestPrefill = ref(createEmptyDeviceRequestPrefill())
+const requestPrefill = ref<DeviceRequestPrefill>(createEmptyDeviceRequestPrefill())
+const requestPrefillWarnings = ref<string[]>([])
 const pendingRequestOpen = ref(false)
 const CMS_ORIGIN = (import.meta.env.VITE_SLS_CMS_ORIGIN || 'https://api.slsys.io').replace(/\/$/, '')
 
@@ -352,13 +355,19 @@ function closeRequestModal() {
 
 async function openModal(itemOrTitle: DeviceItem | string) {
   const title = typeof itemOrTitle === 'string' ? itemOrTitle : itemOrTitle['TITLE']
+  const sourceItem = typeof itemOrTitle === 'string'
+    ? allItems.value.find((item) => item.TITLE === itemOrTitle) ?? null
+    : itemOrTitle
   showModal.value = true
   modalData.value = null
   updateBodyModalState()
 
   try {
-    const data = await fetchJson(`/ru/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`)
-    modalData.value = data
+    const data = await fetchJson(`/ru/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`) as DeviceItem
+    modalData.value = {
+      ...data,
+      ID: data.ID ?? sourceItem?.ID ?? sourceItem?.id,
+    }
 
     const url = new URL(window.location)
     url.searchParams.set('device', title)
@@ -413,7 +422,9 @@ onMounted(async () => {
   setupObserver()
 
   const params = new URLSearchParams(window.location.search)
-  requestPrefill.value = getDeviceRequestPrefillFromSearch(window.location.search)
+  const prefillResult = getDeviceRequestPrefillFromSearch(window.location.search)
+  requestPrefill.value = prefillResult.values
+  requestPrefillWarnings.value = prefillResult.warnings
   pendingRequestOpen.value = params.get('requestDevice') === '1'
   const device = params.get('device')
   if (device) {

@@ -8,16 +8,21 @@ export type CloudAuthStatus =
   | 'auth_error'
   | 'network_error'
 
-export function useCloudAuth() {
-  const status = ref<CloudAuthStatus>('loading')
-  const user = ref<CloudSessionUser | null>(null)
-  const error = ref<string | null>(null)
-  const hasLoaded = ref(false)
+const status = ref<CloudAuthStatus>('loading')
+const user = ref<CloudSessionUser | null>(null)
+const error = ref<string | null>(null)
+const hasLoaded = ref(false)
+let inFlightRefresh: Promise<void> | null = null
 
-  async function refresh() {
-    status.value = 'loading'
-    error.value = null
+async function refreshCloudAuth() {
+  if (inFlightRefresh) {
+    return inFlightRefresh
+  }
 
+  status.value = 'loading'
+  error.value = null
+
+  inFlightRefresh = (async () => {
     try {
       const session = await getCloudSession()
 
@@ -43,12 +48,17 @@ export function useCloudAuth() {
       }
     } finally {
       hasLoaded.value = true
+      inFlightRefresh = null
     }
-  }
+  })()
 
+  return inFlightRefresh
+}
+
+export function useCloudAuth() {
   onMounted(() => {
-    if (!hasLoaded.value) {
-      void refresh()
+    if (!hasLoaded.value && !inFlightRefresh) {
+      void refreshCloudAuth()
     }
   })
 
@@ -56,6 +66,6 @@ export function useCloudAuth() {
     status: computed(() => status.value),
     user: computed(() => user.value),
     error: computed(() => error.value),
-    refresh,
+    refresh: refreshCloudAuth,
   }
 }

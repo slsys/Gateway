@@ -56,10 +56,7 @@
             <p><strong>{{ t('notes') }}:</strong></p>
             <div v-html="decodedNotes"></div>
           </div>
-          <DeviceAccessPanel
-            :device-id="deviceId"
-            :t="t"
-          />
+          <DeviceAccessPanel :device-id="deviceId" :t="t" />
         </div>
         <div v-else>Loading...</div>
       </div>
@@ -82,12 +79,13 @@ const props = defineProps<{
   t: (key: string) => string
 }>()
 
-const deviceId = computed(() => {
+const deviceId = computed<number | null>(() => {
   if (!props.device) {
-    return ''
+    return null
   }
 
-  return String(props.device.ID ?? props.device.id ?? props.device.TITLE ?? '').trim()
+  const numericId = Number(props.device.ID ?? props.device.id)
+  return Number.isInteger(numericId) ? numericId : null
 })
 
 defineEmits(['close'])

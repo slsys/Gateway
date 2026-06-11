@@ -9,6 +9,13 @@
           <p>{{ t('requestModalDescription') }}</p>
         </div>
 
+        <div v-if="prefillWarnings.length" class="request-modal__warning">
+          <p>{{ t('requestPrefillWarningTitle') }}</p>
+          <ul>
+            <li v-for="warning in prefillWarnings" :key="warning">{{ t(warning) }}</li>
+          </ul>
+        </div>
+
         <form class="request-form" @submit.prevent="handleSubmit">
           <div class="request-form__grid">
             <label>
@@ -17,15 +24,35 @@
             </label>
             <label>
               <span>{{ t('requestModelLabel') }}</span>
-              <input v-model="form.model" type="text" autocomplete="off" />
+              <input v-model="form.model" type="text" autocomplete="off" required />
             </label>
             <label>
-              <span>{{ t('requestTitleLabel') }}</span>
-              <input v-model="form.title" type="text" autocomplete="off" />
+              <span>{{ t('requestManufacturerNameLabel') }}</span>
+              <input v-model="form.manufacturerName" type="text" autocomplete="organization" />
             </label>
             <label>
-              <span>{{ t('requestPictureLabel') }}</span>
-              <input v-model="form.picture" type="url" inputmode="url" placeholder="https://" />
+              <span>{{ t('requestModelIdLabel') }}</span>
+              <input v-model="form.modelId" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span>{{ t('requestManufIdLabel') }}</span>
+              <input v-model="form.manufId" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span>{{ t('requestIeeeAddrLabel') }}</span>
+              <input v-model="form.ieeeAddr" type="text" autocomplete="off" />
+            </label>
+            <label>
+              <span>{{ t('requestUpdatedInLabel') }}</span>
+              <input v-model="form.updatedIn" type="text" autocomplete="off" placeholder="0.0.0" />
+            </label>
+            <label>
+              <span>{{ t('requestPowerSourceLabel') }}</span>
+              <input v-model="form.powerSource" type="number" min="0" inputmode="numeric" />
+            </label>
+            <label>
+              <span>{{ t('requestSourceLabel') }}</span>
+              <input v-model="form.source" type="text" autocomplete="off" />
             </label>
           </div>
 
@@ -34,48 +61,42 @@
             <textarea v-model="form.description" rows="4"></textarea>
           </label>
 
+          <label>
+            <span>{{ t('requestExposesLabel') }}</span>
+            <textarea v-model="form.exposes" rows="3"></textarea>
+          </label>
+
           <div class="request-form__grid">
             <label>
-              <span>{{ t('requestExposesLabel') }}</span>
-              <textarea v-model="form.exposesText" rows="4"></textarea>
+              <span>{{ t('requestEndpointsLabel') }}</span>
+              <textarea v-model="form.endpoints" rows="5"></textarea>
             </label>
             <label>
-              <span>{{ t('requestZigbeeModelsLabel') }}</span>
-              <textarea v-model="form.zigbeeModelsText" rows="4"></textarea>
+              <span>{{ t('requestClustersLabel') }}</span>
+              <textarea v-model="form.clusters" rows="5"></textarea>
             </label>
           </div>
 
           <div class="request-form__grid">
             <label>
-              <span>{{ t('requestLinksLabel') }}</span>
-              <textarea v-model="form.buyLinksText" rows="3"></textarea>
+              <span>{{ t('requestInterviewLabel') }}</span>
+              <textarea v-model="form.interview" rows="6"></textarea>
             </label>
             <label>
-              <span>{{ t('requestProtocolLabel') }}</span>
-              <input v-model="form.protocol" type="text" autocomplete="off" />
+              <span>{{ t('requestRawPayloadLabel') }}</span>
+              <textarea v-model="form.rawPayload" rows="6"></textarea>
             </label>
           </div>
 
-          <div class="request-form__grid">
-            <label>
-              <span>{{ t('requestNotesLabel') }}</span>
-              <textarea v-model="form.notes" rows="4"></textarea>
-            </label>
-            <label>
-              <span>{{ t('requestPairingNotesLabel') }}</span>
-              <textarea v-model="form.pairingNotes" rows="4"></textarea>
-            </label>
-          </div>
-
-          <p class="request-form__hint">{{ t('requestStubHint') }}</p>
+          <p class="request-form__hint">{{ t('requestSubmitHint') }}</p>
           <p v-if="submitMessage" class="request-form__message">{{ submitMessage }}</p>
 
           <div class="request-form__actions">
             <button type="button" class="request-form__secondary" @click="$emit('close')">
               {{ t('requestCancel') }}
             </button>
-            <button type="submit" class="request-form__primary">
-              {{ t('requestSubmit') }}
+            <button type="submit" class="request-form__primary" :disabled="submitting || !form.model.trim()">
+              {{ submitting ? t('requestSubmitting') : t('requestSubmit') }}
             </button>
           </div>
         </form>
@@ -85,17 +106,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
-import { createDeviceRequest } from '../../.vitepress/theme/api/communityClient'
+import { reactive, ref, watch } from 'vue'
+import { CommunityApiError, createDeviceRequest } from '../../.vitepress/theme/api/communityClient'
 import {
   buildDeviceRequestPayload,
   createEmptyDeviceRequestPrefill,
+  getDeviceRequestPayloadWarnings,
   type DeviceRequestPrefill,
 } from './helpers/deviceRequestPrefill'
 
 const props = defineProps<{
   show: boolean
   prefill: DeviceRequestPrefill
+  prefillWarnings: string[]
   t: (key: string) => string
 }>()
 
@@ -104,8 +127,8 @@ defineEmits<{
 }>()
 
 const form = reactive<DeviceRequestPrefill>(createEmptyDeviceRequestPrefill())
-const submitMessage = computed(() => state.message)
-const state = reactive({ message: '' })
+const submitting = ref(false)
+const submitMessage = ref('')
 
 watch(
   () => props.show,
@@ -115,22 +138,53 @@ watch(
     }
 
     Object.assign(form, createEmptyDeviceRequestPrefill(), props.prefill)
-    state.message = ''
+    submitMessage.value = ''
   },
   { immediate: true },
 )
 
+function mapRequestError(err: unknown, t: (key: string) => string) {
+  if (err instanceof CommunityApiError) {
+    if (err.code === 'not_authenticated') {
+      return t('communityAuthRequired')
+    }
+    if (err.code === 'auth_service_unavailable') {
+      return t('communityAuthServiceUnavailable')
+    }
+    if (err.status === 422) {
+      return t('communityValidationError')
+    }
+  }
+
+  return t('communityRequestFailed')
+}
+
 async function handleSubmit() {
-  const payload = buildDeviceRequestPayload(form)
+  if (!form.model.trim()) {
+    submitMessage.value = props.t('communityValidationError')
+    return
+  }
+
+  const localWarnings = getDeviceRequestPayloadWarnings(form)
+  if (localWarnings.length > 0) {
+    submitMessage.value = props.t(localWarnings[0])
+    return
+  }
+
+  submitting.value = true
+  submitMessage.value = ''
 
   try {
-    await createDeviceRequest(payload)
-  } catch {
-    state.message = props.t('requestStubResult')
+    const result = await createDeviceRequest(buildDeviceRequestPayload(form))
+    submitMessage.value = `${props.t('requestSuccessPrefix')} ${result.status}`
 
     if (import.meta.env.DEV) {
-      console.debug('Device request stub payload', payload)
+      console.debug('Device request accepted', result)
     }
+  } catch (err) {
+    submitMessage.value = mapRequestError(err, props.t)
+  } finally {
+    submitting.value = false
   }
 }
 </script>
@@ -170,7 +224,10 @@ async function handleSubmit() {
 }
 
 .request-modal__header h2,
-.request-modal__header p {
+.request-modal__header p,
+.request-modal__warning p,
+.request-form__hint,
+.request-form__message {
   margin: 0;
 }
 
@@ -185,6 +242,19 @@ async function handleSubmit() {
 .request-modal__header p:last-child {
   margin-top: 8px;
   color: var(--vp-c-text-2);
+}
+
+.request-modal__warning {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-c-warning-1);
+  border-radius: 10px;
+  background: var(--vp-c-warning-soft);
+}
+
+.request-modal__warning ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
 }
 
 .request-form {
@@ -220,11 +290,6 @@ async function handleSubmit() {
   resize: vertical;
 }
 
-.request-form__hint,
-.request-form__message {
-  margin: 0;
-}
-
 .request-form__hint {
   color: var(--vp-c-text-2);
 }
@@ -250,6 +315,11 @@ async function handleSubmit() {
 .request-form__primary {
   background: var(--vp-c-brand-1);
   color: var(--vp-c-bg);
+}
+
+.request-form__primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .request-form__secondary {

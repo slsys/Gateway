@@ -1,36 +1,57 @@
-import type { CreateDeviceRequestPayload } from '../../../.vitepress/theme/api/communityClient'
+import type { DeviceRequestPayload } from '../../../.vitepress/theme/api/communityClient'
 
 export interface DeviceRequestPrefill {
   vendor: string
   model: string
-  title: string
   description: string
-  picture: string
-  exposesText: string
-  zigbeeModelsText: string
-  buyLinksText: string
-  notes: string
-  pairingNotes: string
-  protocol: string
+  updatedIn: string
+  exposes: string
+  powerSource: string
+  source: string
+  ieeeAddr: string
+  manufacturerName: string
+  modelId: string
+  manufId: string
+  endpoints: string
+  clusters: string
+  interview: string
+  rawPayload: string
 }
+
+export interface DeviceRequestPrefillResult {
+  values: DeviceRequestPrefill
+  warnings: string[]
+}
+
+const EMPTY_JSON_ARRAY = '[]'
+const EMPTY_JSON_OBJECT = '{}'
 
 export const DEVICE_REQUEST_PREFILL_KEYS = [
   'vendor',
-  'manufacturer',
   'model',
-  'title',
   'description',
-  'picture',
-  'image',
+  'updated_in',
+  'updatedIn',
   'exposes',
-  'capabilities',
-  'zigbeeModels',
-  'protocol',
-  'links',
+  'power_source',
+  'powerSource',
   'source',
-  'notes',
-  'pairingNotes',
+  'ieee_addr',
+  'ieeeAddr',
+  'manufacturer_name',
+  'manufacturerName',
+  'model_id',
+  'modelId',
+  'manuf_id',
+  'manufId',
+  'endpoints',
+  'clusters',
+  'interview',
+  'raw_payload',
+  'rawPayload',
 ] as const
+
+type DeviceRequestPrefillKey = (typeof DEVICE_REQUEST_PREFILL_KEYS)[number]
 
 function firstNonEmpty(...values: Array<string | null>): string {
   for (const value of values) {
@@ -42,85 +63,180 @@ function firstNonEmpty(...values: Array<string | null>): string {
   return ''
 }
 
-function normalizeMultiline(value: string): string {
-  return value
-    .split(/\r?\n|,/)
-    .map((item) => item.trim())
-    .filter(Boolean)
-    .join('\n')
+function parseJsonString<T>(
+  rawValue: string,
+  fallback: T,
+  warningKey: string,
+  warnings: string[],
+  validate: (value: unknown) => value is T,
+): T {
+  if (!rawValue.trim()) {
+    return fallback
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue) as unknown
+    if (validate(parsed)) {
+      return parsed
+    }
+  } catch {
+    // fall through to warning below
+  }
+
+  warnings.push(warningKey)
+  return fallback
+}
+
+function normalizeJsonField<T>(
+  rawValue: string,
+  fallback: T,
+  warningKey: string,
+  warnings: string[],
+  validate: (value: unknown) => value is T,
+): string {
+  const parsed = parseJsonString(rawValue, fallback, warningKey, warnings, validate)
+  return JSON.stringify(parsed, null, 2)
+}
+
+function isArray(value: unknown): value is unknown[] {
+  return Array.isArray(value)
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
 export function createEmptyDeviceRequestPrefill(): DeviceRequestPrefill {
   return {
     vendor: '',
     model: '',
-    title: '',
     description: '',
-    picture: '',
-    exposesText: '',
-    zigbeeModelsText: '',
-    buyLinksText: '',
-    notes: '',
-    pairingNotes: '',
-    protocol: '',
+    updatedIn: '',
+    exposes: '',
+    powerSource: '',
+    source: 'gateway',
+    ieeeAddr: '',
+    manufacturerName: '',
+    modelId: '',
+    manufId: '',
+    endpoints: EMPTY_JSON_ARRAY,
+    clusters: EMPTY_JSON_ARRAY,
+    interview: EMPTY_JSON_OBJECT,
+    rawPayload: EMPTY_JSON_OBJECT,
   }
 }
 
 export function normalizeDeviceRequestPrefill(
-  raw: Partial<Record<(typeof DEVICE_REQUEST_PREFILL_KEYS)[number], string | null>>,
-): DeviceRequestPrefill {
-  return {
-    vendor: firstNonEmpty(raw.vendor, raw.manufacturer),
+  raw: Partial<Record<DeviceRequestPrefillKey, string | null>>,
+): DeviceRequestPrefillResult {
+  const warnings: string[] = []
+  const values: DeviceRequestPrefill = {
+    vendor: firstNonEmpty(raw.vendor),
     model: firstNonEmpty(raw.model),
-    title: firstNonEmpty(raw.title),
     description: firstNonEmpty(raw.description),
-    picture: firstNonEmpty(raw.picture, raw.image),
-    exposesText: normalizeMultiline(firstNonEmpty(raw.exposes, raw.capabilities)),
-    zigbeeModelsText: normalizeMultiline(firstNonEmpty(raw.zigbeeModels)),
-    buyLinksText: normalizeMultiline(firstNonEmpty(raw.links, raw.source)),
-    notes: firstNonEmpty(raw.notes),
-    pairingNotes: firstNonEmpty(raw.pairingNotes),
-    protocol: firstNonEmpty(raw.protocol),
+    updatedIn: firstNonEmpty(raw.updatedIn, raw.updated_in),
+    exposes: firstNonEmpty(raw.exposes),
+    powerSource: firstNonEmpty(raw.powerSource, raw.power_source),
+    source: firstNonEmpty(raw.source) || 'gateway',
+    ieeeAddr: firstNonEmpty(raw.ieeeAddr, raw.ieee_addr),
+    manufacturerName: firstNonEmpty(raw.manufacturerName, raw.manufacturer_name),
+    modelId: firstNonEmpty(raw.modelId, raw.model_id),
+    manufId: firstNonEmpty(raw.manufId, raw.manuf_id),
+    endpoints: normalizeJsonField(
+      firstNonEmpty(raw.endpoints) || EMPTY_JSON_ARRAY,
+      [],
+      'requestPrefillInvalidEndpoints',
+      warnings,
+      isArray,
+    ),
+    clusters: normalizeJsonField(
+      firstNonEmpty(raw.clusters) || EMPTY_JSON_ARRAY,
+      [],
+      'requestPrefillInvalidClusters',
+      warnings,
+      isArray,
+    ),
+    interview: normalizeJsonField(
+      firstNonEmpty(raw.interview) || EMPTY_JSON_OBJECT,
+      {},
+      'requestPrefillInvalidInterview',
+      warnings,
+      isRecord,
+    ),
+    rawPayload: normalizeJsonField(
+      firstNonEmpty(raw.rawPayload, raw.raw_payload) || EMPTY_JSON_OBJECT,
+      {},
+      'requestPrefillInvalidRawPayload',
+      warnings,
+      isRecord,
+    ),
+  }
+
+  return {
+    values,
+    warnings,
   }
 }
 
-export function getDeviceRequestPrefillFromSearch(search: string): DeviceRequestPrefill {
+export function getDeviceRequestPrefillFromSearch(search: string): DeviceRequestPrefillResult {
   const params = new URLSearchParams(search)
 
   return normalizeDeviceRequestPrefill({
     vendor: params.get('vendor'),
-    manufacturer: params.get('manufacturer'),
     model: params.get('model'),
-    title: params.get('title'),
     description: params.get('description'),
-    picture: params.get('picture'),
-    image: params.get('image'),
+    updated_in: params.get('updated_in'),
+    updatedIn: params.get('updatedIn'),
     exposes: params.get('exposes'),
-    capabilities: params.get('capabilities'),
-    zigbeeModels: params.get('zigbeeModels'),
-    protocol: params.get('protocol'),
-    links: params.get('links'),
+    power_source: params.get('power_source'),
+    powerSource: params.get('powerSource'),
     source: params.get('source'),
-    notes: params.get('notes'),
-    pairingNotes: params.get('pairingNotes'),
+    ieee_addr: params.get('ieee_addr'),
+    ieeeAddr: params.get('ieeeAddr'),
+    manufacturer_name: params.get('manufacturer_name'),
+    manufacturerName: params.get('manufacturerName'),
+    model_id: params.get('model_id'),
+    modelId: params.get('modelId'),
+    manuf_id: params.get('manuf_id'),
+    manufId: params.get('manufId'),
+    endpoints: params.get('endpoints'),
+    clusters: params.get('clusters'),
+    interview: params.get('interview'),
+    raw_payload: params.get('raw_payload'),
+    rawPayload: params.get('rawPayload'),
   })
 }
 
-export function buildDeviceRequestPayload(prefill: DeviceRequestPrefill): CreateDeviceRequestPayload {
+export function buildDeviceRequestPayload(prefill: DeviceRequestPrefill): DeviceRequestPayload {
+  const warnings: string[] = []
+  const powerSourceNumber = Number(prefill.powerSource)
+
   return {
-    vendor: prefill.vendor,
-    model: prefill.model,
-    title: prefill.title,
-    description: prefill.description,
-    picture: prefill.picture,
-    exposes: prefill.exposesText
-      .split(/\r?\n/)
-      .map((item) => item.trim())
-      .filter(Boolean),
-    zigbeeModelsText: prefill.zigbeeModelsText,
-    buyLinksText: prefill.buyLinksText,
-    notes: prefill.notes,
-    pairingNotes: prefill.pairingNotes,
-    protocol: prefill.protocol,
+    vendor: prefill.vendor.trim(),
+    model: prefill.model.trim(),
+    description: prefill.description.trim(),
+    updatedIn: prefill.updatedIn.trim(),
+    exposes: prefill.exposes.trim(),
+    powerSource: prefill.powerSource.trim() && Number.isFinite(powerSourceNumber) ? powerSourceNumber : null,
+    source: prefill.source.trim() || 'gateway',
+    ieeeAddr: prefill.ieeeAddr.trim(),
+    manufacturerName: prefill.manufacturerName.trim(),
+    modelId: prefill.modelId.trim(),
+    manufId: prefill.manufId.trim(),
+    endpoints: parseJsonString(prefill.endpoints, [], 'requestPrefillInvalidEndpoints', warnings, isArray),
+    clusters: parseJsonString(prefill.clusters, [], 'requestPrefillInvalidClusters', warnings, isArray),
+    interview: parseJsonString(prefill.interview, {}, 'requestPrefillInvalidInterview', warnings, isRecord),
+    rawPayload: parseJsonString(prefill.rawPayload, {}, 'requestPrefillInvalidRawPayload', warnings, isRecord),
   }
+}
+
+export function getDeviceRequestPayloadWarnings(prefill: DeviceRequestPrefill): string[] {
+  const warnings: string[] = []
+
+  parseJsonString(prefill.endpoints, [], 'requestPrefillInvalidEndpoints', warnings, isArray)
+  parseJsonString(prefill.clusters, [], 'requestPrefillInvalidClusters', warnings, isArray)
+  parseJsonString(prefill.interview, {}, 'requestPrefillInvalidInterview', warnings, isRecord)
+  parseJsonString(prefill.rawPayload, {}, 'requestPrefillInvalidRawPayload', warnings, isRecord)
+
+  return warnings
 }
