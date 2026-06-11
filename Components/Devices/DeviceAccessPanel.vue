@@ -60,7 +60,39 @@
                 {{ renderStars(comment.rating) }}
               </span>
             </div>
-            <span>{{ formatCommentDate(comment.UPDATED_AT || comment.CREATED_AT) }}</span>
+            <div class="device-comments-list__side">
+              <span>{{ formatCommentDate(comment.UPDATED_AT || comment.CREATED_AT) }}</span>
+              <div v-if="canManageComment(comment)" class="device-comment-actions device-comment-actions--inline">
+                <button
+                  type="button"
+                  class="device-comment-icon-button"
+                  :aria-label="t('commentEdit')"
+                  :title="t('commentEdit')"
+                  @click="startEdit(comment)"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                  <span class="device-comment-sr-only">{{ t('commentEdit') }}</span>
+                </button>
+                <button
+                  type="button"
+                  class="device-comment-icon-button device-comment-icon-button--danger"
+                  :aria-label="t('commentDelete')"
+                  :title="t('commentDelete')"
+                  :disabled="deletingCommentId === comment.id"
+                  @click="removeComment(comment)"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                  </svg>
+                  <span class="device-comment-sr-only">
+                    {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
 
           <template v-if="editingCommentId === comment.id">
@@ -110,38 +142,6 @@
 
           <template v-else>
             <p v-if="comment.COMMENT.trim()">{{ comment.COMMENT }}</p>
-            <div v-if="canManageComment(comment)" class="device-comment-actions device-comment-actions--inline">
-              <button
-                type="button"
-                class="device-comment-icon-button"
-                :aria-label="t('commentEdit')"
-                :title="t('commentEdit')"
-                @click="startEdit(comment)"
-              >
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="M12.854.146a.5.5 0 0 1 .707 0l2.586 2.586a.5.5 0 0 1 0 .707l-10 10L3 14l.561-3.146zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zM12.793 5.5 10.5 3.207 4.207 9.5 3.854 11.146 5.5 10.793z"/>
-                  <path fill-rule="evenodd" d="M1 13.5V16h2.5l7.086-7.086-2.5-2.5z"/>
-                </svg>
-                <span class="device-comment-sr-only">{{ t('commentEdit') }}</span>
-              </button>
-              <button
-                type="button"
-                class="device-comment-icon-button device-comment-icon-button--danger"
-                :aria-label="t('commentDelete')"
-                :title="t('commentDelete')"
-                :disabled="deletingCommentId === comment.id"
-                @click="removeComment(comment)"
-              >
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="M11.5 1a1 1 0 0 1 1 1V3H15v1H1V3h2.5V2a1 1 0 0 1 1-1zM4.5 2v1h7V2z"/>
-                  <path d="M2.5 5h11l-.63 9.138A2 2 0 0 1 10.874 16H5.126a2 2 0 0 1-1.996-1.862z"/>
-                  <path d="M6 7h1v6H6zm3 0h1v6H9z"/>
-                </svg>
-                <span class="device-comment-sr-only">
-                  {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
-                </span>
-              </button>
-            </div>
           </template>
         </div>
       </li>
@@ -655,10 +655,18 @@ async function removeComment(comment: NormalizedDeviceComment) {
 
 .device-comments-list__meta {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 6px;
+}
+
+.device-comments-list__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex: none;
 }
 
 .device-comments-list__author-line {
@@ -694,8 +702,7 @@ async function removeComment(comment: NormalizedDeviceComment) {
   line-height: 1.3;
 }
 
-.device-comments-list__meta > span {
-  flex: none;
+.device-comments-list__side > span {
   font-size: 12px;
   color: var(--vp-c-text-3);
   white-space: nowrap;
@@ -713,7 +720,8 @@ async function removeComment(comment: NormalizedDeviceComment) {
 }
 
 .device-comment-actions--inline {
-  margin-top: 8px;
+  margin-top: 0;
+  justify-content: flex-end;
 }
 
 .device-comment-icon-button {
