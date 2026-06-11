@@ -523,7 +523,6 @@ function getAvatarFallbackStyle(name: string) {
 
   return {
     background: `hsl(${hue} 65% 96%)`,
-    border: `1px solid hsl(${hue} 55% 90%)`,
     color: `hsl(${hue} 56% 50%)`,
   }
 }

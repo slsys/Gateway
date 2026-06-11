@@ -101,7 +101,9 @@ const showMeta = computed(() => commentsCount.value > 0)
 }
 
 .device-card-body {
+  position: relative;
   padding: 12px;
+  padding-bottom: 36px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -130,7 +132,9 @@ const showMeta = computed(() => commentsCount.value > 0)
 }
 
 .device-card-meta {
-  margin-top: auto;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
   display: flex;
   align-items: center;
   gap: 6px;
