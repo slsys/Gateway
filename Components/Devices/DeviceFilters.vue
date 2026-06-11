@@ -1,13 +1,5 @@
 <template>
   <div class="device-filters">
-    <button
-      v-if="showRequestButton"
-      type="button"
-      class="device-filter-request-button"
-      @click="$emit('openRequest')"
-    >
-      {{ t('requestButton') }}
-    </button>
     <div class="device-filters__controls">
       <input
         :value="search"
@@ -46,7 +38,6 @@ defineProps<{
   vendorFilter: string
   groupBy: string
   vendors: Record<string, DeviceVendor>
-  showRequestButton: boolean
   t: (key: string) => string
 }>()
 
@@ -54,7 +45,6 @@ defineEmits<{
   'update:search': [value: string]
   'update:vendorFilter': [value: string]
   'update:groupBy': [value: string]
-  openRequest: []
 }>()
 </script>
 
@@ -62,8 +52,7 @@ defineEmits<{
 .device-filters {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: flex-end;
   margin-bottom: 16px;
 }
 
@@ -86,18 +75,6 @@ defineEmits<{
   color: var(--vp-c-text-1);
 }
 
-.device-filter-request-button {
-  box-sizing: border-box;
-  flex: none;
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 6px;
-  background: var(--vp-c-brand-1);
-  color: var(--vp-c-bg);
-  height: 38px;
-  padding: 0 14px;
-  cursor: pointer;
-}
-
 @media (max-width: 600px) {
   .device-filters {
     flex-direction: column;
@@ -109,8 +86,7 @@ defineEmits<{
   }
 
   .device-filter-input,
-  .device-filter-select,
-  .device-filter-request-button {
+  .device-filter-select {
     min-width: auto;
     width: 100%;
   }

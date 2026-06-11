@@ -5,9 +5,7 @@
       v-model:vendor-filter="vendorFilter"
       v-model:group-by="groupBy"
       :vendors="vendors"
-      :show-request-button="canRequestDevice"
       :t="t"
-      @open-request="openRequestModal"
     />
 
     <p v-if="error" class="devices-error">{{ error }}</p>

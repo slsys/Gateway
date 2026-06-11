@@ -18,6 +18,10 @@ interface RawCloudSessionUser {
   avatar?: unknown
   photo_url?: unknown
   image?: unknown
+  AVATAR_URL?: unknown
+  AVATAR?: unknown
+  PHOTO_URL?: unknown
+  IMAGE?: unknown
 }
 
 interface RawAuthenticatedCloudSession {
@@ -38,6 +42,10 @@ function pickAvatarUrl(user: RawCloudSessionUser): string | null {
     user.avatar,
     user.photo_url,
     user.image,
+    user.AVATAR_URL,
+    user.AVATAR,
+    user.PHOTO_URL,
+    user.IMAGE,
   ]
 
   for (const candidate of candidates) {

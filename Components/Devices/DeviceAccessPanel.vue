@@ -6,15 +6,6 @@
         <span class="device-access-panel__count-badge">{{ comments.length }}</span>
       </h3>
       <div class="device-access-panel__header-actions">
-        <a
-          v-if="status === 'guest'"
-          class="device-access-panel__cta"
-          href="https://cloud.slsys.io/login"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ t('commentGuestCta') }}
-        </a>
         <button
           v-if="commentsError && !commentsLoading"
           type="button"
@@ -46,7 +37,7 @@
           <div class="device-comment-card__avatar">
             <img
               v-if="getCommentAvatarUrl(thread.root)"
-              :src="getCommentAvatarUrl(thread.root) || undefined"
+              :src="resolveAvatarUrl(getCommentAvatarUrl(thread.root) || '')"
               :alt="thread.root.user_name"
               loading="lazy"
             />
@@ -176,9 +167,9 @@
                   v-if="status === 'authenticated'"
                   type="button"
                   class="device-comment-link"
-                  @click="toggleReplyForm(thread.root.id)"
+                  @click="toggleReplyForm(thread.root.id, thread.root.id)"
                 >
-                  {{ activeReplyParentId === thread.root.id ? t('commentCancel') : t('commentReply') }}
+                  {{ activeReplyAnchorId === thread.root.id ? t('commentCancel') : t('commentReply') }}
                 </button>
                 <div v-if="canManageComment(thread.root)" class="device-comment-actions device-comment-actions--inline">
                   <button type="button" class="device-comment-link" @click="startEdit(thread.root)">
@@ -199,9 +190,9 @@
         </div>
 
         <form
-          v-if="status === 'authenticated' && activeReplyParentId === thread.root.id"
+          v-if="status === 'authenticated' && activeReplyAnchorId === thread.root.id"
           class="device-reply-form"
-          @submit.prevent="submitReply(thread.root.id)"
+          @submit.prevent="submitReply()"
         >
           <textarea
             v-model="replyDraft"
@@ -254,7 +245,7 @@
             <div class="device-comment-card__avatar device-comment-card__avatar--reply">
               <img
                 v-if="getCommentAvatarUrl(reply)"
-                :src="getCommentAvatarUrl(reply) || undefined"
+                :src="resolveAvatarUrl(getCommentAvatarUrl(reply) || '')"
                 :alt="reply.user_name"
                 loading="lazy"
               />
@@ -379,22 +370,77 @@
                     <span>{{ reply.dislikes_count }}</span>
                   </button>
                 </div>
-                <div v-if="canManageComment(reply)" class="device-comment-actions device-comment-actions--inline">
-                  <button type="button" class="device-comment-link" @click="startEdit(reply)">
-                    {{ t('commentEdit') }}
-                  </button>
+                <div class="device-comment-actions-row">
                   <button
+                    v-if="status === 'authenticated'"
                     type="button"
-                    class="device-comment-link device-comment-link--danger"
-                    :disabled="deletingCommentId === reply.id"
-                    @click="removeComment(reply)"
+                    class="device-comment-link"
+                    @click="toggleReplyForm(reply.id, thread.root.id)"
                   >
-                    {{ deletingCommentId === reply.id ? t('commentDeleting') : t('commentDelete') }}
+                    {{ activeReplyAnchorId === reply.id ? t('commentCancel') : t('commentReply') }}
                   </button>
+                  <div v-if="canManageComment(reply)" class="device-comment-actions device-comment-actions--inline">
+                    <button type="button" class="device-comment-link" @click="startEdit(reply)">
+                      {{ t('commentEdit') }}
+                    </button>
+                    <button
+                      type="button"
+                      class="device-comment-link device-comment-link--danger"
+                      :disabled="deletingCommentId === reply.id"
+                      @click="removeComment(reply)"
+                    >
+                      {{ deletingCommentId === reply.id ? t('commentDeleting') : t('commentDelete') }}
+                    </button>
+                  </div>
                 </div>
               </template>
             </div>
           </article>
+          <form
+            v-if="status === 'authenticated' && activeReplyAnchorId === reply.id"
+            class="device-reply-form device-reply-form--nested"
+            @submit.prevent="submitReply()"
+          >
+            <textarea
+              v-model="replyDraft"
+              class="device-comment-form__input"
+              :placeholder="t('commentReplyPlaceholder')"
+              :maxlength="commentMaxLength"
+              :disabled="replySubmitting"
+              rows="3"
+            ></textarea>
+            <input
+              :key="replyFileInputKey"
+              class="device-comment-form__file-input"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              @change="onReplyFilesChange"
+            />
+            <div v-if="replyPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
+              <div v-for="preview in replyPreviews" :key="preview.url" class="device-comment-gallery__item">
+                <img :src="preview.url" :alt="preview.name" />
+              </div>
+            </div>
+            <div class="device-comment-form__footer">
+              <div class="device-comment-form__meta-panel">
+                <p class="device-comment-form__hint">{{ t('commentReplyHint') }}</p>
+                <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
+              </div>
+              <div class="device-comment-actions">
+                <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">
+                  {{ t('commentCancel') }}
+                </button>
+                <button
+                  type="submit"
+                  class="device-access-panel__primary"
+                  :disabled="replySubmitting || !canSubmitReply"
+                >
+                  {{ replySubmitting ? t('commentSubmitting') : t('commentReplySubmit') }}
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </article>
     </div>
@@ -515,6 +561,7 @@ const commentFiles = ref<File[]>([])
 const commentPreviews = ref<PreviewImage[]>([])
 const createFileInputKey = ref(0)
 
+const activeReplyAnchorId = ref<number | null>(null)
 const activeReplyParentId = ref<number | null>(null)
 const replyDraft = ref('')
 const replyFiles = ref<File[]>([])
@@ -735,6 +782,18 @@ function getCommentAvatarUrl(comment: DeviceComment) {
   return null
 }
 
+function resolveAvatarUrl(value: string) {
+  if (/^https?:\/\//i.test(value)) {
+    return value
+  }
+
+  if (value.startsWith('/')) {
+    return `https://cloud.slsys.io${value}`
+  }
+
+  return value
+}
+
 function isOwnComment(comment: DeviceComment) {
   return Boolean(user.value?.id) && String(comment.cloud_user_id ?? '') === String(user.value?.id)
 }
@@ -860,12 +919,13 @@ function resetCreateForm() {
   clearCreateFiles()
 }
 
-function toggleReplyForm(parentId: number) {
-  if (activeReplyParentId.value === parentId) {
+function toggleReplyForm(anchorId: number, parentId: number) {
+  if (activeReplyAnchorId.value === anchorId) {
     cancelReplyForm()
     return
   }
 
+  activeReplyAnchorId.value = anchorId
   activeReplyParentId.value = parentId
   replyDraft.value = ''
   clearReplyFiles()
@@ -873,6 +933,7 @@ function toggleReplyForm(parentId: number) {
 }
 
 function cancelReplyForm() {
+  activeReplyAnchorId.value = null
   activeReplyParentId.value = null
   replyDraft.value = ''
   clearReplyFiles()
@@ -919,8 +980,8 @@ async function submitComment() {
   }
 }
 
-async function submitReply(parentId: number) {
-  if (!canSubmitReply.value || normalizedDeviceId.value === null) {
+async function submitReply() {
+  if (!canSubmitReply.value || normalizedDeviceId.value === null || activeReplyParentId.value === null) {
     actionMessage.value = props.t('communityCommentOrRatingRequired')
     return
   }
@@ -931,7 +992,7 @@ async function submitReply(parentId: number) {
   try {
     await createDeviceComment({
       deviceId: normalizedDeviceId.value,
-      parentId,
+      parentId: activeReplyParentId.value,
       comment: replyDraft.value,
       images: replyFiles.value,
     })
@@ -1374,6 +1435,10 @@ onBeforeUnmount(() => {
 
 .device-reply-form {
   margin-left: 52px;
+}
+
+.device-reply-form--nested {
+  margin-left: 44px;
 }
 
 .device-comment-form__label {

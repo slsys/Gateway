@@ -131,16 +131,27 @@ interface RawNewDeviceComment {
   device_id?: number | string
   parent_id?: number | string | null
   cloud_user_id?: string | number | null
+  CLOUD_USER_ID?: string | number | null
   user_name?: string | null
+  USER_NAME?: string | null
   comment?: string | null
+  COMMENT?: string | null
   rating?: number | string | null
+  RATING?: number | string | null
   status?: string
+  STATUS?: string
   created_at?: string
+  CREATED_AT?: string
   updated_at?: string
+  UPDATED_AT?: string
   images?: RawCommentImage[]
+  IMAGES?: RawCommentImage[]
   likes_count?: number | string
+  LIKES_COUNT?: number | string
   dislikes_count?: number | string
+  DISLIKES_COUNT?: number | string
   my_vote?: string | null
+  MY_VOTE?: string | null
   avatar_url?: string
   user_avatar?: string
   user_avatar_url?: string
@@ -385,17 +396,29 @@ function normalizeNewComment(raw: RawNewDeviceComment): DeviceComment {
     id,
     device_id: deviceId,
     parent_id: toNumber(raw.parent_id),
-    cloud_user_id: raw.cloud_user_id ?? null,
-    user_name: typeof raw.user_name === 'string' && raw.user_name.trim() !== '' ? raw.user_name : 'User',
-    comment: typeof raw.comment === 'string' ? raw.comment : '',
-    rating: toNumber(raw.rating),
-    status: typeof raw.status === 'string' ? raw.status : 'Published',
-    created_at: typeof raw.created_at === 'string' ? raw.created_at : '',
-    updated_at: typeof raw.updated_at === 'string' ? raw.updated_at : typeof raw.created_at === 'string' ? raw.created_at : '',
-    images: normalizeImages(raw.images),
-    likes_count: toNumber(raw.likes_count) ?? 0,
-    dislikes_count: toNumber(raw.dislikes_count) ?? 0,
-    my_vote: toVote(raw.my_vote),
+    cloud_user_id: raw.cloud_user_id ?? raw.CLOUD_USER_ID ?? null,
+    user_name: typeof raw.user_name === 'string' && raw.user_name.trim() !== ''
+      ? raw.user_name
+      : typeof raw.USER_NAME === 'string' && raw.USER_NAME.trim() !== ''
+        ? raw.USER_NAME
+        : 'User',
+    comment: typeof raw.comment === 'string' ? raw.comment : typeof raw.COMMENT === 'string' ? raw.COMMENT : '',
+    rating: toNumber(raw.rating ?? raw.RATING),
+    status: typeof raw.status === 'string' ? raw.status : typeof raw.STATUS === 'string' ? raw.STATUS : 'Published',
+    created_at: typeof raw.created_at === 'string' ? raw.created_at : typeof raw.CREATED_AT === 'string' ? raw.CREATED_AT : '',
+    updated_at: typeof raw.updated_at === 'string'
+      ? raw.updated_at
+      : typeof raw.UPDATED_AT === 'string'
+        ? raw.UPDATED_AT
+        : typeof raw.created_at === 'string'
+          ? raw.created_at
+          : typeof raw.CREATED_AT === 'string'
+            ? raw.CREATED_AT
+            : '',
+    images: normalizeImages(raw.images ?? raw.IMAGES),
+    likes_count: toNumber(raw.likes_count ?? raw.LIKES_COUNT) ?? 0,
+    dislikes_count: toNumber(raw.dislikes_count ?? raw.DISLIKES_COUNT) ?? 0,
+    my_vote: toVote(raw.my_vote ?? raw.MY_VOTE),
     avatarUrl: pickAvatarUrl(raw),
   }
 }
