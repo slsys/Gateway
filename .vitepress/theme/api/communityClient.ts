@@ -1,43 +1,53 @@
 const COMMUNITY_API_ORIGIN = 'https://api.slsys.io'
 
-export type RawDeviceComment = {
-  ID: string
-  DEVICE_ID: string
-  CLOUD_USER_ID: string
-  USER_EMAIL: string
-  USER_NAME: string | null
-  USER_AVATAR?: string
-  USER_AVATAR_URL?: string
-  AVATAR_URL?: string
-  AVATAR?: string
-  CLOUD_USER_AVATAR?: string
-  COMMENT: string
-  RATING: string | null
-  STATUS: 'Published'
-  CREATED_AT: string
-  UPDATED_AT: string
+export type CommentVote = 'like' | 'dislike'
+
+export interface CommentImage {
+  id: number
+  public_url: string
+  mime_type: string
+  size_bytes: number
+  sort_order: number
 }
 
-export type NormalizedDeviceComment = RawDeviceComment & {
+export interface DeviceComment {
   id: number
-  deviceId: number
-  cloudUserId: string
-  rating: number | null
-  avatarUrl: string | null
-}
-
-export type CreatedOrUpdatedComment = {
-  id: number
-  deviceId: number
-  cloudUserId: string
-  userEmail: string
-  userName: string | null
-  avatarUrl: string | null
+  device_id: number
+  parent_id: number | null
+  cloud_user_id?: string | number | null
+  user_name: string
   comment: string
   rating: number | null
-  status: 'Published'
-  createdAt: string
-  updatedAt: string
+  status: string
+  created_at: string
+  updated_at: string
+  images: CommentImage[]
+  likes_count: number
+  dislikes_count: number
+  my_vote: CommentVote | null
+  avatarUrl: string | null
+}
+
+export interface DeviceCommentMutationInput {
+  deviceId: number
+  comment?: string
+  rating?: number | null
+  parentId?: number | null
+  images?: File[]
+}
+
+export interface DeviceCommentUpdateInput {
+  commentId: number
+  comment?: string
+  rating?: number | null
+  images?: File[]
+}
+
+export interface VoteCommentResult {
+  comment_id: number
+  likes_count: number
+  dislikes_count: number
+  my_vote: CommentVote | null
 }
 
 export interface DeviceRequestPayload {
@@ -58,12 +68,25 @@ export interface DeviceRequestPayload {
   rawPayload: Record<string, unknown>
 }
 
+export interface CreatedDeviceRequest {
+  id: number
+  cid: number
+  status: string
+}
+
 export type CommunityErrorCode =
   | 'not_authenticated'
   | 'invalid_device_id'
+  | 'invalid_parent_comment'
+  | 'reply_device_mismatch'
+  | 'reply_depth_not_allowed'
   | 'invalid_comment'
   | 'invalid_rating'
   | 'comment_or_rating_required'
+  | 'invalid_vote'
+  | 'unsupported_image_type'
+  | 'image_too_large'
+  | 'too_many_images'
   | 'comment_forbidden'
   | 'comment_not_found'
   | 'device_not_found'
@@ -95,29 +118,55 @@ interface CommunityErrorResponse {
   message?: string
 }
 
-interface RawCreatedDeviceComment {
-  id: number
-  device_id: number
-  cloud_user_id?: string | number
-  user_name: string | null
-  user_email: string
+interface RawCommentImage {
+  id?: number | string
+  public_url?: string
+  mime_type?: string
+  size_bytes?: number | string
+  sort_order?: number | string
+}
+
+interface RawNewDeviceComment {
+  id?: number | string
+  device_id?: number | string
+  parent_id?: number | string | null
+  cloud_user_id?: string | number | null
+  user_name?: string | null
+  comment?: string | null
+  rating?: number | string | null
+  status?: string
+  created_at?: string
+  updated_at?: string
+  images?: RawCommentImage[]
+  likes_count?: number | string
+  dislikes_count?: number | string
+  my_vote?: string | null
   avatar_url?: string
   user_avatar?: string
   user_avatar_url?: string
-  comment: string
-  rating?: number | string | null
-  status: 'Published'
-  created_at: string
-  updated_at?: string
+  avatar?: string
+  photo_url?: string
+}
+
+interface RawLegacyDeviceComment {
+  ID: string
+  DEVICE_ID: string
+  CLOUD_USER_ID?: string
+  USER_EMAIL?: string
+  USER_NAME: string | null
+  USER_AVATAR?: string
+  USER_AVATAR_URL?: string
+  AVATAR_URL?: string
+  AVATAR?: string
+  CLOUD_USER_AVATAR?: string
+  COMMENT: string
+  RATING: string | null
+  STATUS: string
+  CREATED_AT: string
+  UPDATED_AT: string
 }
 
 interface RawCreatedDeviceRequest {
-  id: number
-  cid: number
-  status: string
-}
-
-export interface CreatedDeviceRequest {
   id: number
   cid: number
   status: string
@@ -129,6 +178,24 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function extractErrorCode(payload: CommunityErrorResponse): string {
   const candidates = [payload.code, payload.error, payload.message]
+  const knownCodes = [
+    'not_authenticated',
+    'invalid_device_id',
+    'invalid_parent_comment',
+    'reply_device_mismatch',
+    'reply_depth_not_allowed',
+    'invalid_comment',
+    'invalid_rating',
+    'comment_or_rating_required',
+    'invalid_vote',
+    'unsupported_image_type',
+    'image_too_large',
+    'too_many_images',
+    'comment_forbidden',
+    'comment_not_found',
+    'device_not_found',
+    'auth_service_unavailable',
+  ]
 
   for (const candidate of candidates) {
     if (typeof candidate !== 'string') {
@@ -136,18 +203,6 @@ function extractErrorCode(payload: CommunityErrorResponse): string {
     }
 
     const normalized = candidate.trim().toLowerCase()
-    const knownCodes = [
-      'not_authenticated',
-      'invalid_device_id',
-      'invalid_comment',
-      'invalid_rating',
-      'comment_or_rating_required',
-      'comment_forbidden',
-      'comment_not_found',
-      'device_not_found',
-      'auth_service_unavailable',
-    ]
-
     const exactMatch = knownCodes.find((code) => normalized === code)
     if (exactMatch) {
       return exactMatch
@@ -168,9 +223,16 @@ function parseErrorCode(status: number, payload: CommunityErrorResponse): Commun
   switch (rawCode) {
     case 'not_authenticated':
     case 'invalid_device_id':
+    case 'invalid_parent_comment':
+    case 'reply_device_mismatch':
+    case 'reply_depth_not_allowed':
     case 'invalid_comment':
     case 'invalid_rating':
     case 'comment_or_rating_required':
+    case 'invalid_vote':
+    case 'unsupported_image_type':
+    case 'image_too_large':
+    case 'too_many_images':
     case 'comment_forbidden':
     case 'comment_not_found':
     case 'device_not_found':
@@ -226,7 +288,7 @@ async function readCommunityResponse<T>(response: Response): Promise<T> {
   return (payload as CommunitySuccessResponse<T>).data as T
 }
 
-function normalizeRating(value: string | number | null | undefined): number | null {
+function toNumber(value: unknown): number | null {
   if (value === null || value === undefined || value === '') {
     return null
   }
@@ -235,115 +297,258 @@ function normalizeRating(value: string | number | null | undefined): number | nu
   return Number.isFinite(numeric) ? numeric : null
 }
 
-function normalizeAvatarFromRawComment(raw: RawDeviceComment): string | null {
-  return raw.USER_AVATAR_URL || raw.USER_AVATAR || raw.AVATAR_URL || raw.AVATAR || raw.CLOUD_USER_AVATAR || null
+function toVote(value: unknown): CommentVote | null {
+  return value === 'like' || value === 'dislike' ? value : null
 }
 
-function normalizeAvatarFromCreatedComment(raw: RawCreatedDeviceComment): string | null {
-  return raw.avatar_url || raw.user_avatar_url || raw.user_avatar || null
+function pickAvatarUrl(raw: Record<string, unknown>): string | null {
+  const candidates = [
+    raw.avatar_url,
+    raw.user_avatar_url,
+    raw.user_avatar,
+    raw.avatar,
+    raw.photo_url,
+    raw.USER_AVATAR_URL,
+    raw.USER_AVATAR,
+    raw.AVATAR_URL,
+    raw.AVATAR,
+    raw.CLOUD_USER_AVATAR,
+  ]
+
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && candidate.trim() !== '') {
+      return candidate
+    }
+  }
+
+  return null
 }
 
-function toNormalizedComment(raw: RawDeviceComment): NormalizedDeviceComment {
+function normalizeCommentImage(raw: unknown): CommentImage | null {
+  if (!isRecord(raw) || typeof raw.public_url !== 'string') {
+    return null
+  }
+
+  const id = toNumber(raw.id) ?? 0
+  const sizeBytes = toNumber(raw.size_bytes) ?? 0
+  const sortOrder = toNumber(raw.sort_order) ?? 0
+
   return {
-    ...raw,
+    id,
+    public_url: raw.public_url,
+    mime_type: typeof raw.mime_type === 'string' ? raw.mime_type : '',
+    size_bytes: sizeBytes,
+    sort_order: sortOrder,
+  }
+}
+
+function normalizeImages(rawImages: unknown): CommentImage[] {
+  if (!Array.isArray(rawImages)) {
+    return []
+  }
+
+  return rawImages
+    .map(normalizeCommentImage)
+    .filter((image): image is CommentImage => image !== null)
+    .sort((left, right) => left.sort_order - right.sort_order)
+}
+
+function normalizeLegacyComment(raw: RawLegacyDeviceComment): DeviceComment {
+  return {
     id: Number(raw.ID),
-    deviceId: Number(raw.DEVICE_ID),
-    cloudUserId: String(raw.CLOUD_USER_ID),
-    rating: normalizeRating(raw.RATING),
-    avatarUrl: normalizeAvatarFromRawComment(raw),
+    device_id: Number(raw.DEVICE_ID),
+    parent_id: null,
+    cloud_user_id: raw.CLOUD_USER_ID ?? null,
+    user_name: raw.USER_NAME || 'User',
+    comment: raw.COMMENT || '',
+    rating: toNumber(raw.RATING),
+    status: raw.STATUS,
+    created_at: raw.CREATED_AT,
+    updated_at: raw.UPDATED_AT,
+    images: [],
+    likes_count: 0,
+    dislikes_count: 0,
+    my_vote: null,
+    avatarUrl: pickAvatarUrl(raw),
   }
 }
 
-function toCreatedOrUpdatedComment(raw: RawCreatedDeviceComment): CreatedOrUpdatedComment {
+function normalizeNewComment(raw: RawNewDeviceComment): DeviceComment {
+  const id = toNumber(raw.id)
+  const deviceId = toNumber(raw.device_id)
+
+  if (id === null || deviceId === null) {
+    throw new CommunityApiError('Unexpected comments payload', 200, 'invalid_response')
+  }
+
   return {
-    id: raw.id,
-    deviceId: raw.device_id,
-    cloudUserId: raw.cloud_user_id === undefined ? '' : String(raw.cloud_user_id),
-    userEmail: raw.user_email,
-    userName: raw.user_name,
-    avatarUrl: normalizeAvatarFromCreatedComment(raw),
-    comment: raw.comment,
-    rating: normalizeRating(raw.rating),
-    status: raw.status,
-    createdAt: raw.created_at,
-    updatedAt: raw.updated_at || raw.created_at,
+    id,
+    device_id: deviceId,
+    parent_id: toNumber(raw.parent_id),
+    cloud_user_id: raw.cloud_user_id ?? null,
+    user_name: typeof raw.user_name === 'string' && raw.user_name.trim() !== '' ? raw.user_name : 'User',
+    comment: typeof raw.comment === 'string' ? raw.comment : '',
+    rating: toNumber(raw.rating),
+    status: typeof raw.status === 'string' ? raw.status : 'Published',
+    created_at: typeof raw.created_at === 'string' ? raw.created_at : '',
+    updated_at: typeof raw.updated_at === 'string' ? raw.updated_at : typeof raw.created_at === 'string' ? raw.created_at : '',
+    images: normalizeImages(raw.images),
+    likes_count: toNumber(raw.likes_count) ?? 0,
+    dislikes_count: toNumber(raw.dislikes_count) ?? 0,
+    my_vote: toVote(raw.my_vote),
+    avatarUrl: pickAvatarUrl(raw),
   }
 }
 
-export async function getDeviceComments(deviceId: number): Promise<NormalizedDeviceComment[]> {
+function normalizeDeviceComment(raw: unknown): DeviceComment {
+  if (!isRecord(raw)) {
+    throw new CommunityApiError('Unexpected comments payload', 200, 'invalid_response')
+  }
+
+  if ('id' in raw || 'device_id' in raw) {
+    return normalizeNewComment(raw as RawNewDeviceComment)
+  }
+
+  if ('ID' in raw && 'DEVICE_ID' in raw) {
+    return normalizeLegacyComment(raw as RawLegacyDeviceComment)
+  }
+
+  throw new CommunityApiError('Unexpected comments payload', 200, 'invalid_response')
+}
+
+function appendCommentMutation(formData: FormData, input: DeviceCommentMutationInput | DeviceCommentUpdateInput) {
+  if ('deviceId' in input) {
+    formData.append('device_id', String(input.deviceId))
+  } else {
+    formData.append('comment_id', String(input.commentId))
+  }
+
+  if (typeof input.comment === 'string' && input.comment.trim() !== '') {
+    formData.append('comment', input.comment.trim())
+  }
+
+  if (typeof input.rating === 'number') {
+    formData.append('rating', String(input.rating))
+  }
+
+  if ('parentId' in input && input.parentId !== null && input.parentId !== undefined) {
+    formData.append('parent_id', String(input.parentId))
+  }
+
+  if (Array.isArray(input.images) && input.images.length > 0) {
+    input.images.forEach((image) => {
+      formData.append('images[]', image)
+    })
+  }
+}
+
+export function resolveCommunityAssetUrl(publicUrl: string): string {
+  if (/^https?:\/\//i.test(publicUrl)) {
+    return publicUrl
+  }
+
+  if (!publicUrl.startsWith('/')) {
+    return `${COMMUNITY_API_ORIGIN}/${publicUrl}`
+  }
+
+  return `${COMMUNITY_API_ORIGIN}${publicUrl}`
+}
+
+export async function getDeviceComments(deviceId: number): Promise<DeviceComment[]> {
   const response = await fetch(
     `${COMMUNITY_API_ORIGIN}/api/community/comments?device_id=${encodeURIComponent(String(deviceId))}`,
     { credentials: 'include' },
   )
 
-  const data = await readCommunityResponse<RawDeviceComment[]>(response)
+  const data = await readCommunityResponse<unknown[]>(response)
 
   if (!Array.isArray(data)) {
     throw new CommunityApiError('Unexpected comments payload', response.status, 'invalid_response')
   }
 
-  return data.map(toNormalizedComment)
+  return data.map(normalizeDeviceComment)
 }
 
-export async function createDeviceComment(
-  deviceId: number,
-  comment: string,
-  rating: number | null,
-): Promise<CreatedOrUpdatedComment> {
+export async function createDeviceComment(input: DeviceCommentMutationInput): Promise<unknown> {
+  const formData = new FormData()
+  appendCommentMutation(formData, input)
+
   const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/comments`, {
     method: 'POST',
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      device_id: deviceId,
-      comment,
-      rating,
-    }),
+    body: formData,
   })
 
-  const data = await readCommunityResponse<RawCreatedDeviceComment>(response)
-
-  if (!isRecord(data) || typeof data.id !== 'number') {
-    throw new CommunityApiError('Unexpected created comment payload', response.status, 'invalid_response')
-  }
-
-  return toCreatedOrUpdatedComment(data)
+  return readCommunityResponse<unknown>(response)
 }
 
-export async function updateDeviceComment(
-  commentId: number,
-  comment: string,
-  rating: number | null,
-): Promise<CreatedOrUpdatedComment> {
+export async function updateDeviceComment(input: DeviceCommentUpdateInput): Promise<unknown> {
+  const formData = new FormData()
+  appendCommentMutation(formData, input)
+
   const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/comments/update`, {
     method: 'POST',
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      comment_id: commentId,
-      comment,
-      rating,
-    }),
+    body: formData,
   })
 
-  const data = await readCommunityResponse<RawCreatedDeviceComment>(response)
-
-  if (!isRecord(data) || typeof data.id !== 'number') {
-    throw new CommunityApiError('Unexpected updated comment payload', response.status, 'invalid_response')
-  }
-
-  return toCreatedOrUpdatedComment(data)
+  return readCommunityResponse<unknown>(response)
 }
 
-export async function deleteDeviceComment(commentId: number): Promise<void> {
+export async function deleteDeviceComment(commentId: number): Promise<unknown> {
+  const formData = new FormData()
+  formData.append('comment_id', String(commentId))
+
   const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/comments/delete`, {
     method: 'POST',
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ comment_id: commentId }),
+    body: formData,
   })
 
-  await readCommunityResponse<unknown>(response)
+  return readCommunityResponse<unknown>(response)
+}
+
+function normalizeVoteResult(raw: unknown, status: number): VoteCommentResult {
+  if (!isRecord(raw)) {
+    throw new CommunityApiError('Unexpected vote payload', status, 'invalid_response')
+  }
+
+  const commentId = toNumber(raw.comment_id)
+  const likesCount = toNumber(raw.likes_count)
+  const dislikesCount = toNumber(raw.dislikes_count)
+
+  if (commentId === null || likesCount === null || dislikesCount === null) {
+    throw new CommunityApiError('Unexpected vote payload', status, 'invalid_response')
+  }
+
+  return {
+    comment_id: commentId,
+    likes_count: likesCount,
+    dislikes_count: dislikesCount,
+    my_vote: toVote(raw.my_vote),
+  }
+}
+
+export async function voteComment(commentId: number, vote: CommentVote): Promise<VoteCommentResult> {
+  const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/comments/${commentId}/vote`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ vote }),
+  })
+
+  const data = await readCommunityResponse<unknown>(response)
+  return normalizeVoteResult(data, response.status)
+}
+
+export async function removeCommentVote(commentId: number): Promise<VoteCommentResult> {
+  const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/comments/${commentId}/vote`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+
+  const data = await readCommunityResponse<unknown>(response)
+  return normalizeVoteResult(data, response.status)
 }
 
 export async function createDeviceRequest(payload: DeviceRequestPayload): Promise<CreatedDeviceRequest> {
