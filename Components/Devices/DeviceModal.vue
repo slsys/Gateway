@@ -56,6 +56,10 @@
             <p><strong>{{ t('notes') }}:</strong></p>
             <div v-html="decodedNotes"></div>
           </div>
+          <DeviceAccessPanel
+            :device-id="deviceId"
+            :t="t"
+          />
         </div>
         <div v-else>Loading...</div>
       </div>
@@ -63,15 +67,27 @@
   </transition>
 </template>
 
-<script setup>
-defineProps({
-  show: { type: Boolean, required: true },
-  device: { type: Object, default: null },
-  vendors: { type: Object, required: true },
-  imageUrl: { type: String, default: '' },
-  decodedPairing: { type: String, default: '' },
-  decodedNotes: { type: String, default: '' },
-  t: { type: Function, required: true },
+<script setup lang="ts">
+import { computed } from 'vue'
+import DeviceAccessPanel from './DeviceAccessPanel.vue'
+import type { DeviceItem, DeviceVendor } from './types/device'
+
+const props = defineProps<{
+  show: boolean
+  device: DeviceItem | null
+  vendors: Record<string, DeviceVendor>
+  imageUrl?: string
+  decodedPairing?: string
+  decodedNotes?: string
+  t: (key: string) => string
+}>()
+
+const deviceId = computed(() => {
+  if (!props.device) {
+    return ''
+  }
+
+  return String(props.device.ID ?? props.device.id ?? props.device.TITLE ?? '').trim()
 })
 
 defineEmits(['close'])
