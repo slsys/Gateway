@@ -62,36 +62,6 @@
             </div>
             <div class="device-comments-list__side">
               <span>{{ formatCommentDate(comment.UPDATED_AT || comment.CREATED_AT) }}</span>
-              <div v-if="canManageComment(comment)" class="device-comment-actions device-comment-actions--inline">
-                <button
-                  type="button"
-                  class="device-comment-icon-button"
-                  :aria-label="t('commentEdit')"
-                  :title="t('commentEdit')"
-                  @click="startEdit(comment)"
-                >
-                  <svg viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                  </svg>
-                  <span class="device-comment-sr-only">{{ t('commentEdit') }}</span>
-                </button>
-                <button
-                  type="button"
-                  class="device-comment-icon-button device-comment-icon-button--danger"
-                  :aria-label="t('commentDelete')"
-                  :title="t('commentDelete')"
-                  :disabled="deletingCommentId === comment.id"
-                  @click="removeComment(comment)"
-                >
-                  <svg viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                  </svg>
-                  <span class="device-comment-sr-only">
-                    {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
-                  </span>
-                </button>
-              </div>
             </div>
           </div>
 
@@ -142,6 +112,19 @@
 
           <template v-else>
             <p v-if="comment.COMMENT.trim()">{{ comment.COMMENT }}</p>
+            <div v-if="canManageComment(comment)" class="device-comment-actions device-comment-actions--inline">
+              <button type="button" class="device-comment-link" @click="startEdit(comment)">
+                {{ t('commentEdit') }}
+              </button>
+              <button
+                type="button"
+                class="device-comment-link device-comment-link--danger"
+                :disabled="deletingCommentId === comment.id"
+                @click="removeComment(comment)"
+              >
+                {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
+              </button>
+            </div>
           </template>
         </div>
       </li>
@@ -154,24 +137,6 @@
       <label class="device-comment-form__label" for="device-comment-message">
         {{ t('commentFormLabel') }}
       </label>
-      <div class="device-comment-form__rating-row">
-        <span class="device-comment-form__rating-label">{{ t('commentRatingLabel') }}</span>
-      </div>
-      <div class="device-rating-editor device-rating-editor--create">
-        <button
-          v-for="value in 5"
-          :key="`create-rating-${value}`"
-          type="button"
-          class="device-rating-star"
-          :class="{ active: (commentRating || 0) >= value }"
-          @click="setCreateRating(value)"
-        >
-          ★
-        </button>
-        <button type="button" class="device-rating-clear" @click="setCreateRating(null)">
-          {{ t('commentRatingClear') }}
-        </button>
-      </div>
       <textarea
         id="device-comment-message"
         v-model="commentDraft"
@@ -185,6 +150,24 @@
         <div class="device-comment-form__meta-panel">
           <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
           <p class="device-comment-form__counter">{{ commentDraftLength }}/{{ commentMaxLength }}</p>
+          <div class="device-comment-form__rating-row">
+            <span class="device-comment-form__rating-label">{{ t('commentRatingLabel') }}</span>
+            <div class="device-rating-editor device-rating-editor--create">
+              <button
+                v-for="value in 5"
+                :key="`create-rating-${value}`"
+                type="button"
+                class="device-rating-star"
+                :class="{ active: (commentRating || 0) >= value }"
+                @click="setCreateRating(value)"
+              >
+                ★
+              </button>
+              <button type="button" class="device-rating-clear" @click="setCreateRating(null)">
+                {{ t('commentRatingClear') }}
+              </button>
+            </div>
+          </div>
         </div>
         <button
           type="submit"
@@ -720,49 +703,27 @@ async function removeComment(comment: NormalizedDeviceComment) {
 }
 
 .device-comment-actions--inline {
-  margin-top: 0;
-  justify-content: flex-end;
+  margin-top: 8px;
 }
 
-.device-comment-icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
+.device-comment-link {
   padding: 0;
   border: 0;
-  border-radius: 8px;
   background: transparent;
   color: var(--vp-c-brand-1);
   cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
-.device-comment-icon-button svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-}
-
-.device-comment-icon-button--danger {
+.device-comment-link--danger {
   color: var(--vp-c-danger-1);
 }
 
-.device-comment-icon-button:disabled {
+.device-comment-link:disabled {
   opacity: 0.55;
   cursor: not-allowed;
-}
-
-.device-comment-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .device-comment-form,
@@ -772,9 +733,11 @@ async function removeComment(comment: NormalizedDeviceComment) {
 
 .device-comment-form {
   padding: 16px;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 12%, var(--vp-c-divider));
   border-radius: 12px;
-  background: var(--vp-c-bg-soft);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-1) 3%, transparent), transparent 70%),
+    var(--vp-c-bg);
 }
 
 .device-comment-form__label {
@@ -784,7 +747,9 @@ async function removeComment(comment: NormalizedDeviceComment) {
 }
 
 .device-comment-form__rating-row {
-  margin-bottom: 8px;
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .device-comment-form__rating-label {
@@ -823,6 +788,10 @@ async function removeComment(comment: NormalizedDeviceComment) {
   align-items: center;
   gap: 6px;
   margin-bottom: 10px;
+}
+
+.device-rating-editor--create {
+  margin-bottom: 0;
 }
 
 .device-rating-star {
