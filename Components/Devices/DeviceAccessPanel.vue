@@ -27,70 +27,108 @@
 
     <div v-if="commentsLoading" class="device-access-panel__empty">{{ t('commentsLoading') }}</div>
     <p v-else-if="commentsError" class="device-access-panel__technical-error">{{ t('commentsLoadFailed') }}</p>
-    <div v-else-if="threads.length" class="device-comment-threads">
-      <article
-        v-for="thread in threads"
-        :key="thread.root.id"
-        class="device-comment-thread"
-      >
-        <div class="device-comment-card" :class="{ 'device-comment-card--own': isOwnComment(thread.root) }">
-          <div class="device-comment-card__avatar">
-            <img
-              v-if="getCommentAvatarUrl(thread.root)"
-              :src="resolveAvatarUrl(getCommentAvatarUrl(thread.root) || '')"
-              :alt="thread.root.user_name"
-              loading="lazy"
-            />
-            <span v-else>{{ getUserInitials(thread.root.user_name) }}</span>
-          </div>
-          <div class="device-comment-card__body">
-            <div class="device-comment-card__meta">
-              <div class="device-comment-card__author-line">
-                <strong>{{ thread.root.user_name || t('commentAnonymous') }}</strong>
-                <span v-if="isOwnComment(thread.root)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
-                <span v-if="thread.root.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${thread.root.rating} / 5`">
-                  {{ renderStars(thread.root.rating) }}
-                </span>
-              </div>
-              <span class="device-comment-card__time">{{ formatCommentDate(thread.root.updated_at || thread.root.created_at) }}</span>
+    <div v-else-if="threadItems.length" class="device-comment-threads">
+      <template v-for="item in threadItems" :key="item.comment.id">
+        <article class="device-comment-thread" :style="{ '--comment-depth': String(item.depth) }">
+          <div class="device-comment-card" :class="{ 'device-comment-card--own': isOwnComment(item.comment) }">
+            <div class="device-comment-card__avatar">
+              <img
+                v-if="getCommentAvatarUrl(item.comment)"
+                :src="resolveAvatarUrl(getCommentAvatarUrl(item.comment) || '')"
+                :alt="item.comment.user_name"
+                loading="lazy"
+              />
+              <span v-else>{{ getUserInitials(item.comment.user_name) }}</span>
             </div>
-
-            <template v-if="editingCommentId === thread.root.id">
-              <div class="device-comment-edit">
-                <div class="device-rating-editor">
-                  <button
-                    v-for="value in 5"
-                    :key="`edit-root-rating-${thread.root.id}-${value}`"
-                    type="button"
-                    class="device-rating-star"
-                    :class="{ active: (editDraftRating || 0) >= value }"
-                    @click="setEditRating(value)"
-                  >
-                    ★
-                  </button>
-                  <button type="button" class="device-rating-clear" @click="setEditRating(null)">
-                    {{ t('commentRatingClear') }}
-                  </button>
+            <div class="device-comment-card__body">
+              <div class="device-comment-card__meta">
+                <div class="device-comment-card__author-line">
+                  <strong>{{ item.comment.user_name || t('commentAnonymous') }}</strong>
+                  <span v-if="isOwnComment(item.comment)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
+                  <span v-if="item.comment.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${item.comment.rating} / 5`">
+                    {{ renderStars(item.comment.rating) }}
+                  </span>
                 </div>
-                <textarea
-                  v-model="editDraftComment"
-                  class="device-comment-form__input"
-                  :maxlength="commentMaxLength"
-                  rows="4"
-                ></textarea>
-                <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
-                <input
-                  :key="editFileInputKey"
-                  class="device-comment-form__file-input"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  multiple
-                  @change="onEditFilesChange"
-                />
-                <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
+                <span class="device-comment-card__time">{{ formatCommentDate(item.comment.updated_at || item.comment.created_at) }}</span>
+              </div>
+
+              <template v-if="editingCommentId === item.comment.id">
+                <div class="device-comment-edit">
+                  <div class="device-rating-editor">
+                    <button
+                      v-for="value in 5"
+                      :key="`edit-rating-${item.comment.id}-${value}`"
+                      type="button"
+                      class="device-rating-star"
+                      :class="{ active: (editDraftRating || 0) >= value }"
+                      @click="setEditRating(value)"
+                    >
+                      ★
+                    </button>
+                    <button type="button" class="device-rating-clear" @click="setEditRating(null)">
+                      {{ t('commentRatingClear') }}
+                    </button>
+                  </div>
+                  <textarea
+                    v-model="editDraftComment"
+                    class="device-comment-form__input"
+                    :maxlength="commentMaxLength"
+                    rows="4"
+                  ></textarea>
+                  <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
+                  <input
+                    :key="editFileInputKey"
+                    class="device-comment-form__file-input"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    multiple
+                    @change="onEditFilesChange"
+                  />
+                  <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
+                    <a
+                      v-for="image in editingComment.images"
+                      :key="`existing-edit-${image.id}`"
+                      :href="getCommentImageUrl(image.public_url)"
+                      class="device-comment-gallery__item"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
+                    </a>
+                  </div>
+                  <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
+                    <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
+                      <img :src="preview.url" :alt="preview.name" />
+                    </div>
+                  </div>
+                  <div class="device-comment-form__footer">
+                    <div class="device-comment-form__meta-panel">
+                      <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
+                      <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
+                    </div>
+                    <div class="device-comment-actions">
+                      <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
+                        {{ t('commentCancel') }}
+                      </button>
+                      <button
+                        type="button"
+                        class="device-access-panel__primary"
+                        :disabled="commentSubmitting || !canSubmitEdit"
+                        @click="saveEdit(item.comment.id)"
+                      >
+                        {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </template>
+
+              <template v-else>
+                <p v-if="item.comment.comment.trim()">{{ item.comment.comment }}</p>
+                <div v-if="item.comment.images.length" class="device-comment-gallery">
                   <a
-                    v-for="image in editingComment.images"
-                    :key="`existing-edit-${image.id}`"
+                    v-for="image in item.comment.images"
+                    :key="`image-${item.comment.id}-${image.id}-${image.public_url}`"
                     :href="getCommentImageUrl(image.public_url)"
                     class="device-comment-gallery__item"
                     target="_blank"
@@ -99,99 +137,60 @@
                     <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
                   </a>
                 </div>
-                <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-                  <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
-                    <img :src="preview.url" :alt="preview.name" />
-                  </div>
-                </div>
-                <div class="device-comment-form__footer">
-                  <div class="device-comment-form__meta-panel">
-                    <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
-                    <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
-                  </div>
-                  <div class="device-comment-actions">
-                    <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
-                      {{ t('commentCancel') }}
-                    </button>
-                    <button
-                      type="button"
-                      class="device-access-panel__primary"
-                      :disabled="commentSubmitting || !canSubmitEdit"
-                      @click="saveEdit(thread.root.id)"
-                    >
-                      {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </template>
-
-            <template v-else>
-              <p v-if="thread.root.comment.trim()">{{ thread.root.comment }}</p>
-              <div v-if="thread.root.images.length" class="device-comment-gallery">
-                <a
-                  v-for="image in thread.root.images"
-                  :key="`root-image-${thread.root.id}-${image.id}-${image.public_url}`"
-                  :href="getCommentImageUrl(image.public_url)"
-                  class="device-comment-gallery__item"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                </a>
-              </div>
-              <div class="device-comment-votes">
-                <button
-                  type="button"
-                  class="device-comment-vote"
-                  :class="{ active: thread.root.my_vote === 'like' }"
-                  :disabled="!canVote || isVotePending(thread.root.id)"
-                  @click="toggleVote(thread.root, 'like')"
-                >
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94Z"/></svg>
-                  <span>{{ thread.root.likes_count }}</span>
-                </button>
-                <button
-                  type="button"
-                  class="device-comment-vote"
-                  :class="{ active: thread.root.my_vote === 'dislike' }"
-                  :disabled="!canVote || isVotePending(thread.root.id)"
-                  @click="toggleVote(thread.root, 'dislike')"
-                >
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94Z"/></svg>
-                  <span>{{ thread.root.dislikes_count }}</span>
-                </button>
-              </div>
-              <div class="device-comment-actions-row">
-                <button
-                  v-if="status === 'authenticated'"
-                  type="button"
-                  class="device-comment-link"
-                  @click="toggleReplyForm(thread.root.id, thread.root.id)"
-                >
-                  {{ activeReplyAnchorId === thread.root.id ? t('commentCancel') : t('commentReply') }}
-                </button>
-                <div v-if="canManageComment(thread.root)" class="device-comment-actions device-comment-actions--inline">
-                  <button type="button" class="device-comment-link" @click="startEdit(thread.root)">
-                    {{ t('commentEdit') }}
+                <div class="device-comment-votes">
+                  <button
+                    type="button"
+                    class="device-comment-vote device-comment-vote--like"
+                    :class="{ active: item.comment.my_vote === 'like' }"
+                    :disabled="!canVote || isVotePending(item.comment.id)"
+                    @click="toggleVote(item.comment, 'like')"
+                  >
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94ZM4.5 15.5A1.5 1.5 0 0 1 3 14V8.5A1.5 1.5 0 0 1 4.5 7h.85a.5.5 0 0 1 .464.314L7 10.5V14a1.5 1.5 0 0 1-1.5 1.5z"/></svg>
+                    <span>{{ item.comment.likes_count }}</span>
                   </button>
                   <button
                     type="button"
-                    class="device-comment-link device-comment-link--danger"
-                    :disabled="deletingCommentId === thread.root.id"
-                    @click="removeComment(thread.root)"
+                    class="device-comment-vote device-comment-vote--dislike"
+                    :class="{ active: item.comment.my_vote === 'dislike' }"
+                    :disabled="!canVote || isVotePending(item.comment.id)"
+                    @click="toggleVote(item.comment, 'dislike')"
                   >
-                    {{ deletingCommentId === thread.root.id ? t('commentDeleting') : t('commentDelete') }}
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94ZM4.5.5A1.5 1.5 0 0 0 3 2v5.5A1.5 1.5 0 0 0 4.5 9h.85a.5.5 0 0 0 .464-.314L7 5.5V2A1.5 1.5 0 0 0 5.5.5z"/></svg>
+                    <span>{{ item.comment.dislikes_count }}</span>
                   </button>
                 </div>
-              </div>
-            </template>
+                <div class="device-comment-actions-row">
+                  <button
+                    v-if="status === 'authenticated'"
+                    type="button"
+                    class="device-comment-link"
+                    @click="toggleReplyForm(item.comment.id)"
+                  >
+                    {{ activeReplyAnchorId === item.comment.id ? t('commentCancel') : t('commentReply') }}
+                  </button>
+                  <div v-if="canManageComment(item.comment)" class="device-comment-actions device-comment-actions--inline">
+                    <button type="button" class="device-comment-link" @click="startEdit(item.comment)">
+                      {{ t('commentEdit') }}
+                    </button>
+                    <button
+                      type="button"
+                      class="device-comment-link device-comment-link--danger"
+                      :disabled="deletingCommentId === item.comment.id"
+                      @click="removeComment(item.comment)"
+                    >
+                      {{ deletingCommentId === item.comment.id ? t('commentDeleting') : t('commentDelete') }}
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
           </div>
-        </div>
+        </article>
 
         <form
-          v-if="status === 'authenticated' && activeReplyAnchorId === thread.root.id"
+          v-if="status === 'authenticated' && activeReplyAnchorId === item.comment.id"
           class="device-reply-form"
+          :style="{ '--comment-depth': String(item.depth) }"
           @submit.prevent="submitReply()"
         >
           <textarea
@@ -234,219 +233,11 @@
             </div>
           </div>
         </form>
-
-        <div v-if="thread.replies.length" class="device-comment-replies">
-          <template v-for="reply in thread.replies" :key="reply.id">
-            <article
-              class="device-comment-card device-comment-card--reply"
-              :class="{ 'device-comment-card--own': isOwnComment(reply) }"
-            >
-              <div class="device-comment-card__avatar device-comment-card__avatar--reply">
-                <img
-                  v-if="getCommentAvatarUrl(reply)"
-                  :src="resolveAvatarUrl(getCommentAvatarUrl(reply) || '')"
-                  :alt="reply.user_name"
-                  loading="lazy"
-                />
-                <span v-else>{{ getUserInitials(reply.user_name) }}</span>
-              </div>
-              <div class="device-comment-card__body">
-                <div class="device-comment-card__meta">
-                  <div class="device-comment-card__author-line">
-                    <strong>{{ reply.user_name || t('commentAnonymous') }}</strong>
-                    <span v-if="isOwnComment(reply)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
-                    <span v-if="reply.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${reply.rating} / 5`">
-                      {{ renderStars(reply.rating) }}
-                    </span>
-                  </div>
-                  <span class="device-comment-card__time">{{ formatCommentDate(reply.updated_at || reply.created_at) }}</span>
-                </div>
-
-                <template v-if="editingCommentId === reply.id">
-                  <div class="device-comment-edit">
-                    <div class="device-rating-editor">
-                      <button
-                        v-for="value in 5"
-                        :key="`edit-reply-rating-${reply.id}-${value}`"
-                        type="button"
-                        class="device-rating-star"
-                        :class="{ active: (editDraftRating || 0) >= value }"
-                        @click="setEditRating(value)"
-                      >
-                        ★
-                      </button>
-                      <button type="button" class="device-rating-clear" @click="setEditRating(null)">
-                        {{ t('commentRatingClear') }}
-                      </button>
-                    </div>
-                    <textarea
-                      v-model="editDraftComment"
-                      class="device-comment-form__input"
-                      :maxlength="commentMaxLength"
-                      rows="4"
-                    ></textarea>
-                    <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
-                    <input
-                      :key="editFileInputKey"
-                      class="device-comment-form__file-input"
-                      type="file"
-                      accept="image/jpeg,image/png,image/webp"
-                      multiple
-                      @change="onEditFilesChange"
-                    />
-                    <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
-                      <a
-                        v-for="image in editingComment.images"
-                        :key="`existing-edit-reply-${image.id}`"
-                        :href="getCommentImageUrl(image.public_url)"
-                        class="device-comment-gallery__item"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                      </a>
-                    </div>
-                    <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-                      <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
-                        <img :src="preview.url" :alt="preview.name" />
-                      </div>
-                    </div>
-                    <div class="device-comment-form__footer">
-                      <div class="device-comment-form__meta-panel">
-                        <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
-                        <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
-                      </div>
-                      <div class="device-comment-actions">
-                        <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
-                          {{ t('commentCancel') }}
-                        </button>
-                        <button
-                          type="button"
-                          class="device-access-panel__primary"
-                          :disabled="commentSubmitting || !canSubmitEdit"
-                          @click="saveEdit(reply.id)"
-                        >
-                          {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-
-                <template v-else>
-                  <p v-if="reply.comment.trim()">{{ reply.comment }}</p>
-                  <div v-if="reply.images.length" class="device-comment-gallery">
-                    <a
-                      v-for="image in reply.images"
-                      :key="`reply-image-${reply.id}-${image.id}-${image.public_url}`"
-                      :href="getCommentImageUrl(image.public_url)"
-                      class="device-comment-gallery__item"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                    </a>
-                  </div>
-                  <div class="device-comment-votes">
-                    <button
-                      type="button"
-                      class="device-comment-vote"
-                      :class="{ active: reply.my_vote === 'like' }"
-                      :disabled="!canVote || isVotePending(reply.id)"
-                      @click="toggleVote(reply, 'like')"
-                    >
-                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94Z"/></svg>
-                      <span>{{ reply.likes_count }}</span>
-                    </button>
-                    <button
-                      type="button"
-                      class="device-comment-vote"
-                      :class="{ active: reply.my_vote === 'dislike' }"
-                      :disabled="!canVote || isVotePending(reply.id)"
-                      @click="toggleVote(reply, 'dislike')"
-                    >
-                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94Z"/></svg>
-                      <span>{{ reply.dislikes_count }}</span>
-                    </button>
-                  </div>
-                  <div class="device-comment-actions-row">
-                    <button
-                      v-if="status === 'authenticated'"
-                      type="button"
-                      class="device-comment-link"
-                      @click="toggleReplyForm(reply.id, thread.root.id)"
-                    >
-                      {{ activeReplyAnchorId === reply.id ? t('commentCancel') : t('commentReply') }}
-                    </button>
-                    <div v-if="canManageComment(reply)" class="device-comment-actions device-comment-actions--inline">
-                      <button type="button" class="device-comment-link" @click="startEdit(reply)">
-                        {{ t('commentEdit') }}
-                      </button>
-                      <button
-                        type="button"
-                        class="device-comment-link device-comment-link--danger"
-                        :disabled="deletingCommentId === reply.id"
-                        @click="removeComment(reply)"
-                      >
-                        {{ deletingCommentId === reply.id ? t('commentDeleting') : t('commentDelete') }}
-                      </button>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </article>
-            <form
-              v-if="status === 'authenticated' && activeReplyAnchorId === reply.id"
-              class="device-reply-form device-reply-form--nested"
-              @submit.prevent="submitReply()"
-            >
-              <textarea
-                v-model="replyDraft"
-                class="device-comment-form__input"
-                :placeholder="t('commentReplyPlaceholder')"
-                :maxlength="commentMaxLength"
-                :disabled="replySubmitting"
-                rows="3"
-              ></textarea>
-              <input
-                :key="replyFileInputKey"
-                class="device-comment-form__file-input"
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                multiple
-                @change="onReplyFilesChange"
-              />
-              <div v-if="replyPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-                <div v-for="preview in replyPreviews" :key="preview.url" class="device-comment-gallery__item">
-                  <img :src="preview.url" :alt="preview.name" />
-                </div>
-              </div>
-              <div class="device-comment-form__footer">
-                <div class="device-comment-form__meta-panel">
-                  <p class="device-comment-form__hint">{{ t('commentReplyHint') }}</p>
-                  <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
-                </div>
-                <div class="device-comment-actions">
-                  <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">
-                    {{ t('commentCancel') }}
-                  </button>
-                  <button
-                    type="submit"
-                    class="device-access-panel__primary"
-                    :disabled="replySubmitting || !canSubmitReply"
-                  >
-                    {{ replySubmitting ? t('commentSubmitting') : t('commentReplySubmit') }}
-                  </button>
-                </div>
-              </div>
-            </form>
-          </template>
-        </div>
-      </article>
+      </template>
     </div>
     <p v-else class="device-access-panel__empty">{{ t('commentsEmpty') }}</p>
 
-    <form v-if="status === 'authenticated'" class="device-comment-form" @submit.prevent="submitComment">
+    <form v-if="status === 'authenticated' && activeReplyAnchorId === null" class="device-comment-form" @submit.prevent="submitComment">
       <label class="device-comment-form__label" for="device-comment-message">
         {{ t('commentFormLabel') }}
       </label>
@@ -530,11 +321,16 @@ import {
   type DeviceComment,
 } from '../../.vitepress/theme/api/communityClient'
 import { useCloudAuth } from '../../.vitepress/theme/composables/useCloudAuth'
-import { buildCommentThreads } from './helpers/buildCommentThreads'
+import { buildCommentThreads, type DeviceCommentThread } from './helpers/buildCommentThreads'
 
 interface PreviewImage {
   name: string
   url: string
+}
+
+interface FlatThreadItem {
+  comment: DeviceComment
+  depth: number
 }
 
 const props = defineProps<{
@@ -588,6 +384,7 @@ const commentDraftLength = computed(() => commentDraft.value.length)
 const editDraftLength = computed(() => editDraftComment.value.length)
 const canVote = computed(() => status.value === 'authenticated')
 const threads = computed(() => buildCommentThreads(comments.value))
+const threadItems = computed<FlatThreadItem[]>(() => flattenThreads(threads.value))
 const editingComment = computed(() => comments.value.find((comment) => comment.id === editingCommentId.value) ?? null)
 const canSubmitComment = computed(() => isValidCommentPayload(commentDraft.value, commentRating.value, commentFiles.value.length))
 const canSubmitReply = computed(() => hasPayload(replyDraft.value, null, replyFiles.value.length))
@@ -614,6 +411,17 @@ const aggregateSummary = computed(() => {
     commentsLabel: `${commentsCount} ${pluralizeComments(commentsCount)}`,
   }
 })
+
+function flattenThreads(nodes: DeviceCommentThread[], depth = 0): FlatThreadItem[] {
+  const result: FlatThreadItem[] = []
+
+  for (const node of nodes) {
+    result.push({ comment: node.comment, depth })
+    result.push(...flattenThreads(node.replies, depth + 1))
+  }
+
+  return result
+}
 
 function pluralizeComments(count: number) {
   if (count % 10 === 1 && count % 100 !== 11) {
@@ -919,14 +727,14 @@ function resetCreateForm() {
   clearCreateFiles()
 }
 
-function toggleReplyForm(anchorId: number, parentId: number) {
-  if (activeReplyAnchorId.value === anchorId) {
+function toggleReplyForm(commentId: number) {
+  if (activeReplyAnchorId.value === commentId) {
     cancelReplyForm()
     return
   }
 
-  activeReplyAnchorId.value = anchorId
-  activeReplyParentId.value = parentId
+  activeReplyAnchorId.value = commentId
+  activeReplyParentId.value = commentId
   replyDraft.value = ''
   clearReplyFiles()
   actionMessage.value = ''
@@ -1217,22 +1025,17 @@ onBeforeUnmount(() => {
 
 .device-comment-threads {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .device-comment-thread {
-  display: grid;
-  gap: 10px;
+  margin-left: calc(var(--comment-depth, 0) * 28px);
 }
 
 .device-comment-card {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
   gap: 12px;
-}
-
-.device-comment-card--reply {
-  grid-template-columns: 32px minmax(0, 1fr);
 }
 
 .device-comment-card__avatar {
@@ -1247,12 +1050,7 @@ onBeforeUnmount(() => {
   color: var(--vp-c-brand-1);
   font-size: 13px;
   font-weight: 700;
-}
-
-.device-comment-card__avatar--reply {
-  width: 32px;
-  height: 32px;
-  font-size: 12px;
+  flex: none;
 }
 
 .device-comment-card--own .device-comment-card__avatar {
@@ -1315,14 +1113,6 @@ onBeforeUnmount(() => {
   line-height: 1.6;
 }
 
-.device-comment-replies {
-  display: grid;
-  gap: 12px;
-  margin-left: 52px;
-  padding-left: 14px;
-  border-left: 1px solid var(--vp-c-divider);
-}
-
 .device-comment-gallery {
   display: flex;
   flex-wrap: wrap;
@@ -1350,7 +1140,7 @@ onBeforeUnmount(() => {
 .device-comment-votes {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 10px;
 }
 
@@ -1361,7 +1151,6 @@ onBeforeUnmount(() => {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--vp-c-text-2);
   cursor: pointer;
   font: inherit;
   font-size: 12px;
@@ -1374,12 +1163,20 @@ onBeforeUnmount(() => {
   fill: currentColor;
 }
 
-.device-comment-vote.active {
-  color: var(--vp-c-brand-1);
+.device-comment-vote--like {
+  color: var(--vp-c-success-1);
+}
+
+.device-comment-vote--dislike {
+  color: var(--vp-c-danger-1);
+}
+
+.device-comment-vote:not(.active) {
+  opacity: 0.78;
 }
 
 .device-comment-vote:disabled {
-  opacity: 0.55;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -1434,11 +1231,7 @@ onBeforeUnmount(() => {
 }
 
 .device-reply-form {
-  margin-left: 52px;
-}
-
-.device-reply-form--nested {
-  margin-left: 44px;
+  margin-left: calc(var(--comment-depth, 0) * 28px + 52px);
 }
 
 .device-comment-form__label {
@@ -1558,9 +1351,12 @@ onBeforeUnmount(() => {
     align-items: flex-start;
   }
 
-  .device-comment-replies,
+  .device-comment-thread {
+    margin-left: calc(var(--comment-depth, 0) * 16px);
+  }
+
   .device-reply-form {
-    margin-left: 18px;
+    margin-left: calc(var(--comment-depth, 0) * 16px + 18px);
   }
 
   .device-comment-actions-row {
