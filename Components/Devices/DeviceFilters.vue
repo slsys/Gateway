@@ -1,16 +1,13 @@
 <template>
   <div class="device-filters">
-    <div class="device-filters__actions">
-      <button
-        v-if="showRequestButton"
-        type="button"
-        class="device-filter-request-button"
-        @click="$emit('openRequest')"
-      >
-        {{ t('requestButton') }}
-      </button>
-    </div>
-
+    <button
+      v-if="showRequestButton"
+      type="button"
+      class="device-filter-request-button"
+      @click="$emit('openRequest')"
+    >
+      {{ t('requestButton') }}
+    </button>
     <div class="device-filters__controls">
       <input
         :value="search"
@@ -70,13 +67,6 @@ defineEmits<{
   margin-bottom: 16px;
 }
 
-.device-filters__actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex: none;
-}
-
 .device-filters__controls {
   display: flex;
   flex: 1;
@@ -86,8 +76,9 @@ defineEmits<{
 
 .device-filter-input,
 .device-filter-select {
+  box-sizing: border-box;
   padding: 6px 10px;
-  min-height: 38px;
+  height: 38px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   min-width: 180px;
@@ -96,13 +87,14 @@ defineEmits<{
 }
 
 .device-filter-request-button {
+  box-sizing: border-box;
   flex: none;
   border: 1px solid var(--vp-c-brand-1);
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--vp-c-brand-1);
   color: var(--vp-c-bg);
-  min-height: 38px;
-  padding: 8px 14px;
+  height: 38px;
+  padding: 0 14px;
   cursor: pointer;
 }
 
@@ -112,7 +104,6 @@ defineEmits<{
     align-items: stretch;
   }
 
-  .device-filters__actions,
   .device-filters__controls {
     flex-direction: column;
   }

@@ -34,9 +34,6 @@
           </span>
           <span class="device-card-meta__text">{{ commentsCount }}</span>
         </template>
-        <template v-else>
-          <span class="device-card-meta__empty">{{ t('noReviews') }}</span>
-        </template>
       </div>
     </div>
   </article>

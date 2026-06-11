@@ -1,7 +1,10 @@
 <template>
   <section class="device-access-panel" aria-live="polite">
     <div class="device-access-panel__header">
-      <h3 class="device-access-panel__title">{{ t('commentsTitle') }} ({{ comments.length }})</h3>
+      <h3 class="device-access-panel__title">
+        <span>{{ t('commentsTitle') }}</span>
+        <span class="device-access-panel__count-badge">{{ comments.length }}</span>
+      </h3>
       <div class="device-access-panel__header-actions">
         <a
           v-if="status === 'guest'"
@@ -108,16 +111,35 @@
           <template v-else>
             <p v-if="comment.COMMENT.trim()">{{ comment.COMMENT }}</p>
             <div v-if="canManageComment(comment)" class="device-comment-actions device-comment-actions--inline">
-              <button type="button" class="device-comment-link" @click="startEdit(comment)">
-                {{ t('commentEdit') }}
+              <button
+                type="button"
+                class="device-comment-icon-button"
+                :aria-label="t('commentEdit')"
+                :title="t('commentEdit')"
+                @click="startEdit(comment)"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M12.854.146a.5.5 0 0 1 .707 0l2.586 2.586a.5.5 0 0 1 0 .707l-10 10L3 14l.561-3.146zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zM12.793 5.5 10.5 3.207 4.207 9.5 3.854 11.146 5.5 10.793z"/>
+                  <path fill-rule="evenodd" d="M1 13.5V16h2.5l7.086-7.086-2.5-2.5z"/>
+                </svg>
+                <span class="device-comment-sr-only">{{ t('commentEdit') }}</span>
               </button>
               <button
                 type="button"
-                class="device-comment-link device-comment-link--danger"
+                class="device-comment-icon-button device-comment-icon-button--danger"
+                :aria-label="t('commentDelete')"
+                :title="t('commentDelete')"
                 :disabled="deletingCommentId === comment.id"
                 @click="removeComment(comment)"
               >
-                {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M11.5 1a1 1 0 0 1 1 1V3H15v1H1V3h2.5V2a1 1 0 0 1 1-1zM4.5 2v1h7V2z"/>
+                  <path d="M2.5 5h11l-.63 9.138A2 2 0 0 1 10.874 16H5.126a2 2 0 0 1-1.996-1.862z"/>
+                  <path d="M6 7h1v6H6zm3 0h1v6H9z"/>
+                </svg>
+                <span class="device-comment-sr-only">
+                  {{ deletingCommentId === comment.id ? t('commentDeleting') : t('commentDelete') }}
+                </span>
               </button>
             </div>
           </template>
@@ -132,6 +154,9 @@
       <label class="device-comment-form__label" for="device-comment-message">
         {{ t('commentFormLabel') }}
       </label>
+      <div class="device-comment-form__rating-row">
+        <span class="device-comment-form__rating-label">{{ t('commentRatingLabel') }}</span>
+      </div>
       <div class="device-rating-editor device-rating-editor--create">
         <button
           v-for="value in 5"
@@ -489,8 +514,27 @@ async function removeComment(comment: NormalizedDeviceComment) {
 
 .device-access-panel__title {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-size: 16px;
   line-height: 21px;
+  font-weight: 600;
+}
+
+.device-access-panel__count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .device-access-panel__aggregate {
@@ -672,17 +716,45 @@ async function removeComment(comment: NormalizedDeviceComment) {
   margin-top: 8px;
 }
 
-.device-comment-link {
+.device-comment-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
   padding: 0;
   border: 0;
+  border-radius: 8px;
   background: transparent;
   color: var(--vp-c-brand-1);
   cursor: pointer;
-  font: inherit;
 }
 
-.device-comment-link--danger {
+.device-comment-icon-button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.device-comment-icon-button--danger {
   color: var(--vp-c-danger-1);
+}
+
+.device-comment-icon-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.device-comment-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .device-comment-form,
@@ -690,10 +762,28 @@ async function removeComment(comment: NormalizedDeviceComment) {
   margin-top: 18px;
 }
 
+.device-comment-form {
+  padding: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+
 .device-comment-form__label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
+}
+
+.device-comment-form__rating-row {
+  margin-bottom: 8px;
+}
+
+.device-comment-form__rating-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
 }
 
 .device-comment-form__input {
