@@ -860,10 +860,14 @@ onBeforeUnmount(() => {
   color: var(--vp-c-brand-1);
   cursor: pointer;
   font: inherit;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.35;
   padding: 0;
+}
+
+.device-access-panel__retry {
+  font-size: 12px;
 }
 
 .device-comment-link--danger {
@@ -900,24 +904,24 @@ onBeforeUnmount(() => {
 
 .device-comment-card {
   display: flex;
-  gap: 12px;
-  margin-left: calc(var(--comment-depth, 0) * 26px);
+  gap: 20px;
+  margin-left: calc(var(--comment-depth, 0) * 52px);
 }
 
 .device-comment-card__avatar {
   align-items: center;
   background: #f4f2ff;
   border-radius: 999px;
-  border: 2px solid #e6e2ff;
+  border: 1px solid #e6e3ff;
   color: #3f56c8;
   display: flex;
-  flex: 0 0 58px;
-  font-size: 18px;
+  flex: 0 0 56px;
+  font-size: 24px;
   font-weight: 700;
-  height: 58px;
+  height: 56px;
   justify-content: center;
   overflow: hidden;
-  width: 58px;
+  width: 56px;
 }
 
 .device-comment-card__avatar > span {
@@ -932,9 +936,9 @@ onBeforeUnmount(() => {
 .device-comment-card__avatar img {
   display: block;
   border-radius: inherit;
-  height: 58px;
+  height: 56px;
   object-fit: cover;
-  width: 58px;
+  width: 56px;
 }
 
 .device-comment-card__body {
@@ -954,23 +958,23 @@ onBeforeUnmount(() => {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
 }
 
 .device-comment-card__author-line strong {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.25;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .device-comment-card__author-badge {
   background: #edf8e8;
-  border-radius: 999px;
-  color: #2f8a36;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.2;
-  padding: 4px 12px;
+  border-radius: 10px;
+  color: #26823a;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 9px;
 }
 
 .device-comment-card__rating-inline,
@@ -989,6 +993,8 @@ onBeforeUnmount(() => {
 .device-comment-card__text {
   color: var(--vp-c-text-1);
   margin: 8px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
   white-space: pre-wrap;
 }
 
@@ -1027,7 +1033,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 500;
   gap: 5px;
   line-height: 1.35;
@@ -1036,8 +1042,8 @@ onBeforeUnmount(() => {
 
 .device-comment-vote svg {
   fill: currentColor;
-  height: 14px;
-  width: 14px;
+  height: 18px;
+  width: 18px;
 }
 
 .device-comment-vote--like {
@@ -1068,14 +1074,14 @@ onBeforeUnmount(() => {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 24px;
   justify-content: flex-start;
   margin-top: 10px;
 }
 
 .device-comment-actions {
   display: inline-flex;
-  gap: 12px;
+  gap: 24px;
 }
 
 .device-comment-votes {
@@ -1092,7 +1098,7 @@ onBeforeUnmount(() => {
 }
 
 .device-reply-form {
-  margin-left: calc(var(--comment-depth, 0) * 26px + 52px);
+  margin-left: calc(var(--comment-depth, 0) * 52px);
 }
 
 .device-comment-form__label {
