@@ -1,5 +1,16 @@
 <template>
   <div class="device-filters">
+    <div class="device-filters__actions">
+      <button
+        v-if="showRequestButton"
+        type="button"
+        class="device-filter-request-button"
+        @click="$emit('openRequest')"
+      >
+        {{ t('requestButton') }}
+      </button>
+    </div>
+
     <div class="device-filters__controls">
       <input
         :value="search"
@@ -27,15 +38,6 @@
         <option value="vendor">{{ t('groupByVendor') }}</option>
       </select>
     </div>
-
-    <button
-      v-if="showRequestButton"
-      type="button"
-      class="device-filter-request-button"
-      @click="$emit('openRequest')"
-    >
-      {{ t('requestButton') }}
-    </button>
   </div>
 </template>
 
@@ -68,10 +70,18 @@ defineEmits<{
   margin-bottom: 16px;
 }
 
+.device-filters__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: none;
+}
+
 .device-filters__controls {
   display: flex;
   flex: 1;
   gap: 12px;
+  justify-content: flex-end;
 }
 
 .device-filter-input,
@@ -100,6 +110,7 @@ defineEmits<{
     align-items: stretch;
   }
 
+  .device-filters__actions,
   .device-filters__controls {
     flex-direction: column;
   }

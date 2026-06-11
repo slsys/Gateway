@@ -6,6 +6,7 @@ export interface DeviceComment {
   cloudUserId: string
   userEmail: string
   userName: string
+  avatarUrl: string | null
   comment: string
   status: string
   createdAt: string
@@ -17,6 +18,7 @@ export interface CreatedDeviceComment {
   deviceId: number
   userName: string
   userEmail: string
+  avatarUrl: string | null
   comment: string
   status: string
   createdAt: string
@@ -79,6 +81,11 @@ interface RawDeviceComment {
   CLOUD_USER_ID: string
   USER_EMAIL: string
   USER_NAME: string
+  USER_AVATAR?: string
+  USER_AVATAR_URL?: string
+  AVATAR_URL?: string
+  AVATAR?: string
+  CLOUD_USER_AVATAR?: string
   COMMENT: string
   STATUS: string
   CREATED_AT: string
@@ -90,6 +97,9 @@ interface RawCreatedDeviceComment {
   device_id: number
   user_name: string
   user_email: string
+  avatar_url?: string
+  user_avatar?: string
+  user_avatar_url?: string
   comment: string
   status: string
   created_at: string
@@ -181,6 +191,7 @@ function toDeviceComment(raw: RawDeviceComment): DeviceComment {
     cloudUserId: raw.CLOUD_USER_ID,
     userEmail: raw.USER_EMAIL,
     userName: raw.USER_NAME,
+    avatarUrl: raw.USER_AVATAR_URL || raw.USER_AVATAR || raw.AVATAR_URL || raw.AVATAR || raw.CLOUD_USER_AVATAR || null,
     comment: raw.COMMENT,
     status: raw.STATUS,
     createdAt: raw.CREATED_AT,
@@ -194,6 +205,7 @@ function toCreatedDeviceComment(raw: RawCreatedDeviceComment): CreatedDeviceComm
     deviceId: raw.device_id,
     userName: raw.user_name,
     userEmail: raw.user_email,
+    avatarUrl: raw.avatar_url || raw.user_avatar_url || raw.user_avatar || null,
     comment: raw.comment,
     status: raw.status,
     createdAt: raw.created_at,

@@ -28,6 +28,7 @@
   "commentSubmitSuccess": "Comment submitted.",
   "commentGuestCta": "Sign in via cloud account",
   "commentAuthCheckFailed": "Failed to verify authorization. Please try again later.",
+  "commentOwnBadge": "You",
   "requestButton": "Request new device",
   "requestModalTitle": "Request new device",
   "requestModalDescription": "This form sends a real request to the community API and supports gateway-side prefill.",

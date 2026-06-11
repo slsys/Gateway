@@ -28,6 +28,7 @@
   "commentSubmitSuccess": "Комментарий отправлен.",
   "commentGuestCta": "Войти через облачный кабинет",
   "commentAuthCheckFailed": "Не удалось проверить авторизацию. Попробуйте позже.",
+  "commentOwnBadge": "Вы",
   "requestButton": "Запрос нового устройства",
   "requestModalTitle": "Запрос нового устройства",
   "requestModalDescription": "Форма отправляет реальную заявку в community API и поддерживает prefill из интерфейса шлюза.",

@@ -2,11 +2,22 @@
   <section class="device-access-panel" aria-live="polite">
     <div class="device-access-panel__header">
       <h3 class="device-access-panel__title">
-        {{ t('commentsTitle') }} <span class="device-access-panel__count">({{ comments.length }})</span>
+        {{ t('commentsTitle') }} <span class="device-access-panel__count">{{ comments.length }}</span>
       </h3>
-      <button v-if="commentsError && !commentsLoading" type="button" class="device-access-panel__retry" @click="refreshComments">
-        {{ t('commentsRetry') }}
-      </button>
+      <div class="device-access-panel__header-actions">
+        <a
+          v-if="status === 'guest'"
+          class="device-access-panel__cta"
+          href="https://cloud.slsys.io/login"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ t('commentGuestCta') }}
+        </a>
+        <button v-if="commentsError && !commentsLoading" type="button" class="device-access-panel__retry" @click="refreshComments">
+          {{ t('commentsRetry') }}
+        </button>
+      </div>
     </div>
 
     <div v-if="commentsLoading" class="device-access-panel__empty">
@@ -16,10 +27,26 @@
       {{ t('commentsLoadFailed') }}
     </p>
     <ul v-else-if="comments.length" class="device-comments-list">
-      <li v-for="comment in comments" :key="comment.id" class="device-comments-list__item">
-        <strong>{{ comment.userName }}</strong>
-        <span>{{ formatCommentDate(comment.createdAt) }}</span>
-        <p>{{ comment.comment }}</p>
+      <li
+        v-for="comment in comments"
+        :key="comment.id"
+        class="device-comments-list__item"
+        :class="{ 'device-comments-list__item--own': isOwnComment(comment) }"
+      >
+        <div class="device-comments-list__avatar">
+          <img v-if="comment.avatarUrl" :src="comment.avatarUrl" :alt="comment.userName" loading="lazy" />
+          <span v-else>{{ getUserInitials(comment.userName) }}</span>
+        </div>
+        <div class="device-comments-list__body">
+          <div class="device-comments-list__meta">
+            <div class="device-comments-list__author-line">
+              <strong>{{ comment.userName }}</strong>
+              <span v-if="isOwnComment(comment)" class="device-comments-list__author-badge">{{ t('commentOwnBadge') }}</span>
+            </div>
+            <span>{{ formatCommentDate(comment.createdAt) }}</span>
+          </div>
+          <p>{{ comment.comment }}</p>
+        </div>
       </li>
     </ul>
     <p v-else class="device-access-panel__empty">
@@ -40,7 +67,7 @@
         rows="4"
       ></textarea>
       <div class="device-comment-form__footer">
-        <div class="device-comment-form__meta">
+        <div class="device-comment-form__meta-panel">
           <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
           <p class="device-comment-form__counter">{{ commentDraftLength }}/{{ commentMaxLength }}</p>
         </div>
@@ -53,15 +80,6 @@
         </button>
       </div>
     </form>
-    <a
-      v-else-if="status === 'guest'"
-      class="device-access-panel__cta"
-      href="https://cloud.slsys.io/login"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {{ t('commentGuestCta') }}
-    </a>
 
     <p v-if="status === 'auth_error' || status === 'network_error'" class="device-access-panel__technical-error">
       {{ t('commentAuthCheckFailed') }}
@@ -85,7 +103,7 @@ const props = defineProps<{
   t: (key: string) => string
 }>()
 
-const { status } = useCloudAuth()
+const { status, user } = useCloudAuth()
 
 const comments = ref<DeviceComment[]>([])
 const commentsLoading = ref(false)
@@ -162,6 +180,19 @@ function formatCommentDate(value: string) {
   }).format(date)
 }
 
+function getUserInitials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || '')
+    .join('')
+}
+
+function isOwnComment(comment: DeviceComment) {
+  return Boolean(user.value?.email) && user.value?.email === comment.userEmail
+}
+
 async function submitComment() {
   if (!canSubmitComment.value || normalizedDeviceId.value === null) {
     actionMessage.value = props.t('communityValidationError')
@@ -180,6 +211,7 @@ async function submitComment() {
         cloudUserId: '',
         userEmail: created.userEmail,
         userName: created.userName,
+        avatarUrl: created.avatarUrl,
         comment: created.comment,
         status: created.status,
         createdAt: created.createdAt,
@@ -210,14 +242,31 @@ async function submitComment() {
   margin-bottom: 12px;
 }
 
+.device-access-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .device-access-panel__title {
   margin: 0;
-  font-size: 20px;
+  font-size: 16px;
+  line-height: 21px;
 }
 
 .device-access-panel__count {
-  color: var(--vp-c-text-2);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  padding: 2px 8px;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .device-access-panel__primary,
@@ -288,25 +337,114 @@ async function submitComment() {
 }
 
 .device-comments-list__item + .device-comments-list__item {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--vp-c-divider);
 }
 
-.device-comments-list__item strong,
-.device-comments-list__item span,
-.device-comments-list__item p {
-  display: block;
+.device-comments-list__item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  transition: transform 0.18s ease, opacity 0.18s ease;
 }
 
-.device-comments-list__item span {
-  margin-top: 2px;
+.device-comments-list__item:hover {
+  transform: translateY(-1px);
+}
+
+.device-comments-list__item--own .device-comments-list__avatar {
+  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
+}
+
+.device-comments-list__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--vp-c-brand-soft), rgba(0, 0, 0, 0.04));
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.device-comments-list__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.device-comments-list__body {
+  min-width: 0;
+}
+
+.device-comments-list__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.device-comments-list__author-line {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.device-comments-list__author-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(76, 175, 80, 0.14);
+  color: #2e7d32;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.device-comments-list__meta strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.device-comments-list__meta > span {
+  flex: none;
   font-size: 12px;
   color: var(--vp-c-text-3);
+  white-space: nowrap;
 }
 
 .device-comments-list__item p {
-  margin-top: 6px;
+  margin-top: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.66)),
+    var(--vp-c-bg-soft);
+  line-height: 1.6;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+:global(.dark) .device-comments-list__item p {
+  background:
+    linear-gradient(180deg, rgba(40, 44, 52, 0.92), rgba(30, 34, 40, 0.88)),
+    var(--vp-c-bg-soft);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+}
+
+.device-comments-list__item--own p {
+  border-color: color-mix(in srgb, var(--vp-c-brand-1) 24%, var(--vp-c-divider));
 }
 
 .device-comment-form {
@@ -338,12 +476,11 @@ async function submitComment() {
   margin-top: 12px;
 }
 
-.device-comment-form__meta {
+.device-comment-form__meta-panel {
   display: grid;
   gap: 4px;
 }
 
-.device-access-panel__cta,
 .device-access-panel__technical-error,
 .device-access-panel__message {
   margin-top: 14px;
@@ -355,9 +492,18 @@ async function submitComment() {
 
 @media (max-width: 640px) {
   .device-access-panel__header,
-  .device-comment-form__footer {
+  .device-comment-form__footer,
+  .device-comments-list__meta {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .device-access-panel__header-actions {
+    justify-content: flex-start;
+  }
+
+  .device-comments-list__meta > span {
+    white-space: normal;
   }
 }
 </style>
