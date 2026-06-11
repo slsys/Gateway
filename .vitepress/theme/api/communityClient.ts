@@ -10,8 +10,17 @@ export interface CreateDeviceCommentPayload {
 }
 
 export interface CreateDeviceRequestPayload {
-  deviceId: string
-  message: string
+  vendor: string
+  model: string
+  title: string
+  description: string
+  picture: string
+  exposes: string[]
+  zigbeeModelsText: string
+  buyLinksText: string
+  notes: string
+  pairingNotes: string
+  protocol: string
 }
 
 const COMMUNITY_API_NOT_READY = 'Community API is not connected yet'

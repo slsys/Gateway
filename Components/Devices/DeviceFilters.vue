@@ -1,51 +1,77 @@
 <template>
   <div class="device-filters">
-    <input
-      :value="search"
-      type="text"
-      :placeholder="t('filterPlaceholder')"
-      class="device-filter-input"
-      @input="$emit('update:search', $event.target.value)"
-    />
-    <select
-      :value="vendorFilter"
-      class="device-filter-select"
-      @change="$emit('update:vendorFilter', $event.target.value)"
+    <div class="device-filters__controls">
+      <input
+        :value="search"
+        type="text"
+        :placeholder="t('filterPlaceholder')"
+        class="device-filter-input"
+        @input="$emit('update:search', ($event.target as HTMLInputElement).value)"
+      />
+      <select
+        :value="vendorFilter"
+        class="device-filter-select"
+        @change="$emit('update:vendorFilter', ($event.target as HTMLSelectElement).value)"
+      >
+        <option value="">{{ t('allVendors') }}</option>
+        <option v-for="(vendor, id) in vendors" :key="id" :value="id">
+          {{ vendor.TITLE }}
+        </option>
+      </select>
+      <select
+        :value="groupBy"
+        class="device-filter-select"
+        @change="$emit('update:groupBy', ($event.target as HTMLSelectElement).value)"
+      >
+        <option value="none">{{ t('noGroup') }}</option>
+        <option value="vendor">{{ t('groupByVendor') }}</option>
+      </select>
+    </div>
+
+    <button
+      v-if="showRequestButton"
+      type="button"
+      class="device-filter-request-button"
+      @click="$emit('openRequest')"
     >
-      <option value="">{{ t('allVendors') }}</option>
-      <option v-for="(vendor, id) in vendors" :key="id" :value="id">
-        {{ vendor['TITLE'] }}
-      </option>
-    </select>
-    <select
-      :value="groupBy"
-      class="device-filter-select"
-      @change="$emit('update:groupBy', $event.target.value)"
-    >
-      <option value="none">{{ t('noGroup') }}</option>
-      <option value="vendor">{{ t('groupByVendor') }}</option>
-    </select>
+      {{ t('requestButton') }}
+    </button>
   </div>
 </template>
 
-<script setup>
-defineProps({
-  search: { type: String, required: true },
-  vendorFilter: { type: String, required: true },
-  groupBy: { type: String, required: true },
-  vendors: { type: Object, required: true },
-  t: { type: Function, required: true },
-})
+<script setup lang="ts">
+import type { DeviceVendor } from './types/device'
 
-defineEmits(['update:search', 'update:vendorFilter', 'update:groupBy'])
+defineProps<{
+  search: string
+  vendorFilter: string
+  groupBy: string
+  vendors: Record<string, DeviceVendor>
+  showRequestButton: boolean
+  t: (key: string) => string
+}>()
+
+defineEmits<{
+  'update:search': [value: string]
+  'update:vendorFilter': [value: string]
+  'update:groupBy': [value: string]
+  openRequest: []
+}>()
 </script>
 
 <style scoped>
 .device-filters {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   margin-bottom: 16px;
-  justify-content: flex-end;
+}
+
+.device-filters__controls {
+  display: flex;
+  flex: 1;
+  gap: 12px;
 }
 
 .device-filter-input,
@@ -58,14 +84,29 @@ defineEmits(['update:search', 'update:vendorFilter', 'update:groupBy'])
   color: var(--vp-c-text-1);
 }
 
+.device-filter-request-button {
+  flex: none;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 8px;
+  background: var(--vp-c-brand-1);
+  color: var(--vp-c-bg);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
 @media (max-width: 600px) {
   .device-filters {
     flex-direction: column;
     align-items: stretch;
   }
 
+  .device-filters__controls {
+    flex-direction: column;
+  }
+
   .device-filter-input,
-  .device-filter-select {
+  .device-filter-select,
+  .device-filter-request-button {
     min-width: auto;
     width: 100%;
   }

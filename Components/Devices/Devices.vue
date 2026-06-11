@@ -5,7 +5,9 @@
       v-model:vendor-filter="vendorFilter"
       v-model:group-by="groupBy"
       :vendors="vendors"
+      :show-request-button="canRequestDevice"
       :t="t"
+      @open-request="openRequestModal"
     />
 
     <p v-if="error" class="devices-error">{{ error }}</p>
@@ -83,21 +85,36 @@
       :t="t"
       @close="closeModal"
     />
+
+    <DeviceRequestModal
+      :show="showRequestModal"
+      :prefill="requestPrefill"
+      :t="t"
+      @close="closeRequestModal"
+    />
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useData } from 'vitepress'
 import { marked } from 'marked'
+import { useCloudAuth } from '../../.vitepress/theme/composables/useCloudAuth'
 import DeviceCard from './DeviceCard.vue'
 import DeviceCardSkeleton from './DeviceCardSkeleton.vue'
 import DeviceFilters from './DeviceFilters.vue'
 import DeviceModal from './DeviceModal.vue'
+import DeviceRequestModal from './DeviceRequestModal.vue'
+import {
+  createEmptyDeviceRequestPrefill,
+  getDeviceRequestPrefillFromSearch,
+} from './helpers/deviceRequestPrefill'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
+import type { DeviceItem, DeviceVendor } from './types/device'
 
 const { lang } = useData()
+const { status: authStatus } = useCloudAuth()
 
 const props = defineProps({
   pageSize: { type: Number, default: 24 },
@@ -105,13 +122,13 @@ const props = defineProps({
   maxPages: { type: Number, default: Infinity },
 })
 
-const allItems = ref([])
-const vendors = ref({})
+const allItems = ref<DeviceItem[]>([])
+const vendors = ref<Record<string, DeviceVendor>>({})
 const initialLoading = ref(false)
 const paging = ref(false)
 const error = ref('')
-const sentinel = ref(null)
-const observer = ref(null)
+const sentinel = ref<HTMLDivElement | null>(null)
+const observer = ref<IntersectionObserver | null>(null)
 const visibleCount = ref(props.pageSize)
 
 const search = ref('')
@@ -119,7 +136,10 @@ const groupBy = ref('none')
 const vendorFilter = ref('')
 
 const showModal = ref(false)
-const modalData = ref(null)
+const modalData = ref<DeviceItem | null>(null)
+const showRequestModal = ref(false)
+const requestPrefill = ref(createEmptyDeviceRequestPrefill())
+const pendingRequestOpen = ref(false)
 const CMS_ORIGIN = (import.meta.env.VITE_SLS_CMS_ORIGIN || 'https://api.slsys.io').replace(/\/$/, '')
 
 const t = (key) => {
@@ -154,6 +174,8 @@ const filteredItems = computed(() => {
   })
 })
 
+const canRequestDevice = computed(() => authStatus.value === 'authenticated')
+
 const maxVisibleCount = computed(() => props.pageSize * props.maxPages)
 
 const visibleItems = computed(() => {
@@ -174,7 +196,7 @@ const pagingSkeletonCount = computed(() => {
 })
 
 const groupedItems = computed(() => {
-  const groups = new Map()
+  const groups = new Map<string, { key: string; picture: string; items: DeviceItem[] }>()
 
   for (const item of visibleItems.value) {
     const vendor = vendors.value[item['VENDOR']]
@@ -203,19 +225,19 @@ const decodedPairing = computed(() => {
   return decoded ? marked(decoded) : ''
 })
 
-function assetUrl(path) {
+function assetUrl(path: string | undefined) {
   return `${CMS_ORIGIN}/${path}`
 }
 
-function getImageUrl(item) {
+function getImageUrl(item: DeviceItem) {
   return assetUrl(item['PICTURE'])
 }
 
-function deviceKey(item) {
+function deviceKey(item: DeviceItem) {
   return `${item.id || item['ID'] || item['TITLE']}-${item['TITLE']}`
 }
 
-async function fetchJson(url) {
+async function fetchJson(url: string) {
   const response = await fetch(new URL(url, CMS_ORIGIN))
   if (!response.ok) {
     throw new Error(`Server error: ${response.status}`)
@@ -226,19 +248,19 @@ async function fetchJson(url) {
     throw new Error('Unexpected response format')
   }
 
-  return json.data
+  return json.data as unknown
 }
 
 async function fetchDevices() {
-  return fetchJson('/ru/ajax/supported_devices?op=get_devices')
+  return (await fetchJson('/ru/ajax/supported_devices?op=get_devices')) as DeviceItem[]
 }
 
 async function fetchVendors() {
-  const data = await fetchJson('/ru/ajax/supported_devices?op=get_vendors')
+  const data = (await fetchJson('/ru/ajax/supported_devices?op=get_vendors')) as DeviceVendor[]
   vendors.value = data.reduce((acc, vendor) => {
-    acc[vendor['ID']] = vendor
+    acc[String(vendor['ID'])] = vendor
     return acc
-  }, {})
+  }, {} as Record<string, DeviceVendor>)
 }
 
 async function loadData() {
@@ -291,11 +313,48 @@ function setupObserver() {
   observer.value.observe(sentinel.value)
 }
 
-async function openModal(itemOrTitle) {
+function updateBodyModalState() {
+  if (showModal.value || showRequestModal.value) {
+    document.body.classList.add('modal-open')
+    return
+  }
+
+  document.body.classList.remove('modal-open')
+}
+
+function updateRequestQuery(open: boolean) {
+  const url = new URL(window.location.href)
+
+  if (open) {
+    url.searchParams.set('requestDevice', '1')
+  } else {
+    url.searchParams.delete('requestDevice')
+  }
+
+  history.pushState({}, '', url)
+}
+
+function openRequestModal() {
+  if (authStatus.value !== 'authenticated') {
+    return
+  }
+
+  showRequestModal.value = true
+  updateBodyModalState()
+  updateRequestQuery(true)
+}
+
+function closeRequestModal() {
+  showRequestModal.value = false
+  updateBodyModalState()
+  updateRequestQuery(false)
+}
+
+async function openModal(itemOrTitle: DeviceItem | string) {
   const title = typeof itemOrTitle === 'string' ? itemOrTitle : itemOrTitle['TITLE']
   showModal.value = true
   modalData.value = null
-  document.body.classList.add('modal-open')
+  updateBodyModalState()
 
   try {
     const data = await fetchJson(`/ru/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`)
@@ -313,14 +372,14 @@ async function openModal(itemOrTitle) {
 function closeModal() {
   showModal.value = false
   modalData.value = null
-  document.body.classList.remove('modal-open')
+  updateBodyModalState()
 
   const url = new URL(window.location)
   url.searchParams.delete('device')
   history.pushState({}, '', url)
 }
 
-function decodeLocalizedText(notes) {
+function decodeLocalizedText(notes: Record<string, string> | undefined) {
   if (!notes || Object.keys(notes).length === 0) {
     return ''
   }
@@ -354,9 +413,23 @@ onMounted(async () => {
   setupObserver()
 
   const params = new URLSearchParams(window.location.search)
+  requestPrefill.value = getDeviceRequestPrefillFromSearch(window.location.search)
+  pendingRequestOpen.value = params.get('requestDevice') === '1'
   const device = params.get('device')
   if (device) {
     await openModal(device)
+  }
+
+  if (pendingRequestOpen.value && authStatus.value === 'authenticated') {
+    openRequestModal()
+    pendingRequestOpen.value = false
+  }
+})
+
+watch(authStatus, (value) => {
+  if (value === 'authenticated' && pendingRequestOpen.value) {
+    openRequestModal()
+    pendingRequestOpen.value = false
   }
 })
 
