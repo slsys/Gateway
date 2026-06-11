@@ -833,6 +833,8 @@ async function removeComment(comment: NormalizedDeviceComment) {
   color: var(--vp-c-brand-1);
   cursor: pointer;
   font: inherit;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .device-access-panel__technical-error,
