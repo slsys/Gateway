@@ -1,28 +1,27 @@
-import type { DeviceComment } from '../../../.vitepress/theme/api/communityClient'
+import type { CommunityComment } from '../../../.vitepress/theme/api/communityClient'
 
-export interface DeviceCommentThread {
-  comment: DeviceComment
-  replies: DeviceCommentThread[]
+export interface CommunityCommentThread {
+  root: CommunityComment
+  replies: CommunityComment[]
 }
 
-export function buildCommentThreads(comments: DeviceComment[]): DeviceCommentThread[] {
-  const byParent = new Map<number | null, DeviceComment[]>()
+export function buildCommentThreads(comments: CommunityComment[]): CommunityCommentThread[] {
+  const roots: CommunityComment[] = []
+  const repliesByParent = new Map<number, CommunityComment[]>()
 
   for (const comment of comments) {
-    const parentId = comment.parent_id ?? null
-    const bucket = byParent.get(parentId) ?? []
+    if (comment.parent_id === null) {
+      roots.push(comment)
+      continue
+    }
+
+    const bucket = repliesByParent.get(comment.parent_id) ?? []
     bucket.push(comment)
-    byParent.set(parentId, bucket)
+    repliesByParent.set(comment.parent_id, bucket)
   }
 
-  const buildBranch = (parentId: number | null): DeviceCommentThread[] => {
-    const bucket = byParent.get(parentId) ?? []
-
-    return bucket.map((comment) => ({
-      comment,
-      replies: buildBranch(comment.id),
-    }))
-  }
-
-  return buildBranch(null)
+  return roots.map((root) => ({
+    root,
+    replies: repliesByParent.get(root.id) ?? [],
+  }))
 }

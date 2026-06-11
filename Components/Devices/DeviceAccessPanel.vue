@@ -5,193 +5,111 @@
         <span>{{ t('commentsTitle') }}</span>
         <span class="device-access-panel__count-badge">{{ comments.length }}</span>
       </h3>
-      <div class="device-access-panel__header-actions">
-        <button
-          v-if="commentsError && !commentsLoading"
-          type="button"
-          class="device-access-panel__retry"
-          @click="refreshComments"
-        >
-          {{ t('commentsRetry') }}
-        </button>
-      </div>
+      <button
+        v-if="commentsError && !commentsLoading"
+        type="button"
+        class="device-access-panel__retry"
+        @click="refreshComments"
+      >
+        {{ t('commentsRetry') }}
+      </button>
     </div>
 
     <div v-if="aggregateSummary" class="device-access-panel__aggregate">
       <span v-if="aggregateSummary.ratingAvg !== null" class="device-access-panel__aggregate-rating">
         {{ formatStarsLabel(aggregateSummary.ratingAvg) }}
       </span>
-      <span v-if="aggregateSummary.ratingsLabel" class="device-access-panel__aggregate-meta">{{ aggregateSummary.ratingsLabel }}</span>
+      <span v-if="aggregateSummary.ratingsLabel" class="device-access-panel__aggregate-meta">
+        {{ aggregateSummary.ratingsLabel }}
+      </span>
       <span class="device-access-panel__aggregate-meta">{{ aggregateSummary.commentsLabel }}</span>
     </div>
 
     <div v-if="commentsLoading" class="device-access-panel__empty">{{ t('commentsLoading') }}</div>
     <p v-else-if="commentsError" class="device-access-panel__technical-error">{{ t('commentsLoadFailed') }}</p>
-    <div v-else-if="threadItems.length" class="device-comment-threads">
-      <template v-for="item in threadItems" :key="item.comment.id">
-        <article class="device-comment-thread" :style="{ '--comment-depth': String(item.depth) }">
-          <div class="device-comment-card" :class="{ 'device-comment-card--own': isOwnComment(item.comment) }">
-            <div class="device-comment-card__avatar">
-              <img
-                v-if="getCommentAvatarUrl(item.comment)"
-                :src="resolveAvatarUrl(getCommentAvatarUrl(item.comment) || '')"
-                :alt="item.comment.user_name"
-                loading="lazy"
-              />
-              <span v-else>{{ getUserInitials(item.comment.user_name) }}</span>
-            </div>
-            <div class="device-comment-card__body">
-              <div class="device-comment-card__meta">
-                <div class="device-comment-card__author-line">
-                  <strong>{{ item.comment.user_name || t('commentAnonymous') }}</strong>
-                  <span v-if="isOwnComment(item.comment)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
-                  <span v-if="item.comment.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${item.comment.rating} / 5`">
-                    {{ renderStars(item.comment.rating) }}
-                  </span>
-                </div>
-                <span class="device-comment-card__time">{{ formatCommentDate(item.comment.updated_at || item.comment.created_at) }}</span>
-              </div>
+    <div v-else-if="threads.length" class="device-comment-threads">
+      <article v-for="thread in threads" :key="thread.root.id" class="device-comment-thread">
+        <CommentCard
+          :comment="thread.root"
+          :is-own="canManageComment(thread.root)"
+          :can-vote="canVote"
+          :vote-pending="isVotePending(thread.root.id)"
+          :show-reply="status === 'authenticated'"
+          :is-reply-open="activeReplyAnchorId === thread.root.id"
+          :editing-comment-id="editingCommentId"
+          :edit-draft-body="editDraftBody"
+          :edit-draft-rating="editDraftRating"
+          :edit-draft-length="editDraftLength"
+          :edit-previews="editPreviews"
+          :edit-file-input-key="editFileInputKey"
+          :comment-submitting="commentSubmitting"
+          :comment-max-length="commentMaxLength"
+          :editing-comment="editingComment"
+          :resolve-avatar-url="resolveAvatarUrl"
+          :resolve-image-url="resolveImageUrl"
+          :is-avatar-broken="isAvatarBroken"
+          :mark-avatar-broken="markAvatarBroken"
+          :format-comment-date="formatCommentDate"
+          :render-stars="renderStars"
+          :get-user-initials="getUserInitials"
+          :get-author-name="getAuthorName"
+          :get-avatar-source="getAvatarSource"
+          :set-edit-rating="setEditRating"
+          :on-edit-files-change="onEditFilesChange"
+          :start-edit="startEdit"
+          :cancel-edit="cancelEdit"
+          :save-edit="saveEdit"
+          :remove-comment="removeComment"
+          :toggle-reply-form="toggleReplyForm"
+          :toggle-vote="toggleVote"
+          :t="t"
+        />
 
-              <template v-if="editingCommentId === item.comment.id">
-                <div class="device-comment-edit">
-                  <div class="device-rating-editor">
-                    <button
-                      v-for="value in 5"
-                      :key="`edit-rating-${item.comment.id}-${value}`"
-                      type="button"
-                      class="device-rating-star"
-                      :class="{ active: (editDraftRating || 0) >= value }"
-                      @click="setEditRating(value)"
-                    >
-                      ★
-                    </button>
-                    <button type="button" class="device-rating-clear" @click="setEditRating(null)">
-                      {{ t('commentRatingClear') }}
-                    </button>
-                  </div>
-                  <textarea
-                    v-model="editDraftComment"
-                    class="device-comment-form__input"
-                    :maxlength="commentMaxLength"
-                    rows="4"
-                  ></textarea>
-                  <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
-                  <input
-                    :key="editFileInputKey"
-                    class="device-comment-form__file-input"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    multiple
-                    @change="onEditFilesChange"
-                  />
-                  <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
-                    <a
-                      v-for="image in editingComment.images"
-                      :key="`existing-edit-${image.id}`"
-                      :href="getCommentImageUrl(image.public_url)"
-                      class="device-comment-gallery__item"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                    </a>
-                  </div>
-                  <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-                    <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
-                      <img :src="preview.url" :alt="preview.name" />
-                    </div>
-                  </div>
-                  <div class="device-comment-form__footer">
-                    <div class="device-comment-form__meta-panel">
-                      <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
-                      <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
-                    </div>
-                    <div class="device-comment-actions">
-                      <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
-                        {{ t('commentCancel') }}
-                      </button>
-                      <button
-                        type="button"
-                        class="device-access-panel__primary"
-                        :disabled="commentSubmitting || !canSubmitEdit"
-                        @click="saveEdit(item.comment.id)"
-                      >
-                        {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </template>
-
-              <template v-else>
-                <p v-if="item.comment.comment.trim()">{{ item.comment.comment }}</p>
-                <div v-if="item.comment.images.length" class="device-comment-gallery">
-                  <a
-                    v-for="image in item.comment.images"
-                    :key="`image-${item.comment.id}-${image.id}-${image.public_url}`"
-                    :href="getCommentImageUrl(image.public_url)"
-                    class="device-comment-gallery__item"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                  </a>
-                </div>
-                <div class="device-comment-votes">
-                  <button
-                    type="button"
-                    class="device-comment-vote device-comment-vote--like"
-                    :class="{ active: item.comment.my_vote === 'like' }"
-                    :disabled="!canVote || isVotePending(item.comment.id)"
-                    @click="toggleVote(item.comment, 'like')"
-                  >
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94ZM4.5 15.5A1.5 1.5 0 0 1 3 14V8.5A1.5 1.5 0 0 1 4.5 7h.85a.5.5 0 0 1 .464.314L7 10.5V14a1.5 1.5 0 0 1-1.5 1.5z"/></svg>
-                    <span>{{ item.comment.likes_count }}</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="device-comment-vote device-comment-vote--dislike"
-                    :class="{ active: item.comment.my_vote === 'dislike' }"
-                    :disabled="!canVote || isVotePending(item.comment.id)"
-                    @click="toggleVote(item.comment, 'dislike')"
-                  >
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94ZM4.5.5A1.5 1.5 0 0 0 3 2v5.5A1.5 1.5 0 0 0 4.5 9h.85a.5.5 0 0 0 .464-.314L7 5.5V2A1.5 1.5 0 0 0 5.5.5z"/></svg>
-                    <span>{{ item.comment.dislikes_count }}</span>
-                  </button>
-                </div>
-                <div class="device-comment-actions-row">
-                  <button
-                    v-if="status === 'authenticated'"
-                    type="button"
-                    class="device-comment-link"
-                    @click="toggleReplyForm(item.comment.id)"
-                  >
-                    {{ activeReplyAnchorId === item.comment.id ? t('commentCancel') : t('commentReply') }}
-                  </button>
-                  <div v-if="canManageComment(item.comment)" class="device-comment-actions device-comment-actions--inline">
-                    <button type="button" class="device-comment-link" @click="startEdit(item.comment)">
-                      {{ t('commentEdit') }}
-                    </button>
-                    <button
-                      type="button"
-                      class="device-comment-link device-comment-link--danger"
-                      :disabled="deletingCommentId === item.comment.id"
-                      @click="removeComment(item.comment)"
-                    >
-                      {{ deletingCommentId === item.comment.id ? t('commentDeleting') : t('commentDelete') }}
-                    </button>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-        </article>
+        <div v-if="thread.replies.length" class="device-comment-replies">
+          <CommentCard
+            v-for="reply in thread.replies"
+            :key="reply.id"
+            :comment="reply"
+            :is-own="canManageComment(reply)"
+            :can-vote="canVote"
+            :vote-pending="isVotePending(reply.id)"
+            :show-reply="false"
+            :is-reply-open="false"
+            :editing-comment-id="editingCommentId"
+            :edit-draft-body="editDraftBody"
+            :edit-draft-rating="editDraftRating"
+            :edit-draft-length="editDraftLength"
+            :edit-previews="editPreviews"
+            :edit-file-input-key="editFileInputKey"
+            :comment-submitting="commentSubmitting"
+            :comment-max-length="commentMaxLength"
+            :editing-comment="editingComment"
+            :resolve-avatar-url="resolveAvatarUrl"
+            :resolve-image-url="resolveImageUrl"
+            :is-avatar-broken="isAvatarBroken"
+            :mark-avatar-broken="markAvatarBroken"
+            :format-comment-date="formatCommentDate"
+            :render-stars="renderStars"
+            :get-user-initials="getUserInitials"
+            :get-author-name="getAuthorName"
+            :get-avatar-source="getAvatarSource"
+            :set-edit-rating="setEditRating"
+            :on-edit-files-change="onEditFilesChange"
+            :start-edit="startEdit"
+            :cancel-edit="cancelEdit"
+            :save-edit="saveEdit"
+            :remove-comment="removeComment"
+            :toggle-reply-form="toggleReplyForm"
+            :toggle-vote="toggleVote"
+            :t="t"
+            is-reply
+          />
+        </div>
 
         <form
-          v-if="status === 'authenticated' && activeReplyAnchorId === item.comment.id"
+          v-if="status === 'authenticated' && activeReplyAnchorId === thread.root.id"
           class="device-reply-form"
-          :style="{ '--comment-depth': String(item.depth) }"
-          @submit.prevent="submitReply()"
+          @submit.prevent="submitReply"
         >
           <textarea
             v-model="replyDraft"
@@ -216,7 +134,6 @@
           </div>
           <div class="device-comment-form__footer">
             <div class="device-comment-form__meta-panel">
-              <p class="device-comment-form__hint">{{ t('commentReplyHint') }}</p>
               <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
             </div>
             <div class="device-comment-actions">
@@ -233,11 +150,15 @@
             </div>
           </div>
         </form>
-      </template>
+      </article>
     </div>
     <p v-else class="device-access-panel__empty">{{ t('commentsEmpty') }}</p>
 
-    <form v-if="status === 'authenticated' && activeReplyAnchorId === null" class="device-comment-form" @submit.prevent="submitComment">
+    <form
+      v-if="status === 'authenticated' && activeReplyAnchorId === null"
+      class="device-comment-form"
+      @submit.prevent="submitComment"
+    >
       <label class="device-comment-form__label" for="device-comment-message">
         {{ t('commentFormLabel') }}
       </label>
@@ -265,7 +186,6 @@
       </div>
       <div class="device-comment-form__footer">
         <div class="device-comment-form__meta-panel">
-          <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
           <p class="device-comment-form__counter">{{ commentDraftLength }}/{{ commentMaxLength }}</p>
           <div class="device-comment-form__rating-row">
             <span class="device-comment-form__rating-label">{{ t('commentRatingLabel') }}</span>
@@ -307,7 +227,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, defineComponent, h, onBeforeUnmount, ref, watch, type PropType } from 'vue'
 import {
   CommunityApiError,
   createDeviceComment,
@@ -318,19 +238,15 @@ import {
   updateDeviceComment,
   voteComment,
   type CommentVote,
-  type DeviceComment,
+  type CommunityComment,
+  type CommunityCommentImage,
 } from '../../.vitepress/theme/api/communityClient'
 import { useCloudAuth } from '../../.vitepress/theme/composables/useCloudAuth'
-import { buildCommentThreads, type DeviceCommentThread } from './helpers/buildCommentThreads'
+import { buildCommentThreads } from './helpers/buildCommentThreads'
 
 interface PreviewImage {
   name: string
   url: string
-}
-
-interface FlatThreadItem {
-  comment: DeviceComment
-  depth: number
 }
 
 const props = defineProps<{
@@ -344,9 +260,10 @@ const emit = defineEmits<{
   aggregatesChange: [{ commentsCount: number; ratingAvg: number | null; ratingsCount: number }]
 }>()
 
+const t = props.t
 const { status, user } = useCloudAuth()
 
-const comments = ref<DeviceComment[]>([])
+const comments = ref<CommunityComment[]>([])
 const commentsLoading = ref(false)
 const commentsError = ref(false)
 const commentSubmitting = ref(false)
@@ -365,7 +282,7 @@ const replyPreviews = ref<PreviewImage[]>([])
 const replyFileInputKey = ref(0)
 const replySubmitting = ref(false)
 
-const editDraftComment = ref('')
+const editDraftBody = ref('')
 const editDraftRating = ref<number | null>(null)
 const editFiles = ref<File[]>([])
 const editPreviews = ref<PreviewImage[]>([])
@@ -373,6 +290,7 @@ const editFileInputKey = ref(0)
 const editingCommentId = ref<number | null>(null)
 
 const votePendingIds = ref<number[]>([])
+const brokenAvatarUrls = ref<string[]>([])
 const actionMessage = ref('')
 const commentMaxLength = 2000
 const maxImagesPerComment = 5
@@ -381,16 +299,15 @@ const allowedImageMimeTypes = ['image/jpeg', 'image/png', 'image/webp']
 
 const normalizedDeviceId = computed(() => props.deviceId)
 const commentDraftLength = computed(() => commentDraft.value.length)
-const editDraftLength = computed(() => editDraftComment.value.length)
+const editDraftLength = computed(() => editDraftBody.value.length)
 const canVote = computed(() => status.value === 'authenticated')
 const threads = computed(() => buildCommentThreads(comments.value))
-const threadItems = computed<FlatThreadItem[]>(() => flattenThreads(threads.value))
 const editingComment = computed(() => comments.value.find((comment) => comment.id === editingCommentId.value) ?? null)
-const canSubmitComment = computed(() => isValidCommentPayload(commentDraft.value, commentRating.value, commentFiles.value.length))
+const canSubmitComment = computed(() => hasPayload(commentDraft.value, commentRating.value, commentFiles.value.length))
 const canSubmitReply = computed(() => hasPayload(replyDraft.value, null, replyFiles.value.length))
 const canSubmitEdit = computed(() => {
   const currentImagesCount = editingComment.value?.images.length ?? 0
-  return hasPayload(editDraftComment.value, editDraftRating.value, editFiles.value.length || currentImagesCount)
+  return hasPayload(editDraftBody.value, editDraftRating.value, editFiles.value.length || currentImagesCount)
     && editingCommentId.value !== null
   })
 
@@ -412,91 +329,329 @@ const aggregateSummary = computed(() => {
   }
 })
 
-function flattenThreads(nodes: DeviceCommentThread[], depth = 0): FlatThreadItem[] {
-  const result: FlatThreadItem[] = []
+const HandThumbsUpIcon = defineComponent({
+  name: 'HandThumbsUpIcon',
+  setup() {
+    return () => h(
+      'svg',
+      { viewBox: '0 0 16 16', 'aria-hidden': 'true' },
+      [
+        h('path', {
+          d: 'M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.169 1.005.337 2.388.281 4.058h2.568a1.5 1.5 0 0 1 1.473 1.783l-1.094 5.473A2 2 0 0 1 12.122 15H4.5a1.5 1.5 0 0 1-1.492-1.356L2.469 8.5H1.5A1.5 1.5 0 0 1 0 7V6a1 1 0 0 1 1-1h2.17a1 1 0 0 1 .948.684l.138.416.446-.892c.302-.605.613-1.21.91-1.854.27-.587.505-1.243.644-2.205Z',
+        }),
+      ],
+    )
+  },
+})
 
-  for (const node of nodes) {
-    result.push({ comment: node.comment, depth })
-    result.push(...flattenThreads(node.replies, depth + 1))
-  }
+const HandThumbsDownIcon = defineComponent({
+  name: 'HandThumbsDownIcon',
+  setup() {
+    return () => h(
+      'svg',
+      { viewBox: '0 0 16 16', 'aria-hidden': 'true' },
+      [
+        h('path', {
+          d: 'M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.169-1.005.337-2.388.281-4.058h2.568a1.5 1.5 0 0 0 1.473-1.783l-1.094-5.473A2 2 0 0 0 12.122 1H4.5a1.5 1.5 0 0 0-1.492 1.356L2.469 7.5H1.5A1.5 1.5 0 0 0 0 9v1a1 1 0 0 0 1 1h2.17a1 1 0 0 0 .948-.684l.138-.416.446.892c.302.605.613 1.21.91 1.854.27.587.505 1.243.644 2.205Z',
+        }),
+      ],
+    )
+  },
+})
 
-  return result
-}
+const CommentCard = defineComponent({
+  name: 'CommentCard',
+  props: {
+    comment: { type: Object as PropType<CommunityComment>, required: true },
+    isOwn: { type: Boolean, required: true },
+    canVote: { type: Boolean, required: true },
+    votePending: { type: Boolean, required: true },
+    showReply: { type: Boolean, required: true },
+    isReplyOpen: { type: Boolean, required: true },
+    isReply: { type: Boolean, default: false },
+    editingCommentId: { type: Number as PropType<number | null>, required: true },
+    editDraftBody: { type: String, required: true },
+    editDraftRating: { type: Number as PropType<number | null>, required: true },
+    editDraftLength: { type: Number, required: true },
+    editPreviews: { type: Array as PropType<PreviewImage[]>, required: true },
+    editFileInputKey: { type: Number, required: true },
+    commentSubmitting: { type: Boolean, required: true },
+    commentMaxLength: { type: Number, required: true },
+    editingComment: { type: Object as PropType<CommunityComment | null>, required: true },
+    resolveAvatarUrl: { type: Function as PropType<(value: string) => string>, required: true },
+    resolveImageUrl: { type: Function as PropType<(image: CommunityCommentImage) => string | null>, required: true },
+    isAvatarBroken: { type: Function as PropType<(value: string) => boolean>, required: true },
+    markAvatarBroken: { type: Function as PropType<(value: string) => void>, required: true },
+    formatCommentDate: { type: Function as PropType<(value: string | null) => string>, required: true },
+    renderStars: { type: Function as PropType<(rating: number) => string>, required: true },
+    getUserInitials: { type: Function as PropType<(name: string) => string>, required: true },
+    getAuthorName: { type: Function as PropType<(comment: CommunityComment) => string>, required: true },
+    getAvatarSource: { type: Function as PropType<(comment: CommunityComment) => string | null>, required: true },
+    setEditRating: { type: Function as PropType<(rating: number | null) => void>, required: true },
+    onEditFilesChange: { type: Function as PropType<(event: Event) => void>, required: true },
+    startEdit: { type: Function as PropType<(comment: CommunityComment) => void>, required: true },
+    cancelEdit: { type: Function as PropType<() => void>, required: true },
+    saveEdit: { type: Function as PropType<(commentId: number) => void>, required: true },
+    removeComment: { type: Function as PropType<(comment: CommunityComment) => void>, required: true },
+    toggleReplyForm: { type: Function as PropType<(commentId: number) => void>, required: true },
+    toggleVote: { type: Function as PropType<(comment: CommunityComment, vote: CommentVote) => void>, required: true },
+    t: { type: Function as PropType<(key: string) => string>, required: true },
+  },
+  setup(cardProps) {
+    return () => {
+      const avatarSource = cardProps.getAvatarSource(cardProps.comment)
+      const resolvedAvatar = avatarSource ? cardProps.resolveAvatarUrl(avatarSource) : null
+      const hasAvatar = Boolean(resolvedAvatar) && !cardProps.isAvatarBroken(avatarSource || '')
+      const isEditing = cardProps.editingCommentId === cardProps.comment.id
+
+      return h('div', {
+        class: ['device-comment-card', { 'device-comment-card--reply': cardProps.isReply, 'device-comment-card--own': cardProps.isOwn }],
+      }, [
+        h('div', { class: 'device-comment-card__avatar' }, [
+          hasAvatar
+            ? h('img', {
+                src: resolvedAvatar || '',
+                alt: cardProps.getAuthorName(cardProps.comment),
+                loading: 'lazy',
+                onError: () => cardProps.markAvatarBroken(avatarSource || ''),
+              })
+            : h('span', cardProps.getUserInitials(cardProps.getAuthorName(cardProps.comment))),
+        ]),
+        h('div', { class: 'device-comment-card__body' }, [
+          h('div', { class: 'device-comment-card__meta' }, [
+            h('div', { class: 'device-comment-card__author-line' }, [
+              h('strong', cardProps.getAuthorName(cardProps.comment)),
+              cardProps.isOwn ? h('span', { class: 'device-comment-card__author-badge' }, cardProps.t('commentOwnBadge')) : null,
+              cardProps.comment.rating !== null
+                ? h('span', {
+                    class: 'device-comment-card__rating-inline',
+                    'aria-label': `${cardProps.comment.rating} / 5`,
+                  }, cardProps.renderStars(cardProps.comment.rating))
+                : null,
+            ]),
+            h('span', { class: 'device-comment-card__time' }, cardProps.formatCommentDate(cardProps.comment.updated_at || cardProps.comment.created_at)),
+          ]),
+          isEditing
+            ? h('div', { class: 'device-comment-edit' }, [
+                h('div', { class: 'device-rating-editor' }, [
+                  ...[1, 2, 3, 4, 5].map((value) => h('button', {
+                    key: `edit-rating-${cardProps.comment.id}-${value}`,
+                    type: 'button',
+                    class: ['device-rating-star', { active: (cardProps.editDraftRating || 0) >= value }],
+                    onClick: () => cardProps.setEditRating(value),
+                  }, '★')),
+                  h('button', {
+                    type: 'button',
+                    class: 'device-rating-clear',
+                    onClick: () => cardProps.setEditRating(null),
+                  }, cardProps.t('commentRatingClear')),
+                ]),
+                h('textarea', {
+                  value: cardProps.editDraftBody,
+                  onInput: (event: Event) => {
+                    editDraftBody.value = (event.target as HTMLTextAreaElement).value
+                  },
+                  class: 'device-comment-form__input',
+                  maxlength: cardProps.commentMaxLength,
+                  rows: 4,
+                }),
+                h('p', { class: 'device-comment-form__replacement-hint' }, cardProps.t('commentImagesReplaceHint')),
+                h('input', {
+                  key: cardProps.editFileInputKey,
+                  class: 'device-comment-form__file-input',
+                  type: 'file',
+                  accept: 'image/jpeg,image/png,image/webp',
+                  multiple: true,
+                  onChange: cardProps.onEditFilesChange,
+                }),
+                cardProps.editingComment?.images.length && !cardProps.editPreviews.length
+                  ? h('div', { class: 'device-comment-gallery device-comment-gallery--current' },
+                      cardProps.editingComment.images
+                        .map((image) => {
+                          const imageUrl = cardProps.resolveImageUrl(image)
+                          if (!imageUrl) {
+                            return null
+                          }
+                          return h('a', {
+                            key: `existing-edit-${image.id}`,
+                            href: imageUrl,
+                            class: 'device-comment-gallery__item',
+                            target: '_blank',
+                            rel: 'noopener noreferrer',
+                          }, [
+                            h('img', { src: imageUrl, alt: cardProps.t('commentImageAlt'), loading: 'lazy' }),
+                          ])
+                        })
+                        .filter(Boolean),
+                    )
+                  : null,
+                cardProps.editPreviews.length
+                  ? h('div', { class: 'device-comment-gallery device-comment-gallery--preview' },
+                      cardProps.editPreviews.map((preview) => h('div', {
+                        key: preview.url,
+                        class: 'device-comment-gallery__item',
+                      }, [h('img', { src: preview.url, alt: preview.name })])),
+                    )
+                  : null,
+                h('div', { class: 'device-comment-form__footer' }, [
+                  h('div', { class: 'device-comment-form__meta-panel' }, [
+                    h('p', { class: 'device-comment-form__counter' }, `${cardProps.editDraftLength}/${cardProps.commentMaxLength}`),
+                  ]),
+                  h('div', { class: 'device-comment-actions' }, [
+                    h('button', {
+                      type: 'button',
+                      class: 'device-access-panel__secondary',
+                      onClick: cardProps.cancelEdit,
+                    }, cardProps.t('commentCancel')),
+                    h('button', {
+                      type: 'button',
+                      class: 'device-access-panel__primary',
+                      disabled: cardProps.commentSubmitting || !canSubmitEdit.value,
+                      onClick: () => cardProps.saveEdit(cardProps.comment.id),
+                    }, cardProps.commentSubmitting ? cardProps.t('commentSaving') : cardProps.t('commentSave')),
+                  ]),
+                ]),
+              ])
+            : h('div', { class: 'device-comment-card__content' }, [
+                cardProps.comment.body.trim()
+                  ? h('p', { class: 'device-comment-card__text' }, cardProps.comment.body)
+                  : null,
+                cardProps.comment.images.length
+                  ? h('div', { class: 'device-comment-gallery' },
+                      cardProps.comment.images
+                        .map((image) => {
+                          const imageUrl = cardProps.resolveImageUrl(image)
+                          if (!imageUrl) {
+                            return null
+                          }
+                          return h('a', {
+                            key: `image-${cardProps.comment.id}-${image.id}-${imageUrl}`,
+                            href: imageUrl,
+                            class: 'device-comment-gallery__item',
+                            target: '_blank',
+                            rel: 'noopener noreferrer',
+                          }, [
+                            h('img', { src: imageUrl, alt: cardProps.t('commentImageAlt'), loading: 'lazy' }),
+                          ])
+                        })
+                        .filter(Boolean),
+                    )
+                  : null,
+                h('div', { class: 'device-comment-votes' }, [
+                  h('button', {
+                    type: 'button',
+                    class: ['device-comment-vote', 'device-comment-vote--like', { active: cardProps.comment.my_vote === 'like' }],
+                    disabled: !cardProps.canVote || cardProps.votePending,
+                    onClick: () => cardProps.toggleVote(cardProps.comment, 'like'),
+                  }, [h(HandThumbsUpIcon), h('span', String(cardProps.comment.likes_count))]),
+                  h('button', {
+                    type: 'button',
+                    class: ['device-comment-vote', 'device-comment-vote--dislike', { active: cardProps.comment.my_vote === 'dislike' }],
+                    disabled: !cardProps.canVote || cardProps.votePending,
+                    onClick: () => cardProps.toggleVote(cardProps.comment, 'dislike'),
+                  }, [h(HandThumbsDownIcon), h('span', String(cardProps.comment.dislikes_count))]),
+                ]),
+                h('div', { class: 'device-comment-actions-row' }, [
+                  cardProps.showReply
+                    ? h('button', {
+                        type: 'button',
+                        class: 'device-comment-link',
+                        onClick: () => cardProps.toggleReplyForm(cardProps.comment.id),
+                      }, cardProps.isReplyOpen ? cardProps.t('commentCancel') : cardProps.t('commentReply'))
+                    : null,
+                  cardProps.isOwn
+                    ? h('div', { class: 'device-comment-actions device-comment-actions--inline' }, [
+                        h('button', {
+                          type: 'button',
+                          class: 'device-comment-link',
+                          onClick: () => cardProps.startEdit(cardProps.comment),
+                        }, cardProps.t('commentEdit')),
+                        h('button', {
+                          type: 'button',
+                          class: 'device-comment-link device-comment-link--danger',
+                          disabled: deletingCommentId.value === cardProps.comment.id,
+                          onClick: () => cardProps.removeComment(cardProps.comment),
+                        }, deletingCommentId.value === cardProps.comment.id ? cardProps.t('commentDeleting') : cardProps.t('commentDelete')),
+                      ])
+                    : null,
+                ]),
+              ]),
+        ]),
+      ])
+    }
+  },
+})
 
 function pluralizeComments(count: number) {
   if (count % 10 === 1 && count % 100 !== 11) {
-    return props.t('commentsCountOne')
+    return t('commentsCountOne')
   }
   if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
-    return props.t('commentsCountFew')
+    return t('commentsCountFew')
   }
-  return props.t('commentsCountMany')
+  return t('commentsCountMany')
 }
 
 function pluralizeRatings(count: number) {
   if (count % 10 === 1 && count % 100 !== 11) {
-    return props.t('ratingsCountOne')
+    return t('ratingsCountOne')
   }
   if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
-    return props.t('ratingsCountFew')
+    return t('ratingsCountFew')
   }
-  return props.t('ratingsCountMany')
+  return t('ratingsCountMany')
 }
 
 function normalizeRatingInput(rating: number | null) {
   return rating === null ? null : Math.min(5, Math.max(1, rating))
 }
 
-function hasPayload(comment: string, rating: number | null, imagesCount: number) {
-  const trimmed = comment.trim()
+function hasPayload(body: string, rating: number | null, imagesCount: number) {
+  const trimmed = body.trim()
   const normalizedRating = normalizeRatingInput(rating)
   return (trimmed.length > 0 || normalizedRating !== null || imagesCount > 0) && trimmed.length <= commentMaxLength
-}
-
-function isValidCommentPayload(comment: string, rating: number | null, imagesCount: number) {
-  return hasPayload(comment, rating, imagesCount)
 }
 
 function mapCommentError(err: unknown): string {
   if (err instanceof CommunityApiError) {
     switch (err.code) {
       case 'not_authenticated':
-        return props.t('communityAuthRequired')
+        return t('communityAuthRequired')
       case 'invalid_device_id':
-        return props.t('communityInvalidDeviceId')
+        return t('communityInvalidDeviceId')
       case 'invalid_parent_comment':
-        return props.t('communityInvalidParentComment')
+        return t('communityInvalidParentComment')
       case 'reply_device_mismatch':
-        return props.t('communityReplyDeviceMismatch')
+        return t('communityReplyDeviceMismatch')
       case 'reply_depth_not_allowed':
-        return props.t('communityReplyDepthNotAllowed')
+        return t('communityReplyDepthNotAllowed')
       case 'invalid_rating':
-        return props.t('communityInvalidRating')
+        return t('communityInvalidRating')
       case 'invalid_vote':
-        return props.t('communityInvalidVote')
+        return t('communityInvalidVote')
       case 'unsupported_image_type':
-        return props.t('communityUnsupportedImageType')
+        return t('communityUnsupportedImageType')
       case 'image_too_large':
-        return props.t('communityImageTooLarge')
+        return t('communityImageTooLarge')
       case 'too_many_images':
-        return props.t('communityTooManyImages')
+        return t('communityTooManyImages')
       case 'comment_forbidden':
-        return props.t('communityCommentForbidden')
+        return t('communityCommentForbidden')
       case 'comment_not_found':
-        return props.t('communityCommentNotFound')
+        return t('communityCommentNotFound')
       case 'auth_service_unavailable':
-        return props.t('communityAuthServiceUnavailable')
+        return t('communityAuthServiceUnavailable')
       case 'comment_or_rating_required':
-        return props.t('communityCommentOrRatingRequired')
+        return t('communityCommentOrRatingRequired')
       case 'invalid_comment':
       case 'device_not_found':
-        return props.t('communityValidationError')
+        return t('communityValidationError')
       default:
-        return props.t('communityRequestFailed')
+        return t('communityRequestFailed')
     }
   }
 
-  return props.t('communityRequestFailed')
+  return t('communityRequestFailed')
 }
 
 function emitAggregates() {
@@ -545,7 +700,11 @@ watch(
   { immediate: true },
 )
 
-function formatCommentDate(value: string) {
+function formatCommentDate(value: string | null) {
+  if (!value) {
+    return ''
+  }
+
   const normalized = value.includes(' ') && !value.includes('T') ? value.replace(' ', 'T') : value
   const date = new Date(normalized)
 
@@ -570,7 +729,7 @@ function formatStarsLabel(rating: number) {
 }
 
 function getUserInitials(name: string) {
-  return (name || props.t('commentAnonymous'))
+  return (name || t('commentAnonymous'))
     .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
@@ -578,16 +737,32 @@ function getUserInitials(name: string) {
     .join('')
 }
 
-function getCommentAvatarUrl(comment: DeviceComment) {
-  if (comment.avatarUrl) {
-    return comment.avatarUrl
+function getAuthorName(comment: CommunityComment) {
+  if (comment.author === null) {
+    return t('commentDeletedUser')
   }
 
-  if (isOwnComment(comment) && user.value?.avatarUrl) {
-    return user.value.avatarUrl
+  return comment.author.display_name.trim() || t('commentAnonymous')
+}
+
+function isAvatarBroken(value: string) {
+  return brokenAvatarUrls.value.includes(value)
+}
+
+function markAvatarBroken(value: string) {
+  if (!value || brokenAvatarUrls.value.includes(value)) {
+    return
   }
 
-  return null
+  brokenAvatarUrls.value = [...brokenAvatarUrls.value, value]
+}
+
+function getAvatarSource(comment: CommunityComment) {
+  const candidate = comment.author?.avatar_url ?? null
+  if (!candidate || isAvatarBroken(candidate)) {
+    return null
+  }
+  return candidate
 }
 
 function resolveAvatarUrl(value: string) {
@@ -602,12 +777,18 @@ function resolveAvatarUrl(value: string) {
   return value
 }
 
-function isOwnComment(comment: DeviceComment) {
-  return Boolean(user.value?.id) && String(comment.cloud_user_id ?? '') === String(user.value?.id)
+function resolveImageUrl(image: CommunityCommentImage) {
+  if (!image.url) {
+    return null
+  }
+
+  return resolveCommunityAssetUrl(image.url)
 }
 
-function canManageComment(comment: DeviceComment) {
-  return status.value === 'authenticated' && isOwnComment(comment)
+function canManageComment(comment: CommunityComment) {
+  return status.value === 'authenticated'
+    && comment.author !== null
+    && String(comment.author.id) === String(user.value?.id)
 }
 
 function setCreateRating(rating: number | null) {
@@ -616,10 +797,6 @@ function setCreateRating(rating: number | null) {
 
 function setEditRating(rating: number | null) {
   editDraftRating.value = normalizeRatingInput(rating)
-}
-
-function getCommentImageUrl(publicUrl: string) {
-  return resolveCommunityAssetUrl(publicUrl)
 }
 
 function revokePreviewUrls(previews: PreviewImage[]) {
@@ -660,16 +837,16 @@ function validateImageFiles(fileList: FileList | null): File[] {
   const files = Array.from(fileList || [])
 
   if (files.length > maxImagesPerComment) {
-    throw new Error(props.t('communityTooManyImages'))
+    throw new Error(t('communityTooManyImages'))
   }
 
   for (const file of files) {
     if (!allowedImageMimeTypes.includes(file.type)) {
-      throw new Error(props.t('communityUnsupportedImageType'))
+      throw new Error(t('communityUnsupportedImageType'))
     }
 
     if (file.size > maxImageSizeBytes) {
-      throw new Error(props.t('communityImageTooLarge'))
+      throw new Error(t('communityImageTooLarge'))
     }
   }
 
@@ -687,7 +864,7 @@ function onCreateFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearCreateFiles()
-    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
   }
 }
 
@@ -702,7 +879,7 @@ function onReplyFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearReplyFiles()
-    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
   }
 }
 
@@ -717,7 +894,7 @@ function onEditFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearEditFiles()
-    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
   }
 }
 
@@ -747,9 +924,9 @@ function cancelReplyForm() {
   clearReplyFiles()
 }
 
-function startEdit(comment: DeviceComment) {
+function startEdit(comment: CommunityComment) {
   editingCommentId.value = comment.id
-  editDraftComment.value = comment.comment
+  editDraftBody.value = comment.body
   editDraftRating.value = comment.rating
   clearEditFiles()
   actionMessage.value = ''
@@ -757,14 +934,14 @@ function startEdit(comment: DeviceComment) {
 
 function cancelEdit() {
   editingCommentId.value = null
-  editDraftComment.value = ''
+  editDraftBody.value = ''
   editDraftRating.value = null
   clearEditFiles()
 }
 
 async function submitComment() {
   if (!canSubmitComment.value || normalizedDeviceId.value === null) {
-    actionMessage.value = props.t('communityCommentOrRatingRequired')
+    actionMessage.value = t('communityCommentOrRatingRequired')
     return
   }
 
@@ -774,12 +951,12 @@ async function submitComment() {
   try {
     await createDeviceComment({
       deviceId: normalizedDeviceId.value,
-      comment: commentDraft.value,
+      body: commentDraft.value,
       rating: commentRating.value,
       images: commentFiles.value,
     })
     resetCreateForm()
-    actionMessage.value = props.t('commentSubmitSuccess')
+    actionMessage.value = t('commentSubmitSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -790,7 +967,7 @@ async function submitComment() {
 
 async function submitReply() {
   if (!canSubmitReply.value || normalizedDeviceId.value === null || activeReplyParentId.value === null) {
-    actionMessage.value = props.t('communityCommentOrRatingRequired')
+    actionMessage.value = t('communityCommentOrRatingRequired')
     return
   }
 
@@ -801,11 +978,11 @@ async function submitReply() {
     await createDeviceComment({
       deviceId: normalizedDeviceId.value,
       parentId: activeReplyParentId.value,
-      comment: replyDraft.value,
+      body: replyDraft.value,
       images: replyFiles.value,
     })
     cancelReplyForm()
-    actionMessage.value = props.t('commentReplySuccess')
+    actionMessage.value = t('commentReplySuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -816,7 +993,7 @@ async function submitReply() {
 
 async function saveEdit(commentId: number) {
   if (!canSubmitEdit.value) {
-    actionMessage.value = props.t('communityCommentOrRatingRequired')
+    actionMessage.value = t('communityCommentOrRatingRequired')
     return
   }
 
@@ -826,12 +1003,12 @@ async function saveEdit(commentId: number) {
   try {
     await updateDeviceComment({
       commentId,
-      comment: editDraftComment.value,
+      body: editDraftBody.value,
       rating: editDraftRating.value,
       images: editFiles.value,
     })
     cancelEdit()
-    actionMessage.value = props.t('commentUpdateSuccess')
+    actionMessage.value = t('commentUpdateSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -840,8 +1017,8 @@ async function saveEdit(commentId: number) {
   }
 }
 
-async function removeComment(comment: DeviceComment) {
-  if (!window.confirm(props.t('commentDeleteConfirm'))) {
+async function removeComment(comment: CommunityComment) {
+  if (!window.confirm(t('commentDeleteConfirm'))) {
     return
   }
 
@@ -850,7 +1027,7 @@ async function removeComment(comment: DeviceComment) {
 
   try {
     await deleteDeviceComment(comment.id)
-    actionMessage.value = props.t('commentDeleteSuccess')
+    actionMessage.value = t('commentDeleteSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -863,7 +1040,7 @@ function isVotePending(commentId: number) {
   return votePendingIds.value.includes(commentId)
 }
 
-function patchVoteState(commentId: number, voteState: { likes_count: number; dislikes_count: number; my_vote: CommentVote | null }) {
+function patchVoteState(commentId: number, voteState: VoteCommentResultLike) {
   comments.value = comments.value.map((comment) => {
     if (comment.id !== commentId) {
       return comment
@@ -878,7 +1055,13 @@ function patchVoteState(commentId: number, voteState: { likes_count: number; dis
   })
 }
 
-async function toggleVote(comment: DeviceComment, nextVote: CommentVote) {
+type VoteCommentResultLike = {
+  likes_count: number
+  dislikes_count: number
+  my_vote: CommentVote | null
+}
+
+async function toggleVote(comment: CommunityComment, nextVote: CommentVote) {
   if (!canVote.value || isVotePending(comment.id)) {
     return
   }
@@ -900,9 +1083,9 @@ async function toggleVote(comment: DeviceComment, nextVote: CommentVote) {
 }
 
 onBeforeUnmount(() => {
-  clearCreateFiles()
-  clearReplyFiles()
-  clearEditFiles()
+  revokePreviewUrls(commentPreviews.value)
+  revokePreviewUrls(replyPreviews.value)
+  revokePreviewUrls(editPreviews.value)
 })
 </script>
 
@@ -912,255 +1095,207 @@ onBeforeUnmount(() => {
 }
 
 .device-access-panel__header {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 12px;
-}
-
-.device-access-panel__header-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .device-access-panel__title {
-  margin: 0;
-  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  line-height: 21px;
+  color: var(--vp-c-text-1);
+  display: flex;
+  font-size: 1rem;
   font-weight: 600;
+  gap: 8px;
+  line-height: 1.35;
+  margin: 0;
 }
 
 .device-access-panel__count-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  min-height: 22px;
-  padding: 0 8px;
+  background: var(--vp-c-default-soft);
   border-radius: 999px;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-2);
   font-size: 12px;
-  line-height: 1;
-  font-weight: 700;
+  font-weight: 600;
+  padding: 2px 8px;
+}
+
+.device-access-panel__retry,
+.device-comment-link,
+.device-rating-clear {
+  background: transparent;
+  border: 0;
+  color: var(--vp-c-brand-1);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 0;
+}
+
+.device-comment-link--danger {
+  color: var(--vp-c-danger-1);
 }
 
 .device-access-panel__aggregate {
-  display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
   color: var(--vp-c-text-2);
-  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .device-access-panel__aggregate-rating {
-  color: #c47c00;
-  font-weight: 700;
-}
-
-.device-access-panel__aggregate-meta {
-  color: var(--vp-c-text-2);
-}
-
-.device-access-panel__primary,
-.device-access-panel__secondary,
-.device-access-panel__cta,
-.device-access-panel__retry {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  border-radius: 8px;
-  border: 1px solid var(--vp-c-brand-1);
-  padding: 7px 14px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  box-sizing: border-box;
-}
-
-.device-access-panel__primary {
-  background: var(--vp-c-brand-1);
-  color: var(--vp-c-bg);
-}
-
-.device-access-panel__secondary,
-.device-access-panel__cta,
-.device-access-panel__retry {
-  background: transparent;
-  color: var(--vp-c-brand-1);
-}
-
-.device-access-panel__primary:disabled,
-.device-access-panel__secondary:disabled,
-.device-access-panel__retry:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  color: var(--vp-c-text-1);
+  font-weight: 600;
 }
 
 .device-access-panel__empty,
-.device-comment-form__hint,
 .device-access-panel__technical-error,
-.device-comment-form__counter,
-.device-comment-form__replacement-hint,
+.device-access-panel__message,
 .device-access-panel__guest-note {
   color: var(--vp-c-text-2);
-}
-
-.device-access-panel__guest-note,
-.device-access-panel__message,
-.device-access-panel__technical-error,
-.device-comment-card p,
-.device-comment-form__hint,
-.device-comment-form__counter,
-.device-comment-form__replacement-hint {
-  margin: 0;
+  margin: 14px 0 0;
 }
 
 .device-comment-threads {
   display: grid;
-  gap: 12px;
+  gap: 18px;
+  margin-top: 18px;
 }
 
 .device-comment-thread {
-  margin-left: calc(var(--comment-depth, 0) * 28px);
+  display: grid;
+  gap: 12px;
+}
+
+.device-comment-replies {
+  border-left: 1px solid var(--vp-c-divider);
+  display: grid;
+  gap: 12px;
+  margin-left: 22px;
+  padding-left: 18px;
 }
 
 .device-comment-card {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
+  display: flex;
   gap: 12px;
 }
 
 .device-comment-card__avatar {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--vp-c-brand-soft), rgba(0, 0, 0, 0.04));
-  color: var(--vp-c-brand-1);
+  background: var(--vp-c-default-soft);
+  border-radius: 999px;
+  color: var(--vp-c-text-2);
+  display: flex;
+  flex: 0 0 40px;
   font-size: 13px;
   font-weight: 700;
-  flex: none;
-}
-
-.device-comment-card--own .device-comment-card__avatar {
-  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
+  height: 40px;
+  justify-content: center;
+  overflow: hidden;
+  width: 40px;
 }
 
 .device-comment-card__avatar img {
-  width: 100%;
+  display: block;
   height: 100%;
   object-fit: cover;
+  width: 100%;
 }
 
 .device-comment-card__body {
+  flex: 1;
   min-width: 0;
 }
 
 .device-comment-card__meta {
+  align-items: baseline;
   display: flex;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 6px;
 }
 
 .device-comment-card__author-line {
-  display: inline-flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  min-width: 0;
-}
-
-.device-comment-card__author-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--vp-c-success-soft);
-  color: var(--vp-c-success-1);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.device-comment-card__rating-inline {
-  color: #c47c00;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-
-.device-comment-card__time {
-  flex: none;
-  font-size: 12px;
-  color: var(--vp-c-text-3);
-  white-space: nowrap;
-}
-
-.device-comment-card p {
-  line-height: 1.6;
-}
-
-.device-comment-gallery {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.device-comment-card__author-badge {
+  background: var(--vp-c-success-soft);
+  border-radius: 999px;
+  color: var(--vp-c-success-1);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+}
+
+.device-comment-card__rating-inline,
+.device-comment-card__time {
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+}
+
+.device-comment-card__content,
+.device-comment-edit {
+  margin-top: 8px;
+}
+
+.device-comment-card__text {
+  color: var(--vp-c-text-1);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.device-comment-gallery {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   margin-top: 10px;
 }
 
 .device-comment-gallery__item {
-  display: block;
-  width: 88px;
-  height: 88px;
-  overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid var(--vp-c-divider);
+  aspect-ratio: 1;
   background: var(--vp-c-bg-soft);
+  border-radius: 10px;
+  display: block;
+  overflow: hidden;
 }
 
 .device-comment-gallery__item img {
-  width: 100%;
+  display: block;
   height: 100%;
   object-fit: cover;
-  display: block;
+  width: 100%;
 }
 
 .device-comment-votes {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 12px;
   margin-top: 10px;
 }
 
 .device-comment-vote {
-  display: inline-flex;
   align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  display: inline-flex;
   gap: 6px;
   padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  font-size: 12px;
-  line-height: 1.35;
 }
 
 .device-comment-vote svg {
-  width: 14px;
-  height: 14px;
   fill: currentColor;
+  height: 14px;
+  width: 14px;
 }
 
 .device-comment-vote--like {
@@ -1172,195 +1307,165 @@ onBeforeUnmount(() => {
 }
 
 .device-comment-vote:not(.active) {
-  opacity: 0.78;
+  opacity: 0.75;
 }
 
-.device-comment-vote:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.device-comment-actions-row,
-.device-comment-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.device-comment-vote:disabled,
+.device-comment-link:disabled,
+.device-access-panel__primary:disabled,
+.device-access-panel__secondary:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 
 .device-comment-actions-row {
-  margin-top: 10px;
+  align-items: center;
+  display: flex;
   flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
 }
 
+.device-comment-actions,
 .device-comment-actions--inline {
-  gap: 10px;
-}
-
-.device-comment-link {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--vp-c-brand-1);
-  cursor: pointer;
-  font: inherit;
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-.device-comment-link--danger {
-  color: var(--vp-c-danger-1);
-}
-
-.device-comment-link:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+  display: inline-flex;
+  gap: 12px;
 }
 
 .device-comment-form,
-.device-comment-edit,
 .device-reply-form {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
   margin-top: 18px;
-}
-
-.device-comment-form,
-.device-reply-form {
-  padding: 16px;
-  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 12%, var(--vp-c-divider));
-  border-radius: 12px;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-1) 3%, transparent), transparent 70%), var(--vp-c-bg);
+  padding: 14px;
 }
 
 .device-reply-form {
-  margin-left: calc(var(--comment-depth, 0) * 28px + 52px);
+  margin-left: 52px;
 }
 
 .device-comment-form__label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.device-comment-form__rating-row {
-  display: grid;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.device-comment-form__rating-label {
+  color: var(--vp-c-text-1);
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--vp-c-text-2);
+  margin-bottom: 10px;
 }
 
 .device-comment-form__input,
 .device-comment-form__file-input {
   width: 100%;
-  box-sizing: border-box;
 }
 
 .device-comment-form__input {
-  padding: 10px 12px;
+  background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg);
+  border-radius: 12px;
   color: var(--vp-c-text-1);
+  font: inherit;
+  padding: 10px 12px;
   resize: vertical;
 }
 
-.device-comment-form__file-input {
-  margin-top: 10px;
+.device-comment-form__input:focus {
+  border-color: var(--vp-c-brand-1);
+  outline: none;
 }
 
-.device-comment-form__replacement-hint {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 1.5;
+.device-comment-form__file-input {
+  color: var(--vp-c-text-2);
+  margin-top: 12px;
 }
 
 .device-comment-form__footer {
+  align-items: flex-end;
   display: flex;
-  align-items: flex-start;
+  gap: 12px;
   justify-content: space-between;
-  gap: 16px;
   margin-top: 12px;
 }
 
 .device-comment-form__meta-panel {
   display: grid;
-  gap: 4px;
+  gap: 8px;
+}
+
+.device-comment-form__counter,
+.device-comment-form__replacement-hint {
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  margin: 0;
+}
+
+.device-comment-form__rating-row {
+  display: grid;
+  gap: 6px;
+}
+
+.device-comment-form__rating-label {
+  color: var(--vp-c-text-2);
+  font-size: 13px;
 }
 
 .device-rating-editor {
-  display: flex;
   align-items: center;
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
-}
-
-.device-rating-editor--create {
-  margin-bottom: 0;
 }
 
 .device-rating-star {
-  padding: 0;
-  border: 0;
   background: transparent;
-  color: var(--vp-c-divider);
-  font-size: 22px;
-  line-height: 1;
+  border: 0;
+  color: var(--vp-c-text-3);
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
 }
 
 .device-rating-star.active {
-  color: #c47c00;
+  color: #f5b400;
 }
 
-.device-rating-clear {
-  margin-left: 8px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--vp-c-brand-1);
-  cursor: pointer;
+.device-access-panel__primary,
+.device-access-panel__secondary {
+  border-radius: 10px;
   font: inherit;
-  font-size: 12px;
-  line-height: 1.35;
+  min-height: 36px;
+  padding: 0 14px;
 }
 
-.device-access-panel__technical-error,
-.device-access-panel__message,
-.device-access-panel__guest-note {
-  margin-top: 14px;
+.device-access-panel__primary {
+  background: var(--vp-c-brand-1);
+  border: 1px solid var(--vp-c-brand-1);
+  color: #fff;
 }
 
-.device-access-panel__message {
-  color: var(--vp-c-brand-1);
+.device-access-panel__secondary {
+  background: transparent;
+  border: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-1);
 }
 
 .device-access-panel__guest-note a {
   color: var(--vp-c-brand-1);
-  text-decoration: none;
 }
 
 @media (max-width: 640px) {
-  .device-access-panel__header,
-  .device-comment-form__footer,
-  .device-comment-card__meta {
-    flex-direction: column;
+  .device-comment-card__meta,
+  .device-comment-form__footer {
     align-items: flex-start;
-  }
-
-  .device-comment-thread {
-    margin-left: calc(var(--comment-depth, 0) * 16px);
+    flex-direction: column;
   }
 
   .device-reply-form {
-    margin-left: calc(var(--comment-depth, 0) * 16px + 18px);
+    margin-left: 0;
   }
 
-  .device-comment-actions-row {
-    align-items: flex-start;
+  .device-comment-replies {
+    margin-left: 12px;
+    padding-left: 12px;
   }
 }
 </style>
