@@ -204,12 +204,8 @@ const commentsLabel = computed(() => {
   position: absolute;
   top: 8px;
   right: 8px;
-  background-color: #4caf50;
-  color: white;
-}
-
-:global(.dark) .device-in-lab {
-  background-color: #2e7d32;
+  background-color: var(--vp-c-success-2);
+  color: var(--vp-c-bg);
 }
 
 @media (max-width: 600px) {

@@ -220,12 +220,8 @@ defineEmits<{
 }
 
 .in-lab {
-  background-color: #4caf50;
-  color: white;
-}
-
-:global(.dark) .in-lab {
-  background-color: #2e7d32;
+  background-color: var(--vp-c-success-2);
+  color: var(--vp-c-bg);
 }
 
 .states {

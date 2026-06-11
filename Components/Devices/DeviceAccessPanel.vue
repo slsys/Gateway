@@ -236,69 +236,109 @@
         </form>
 
         <div v-if="thread.replies.length" class="device-comment-replies">
-          <article
-            v-for="reply in thread.replies"
-            :key="reply.id"
-            class="device-comment-card device-comment-card--reply"
-            :class="{ 'device-comment-card--own': isOwnComment(reply) }"
-          >
-            <div class="device-comment-card__avatar device-comment-card__avatar--reply">
-              <img
-                v-if="getCommentAvatarUrl(reply)"
-                :src="resolveAvatarUrl(getCommentAvatarUrl(reply) || '')"
-                :alt="reply.user_name"
-                loading="lazy"
-              />
-              <span v-else>{{ getUserInitials(reply.user_name) }}</span>
-            </div>
-            <div class="device-comment-card__body">
-              <div class="device-comment-card__meta">
-                <div class="device-comment-card__author-line">
-                  <strong>{{ reply.user_name || t('commentAnonymous') }}</strong>
-                  <span v-if="isOwnComment(reply)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
-                  <span v-if="reply.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${reply.rating} / 5`">
-                    {{ renderStars(reply.rating) }}
-                  </span>
-                </div>
-                <span class="device-comment-card__time">{{ formatCommentDate(reply.updated_at || reply.created_at) }}</span>
+          <template v-for="reply in thread.replies" :key="reply.id">
+            <article
+              class="device-comment-card device-comment-card--reply"
+              :class="{ 'device-comment-card--own': isOwnComment(reply) }"
+            >
+              <div class="device-comment-card__avatar device-comment-card__avatar--reply">
+                <img
+                  v-if="getCommentAvatarUrl(reply)"
+                  :src="resolveAvatarUrl(getCommentAvatarUrl(reply) || '')"
+                  :alt="reply.user_name"
+                  loading="lazy"
+                />
+                <span v-else>{{ getUserInitials(reply.user_name) }}</span>
               </div>
-
-              <template v-if="editingCommentId === reply.id">
-                <div class="device-comment-edit">
-                  <div class="device-rating-editor">
-                    <button
-                      v-for="value in 5"
-                      :key="`edit-reply-rating-${reply.id}-${value}`"
-                      type="button"
-                      class="device-rating-star"
-                      :class="{ active: (editDraftRating || 0) >= value }"
-                      @click="setEditRating(value)"
-                    >
-                      ★
-                    </button>
-                    <button type="button" class="device-rating-clear" @click="setEditRating(null)">
-                      {{ t('commentRatingClear') }}
-                    </button>
+              <div class="device-comment-card__body">
+                <div class="device-comment-card__meta">
+                  <div class="device-comment-card__author-line">
+                    <strong>{{ reply.user_name || t('commentAnonymous') }}</strong>
+                    <span v-if="isOwnComment(reply)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
+                    <span v-if="reply.rating !== null" class="device-comment-card__rating-inline" :aria-label="`${reply.rating} / 5`">
+                      {{ renderStars(reply.rating) }}
+                    </span>
                   </div>
-                  <textarea
-                    v-model="editDraftComment"
-                    class="device-comment-form__input"
-                    :maxlength="commentMaxLength"
-                    rows="4"
-                  ></textarea>
-                  <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
-                  <input
-                    :key="editFileInputKey"
-                    class="device-comment-form__file-input"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    multiple
-                    @change="onEditFilesChange"
-                  />
-                  <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
+                  <span class="device-comment-card__time">{{ formatCommentDate(reply.updated_at || reply.created_at) }}</span>
+                </div>
+
+                <template v-if="editingCommentId === reply.id">
+                  <div class="device-comment-edit">
+                    <div class="device-rating-editor">
+                      <button
+                        v-for="value in 5"
+                        :key="`edit-reply-rating-${reply.id}-${value}`"
+                        type="button"
+                        class="device-rating-star"
+                        :class="{ active: (editDraftRating || 0) >= value }"
+                        @click="setEditRating(value)"
+                      >
+                        ★
+                      </button>
+                      <button type="button" class="device-rating-clear" @click="setEditRating(null)">
+                        {{ t('commentRatingClear') }}
+                      </button>
+                    </div>
+                    <textarea
+                      v-model="editDraftComment"
+                      class="device-comment-form__input"
+                      :maxlength="commentMaxLength"
+                      rows="4"
+                    ></textarea>
+                    <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
+                    <input
+                      :key="editFileInputKey"
+                      class="device-comment-form__file-input"
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      multiple
+                      @change="onEditFilesChange"
+                    />
+                    <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
+                      <a
+                        v-for="image in editingComment.images"
+                        :key="`existing-edit-reply-${image.id}`"
+                        :href="getCommentImageUrl(image.public_url)"
+                        class="device-comment-gallery__item"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
+                      </a>
+                    </div>
+                    <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
+                      <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
+                        <img :src="preview.url" :alt="preview.name" />
+                      </div>
+                    </div>
+                    <div class="device-comment-form__footer">
+                      <div class="device-comment-form__meta-panel">
+                        <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
+                        <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
+                      </div>
+                      <div class="device-comment-actions">
+                        <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
+                          {{ t('commentCancel') }}
+                        </button>
+                        <button
+                          type="button"
+                          class="device-access-panel__primary"
+                          :disabled="commentSubmitting || !canSubmitEdit"
+                          @click="saveEdit(reply.id)"
+                        >
+                          {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+
+                <template v-else>
+                  <p v-if="reply.comment.trim()">{{ reply.comment }}</p>
+                  <div v-if="reply.images.length" class="device-comment-gallery">
                     <a
-                      v-for="image in editingComment.images"
-                      :key="`existing-edit-reply-${image.id}`"
+                      v-for="image in reply.images"
+                      :key="`reply-image-${reply.id}-${image.id}-${image.public_url}`"
                       :href="getCommentImageUrl(image.public_url)"
                       class="device-comment-gallery__item"
                       target="_blank"
@@ -307,140 +347,100 @@
                       <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
                     </a>
                   </div>
-                  <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-                    <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
-                      <img :src="preview.url" :alt="preview.name" />
-                    </div>
-                  </div>
-                  <div class="device-comment-form__footer">
-                    <div class="device-comment-form__meta-panel">
-                      <p class="device-comment-form__hint">{{ t('commentSubmitHint') }}</p>
-                      <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
-                    </div>
-                    <div class="device-comment-actions">
-                      <button type="button" class="device-access-panel__secondary" @click="cancelEdit">
-                        {{ t('commentCancel') }}
-                      </button>
-                      <button
-                        type="button"
-                        class="device-access-panel__primary"
-                        :disabled="commentSubmitting || !canSubmitEdit"
-                        @click="saveEdit(reply.id)"
-                      >
-                        {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </template>
-
-              <template v-else>
-                <p v-if="reply.comment.trim()">{{ reply.comment }}</p>
-                <div v-if="reply.images.length" class="device-comment-gallery">
-                  <a
-                    v-for="image in reply.images"
-                    :key="`reply-image-${reply.id}-${image.id}-${image.public_url}`"
-                    :href="getCommentImageUrl(image.public_url)"
-                    class="device-comment-gallery__item"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img :src="getCommentImageUrl(image.public_url)" :alt="t('commentImageAlt')" loading="lazy" />
-                  </a>
-                </div>
-                <div class="device-comment-votes">
-                  <button
-                    type="button"
-                    class="device-comment-vote"
-                    :class="{ active: reply.my_vote === 'like' }"
-                    :disabled="!canVote || isVotePending(reply.id)"
-                    @click="toggleVote(reply, 'like')"
-                  >
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94Z"/></svg>
-                    <span>{{ reply.likes_count }}</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="device-comment-vote"
-                    :class="{ active: reply.my_vote === 'dislike' }"
-                    :disabled="!canVote || isVotePending(reply.id)"
-                    @click="toggleVote(reply, 'dislike')"
-                  >
-                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94Z"/></svg>
-                    <span>{{ reply.dislikes_count }}</span>
-                  </button>
-                </div>
-                <div class="device-comment-actions-row">
-                  <button
-                    v-if="status === 'authenticated'"
-                    type="button"
-                    class="device-comment-link"
-                    @click="toggleReplyForm(reply.id, thread.root.id)"
-                  >
-                    {{ activeReplyAnchorId === reply.id ? t('commentCancel') : t('commentReply') }}
-                  </button>
-                  <div v-if="canManageComment(reply)" class="device-comment-actions device-comment-actions--inline">
-                    <button type="button" class="device-comment-link" @click="startEdit(reply)">
-                      {{ t('commentEdit') }}
+                  <div class="device-comment-votes">
+                    <button
+                      type="button"
+                      class="device-comment-vote"
+                      :class="{ active: reply.my_vote === 'like' }"
+                      :disabled="!canVote || isVotePending(reply.id)"
+                      @click="toggleVote(reply, 'like')"
+                    >
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.225 1.341.394 3.154.136 5.088h2.502a1.5 1.5 0 0 1 1.444 1.906l-1.203 4.811A2 2 0 0 1 11.794 15H5.153a1 1 0 0 1-.909-.584L2.99 11.694V14.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1.994a.5.5 0 0 1 .5.5v.362l1.333-2.666c.11-.223.22-.445.315-.665.4-.927.708-1.82.815-2.94Z"/></svg>
+                      <span>{{ reply.likes_count }}</span>
                     </button>
                     <button
                       type="button"
-                      class="device-comment-link device-comment-link--danger"
-                      :disabled="deletingCommentId === reply.id"
-                      @click="removeComment(reply)"
+                      class="device-comment-vote"
+                      :class="{ active: reply.my_vote === 'dislike' }"
+                      :disabled="!canVote || isVotePending(reply.id)"
+                      @click="toggleVote(reply, 'dislike')"
                     >
-                      {{ deletingCommentId === reply.id ? t('commentDeleting') : t('commentDelete') }}
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.225-1.341.394-3.154.136-5.088h2.502a1.5 1.5 0 0 0 1.444-1.906L13.734 1.99A2 2 0 0 0 11.794 1H5.153a1 1 0 0 0-.909.584L2.99 4.306V1.5a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h1.994a.5.5 0 0 0 .5-.5v-.362l1.333 2.666c.11.223.22.445.315.665.4.927.708 1.82.815 2.94Z"/></svg>
+                      <span>{{ reply.dislikes_count }}</span>
                     </button>
                   </div>
+                  <div class="device-comment-actions-row">
+                    <button
+                      v-if="status === 'authenticated'"
+                      type="button"
+                      class="device-comment-link"
+                      @click="toggleReplyForm(reply.id, thread.root.id)"
+                    >
+                      {{ activeReplyAnchorId === reply.id ? t('commentCancel') : t('commentReply') }}
+                    </button>
+                    <div v-if="canManageComment(reply)" class="device-comment-actions device-comment-actions--inline">
+                      <button type="button" class="device-comment-link" @click="startEdit(reply)">
+                        {{ t('commentEdit') }}
+                      </button>
+                      <button
+                        type="button"
+                        class="device-comment-link device-comment-link--danger"
+                        :disabled="deletingCommentId === reply.id"
+                        @click="removeComment(reply)"
+                      >
+                        {{ deletingCommentId === reply.id ? t('commentDeleting') : t('commentDelete') }}
+                      </button>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </article>
+            <form
+              v-if="status === 'authenticated' && activeReplyAnchorId === reply.id"
+              class="device-reply-form device-reply-form--nested"
+              @submit.prevent="submitReply()"
+            >
+              <textarea
+                v-model="replyDraft"
+                class="device-comment-form__input"
+                :placeholder="t('commentReplyPlaceholder')"
+                :maxlength="commentMaxLength"
+                :disabled="replySubmitting"
+                rows="3"
+              ></textarea>
+              <input
+                :key="replyFileInputKey"
+                class="device-comment-form__file-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                @change="onReplyFilesChange"
+              />
+              <div v-if="replyPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
+                <div v-for="preview in replyPreviews" :key="preview.url" class="device-comment-gallery__item">
+                  <img :src="preview.url" :alt="preview.name" />
                 </div>
-              </template>
-            </div>
-          </article>
-          <form
-            v-if="status === 'authenticated' && activeReplyAnchorId === reply.id"
-            class="device-reply-form device-reply-form--nested"
-            @submit.prevent="submitReply()"
-          >
-            <textarea
-              v-model="replyDraft"
-              class="device-comment-form__input"
-              :placeholder="t('commentReplyPlaceholder')"
-              :maxlength="commentMaxLength"
-              :disabled="replySubmitting"
-              rows="3"
-            ></textarea>
-            <input
-              :key="replyFileInputKey"
-              class="device-comment-form__file-input"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              multiple
-              @change="onReplyFilesChange"
-            />
-            <div v-if="replyPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
-              <div v-for="preview in replyPreviews" :key="preview.url" class="device-comment-gallery__item">
-                <img :src="preview.url" :alt="preview.name" />
               </div>
-            </div>
-            <div class="device-comment-form__footer">
-              <div class="device-comment-form__meta-panel">
-                <p class="device-comment-form__hint">{{ t('commentReplyHint') }}</p>
-                <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
+              <div class="device-comment-form__footer">
+                <div class="device-comment-form__meta-panel">
+                  <p class="device-comment-form__hint">{{ t('commentReplyHint') }}</p>
+                  <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
+                </div>
+                <div class="device-comment-actions">
+                  <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">
+                    {{ t('commentCancel') }}
+                  </button>
+                  <button
+                    type="submit"
+                    class="device-access-panel__primary"
+                    :disabled="replySubmitting || !canSubmitReply"
+                  >
+                    {{ replySubmitting ? t('commentSubmitting') : t('commentReplySubmit') }}
+                  </button>
+                </div>
               </div>
-              <div class="device-comment-actions">
-                <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">
-                  {{ t('commentCancel') }}
-                </button>
-                <button
-                  type="submit"
-                  class="device-access-panel__primary"
-                  :disabled="replySubmitting || !canSubmitReply"
-                >
-                  {{ replySubmitting ? t('commentSubmitting') : t('commentReplySubmit') }}
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </template>
         </div>
       </article>
     </div>
@@ -1291,8 +1291,8 @@ onBeforeUnmount(() => {
   justify-content: center;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(76, 175, 80, 0.14);
-  color: #2e7d32;
+  background: var(--vp-c-success-soft);
+  color: var(--vp-c-success-1);
   font-size: 11px;
   font-weight: 700;
   line-height: 1.4;
