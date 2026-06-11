@@ -517,10 +517,14 @@ function getUserInitials(name: string) {
 }
 
 function getAvatarFallbackStyle(name: string) {
+  const seed = Array.from(name || props.t('commentAnonymous'))
+    .reduce((sum, char) => sum + char.charCodeAt(0), 0)
+  const hue = seed % 360
+
   return {
-    background: '#f4f2ff',
-    border: '2px solid #e6e2ff',
-    color: '#3f56c8',
+    background: `hsl(${hue} 65% 96%)`,
+    border: `1px solid hsl(${hue} 55% 90%)`,
+    color: `hsl(${hue} 56% 50%)`,
   }
 }
 
@@ -904,24 +908,24 @@ onBeforeUnmount(() => {
 
 .device-comment-card {
   display: flex;
-  gap: 20px;
-  margin-left: calc(var(--comment-depth, 0) * 52px);
+  gap: 12px;
+  margin-left: calc(var(--comment-depth, 0) * 26px);
 }
 
 .device-comment-card__avatar {
   align-items: center;
-  background: #f4f2ff;
+  background: linear-gradient(180deg, rgba(126, 135, 255, 0.12), rgba(126, 135, 255, 0.06));
   border-radius: 999px;
   border: 1px solid #e6e3ff;
-  color: #3f56c8;
+  color: #4963d3;
   display: flex;
-  flex: 0 0 56px;
-  font-size: 24px;
+  flex: 0 0 44px;
+  font-size: 14px;
   font-weight: 700;
-  height: 56px;
+  height: 44px;
   justify-content: center;
   overflow: hidden;
-  width: 56px;
+  width: 44px;
 }
 
 .device-comment-card__avatar > span {
@@ -936,9 +940,9 @@ onBeforeUnmount(() => {
 .device-comment-card__avatar img {
   display: block;
   border-radius: inherit;
-  height: 56px;
+  height: 44px;
   object-fit: cover;
-  width: 56px;
+  width: 44px;
 }
 
 .device-comment-card__body {
@@ -958,23 +962,23 @@ onBeforeUnmount(() => {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .device-comment-card__author-line strong {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .device-comment-card__author-badge {
   background: #edf8e8;
-  border-radius: 10px;
-  color: #26823a;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 3px 9px;
+  border-radius: 999px;
+  color: #2f8a36;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 4px 10px;
 }
 
 .device-comment-card__rating-inline,
@@ -993,8 +997,7 @@ onBeforeUnmount(() => {
 .device-comment-card__text {
   color: var(--vp-c-text-1);
   margin: 8px 0 0;
-  font-size: 24px;
-  line-height: 1.2;
+  line-height: 1.5;
   white-space: pre-wrap;
 }
 
@@ -1033,7 +1036,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 500;
   gap: 5px;
   line-height: 1.35;
@@ -1042,8 +1045,8 @@ onBeforeUnmount(() => {
 
 .device-comment-vote svg {
   fill: currentColor;
-  height: 18px;
-  width: 18px;
+  height: 14px;
+  width: 14px;
 }
 
 .device-comment-vote--like {
@@ -1074,14 +1077,14 @@ onBeforeUnmount(() => {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 12px;
   justify-content: flex-start;
   margin-top: 10px;
 }
 
 .device-comment-actions {
   display: inline-flex;
-  gap: 24px;
+  gap: 12px;
 }
 
 .device-comment-votes {
@@ -1098,7 +1101,7 @@ onBeforeUnmount(() => {
 }
 
 .device-reply-form {
-  margin-left: calc(var(--comment-depth, 0) * 52px);
+  margin-left: calc(var(--comment-depth, 0) * 26px + 52px);
 }
 
 .device-comment-form__label {
