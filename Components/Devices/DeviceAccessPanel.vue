@@ -19,96 +19,178 @@
       <span v-if="aggregateSummary.ratingAvg !== null" class="device-access-panel__aggregate-rating">
         {{ formatStarsLabel(aggregateSummary.ratingAvg) }}
       </span>
-      <span v-if="aggregateSummary.ratingsLabel" class="device-access-panel__aggregate-meta">
-        {{ aggregateSummary.ratingsLabel }}
-      </span>
+      <span v-if="aggregateSummary.ratingsLabel" class="device-access-panel__aggregate-meta">{{ aggregateSummary.ratingsLabel }}</span>
       <span class="device-access-panel__aggregate-meta">{{ aggregateSummary.commentsLabel }}</span>
     </div>
 
     <div v-if="commentsLoading" class="device-access-panel__empty">{{ t('commentsLoading') }}</div>
     <p v-else-if="commentsError" class="device-access-panel__technical-error">{{ t('commentsLoadFailed') }}</p>
-    <div v-else-if="threads.length" class="device-comment-threads">
-      <article v-for="thread in threads" :key="thread.root.id" class="device-comment-thread">
-        <CommentCard
-          :comment="thread.root"
-          :is-own="canManageComment(thread.root)"
-          :can-vote="canVote"
-          :vote-pending="isVotePending(thread.root.id)"
-          :show-reply="status === 'authenticated'"
-          :is-reply-open="activeReplyAnchorId === thread.root.id"
-          :editing-comment-id="editingCommentId"
-          :edit-draft-body="editDraftBody"
-          :edit-draft-rating="editDraftRating"
-          :edit-draft-length="editDraftLength"
-          :edit-previews="editPreviews"
-          :edit-file-input-key="editFileInputKey"
-          :comment-submitting="commentSubmitting"
-          :comment-max-length="commentMaxLength"
-          :editing-comment="editingComment"
-          :resolve-avatar-url="resolveAvatarUrl"
-          :resolve-image-url="resolveImageUrl"
-          :is-avatar-broken="isAvatarBroken"
-          :mark-avatar-broken="markAvatarBroken"
-          :format-comment-date="formatCommentDate"
-          :render-stars="renderStars"
-          :get-user-initials="getUserInitials"
-          :get-author-name="getAuthorName"
-          :get-avatar-source="getAvatarSource"
-          :set-edit-rating="setEditRating"
-          :on-edit-files-change="onEditFilesChange"
-          :start-edit="startEdit"
-          :cancel-edit="cancelEdit"
-          :save-edit="saveEdit"
-          :remove-comment="removeComment"
-          :toggle-reply-form="toggleReplyForm"
-          :toggle-vote="toggleVote"
-          :t="t"
-        />
+    <div v-else-if="flatItems.length" class="device-comment-list">
+      <template v-for="item in flatItems" :key="item.comment.id">
+        <article class="device-comment-card" :class="{ 'device-comment-card--own': canManageComment(item.comment) }" :style="{ '--comment-depth': String(item.depth) }">
+          <div class="device-comment-card__avatar">
+            <img
+              v-if="getAvatarSource(item.comment)"
+              :src="resolveAvatarUrl(getAvatarSource(item.comment) || '')"
+              :alt="getAuthorName(item.comment)"
+              loading="lazy"
+              @error="markAvatarBroken(getAvatarSource(item.comment) || '')"
+            />
+            <span v-else>{{ getUserInitials(getAuthorName(item.comment)) }}</span>
+          </div>
 
-        <div v-if="thread.replies.length" class="device-comment-replies">
-          <CommentCard
-            v-for="reply in thread.replies"
-            :key="reply.id"
-            :comment="reply"
-            :is-own="canManageComment(reply)"
-            :can-vote="canVote"
-            :vote-pending="isVotePending(reply.id)"
-            :show-reply="false"
-            :is-reply-open="false"
-            :editing-comment-id="editingCommentId"
-            :edit-draft-body="editDraftBody"
-            :edit-draft-rating="editDraftRating"
-            :edit-draft-length="editDraftLength"
-            :edit-previews="editPreviews"
-            :edit-file-input-key="editFileInputKey"
-            :comment-submitting="commentSubmitting"
-            :comment-max-length="commentMaxLength"
-            :editing-comment="editingComment"
-            :resolve-avatar-url="resolveAvatarUrl"
-            :resolve-image-url="resolveImageUrl"
-            :is-avatar-broken="isAvatarBroken"
-            :mark-avatar-broken="markAvatarBroken"
-            :format-comment-date="formatCommentDate"
-            :render-stars="renderStars"
-            :get-user-initials="getUserInitials"
-            :get-author-name="getAuthorName"
-            :get-avatar-source="getAvatarSource"
-            :set-edit-rating="setEditRating"
-            :on-edit-files-change="onEditFilesChange"
-            :start-edit="startEdit"
-            :cancel-edit="cancelEdit"
-            :save-edit="saveEdit"
-            :remove-comment="removeComment"
-            :toggle-reply-form="toggleReplyForm"
-            :toggle-vote="toggleVote"
-            :t="t"
-            is-reply
-          />
-        </div>
+          <div class="device-comment-card__body">
+            <div class="device-comment-card__meta">
+              <div class="device-comment-card__author-line">
+                <strong>{{ getAuthorName(item.comment) }}</strong>
+                <span v-if="canManageComment(item.comment)" class="device-comment-card__author-badge">{{ t('commentOwnBadge') }}</span>
+                <span v-if="item.comment.rating !== null" class="device-comment-card__rating-inline">{{ renderStars(item.comment.rating) }}</span>
+              </div>
+              <span class="device-comment-card__time">{{ formatCommentDate(item.comment.updated_at || item.comment.created_at) }}</span>
+            </div>
+
+            <template v-if="editingCommentId === item.comment.id">
+              <div class="device-comment-edit">
+                <div class="device-rating-editor">
+                  <button
+                    v-for="value in 5"
+                    :key="`edit-rating-${item.comment.id}-${value}`"
+                    type="button"
+                    class="device-rating-star"
+                    :class="{ active: (editDraftRating || 0) >= value }"
+                    @click="setEditRating(value)"
+                  >
+                    ★
+                  </button>
+                  <button type="button" class="device-rating-clear" @click="setEditRating(null)">
+                    {{ t('commentRatingClear') }}
+                  </button>
+                </div>
+
+                <textarea
+                  v-model="editDraftBody"
+                  class="device-comment-form__input"
+                  :maxlength="commentMaxLength"
+                  rows="4"
+                ></textarea>
+
+                <p class="device-comment-form__replacement-hint">{{ t('commentImagesReplaceHint') }}</p>
+                <input
+                  :key="editFileInputKey"
+                  class="device-comment-form__file-input"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  @change="onEditFilesChange"
+                />
+
+                <div v-if="editingComment?.images.length && !editPreviews.length" class="device-comment-gallery device-comment-gallery--current">
+                  <a
+                    v-for="image in editingComment.images"
+                    :key="`existing-edit-${image.id}`"
+                    :href="resolveImageUrl(image) || undefined"
+                    class="device-comment-gallery__item"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img v-if="resolveImageUrl(image)" :src="resolveImageUrl(image) || ''" :alt="t('commentImageAlt')" loading="lazy" />
+                  </a>
+                </div>
+
+                <div v-if="editPreviews.length" class="device-comment-gallery device-comment-gallery--preview">
+                  <div v-for="preview in editPreviews" :key="preview.url" class="device-comment-gallery__item">
+                    <img :src="preview.url" :alt="preview.name" />
+                  </div>
+                </div>
+
+                <div class="device-comment-form__footer">
+                  <div class="device-comment-form__meta-panel">
+                    <p class="device-comment-form__counter">{{ editDraftLength }}/{{ commentMaxLength }}</p>
+                  </div>
+                  <div class="device-comment-actions">
+                    <button type="button" class="device-access-panel__secondary" @click="cancelEdit">{{ t('commentCancel') }}</button>
+                    <button
+                      type="button"
+                      class="device-access-panel__primary"
+                      :disabled="commentSubmitting || !canSubmitEdit"
+                      @click="saveEdit(item.comment.id)"
+                    >
+                      {{ commentSubmitting ? t('commentSaving') : t('commentSave') }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+            <template v-else>
+              <p v-if="item.comment.body.trim()" class="device-comment-card__text">{{ item.comment.body }}</p>
+
+              <div v-if="item.comment.images.length" class="device-comment-gallery">
+                <a
+                  v-for="image in item.comment.images"
+                  :key="`image-${item.comment.id}-${image.id}`"
+                  :href="resolveImageUrl(image) || undefined"
+                  class="device-comment-gallery__item"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img v-if="resolveImageUrl(image)" :src="resolveImageUrl(image) || ''" :alt="t('commentImageAlt')" loading="lazy" />
+                </a>
+              </div>
+
+              <div class="device-comment-votes">
+                <button
+                  type="button"
+                  class="device-comment-vote device-comment-vote--like"
+                  :class="{ active: item.comment.my_vote === 'like' }"
+                  :disabled="!canVote || isVotePending(item.comment.id)"
+                  @click="toggleVote(item.comment, 'like')"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.169 1.005.337 2.388.281 4.058h2.568a1.5 1.5 0 0 1 1.473 1.783l-1.094 5.473A2 2 0 0 1 12.122 15H4.5a1.5 1.5 0 0 1-1.492-1.356L2.469 8.5H1.5A1.5 1.5 0 0 1 0 7V6a1 1 0 0 1 1-1h2.17a1 1 0 0 1 .948.684l.138.416.446-.892c.302-.605.613-1.21.91-1.854.27-.587.505-1.243.644-2.205Z"/></svg>
+                  <span>{{ item.comment.likes_count }}</span>
+                </button>
+                <button
+                  type="button"
+                  class="device-comment-vote device-comment-vote--dislike"
+                  :class="{ active: item.comment.my_vote === 'dislike' }"
+                  :disabled="!canVote || isVotePending(item.comment.id)"
+                  @click="toggleVote(item.comment, 'dislike')"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.169 1.005.337 2.388.281 4.058h2.568a1.5 1.5 0 0 1 1.473 1.783l-1.094 5.473A2 2 0 0 1 12.122 15H4.5a1.5 1.5 0 0 1-1.492-1.356L2.469 8.5H1.5A1.5 1.5 0 0 1 0 7V6a1 1 0 0 1 1-1h2.17a1 1.5 0 0 1 .948.684l.138.416.446-.892c.302-.605.613-1.21.91-1.854.27-.587.505-1.243.644-2.205Z"/></svg>
+                  <span>{{ item.comment.dislikes_count }}</span>
+                </button>
+              </div>
+
+              <div class="device-comment-actions-row">
+                <button
+                  v-if="status === 'authenticated'"
+                  type="button"
+                  class="device-comment-link"
+                  @click="toggleReplyForm(item.comment.id)"
+                >
+                  {{ activeReplyAnchorId === item.comment.id ? t('commentCancel') : t('commentReply') }}
+                </button>
+
+                <div v-if="canManageComment(item.comment)" class="device-comment-actions device-comment-actions--inline">
+                  <button type="button" class="device-comment-link" @click="startEdit(item.comment)">{{ t('commentEdit') }}</button>
+                  <button
+                    type="button"
+                    class="device-comment-link device-comment-link--danger"
+                    :disabled="deletingCommentId === item.comment.id"
+                    @click="removeComment(item.comment)"
+                  >
+                    {{ deletingCommentId === item.comment.id ? t('commentDeleting') : t('commentDelete') }}
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+        </article>
 
         <form
-          v-if="status === 'authenticated' && activeReplyAnchorId === thread.root.id"
+          v-if="status === 'authenticated' && activeReplyAnchorId === item.comment.id"
           class="device-reply-form"
+          :style="{ '--comment-depth': String(item.depth + 1) }"
           @submit.prevent="submitReply"
         >
           <textarea
@@ -137,31 +219,19 @@
               <p class="device-comment-form__counter">{{ replyDraft.length }}/{{ commentMaxLength }}</p>
             </div>
             <div class="device-comment-actions">
-              <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">
-                {{ t('commentCancel') }}
-              </button>
-              <button
-                type="submit"
-                class="device-access-panel__primary"
-                :disabled="replySubmitting || !canSubmitReply"
-              >
+              <button type="button" class="device-access-panel__secondary" @click="cancelReplyForm">{{ t('commentCancel') }}</button>
+              <button type="submit" class="device-access-panel__primary" :disabled="replySubmitting || !canSubmitReply">
                 {{ replySubmitting ? t('commentSubmitting') : t('commentReplySubmit') }}
               </button>
             </div>
           </div>
         </form>
-      </article>
+      </template>
     </div>
     <p v-else class="device-access-panel__empty">{{ t('commentsEmpty') }}</p>
 
-    <form
-      v-if="status === 'authenticated' && activeReplyAnchorId === null"
-      class="device-comment-form"
-      @submit.prevent="submitComment"
-    >
-      <label class="device-comment-form__label" for="device-comment-message">
-        {{ t('commentFormLabel') }}
-      </label>
+    <form v-if="status === 'authenticated' && activeReplyAnchorId === null" class="device-comment-form" @submit.prevent="submitComment">
+      <label class="device-comment-form__label" for="device-comment-message">{{ t('commentFormLabel') }}</label>
       <textarea
         id="device-comment-message"
         v-model="commentDraft"
@@ -189,7 +259,7 @@
           <p class="device-comment-form__counter">{{ commentDraftLength }}/{{ commentMaxLength }}</p>
           <div class="device-comment-form__rating-row">
             <span class="device-comment-form__rating-label">{{ t('commentRatingLabel') }}</span>
-            <div class="device-rating-editor device-rating-editor--create">
+            <div class="device-rating-editor">
               <button
                 v-for="value in 5"
                 :key="`create-rating-${value}`"
@@ -200,17 +270,11 @@
               >
                 ★
               </button>
-              <button type="button" class="device-rating-clear" @click="setCreateRating(null)">
-                {{ t('commentRatingClear') }}
-              </button>
+              <button type="button" class="device-rating-clear" @click="setCreateRating(null)">{{ t('commentRatingClear') }}</button>
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          class="device-access-panel__primary"
-          :disabled="commentSubmitting || !canSubmitComment"
-        >
+        <button type="submit" class="device-access-panel__primary" :disabled="commentSubmitting || !canSubmitComment">
           {{ commentSubmitting ? t('commentSubmitting') : t('commentSubmit') }}
         </button>
       </div>
@@ -219,15 +283,13 @@
     <p v-if="status === 'guest'" class="device-access-panel__guest-note">
       <a href="https://cloud.slsys.io/login" target="_blank" rel="noopener noreferrer">{{ t('commentGuestCta') }}</a>
     </p>
-    <p v-if="status === 'auth_error' || status === 'network_error'" class="device-access-panel__technical-error">
-      {{ t('commentAuthCheckFailed') }}
-    </p>
+    <p v-if="status === 'auth_error' || status === 'network_error'" class="device-access-panel__technical-error">{{ t('commentAuthCheckFailed') }}</p>
     <p v-if="actionMessage" class="device-access-panel__message">{{ actionMessage }}</p>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, h, onBeforeUnmount, ref, watch, type PropType } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import {
   CommunityApiError,
   createDeviceComment,
@@ -242,11 +304,16 @@ import {
   type CommunityCommentImage,
 } from '../../.vitepress/theme/api/communityClient'
 import { useCloudAuth } from '../../.vitepress/theme/composables/useCloudAuth'
-import { buildCommentThreads } from './helpers/buildCommentThreads'
+import { buildCommentThreads, type CommunityCommentThreadNode } from './helpers/buildCommentThreads'
 
 interface PreviewImage {
   name: string
   url: string
+}
+
+interface FlatThreadItem {
+  comment: CommunityComment
+  depth: number
 }
 
 const props = defineProps<{
@@ -260,9 +327,7 @@ const emit = defineEmits<{
   aggregatesChange: [{ commentsCount: number; ratingAvg: number | null; ratingsCount: number }]
 }>()
 
-const t = props.t
 const { status, user } = useCloudAuth()
-
 const comments = ref<CommunityComment[]>([])
 const commentsLoading = ref(false)
 const commentsError = ref(false)
@@ -273,7 +338,6 @@ const commentRating = ref<number | null>(null)
 const commentFiles = ref<File[]>([])
 const commentPreviews = ref<PreviewImage[]>([])
 const createFileInputKey = ref(0)
-
 const activeReplyAnchorId = ref<number | null>(null)
 const activeReplyParentId = ref<number | null>(null)
 const replyDraft = ref('')
@@ -281,14 +345,12 @@ const replyFiles = ref<File[]>([])
 const replyPreviews = ref<PreviewImage[]>([])
 const replyFileInputKey = ref(0)
 const replySubmitting = ref(false)
-
 const editDraftBody = ref('')
 const editDraftRating = ref<number | null>(null)
 const editFiles = ref<File[]>([])
 const editPreviews = ref<PreviewImage[]>([])
 const editFileInputKey = ref(0)
 const editingCommentId = ref<number | null>(null)
-
 const votePendingIds = ref<number[]>([])
 const brokenAvatarUrls = ref<string[]>([])
 const actionMessage = ref('')
@@ -302,6 +364,7 @@ const commentDraftLength = computed(() => commentDraft.value.length)
 const editDraftLength = computed(() => editDraftBody.value.length)
 const canVote = computed(() => status.value === 'authenticated')
 const threads = computed(() => buildCommentThreads(comments.value))
+const flatItems = computed<FlatThreadItem[]>(() => flattenThreads(threads.value))
 const editingComment = computed(() => comments.value.find((comment) => comment.id === editingCommentId.value) ?? null)
 const canSubmitComment = computed(() => hasPayload(commentDraft.value, commentRating.value, commentFiles.value.length))
 const canSubmitReply = computed(() => hasPayload(replyDraft.value, null, replyFiles.value.length))
@@ -309,7 +372,7 @@ const canSubmitEdit = computed(() => {
   const currentImagesCount = editingComment.value?.images.length ?? 0
   return hasPayload(editDraftBody.value, editDraftRating.value, editFiles.value.length || currentImagesCount)
     && editingCommentId.value !== null
-  })
+})
 
 const aggregateSummary = computed(() => {
   const commentsCount = comments.value.length || props.commentsCount || 0
@@ -329,277 +392,27 @@ const aggregateSummary = computed(() => {
   }
 })
 
-const HandThumbsUpIcon = defineComponent({
-  name: 'HandThumbsUpIcon',
-  setup() {
-    return () => h(
-      'svg',
-      { viewBox: '0 0 16 16', 'aria-hidden': 'true' },
-      [
-        h('path', {
-          d: 'M6.956 1.745C7.021.81 7.908.081 8.864.325l.261.067c.864.221 1.582.928 1.73 1.812.169 1.005.337 2.388.281 4.058h2.568a1.5 1.5 0 0 1 1.473 1.783l-1.094 5.473A2 2 0 0 1 12.122 15H4.5a1.5 1.5 0 0 1-1.492-1.356L2.469 8.5H1.5A1.5 1.5 0 0 1 0 7V6a1 1 0 0 1 1-1h2.17a1 1 0 0 1 .948.684l.138.416.446-.892c.302-.605.613-1.21.91-1.854.27-.587.505-1.243.644-2.205Z',
-        }),
-      ],
-    )
-  },
-})
+function flattenThreads(nodes: CommunityCommentThreadNode[], depth = 0): FlatThreadItem[] {
+  const items: FlatThreadItem[] = []
 
-const HandThumbsDownIcon = defineComponent({
-  name: 'HandThumbsDownIcon',
-  setup() {
-    return () => h(
-      'svg',
-      { viewBox: '0 0 16 16', 'aria-hidden': 'true' },
-      [
-        h('path', {
-          d: 'M6.956 14.255c.065.935.952 1.664 1.908 1.42l.261-.067c.864-.221 1.582-.928 1.73-1.812.169-1.005.337-2.388.281-4.058h2.568a1.5 1.5 0 0 0 1.473-1.783l-1.094-5.473A2 2 0 0 0 12.122 1H4.5a1.5 1.5 0 0 0-1.492 1.356L2.469 7.5H1.5A1.5 1.5 0 0 0 0 9v1a1 1 0 0 0 1 1h2.17a1 1 0 0 0 .948-.684l.138-.416.446.892c.302.605.613 1.21.91 1.854.27.587.505 1.243.644 2.205Z',
-        }),
-      ],
-    )
-  },
-})
+  for (const node of nodes) {
+    items.push({ comment: node.comment, depth })
+    items.push(...flattenThreads(node.replies, depth + 1))
+  }
 
-const CommentCard = defineComponent({
-  name: 'CommentCard',
-  props: {
-    comment: { type: Object as PropType<CommunityComment>, required: true },
-    isOwn: { type: Boolean, required: true },
-    canVote: { type: Boolean, required: true },
-    votePending: { type: Boolean, required: true },
-    showReply: { type: Boolean, required: true },
-    isReplyOpen: { type: Boolean, required: true },
-    isReply: { type: Boolean, default: false },
-    editingCommentId: { type: Number as PropType<number | null>, required: true },
-    editDraftBody: { type: String, required: true },
-    editDraftRating: { type: Number as PropType<number | null>, required: true },
-    editDraftLength: { type: Number, required: true },
-    editPreviews: { type: Array as PropType<PreviewImage[]>, required: true },
-    editFileInputKey: { type: Number, required: true },
-    commentSubmitting: { type: Boolean, required: true },
-    commentMaxLength: { type: Number, required: true },
-    editingComment: { type: Object as PropType<CommunityComment | null>, required: true },
-    resolveAvatarUrl: { type: Function as PropType<(value: string) => string>, required: true },
-    resolveImageUrl: { type: Function as PropType<(image: CommunityCommentImage) => string | null>, required: true },
-    isAvatarBroken: { type: Function as PropType<(value: string) => boolean>, required: true },
-    markAvatarBroken: { type: Function as PropType<(value: string) => void>, required: true },
-    formatCommentDate: { type: Function as PropType<(value: string | null) => string>, required: true },
-    renderStars: { type: Function as PropType<(rating: number) => string>, required: true },
-    getUserInitials: { type: Function as PropType<(name: string) => string>, required: true },
-    getAuthorName: { type: Function as PropType<(comment: CommunityComment) => string>, required: true },
-    getAvatarSource: { type: Function as PropType<(comment: CommunityComment) => string | null>, required: true },
-    setEditRating: { type: Function as PropType<(rating: number | null) => void>, required: true },
-    onEditFilesChange: { type: Function as PropType<(event: Event) => void>, required: true },
-    startEdit: { type: Function as PropType<(comment: CommunityComment) => void>, required: true },
-    cancelEdit: { type: Function as PropType<() => void>, required: true },
-    saveEdit: { type: Function as PropType<(commentId: number) => void>, required: true },
-    removeComment: { type: Function as PropType<(comment: CommunityComment) => void>, required: true },
-    toggleReplyForm: { type: Function as PropType<(commentId: number) => void>, required: true },
-    toggleVote: { type: Function as PropType<(comment: CommunityComment, vote: CommentVote) => void>, required: true },
-    t: { type: Function as PropType<(key: string) => string>, required: true },
-  },
-  setup(cardProps) {
-    return () => {
-      const avatarSource = cardProps.getAvatarSource(cardProps.comment)
-      const resolvedAvatar = avatarSource ? cardProps.resolveAvatarUrl(avatarSource) : null
-      const hasAvatar = Boolean(resolvedAvatar) && !cardProps.isAvatarBroken(avatarSource || '')
-      const isEditing = cardProps.editingCommentId === cardProps.comment.id
-
-      return h('div', {
-        class: ['device-comment-card', { 'device-comment-card--reply': cardProps.isReply, 'device-comment-card--own': cardProps.isOwn }],
-      }, [
-        h('div', { class: 'device-comment-card__avatar' }, [
-          hasAvatar
-            ? h('img', {
-                src: resolvedAvatar || '',
-                alt: cardProps.getAuthorName(cardProps.comment),
-                loading: 'lazy',
-                onError: () => cardProps.markAvatarBroken(avatarSource || ''),
-              })
-            : h('span', cardProps.getUserInitials(cardProps.getAuthorName(cardProps.comment))),
-        ]),
-        h('div', { class: 'device-comment-card__body' }, [
-          h('div', { class: 'device-comment-card__meta' }, [
-            h('div', { class: 'device-comment-card__author-line' }, [
-              h('strong', cardProps.getAuthorName(cardProps.comment)),
-              cardProps.isOwn ? h('span', { class: 'device-comment-card__author-badge' }, cardProps.t('commentOwnBadge')) : null,
-              cardProps.comment.rating !== null
-                ? h('span', {
-                    class: 'device-comment-card__rating-inline',
-                    'aria-label': `${cardProps.comment.rating} / 5`,
-                  }, cardProps.renderStars(cardProps.comment.rating))
-                : null,
-            ]),
-            h('span', { class: 'device-comment-card__time' }, cardProps.formatCommentDate(cardProps.comment.updated_at || cardProps.comment.created_at)),
-          ]),
-          isEditing
-            ? h('div', { class: 'device-comment-edit' }, [
-                h('div', { class: 'device-rating-editor' }, [
-                  ...[1, 2, 3, 4, 5].map((value) => h('button', {
-                    key: `edit-rating-${cardProps.comment.id}-${value}`,
-                    type: 'button',
-                    class: ['device-rating-star', { active: (cardProps.editDraftRating || 0) >= value }],
-                    onClick: () => cardProps.setEditRating(value),
-                  }, '★')),
-                  h('button', {
-                    type: 'button',
-                    class: 'device-rating-clear',
-                    onClick: () => cardProps.setEditRating(null),
-                  }, cardProps.t('commentRatingClear')),
-                ]),
-                h('textarea', {
-                  value: cardProps.editDraftBody,
-                  onInput: (event: Event) => {
-                    editDraftBody.value = (event.target as HTMLTextAreaElement).value
-                  },
-                  class: 'device-comment-form__input',
-                  maxlength: cardProps.commentMaxLength,
-                  rows: 4,
-                }),
-                h('p', { class: 'device-comment-form__replacement-hint' }, cardProps.t('commentImagesReplaceHint')),
-                h('input', {
-                  key: cardProps.editFileInputKey,
-                  class: 'device-comment-form__file-input',
-                  type: 'file',
-                  accept: 'image/jpeg,image/png,image/webp',
-                  multiple: true,
-                  onChange: cardProps.onEditFilesChange,
-                }),
-                cardProps.editingComment?.images.length && !cardProps.editPreviews.length
-                  ? h('div', { class: 'device-comment-gallery device-comment-gallery--current' },
-                      cardProps.editingComment.images
-                        .map((image) => {
-                          const imageUrl = cardProps.resolveImageUrl(image)
-                          if (!imageUrl) {
-                            return null
-                          }
-                          return h('a', {
-                            key: `existing-edit-${image.id}`,
-                            href: imageUrl,
-                            class: 'device-comment-gallery__item',
-                            target: '_blank',
-                            rel: 'noopener noreferrer',
-                          }, [
-                            h('img', { src: imageUrl, alt: cardProps.t('commentImageAlt'), loading: 'lazy' }),
-                          ])
-                        })
-                        .filter(Boolean),
-                    )
-                  : null,
-                cardProps.editPreviews.length
-                  ? h('div', { class: 'device-comment-gallery device-comment-gallery--preview' },
-                      cardProps.editPreviews.map((preview) => h('div', {
-                        key: preview.url,
-                        class: 'device-comment-gallery__item',
-                      }, [h('img', { src: preview.url, alt: preview.name })])),
-                    )
-                  : null,
-                h('div', { class: 'device-comment-form__footer' }, [
-                  h('div', { class: 'device-comment-form__meta-panel' }, [
-                    h('p', { class: 'device-comment-form__counter' }, `${cardProps.editDraftLength}/${cardProps.commentMaxLength}`),
-                  ]),
-                  h('div', { class: 'device-comment-actions' }, [
-                    h('button', {
-                      type: 'button',
-                      class: 'device-access-panel__secondary',
-                      onClick: cardProps.cancelEdit,
-                    }, cardProps.t('commentCancel')),
-                    h('button', {
-                      type: 'button',
-                      class: 'device-access-panel__primary',
-                      disabled: cardProps.commentSubmitting || !canSubmitEdit.value,
-                      onClick: () => cardProps.saveEdit(cardProps.comment.id),
-                    }, cardProps.commentSubmitting ? cardProps.t('commentSaving') : cardProps.t('commentSave')),
-                  ]),
-                ]),
-              ])
-            : h('div', { class: 'device-comment-card__content' }, [
-                cardProps.comment.body.trim()
-                  ? h('p', { class: 'device-comment-card__text' }, cardProps.comment.body)
-                  : null,
-                cardProps.comment.images.length
-                  ? h('div', { class: 'device-comment-gallery' },
-                      cardProps.comment.images
-                        .map((image) => {
-                          const imageUrl = cardProps.resolveImageUrl(image)
-                          if (!imageUrl) {
-                            return null
-                          }
-                          return h('a', {
-                            key: `image-${cardProps.comment.id}-${image.id}-${imageUrl}`,
-                            href: imageUrl,
-                            class: 'device-comment-gallery__item',
-                            target: '_blank',
-                            rel: 'noopener noreferrer',
-                          }, [
-                            h('img', { src: imageUrl, alt: cardProps.t('commentImageAlt'), loading: 'lazy' }),
-                          ])
-                        })
-                        .filter(Boolean),
-                    )
-                  : null,
-                h('div', { class: 'device-comment-votes' }, [
-                  h('button', {
-                    type: 'button',
-                    class: ['device-comment-vote', 'device-comment-vote--like', { active: cardProps.comment.my_vote === 'like' }],
-                    disabled: !cardProps.canVote || cardProps.votePending,
-                    onClick: () => cardProps.toggleVote(cardProps.comment, 'like'),
-                  }, [h(HandThumbsUpIcon), h('span', String(cardProps.comment.likes_count))]),
-                  h('button', {
-                    type: 'button',
-                    class: ['device-comment-vote', 'device-comment-vote--dislike', { active: cardProps.comment.my_vote === 'dislike' }],
-                    disabled: !cardProps.canVote || cardProps.votePending,
-                    onClick: () => cardProps.toggleVote(cardProps.comment, 'dislike'),
-                  }, [h(HandThumbsDownIcon), h('span', String(cardProps.comment.dislikes_count))]),
-                ]),
-                h('div', { class: 'device-comment-actions-row' }, [
-                  cardProps.showReply
-                    ? h('button', {
-                        type: 'button',
-                        class: 'device-comment-link',
-                        onClick: () => cardProps.toggleReplyForm(cardProps.comment.id),
-                      }, cardProps.isReplyOpen ? cardProps.t('commentCancel') : cardProps.t('commentReply'))
-                    : null,
-                  cardProps.isOwn
-                    ? h('div', { class: 'device-comment-actions device-comment-actions--inline' }, [
-                        h('button', {
-                          type: 'button',
-                          class: 'device-comment-link',
-                          onClick: () => cardProps.startEdit(cardProps.comment),
-                        }, cardProps.t('commentEdit')),
-                        h('button', {
-                          type: 'button',
-                          class: 'device-comment-link device-comment-link--danger',
-                          disabled: deletingCommentId.value === cardProps.comment.id,
-                          onClick: () => cardProps.removeComment(cardProps.comment),
-                        }, deletingCommentId.value === cardProps.comment.id ? cardProps.t('commentDeleting') : cardProps.t('commentDelete')),
-                      ])
-                    : null,
-                ]),
-              ]),
-        ]),
-      ])
-    }
-  },
-})
+  return items
+}
 
 function pluralizeComments(count: number) {
-  if (count % 10 === 1 && count % 100 !== 11) {
-    return t('commentsCountOne')
-  }
-  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
-    return t('commentsCountFew')
-  }
-  return t('commentsCountMany')
+  if (count % 10 === 1 && count % 100 !== 11) return props.t('commentsCountOne')
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return props.t('commentsCountFew')
+  return props.t('commentsCountMany')
 }
 
 function pluralizeRatings(count: number) {
-  if (count % 10 === 1 && count % 100 !== 11) {
-    return t('ratingsCountOne')
-  }
-  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
-    return t('ratingsCountFew')
-  }
-  return t('ratingsCountMany')
+  if (count % 10 === 1 && count % 100 !== 11) return props.t('ratingsCountOne')
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return props.t('ratingsCountFew')
+  return props.t('ratingsCountMany')
 }
 
 function normalizeRatingInput(rating: number | null) {
@@ -615,43 +428,26 @@ function hasPayload(body: string, rating: number | null, imagesCount: number) {
 function mapCommentError(err: unknown): string {
   if (err instanceof CommunityApiError) {
     switch (err.code) {
-      case 'not_authenticated':
-        return t('communityAuthRequired')
-      case 'invalid_device_id':
-        return t('communityInvalidDeviceId')
-      case 'invalid_parent_comment':
-        return t('communityInvalidParentComment')
-      case 'reply_device_mismatch':
-        return t('communityReplyDeviceMismatch')
-      case 'reply_depth_not_allowed':
-        return t('communityReplyDepthNotAllowed')
-      case 'invalid_rating':
-        return t('communityInvalidRating')
-      case 'invalid_vote':
-        return t('communityInvalidVote')
-      case 'unsupported_image_type':
-        return t('communityUnsupportedImageType')
-      case 'image_too_large':
-        return t('communityImageTooLarge')
-      case 'too_many_images':
-        return t('communityTooManyImages')
-      case 'comment_forbidden':
-        return t('communityCommentForbidden')
-      case 'comment_not_found':
-        return t('communityCommentNotFound')
-      case 'auth_service_unavailable':
-        return t('communityAuthServiceUnavailable')
-      case 'comment_or_rating_required':
-        return t('communityCommentOrRatingRequired')
+      case 'not_authenticated': return props.t('communityAuthRequired')
+      case 'invalid_device_id': return props.t('communityInvalidDeviceId')
+      case 'invalid_parent_comment': return props.t('communityInvalidParentComment')
+      case 'reply_device_mismatch': return props.t('communityReplyDeviceMismatch')
+      case 'reply_depth_not_allowed': return props.t('communityReplyDepthNotAllowed')
+      case 'invalid_rating': return props.t('communityInvalidRating')
+      case 'invalid_vote': return props.t('communityInvalidVote')
+      case 'unsupported_image_type': return props.t('communityUnsupportedImageType')
+      case 'image_too_large': return props.t('communityImageTooLarge')
+      case 'too_many_images': return props.t('communityTooManyImages')
+      case 'comment_forbidden': return props.t('communityCommentForbidden')
+      case 'comment_not_found': return props.t('communityCommentNotFound')
+      case 'auth_service_unavailable': return props.t('communityAuthServiceUnavailable')
+      case 'comment_or_rating_required': return props.t('communityCommentOrRatingRequired')
       case 'invalid_comment':
-      case 'device_not_found':
-        return t('communityValidationError')
-      default:
-        return t('communityRequestFailed')
+      case 'device_not_found': return props.t('communityValidationError')
+      default: return props.t('communityRequestFailed')
     }
   }
-
-  return t('communityRequestFailed')
+  return props.t('communityRequestFailed')
 }
 
 function emitAggregates() {
@@ -661,11 +457,7 @@ function emitAggregates() {
     ? Number((ratedComments.reduce((sum, comment) => sum + (comment.rating || 0), 0) / ratedComments.length).toFixed(1))
     : null
 
-  emit('aggregatesChange', {
-    commentsCount,
-    ratingAvg,
-    ratingsCount: ratedComments.length,
-  })
+  emit('aggregatesChange', { commentsCount, ratingAvg, ratingsCount: ratedComments.length })
 }
 
 async function refreshComments() {
@@ -680,7 +472,6 @@ async function refreshComments() {
   }
 
   commentsLoading.value = true
-
   try {
     comments.value = await getDeviceComments(deviceId)
     emitAggregates()
@@ -692,36 +483,18 @@ async function refreshComments() {
   }
 }
 
-watch(
-  normalizedDeviceId,
-  () => {
-    void refreshComments()
-  },
-  { immediate: true },
-)
+watch(normalizedDeviceId, () => { void refreshComments() }, { immediate: true })
 
 function formatCommentDate(value: string | null) {
-  if (!value) {
-    return ''
-  }
-
+  if (!value) return ''
   const normalized = value.includes(' ') && !value.includes('T') ? value.replace(' ', 'T') : value
   const date = new Date(normalized)
-
-  if (Number.isNaN(date.getTime())) {
-    return value
-  }
-
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(date)
+  if (Number.isNaN(date.getTime())) return value
+  return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(date)
 }
 
 function renderStars(rating: number) {
-  const full = '★'.repeat(Math.round(rating))
-  const empty = '☆'.repeat(Math.max(0, 5 - Math.round(rating)))
-  return `${full}${empty}`
+  return `${'★'.repeat(Math.round(rating))}${'☆'.repeat(Math.max(0, 5 - Math.round(rating)))}`
 }
 
 function formatStarsLabel(rating: number) {
@@ -729,7 +502,7 @@ function formatStarsLabel(rating: number) {
 }
 
 function getUserInitials(name: string) {
-  return (name || t('commentAnonymous'))
+  return (name || props.t('commentAnonymous'))
     .split(/\s+/)
     .filter(Boolean)
     .slice(0, 2)
@@ -738,11 +511,8 @@ function getUserInitials(name: string) {
 }
 
 function getAuthorName(comment: CommunityComment) {
-  if (comment.author === null) {
-    return t('commentDeletedUser')
-  }
-
-  return comment.author.display_name.trim() || t('commentAnonymous')
+  if (comment.author === null) return props.t('commentDeletedUser')
+  return comment.author.display_name.trim() || props.t('commentAnonymous')
 }
 
 function isAvatarBroken(value: string) {
@@ -750,45 +520,28 @@ function isAvatarBroken(value: string) {
 }
 
 function markAvatarBroken(value: string) {
-  if (!value || brokenAvatarUrls.value.includes(value)) {
-    return
-  }
-
+  if (!value || brokenAvatarUrls.value.includes(value)) return
   brokenAvatarUrls.value = [...brokenAvatarUrls.value, value]
 }
 
 function getAvatarSource(comment: CommunityComment) {
   const candidate = comment.author?.avatar_url ?? null
-  if (!candidate || isAvatarBroken(candidate)) {
-    return null
-  }
+  if (!candidate || isAvatarBroken(candidate)) return null
   return candidate
 }
 
 function resolveAvatarUrl(value: string) {
-  if (/^https?:\/\//i.test(value)) {
-    return value
-  }
-
-  if (value.startsWith('/')) {
-    return `https://cloud.slsys.io${value}`
-  }
-
+  if (/^https?:\/\//i.test(value)) return value
+  if (value.startsWith('/')) return `https://cloud.slsys.io${value}`
   return value
 }
 
 function resolveImageUrl(image: CommunityCommentImage) {
-  if (!image.url) {
-    return null
-  }
-
-  return resolveCommunityAssetUrl(image.url)
+  return image.url ? resolveCommunityAssetUrl(image.url) : null
 }
 
 function canManageComment(comment: CommunityComment) {
-  return status.value === 'authenticated'
-    && comment.author !== null
-    && String(comment.author.id) === String(user.value?.id)
+  return status.value === 'authenticated' && comment.author !== null && String(comment.author.id) === String(user.value?.id)
 }
 
 function setCreateRating(rating: number | null) {
@@ -800,9 +553,7 @@ function setEditRating(rating: number | null) {
 }
 
 function revokePreviewUrls(previews: PreviewImage[]) {
-  previews.forEach((preview) => {
-    URL.revokeObjectURL(preview.url)
-  })
+  previews.forEach((preview) => URL.revokeObjectURL(preview.url))
 }
 
 function clearCreateFiles() {
@@ -827,27 +578,16 @@ function clearEditFiles() {
 }
 
 function buildPreviews(files: File[]): PreviewImage[] {
-  return files.map((file) => ({
-    name: file.name,
-    url: URL.createObjectURL(file),
-  }))
+  return files.map((file) => ({ name: file.name, url: URL.createObjectURL(file) }))
 }
 
 function validateImageFiles(fileList: FileList | null): File[] {
   const files = Array.from(fileList || [])
-
-  if (files.length > maxImagesPerComment) {
-    throw new Error(t('communityTooManyImages'))
-  }
+  if (files.length > maxImagesPerComment) throw new Error(props.t('communityTooManyImages'))
 
   for (const file of files) {
-    if (!allowedImageMimeTypes.includes(file.type)) {
-      throw new Error(t('communityUnsupportedImageType'))
-    }
-
-    if (file.size > maxImageSizeBytes) {
-      throw new Error(t('communityImageTooLarge'))
-    }
+    if (!allowedImageMimeTypes.includes(file.type)) throw new Error(props.t('communityUnsupportedImageType'))
+    if (file.size > maxImageSizeBytes) throw new Error(props.t('communityImageTooLarge'))
   }
 
   return files
@@ -855,7 +595,6 @@ function validateImageFiles(fileList: FileList | null): File[] {
 
 function onCreateFilesChange(event: Event) {
   const input = event.target as HTMLInputElement
-
   try {
     const files = validateImageFiles(input.files)
     clearCreateFiles()
@@ -864,13 +603,12 @@ function onCreateFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearCreateFiles()
-    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
   }
 }
 
 function onReplyFilesChange(event: Event) {
   const input = event.target as HTMLInputElement
-
   try {
     const files = validateImageFiles(input.files)
     clearReplyFiles()
@@ -879,13 +617,12 @@ function onReplyFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearReplyFiles()
-    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
   }
 }
 
 function onEditFilesChange(event: Event) {
   const input = event.target as HTMLInputElement
-
   try {
     const files = validateImageFiles(input.files)
     clearEditFiles()
@@ -894,7 +631,7 @@ function onEditFilesChange(event: Event) {
     actionMessage.value = ''
   } catch (err) {
     clearEditFiles()
-    actionMessage.value = err instanceof Error ? err.message : t('communityRequestFailed')
+    actionMessage.value = err instanceof Error ? err.message : props.t('communityRequestFailed')
   }
 }
 
@@ -909,7 +646,6 @@ function toggleReplyForm(commentId: number) {
     cancelReplyForm()
     return
   }
-
   activeReplyAnchorId.value = commentId
   activeReplyParentId.value = commentId
   replyDraft.value = ''
@@ -941,22 +677,16 @@ function cancelEdit() {
 
 async function submitComment() {
   if (!canSubmitComment.value || normalizedDeviceId.value === null) {
-    actionMessage.value = t('communityCommentOrRatingRequired')
+    actionMessage.value = props.t('communityCommentOrRatingRequired')
     return
   }
 
   commentSubmitting.value = true
   actionMessage.value = ''
-
   try {
-    await createDeviceComment({
-      deviceId: normalizedDeviceId.value,
-      body: commentDraft.value,
-      rating: commentRating.value,
-      images: commentFiles.value,
-    })
+    await createDeviceComment({ deviceId: normalizedDeviceId.value, body: commentDraft.value, rating: commentRating.value, images: commentFiles.value })
     resetCreateForm()
-    actionMessage.value = t('commentSubmitSuccess')
+    actionMessage.value = props.t('commentSubmitSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -967,22 +697,16 @@ async function submitComment() {
 
 async function submitReply() {
   if (!canSubmitReply.value || normalizedDeviceId.value === null || activeReplyParentId.value === null) {
-    actionMessage.value = t('communityCommentOrRatingRequired')
+    actionMessage.value = props.t('communityCommentOrRatingRequired')
     return
   }
 
   replySubmitting.value = true
   actionMessage.value = ''
-
   try {
-    await createDeviceComment({
-      deviceId: normalizedDeviceId.value,
-      parentId: activeReplyParentId.value,
-      body: replyDraft.value,
-      images: replyFiles.value,
-    })
+    await createDeviceComment({ deviceId: normalizedDeviceId.value, parentId: activeReplyParentId.value, body: replyDraft.value, images: replyFiles.value })
     cancelReplyForm()
-    actionMessage.value = t('commentReplySuccess')
+    actionMessage.value = props.t('commentReplySuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -993,22 +717,16 @@ async function submitReply() {
 
 async function saveEdit(commentId: number) {
   if (!canSubmitEdit.value) {
-    actionMessage.value = t('communityCommentOrRatingRequired')
+    actionMessage.value = props.t('communityCommentOrRatingRequired')
     return
   }
 
   commentSubmitting.value = true
   actionMessage.value = ''
-
   try {
-    await updateDeviceComment({
-      commentId,
-      body: editDraftBody.value,
-      rating: editDraftRating.value,
-      images: editFiles.value,
-    })
+    await updateDeviceComment({ commentId, body: editDraftBody.value, rating: editDraftRating.value, images: editFiles.value })
     cancelEdit()
-    actionMessage.value = t('commentUpdateSuccess')
+    actionMessage.value = props.t('commentUpdateSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -1018,16 +736,13 @@ async function saveEdit(commentId: number) {
 }
 
 async function removeComment(comment: CommunityComment) {
-  if (!window.confirm(t('commentDeleteConfirm'))) {
-    return
-  }
+  if (!window.confirm(props.t('commentDeleteConfirm'))) return
 
   deletingCommentId.value = comment.id
   actionMessage.value = ''
-
   try {
     await deleteDeviceComment(comment.id)
-    actionMessage.value = t('commentDeleteSuccess')
+    actionMessage.value = props.t('commentDeleteSuccess')
     await refreshComments()
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -1040,40 +755,19 @@ function isVotePending(commentId: number) {
   return votePendingIds.value.includes(commentId)
 }
 
-function patchVoteState(commentId: number, voteState: VoteCommentResultLike) {
-  comments.value = comments.value.map((comment) => {
-    if (comment.id !== commentId) {
-      return comment
-    }
-
-    return {
-      ...comment,
-      likes_count: voteState.likes_count,
-      dislikes_count: voteState.dislikes_count,
-      my_vote: voteState.my_vote,
-    }
-  })
-}
-
-type VoteCommentResultLike = {
-  likes_count: number
-  dislikes_count: number
-  my_vote: CommentVote | null
+function patchVoteState(commentId: number, voteState: { likes_count: number; dislikes_count: number; my_vote: CommentVote | null }) {
+  comments.value = comments.value.map((comment) => comment.id === commentId
+    ? { ...comment, likes_count: voteState.likes_count, dislikes_count: voteState.dislikes_count, my_vote: voteState.my_vote }
+    : comment)
 }
 
 async function toggleVote(comment: CommunityComment, nextVote: CommentVote) {
-  if (!canVote.value || isVotePending(comment.id)) {
-    return
-  }
+  if (!canVote.value || isVotePending(comment.id)) return
 
   votePendingIds.value = [...votePendingIds.value, comment.id]
   actionMessage.value = ''
-
   try {
-    const result = comment.my_vote === nextVote
-      ? await removeCommentVote(comment.id)
-      : await voteComment(comment.id, nextVote)
-
+    const result = comment.my_vote === nextVote ? await removeCommentVote(comment.id) : await voteComment(comment.id, nextVote)
     patchVoteState(comment.id, result)
   } catch (err) {
     actionMessage.value = mapCommentError(err)
@@ -1097,14 +791,14 @@ onBeforeUnmount(() => {
 .device-access-panel__header {
   align-items: center;
   display: flex;
-  justify-content: space-between;
   gap: 12px;
+  justify-content: space-between;
 }
 
 .device-access-panel__title {
   align-items: center;
   color: var(--vp-c-text-1);
-  display: flex;
+  display: inline-flex;
   font-size: 1rem;
   font-weight: 600;
   gap: 8px;
@@ -1113,11 +807,15 @@ onBeforeUnmount(() => {
 }
 
 .device-access-panel__count-badge {
+  align-items: center;
   background: var(--vp-c-default-soft);
   border-radius: 999px;
   color: var(--vp-c-text-2);
+  display: inline-flex;
   font-size: 12px;
   font-weight: 600;
+  justify-content: center;
+  min-width: 24px;
   padding: 2px 8px;
 }
 
@@ -1130,6 +828,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
   font: inherit;
   font-size: 12px;
+  font-weight: 500;
   line-height: 1.35;
   padding: 0;
 }
@@ -1160,28 +859,16 @@ onBeforeUnmount(() => {
   margin: 14px 0 0;
 }
 
-.device-comment-threads {
+.device-comment-list {
   display: grid;
-  gap: 18px;
+  gap: 14px;
   margin-top: 18px;
-}
-
-.device-comment-thread {
-  display: grid;
-  gap: 12px;
-}
-
-.device-comment-replies {
-  border-left: 1px solid var(--vp-c-divider);
-  display: grid;
-  gap: 12px;
-  margin-left: 22px;
-  padding-left: 18px;
 }
 
 .device-comment-card {
   display: flex;
   gap: 12px;
+  margin-left: calc(var(--comment-depth, 0) * 26px);
 }
 
 .device-comment-card__avatar {
@@ -1201,9 +888,9 @@ onBeforeUnmount(() => {
 
 .device-comment-card__avatar img {
   display: block;
-  height: 100%;
+  height: 40px;
   object-fit: cover;
-  width: 100%;
+  width: 40px;
 }
 
 .device-comment-card__body {
@@ -1241,14 +928,9 @@ onBeforeUnmount(() => {
   font-size: 12px;
 }
 
-.device-comment-card__content,
-.device-comment-edit {
-  margin-top: 8px;
-}
-
 .device-comment-card__text {
   color: var(--vp-c-text-1);
-  margin: 0;
+  margin: 8px 0 0;
   white-space: pre-wrap;
 }
 
@@ -1277,7 +959,7 @@ onBeforeUnmount(() => {
 .device-comment-votes {
   align-items: center;
   display: flex;
-  gap: 12px;
+  gap: 14px;
   margin-top: 10px;
 }
 
@@ -1285,7 +967,6 @@ onBeforeUnmount(() => {
   align-items: center;
   background: transparent;
   border: 0;
-  color: var(--vp-c-text-2);
   cursor: pointer;
   display: inline-flex;
   gap: 6px;
@@ -1306,8 +987,12 @@ onBeforeUnmount(() => {
   color: var(--vp-c-danger-1);
 }
 
+.device-comment-vote--dislike svg {
+  transform: rotate(180deg);
+}
+
 .device-comment-vote:not(.active) {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .device-comment-vote:disabled,
@@ -1326,8 +1011,7 @@ onBeforeUnmount(() => {
   margin-top: 10px;
 }
 
-.device-comment-actions,
-.device-comment-actions--inline {
+.device-comment-actions {
   display: inline-flex;
   gap: 12px;
 }
@@ -1341,7 +1025,7 @@ onBeforeUnmount(() => {
 }
 
 .device-reply-form {
-  margin-left: 52px;
+  margin-left: calc(var(--comment-depth, 0) * 26px + 52px);
 }
 
 .device-comment-form__label {
@@ -1453,19 +1137,20 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 640px) {
-  .device-comment-card__meta,
-  .device-comment-form__footer {
+  .device-comment-card,
+  .device-comment-form__footer,
+  .device-comment-card__meta {
     align-items: flex-start;
+  }
+
+  .device-comment-form__footer,
+  .device-comment-card__meta {
     flex-direction: column;
   }
 
+  .device-comment-card,
   .device-reply-form {
     margin-left: 0;
-  }
-
-  .device-comment-replies {
-    margin-left: 12px;
-    padding-left: 12px;
   }
 }
 </style>
