@@ -17,6 +17,11 @@
                 {{ vendors[device.VENDOR] ? vendors[device.VENDOR]['TITLE'] : device.VENDOR }}
               </p>
               <p><strong>{{ t('description') }}:</strong> {{ device['DESCRIPTION'] }}</p>
+              <div class="modal-community-summary">
+                <span v-if="ratingAverage !== null" class="modal-community-summary__rating">★ {{ ratingAverage.toFixed(1) }}</span>
+                <span>{{ commentsCount }} {{ commentsLabel }}</span>
+                <span v-if="ratingsCount !== null && ratingsCount > 0">{{ ratingsCount }} {{ ratingsLabel }}</span>
+              </div>
               <div v-if="Array.isArray(device['EXPOSES']) && device['EXPOSES'].length" class="states">
                 <strong>{{ t('states') }}:</strong>
                 <span v-for="state in device['EXPOSES']" :key="state" class="badge">{{ state }}</span>
@@ -56,7 +61,13 @@
             <p><strong>{{ t('notes') }}:</strong></p>
             <div v-html="decodedNotes"></div>
           </div>
-          <DeviceAccessPanel :device-id="deviceId" :t="t" />
+          <DeviceAccessPanel
+            :device-id="deviceId"
+            :comments-count="commentsCount"
+            :rating-avg="ratingAverage"
+            :t="t"
+            @aggregates-change="$emit('aggregatesChange', $event)"
+          />
         </div>
         <div v-else>Loading...</div>
       </div>
@@ -88,7 +99,40 @@ const deviceId = computed<number | null>(() => {
   return Number.isInteger(numericId) ? numericId : null
 })
 
-defineEmits(['close'])
+const commentsCount = computed(() => Number(props.device?.COMMENTS_COUNT || 0))
+const ratingAverage = computed(() => {
+  const numeric = Number(props.device?.RATING_AVG)
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : null
+})
+const ratingsCount = computed(() => {
+  const numeric = Number(props.device?.RATINGS_COUNT)
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : null
+})
+const commentsLabel = computed(() => {
+  const count = commentsCount.value
+  if (count % 10 === 1 && count % 100 !== 11) {
+    return props.t('commentsCountOne')
+  }
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+    return props.t('commentsCountFew')
+  }
+  return props.t('commentsCountMany')
+})
+const ratingsLabel = computed(() => {
+  const count = ratingsCount.value || 0
+  if (count % 10 === 1 && count % 100 !== 11) {
+    return props.t('ratingsCountOne')
+  }
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+    return props.t('ratingsCountFew')
+  }
+  return props.t('ratingsCountMany')
+})
+
+defineEmits<{
+  close: []
+  aggregatesChange: [{ commentsCount: number; ratingAvg: number | null; ratingsCount: number }]
+}>()
 </script>
 
 <style scoped>
@@ -149,6 +193,21 @@ defineEmits(['close'])
 
 .modal-info {
   flex: 1;
+}
+
+.modal-community-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 14px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}
+
+.modal-community-summary__rating {
+  color: #c47c00;
+  font-weight: 700;
 }
 
 .badge {

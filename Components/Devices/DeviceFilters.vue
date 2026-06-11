@@ -87,6 +87,7 @@ defineEmits<{
 .device-filter-input,
 .device-filter-select {
   padding: 6px 10px;
+  min-height: 38px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   min-width: 180px;
@@ -100,6 +101,7 @@ defineEmits<{
   border-radius: 8px;
   background: var(--vp-c-brand-1);
   color: var(--vp-c-bg);
+  min-height: 38px;
   padding: 8px 14px;
   cursor: pointer;
 }

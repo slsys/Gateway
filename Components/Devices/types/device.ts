@@ -24,6 +24,9 @@ export interface DeviceItem {
   HAVE_IN_LAB?: string
   PICTURE?: string
   UPDATED_IN?: string
+  COMMENTS_COUNT?: string | number | null
+  RATING_AVG?: string | number | null
+  RATINGS_COUNT?: string | number | null
   EXPOSES?: string[] | null
   ZIGBEE_MODELS?: DeviceZigbeeModel[]
   BUY_LINKS?: DeviceBuyLink[]

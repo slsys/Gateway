@@ -84,6 +84,7 @@
       :decoded-notes="decodedNotes"
       :t="t"
       @close="closeModal"
+      @aggregates-change="applyDeviceAggregates"
     />
 
     <DeviceRequestModal
@@ -255,11 +256,11 @@ async function fetchJson(url: string) {
 }
 
 async function fetchDevices() {
-  return (await fetchJson('/ru/ajax/supported_devices?op=get_devices')) as DeviceItem[]
+  return (await fetchJson('/ajax/supported_devices?op=get_devices')) as DeviceItem[]
 }
 
 async function fetchVendors() {
-  const data = (await fetchJson('/ru/ajax/supported_devices?op=get_vendors')) as DeviceVendor[]
+  const data = (await fetchJson('/ajax/supported_devices?op=get_vendors')) as DeviceVendor[]
   vendors.value = data.reduce((acc, vendor) => {
     acc[String(vendor['ID'])] = vendor
     return acc
@@ -353,6 +354,40 @@ function closeRequestModal() {
   updateRequestQuery(false)
 }
 
+function applyDeviceAggregates(payload: { commentsCount: number; ratingAvg: number | null; ratingsCount: number }) {
+  if (!modalData.value) {
+    return
+  }
+
+  const nextModalData: DeviceItem = {
+    ...modalData.value,
+    COMMENTS_COUNT: String(payload.commentsCount),
+    RATING_AVG: payload.ratingAvg === null ? null : String(payload.ratingAvg),
+    RATINGS_COUNT: String(payload.ratingsCount),
+  }
+
+  modalData.value = nextModalData
+
+  const targetId = String(nextModalData.ID ?? nextModalData.id ?? '')
+  if (!targetId) {
+    return
+  }
+
+  allItems.value = allItems.value.map((item) => {
+    const itemId = String(item.ID ?? item.id ?? '')
+    if (itemId !== targetId) {
+      return item
+    }
+
+    return {
+      ...item,
+      COMMENTS_COUNT: nextModalData.COMMENTS_COUNT,
+      RATING_AVG: nextModalData.RATING_AVG,
+      RATINGS_COUNT: nextModalData.RATINGS_COUNT,
+    }
+  })
+}
+
 async function openModal(itemOrTitle: DeviceItem | string) {
   const title = typeof itemOrTitle === 'string' ? itemOrTitle : itemOrTitle['TITLE']
   const sourceItem = typeof itemOrTitle === 'string'
@@ -363,10 +398,13 @@ async function openModal(itemOrTitle: DeviceItem | string) {
   updateBodyModalState()
 
   try {
-    const data = await fetchJson(`/ru/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`) as DeviceItem
+    const data = await fetchJson(`/ajax/supported_devices?op=get_device&id=${encodeURIComponent(title)}`) as DeviceItem
     modalData.value = {
       ...data,
       ID: data.ID ?? sourceItem?.ID ?? sourceItem?.id,
+      COMMENTS_COUNT: data.COMMENTS_COUNT ?? sourceItem?.COMMENTS_COUNT ?? '0',
+      RATING_AVG: data.RATING_AVG ?? sourceItem?.RATING_AVG ?? null,
+      RATINGS_COUNT: data.RATINGS_COUNT ?? sourceItem?.RATINGS_COUNT ?? null,
     }
 
     const url = new URL(window.location)
