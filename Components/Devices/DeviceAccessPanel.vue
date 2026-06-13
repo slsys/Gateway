@@ -28,7 +28,7 @@
     <div v-else-if="flatItems.length" class="device-comment-list">
       <template v-for="item in flatItems" :key="item.comment.id">
         <article class="device-comment-card" :class="{ 'device-comment-card--own': canManageComment(item.comment) }" :style="{ '--comment-depth': String(item.depth) }">
-          <div class="device-comment-card__avatar">
+          <div class="device-comment-card__avatar" :style="getAvatarContainerStyle(item.comment)">
             <img
               v-if="getAvatarSource(item.comment)"
               :src="resolveAvatarUrl(getAvatarSource(item.comment) || '')"
@@ -36,7 +36,7 @@
               loading="lazy"
               @error="markAvatarBroken(getAvatarSource(item.comment) || '')"
             />
-            <span v-else :style="getAvatarFallbackStyle(getAuthorName(item.comment))">
+            <span v-else>
               {{ getUserInitials(getAuthorName(item.comment)) }}
             </span>
           </div>
@@ -523,8 +523,17 @@ function getAvatarFallbackStyle(name: string) {
 
   return {
     background: `hsl(${hue} 65% 96%)`,
+    border: `1px solid hsl(${hue} 55% 90%)`,
     color: `hsl(${hue} 56% 50%)`,
   }
+}
+
+function getAvatarContainerStyle(comment: CommunityComment) {
+  if (getAvatarSource(comment)) {
+    return undefined
+  }
+
+  return getAvatarFallbackStyle(getAuthorName(comment))
 }
 
 function getAuthorName(comment: CommunityComment) {

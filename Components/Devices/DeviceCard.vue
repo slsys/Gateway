@@ -14,7 +14,7 @@
       />
     </div>
 
-    <div class="device-card-body">
+    <div class="device-card-body" :class="{ 'device-card-body--with-meta': showMeta }">
       <h3 class="device-card-title">{{ item['MODEL'] }}</h3>
       <p class="device-card-desc">{{ item['DESCRIPTION'] || fallbackDescription }}</p>
       <div v-if="showMeta" class="device-card-meta">
@@ -103,11 +103,14 @@ const showMeta = computed(() => commentsCount.value > 0)
 .device-card-body {
   position: relative;
   padding: 12px;
-  padding-bottom: 36px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   flex: 1;
+}
+
+.device-card-body--with-meta {
+  padding-bottom: 36px;
 }
 
 .device-card-title {
@@ -133,7 +136,7 @@ const showMeta = computed(() => commentsCount.value > 0)
 
 .device-card-meta {
   position: absolute;
-  left: 12px;
+  left: 8px;
   bottom: 12px;
   display: flex;
   align-items: center;
