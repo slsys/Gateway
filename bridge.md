@@ -17,6 +17,22 @@
 Пример файла конфигурации `configuration.yaml`:
 
 ```yaml
+homeassistant: true
+permit_join: false
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://localhost'
 serial:
   port: 'tcp://192.168.1.13:8881'
+  adapter: zstack
+frontend:
+  host: 0.0.0.0
+  port: 8090
+advanced:
+  network_key: GENERATE
+  pan_id: GENERATE
+  ext_pan_id: GENERATE
 ```
+
+
+[Настройка в Majordomo](https://connect.smartliving.ru/profile/2784/blog716.html)
