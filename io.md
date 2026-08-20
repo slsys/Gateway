@@ -94,11 +94,53 @@ io.addGPIOInput("gerkon", 28, gpio.INPUT_PULLUP, 2)
 
 ### io.addExtAnalogInput()
 
+Добавляем аналоговый порт внешнего преобразователя (SLS PLC Max)
+
 ```lua
 io.addExtAnalogInput(ioName, pin[, ioAnalogInputType = 0[, ioInterval = 5]])
 -- ioName - STR, имя входа
--- pin - INT, номер контакта
+-- pin - INT, номер контакта 1-4
+-- ioAnalogInputType - INT, тип аналогового значения:
+  -- RAW            = 0
+  -- VOLTAGE        = 1
+  -- CURRENT        = 2
+  -- RESISTANCE     = 3
+  -- NTC            = 4
+-- ioInterval - INT, период опроса порта в секундах
 ```
+
+Состояния:
+
+- value_raw - сырое значение ADC
+
+- current - значение в Aмперах
+
+- voltage - значение в Вольтах
+
+- cal_raw - калибровка raw значение +/- (RW)
+
+- cal_scale - множитель к значение в Волтах (RW)
+
+- error - ошибка датчика 4-20mA (down/short/normal)
+
+- conv_enable - включение преобразования в физическую величину (RW)
+
+- conv_status - статус преобразования (low/high/normal)
+
+- value - значение физической величины
+
+- conv_low_from - нижняя граница исходного значения (RW)
+
+- conv_high_from - верхняя граница исходного значения (RW)
+
+- conv_low_to - нижняя граница конечной физической величины (RW)
+
+- conv_high_to - верхняя граница конечной физической величины (RW)
+
+- conv_err_low - нижнее значение для детектирование ошибки (RW)
+
+- conv_err_high - верхнее значение для детектирование ошибки (RW)
+
 
 ### io.get()
 
