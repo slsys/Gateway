@@ -56,30 +56,6 @@ export interface VoteCommentResult {
   my_vote: CommentVote | null
 }
 
-export interface DeviceRequestPayload {
-  vendor: string
-  model: string
-  description: string
-  updatedIn: string
-  exposes: string
-  powerSource: number | null
-  source: string
-  ieeeAddr: string
-  manufacturerName: string
-  modelId: string
-  manufId: string
-  endpoints: unknown[]
-  clusters: unknown[]
-  interview: Record<string, unknown>
-  rawPayload: Record<string, unknown>
-}
-
-export interface CreatedDeviceRequest {
-  id: number
-  cid: number
-  status: string
-}
-
 export type CommunityErrorCode =
   | 'not_authenticated'
   | 'invalid_device_id'
@@ -122,12 +98,6 @@ interface CommunityErrorResponse {
   error?: string
   code?: string
   message?: string
-}
-
-interface RawCreatedDeviceRequest {
-  id: number
-  cid: number
-  status: string
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -491,37 +461,4 @@ export async function removeCommentVote(commentId: number): Promise<VoteCommentR
 
   const data = await readCommunityResponse<unknown>(response)
   return normalizeVoteResult(data, response.status)
-}
-
-export async function createDeviceRequest(payload: DeviceRequestPayload): Promise<CreatedDeviceRequest> {
-  const response = await fetch(`${COMMUNITY_API_ORIGIN}/api/community/requests`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      vendor: payload.vendor,
-      model: payload.model,
-      description: payload.description,
-      updated_in: payload.updatedIn,
-      exposes: payload.exposes,
-      power_source: payload.powerSource,
-      source: payload.source,
-      ieee_addr: payload.ieeeAddr,
-      manufacturer_name: payload.manufacturerName,
-      model_id: payload.modelId,
-      manuf_id: payload.manufId,
-      endpoints: payload.endpoints,
-      clusters: payload.clusters,
-      interview: payload.interview,
-      raw_payload: payload.rawPayload,
-    }),
-  })
-
-  const data = await readCommunityResponse<RawCreatedDeviceRequest>(response)
-
-  if (!isRecord(data) || typeof data.id !== 'number' || typeof data.cid !== 'number' || typeof data.status !== 'string') {
-    throw new CommunityApiError('Unexpected created request payload', response.status, 'invalid_response')
-  }
-
-  return { id: data.id, cid: data.cid, status: data.status }
 }

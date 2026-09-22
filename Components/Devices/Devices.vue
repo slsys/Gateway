@@ -85,13 +85,6 @@
       @aggregates-change="applyDeviceAggregates"
     />
 
-    <DeviceRequestModal
-      :show="showRequestModal"
-      :prefill="requestPrefill"
-      :prefill-warnings="requestPrefillWarnings"
-      :t="t"
-      @close="closeRequestModal"
-    />
   </section>
 </template>
 
@@ -104,18 +97,12 @@ import DeviceCard from './DeviceCard.vue'
 import DeviceCardSkeleton from './DeviceCardSkeleton.vue'
 import DeviceFilters from './DeviceFilters.vue'
 import DeviceModal from './DeviceModal.vue'
-import DeviceRequestModal from './DeviceRequestModal.vue'
-import {
-  createEmptyDeviceRequestPrefill,
-  getDeviceRequestPrefillFromSearch,
-  type DeviceRequestPrefill,
-} from './helpers/deviceRequestPrefill'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
 import type { DeviceItem, DeviceVendor } from './types/device'
 
 const { lang } = useData()
-const { status: authStatus } = useCloudAuth()
+useCloudAuth()
 
 const props = defineProps({
   pageSize: { type: Number, default: 24 },
@@ -138,10 +125,6 @@ const vendorFilter = ref('')
 
 const showModal = ref(false)
 const modalData = ref<DeviceItem | null>(null)
-const showRequestModal = ref(false)
-const requestPrefill = ref<DeviceRequestPrefill>(createEmptyDeviceRequestPrefill())
-const requestPrefillWarnings = ref<string[]>([])
-const pendingRequestOpen = ref(false)
 const CMS_ORIGIN = (import.meta.env.VITE_SLS_CMS_ORIGIN || 'https://api.slsys.io').replace(/\/$/, '')
 
 const t = (key) => {
@@ -161,22 +144,25 @@ const filteredItems = computed(() => {
       return true
     }
 
-    const modelMatch = (item['MODEL'] || '').toLowerCase().includes(query)
-    const titleMatch = (item['TITLE'] || '').toLowerCase().includes(query)
+    const modelMatch = String(item.MODEL ?? '').toLowerCase().includes(query)
+    const titleMatch = String(item.TITLE ?? '').toLowerCase().includes(query)
+    const descriptionMatch = stripHtmlTags(String(item.DESCRIPTION ?? '')).toLowerCase().includes(query)
     const zigbeeMatch =
       Array.isArray(item['ZIGBEE_MODELS']) &&
       item['ZIGBEE_MODELS'].some((zigbeeModel) => {
         return (
-          (zigbeeModel['modelId'] || '').toLowerCase().includes(query) ||
-          (zigbeeModel['manufId'] || '').toLowerCase().includes(query)
+          String(zigbeeModel.modelId ?? '').toLowerCase().includes(query) ||
+          String(zigbeeModel.manufId ?? '').toLowerCase().includes(query)
         )
       })
 
-    return modelMatch || titleMatch || zigbeeMatch
+    return modelMatch || titleMatch || descriptionMatch || zigbeeMatch
   })
 })
 
-const canRequestDevice = computed(() => authStatus.value === 'authenticated')
+function stripHtmlTags(value: string) {
+  return value.replace(/<[^>]*>/g, ' ')
+}
 
 const maxVisibleCount = computed(() => props.pageSize * props.maxPages)
 
@@ -316,40 +302,12 @@ function setupObserver() {
 }
 
 function updateBodyModalState() {
-  if (showModal.value || showRequestModal.value) {
+  if (showModal.value) {
     document.body.classList.add('modal-open')
     return
   }
 
   document.body.classList.remove('modal-open')
-}
-
-function updateRequestQuery(open: boolean) {
-  const url = new URL(window.location.href)
-
-  if (open) {
-    url.searchParams.set('requestDevice', '1')
-  } else {
-    url.searchParams.delete('requestDevice')
-  }
-
-  history.pushState({}, '', url)
-}
-
-function openRequestModal() {
-  if (authStatus.value !== 'authenticated') {
-    return
-  }
-
-  showRequestModal.value = true
-  updateBodyModalState()
-  updateRequestQuery(true)
-}
-
-function closeRequestModal() {
-  showRequestModal.value = false
-  updateBodyModalState()
-  updateRequestQuery(false)
 }
 
 function applyDeviceAggregates(payload: { commentsCount: number; ratingAvg: number | null; ratingsCount: number }) {
@@ -386,6 +344,46 @@ function applyDeviceAggregates(payload: { commentsCount: number; ratingAvg: numb
   })
 }
 
+function getDevicesBasePath() {
+  return window.location.pathname.startsWith('/en/') ? '/en/supported_devices' : '/supported_devices'
+}
+
+function getDeviceShareId(item: DeviceItem) {
+  return String(item.TITLE ?? item.ID ?? item.id ?? '').trim()
+}
+
+function getDeviceSharePath(item: DeviceItem) {
+  const shareId = getDeviceShareId(item)
+  const basePath = getDevicesBasePath()
+
+  return shareId ? `${basePath}/${encodeURIComponent(shareId)}` : basePath
+}
+
+function getDeviceFromSharePath() {
+  const pathname = window.location.pathname.replace(/\/$/, '')
+  const match = pathname.match(/^\/(?:en\/)?supported_devices\/([^/]+)$/)
+
+  if (!match || match[1] === 'request') {
+    return ''
+  }
+
+  return decodeURIComponent(match[1])
+}
+
+function pushDeviceShareUrl(item: DeviceItem) {
+  const url = new URL(window.location.href)
+  url.pathname = getDeviceSharePath(item)
+  url.searchParams.delete('device')
+  history.pushState({}, '', url)
+}
+
+function pushDevicesBaseUrl() {
+  const url = new URL(window.location.href)
+  url.pathname = getDevicesBasePath()
+  url.searchParams.delete('device')
+  history.pushState({}, '', url)
+}
+
 async function openModal(itemOrTitle: DeviceItem | string) {
   const title = typeof itemOrTitle === 'string' ? itemOrTitle : itemOrTitle['TITLE']
   const sourceItem = typeof itemOrTitle === 'string'
@@ -405,9 +403,7 @@ async function openModal(itemOrTitle: DeviceItem | string) {
       RATINGS_COUNT: data.RATINGS_COUNT ?? sourceItem?.RATINGS_COUNT ?? null,
     }
 
-    const url = new URL(window.location)
-    url.searchParams.set('device', title)
-    history.pushState({}, '', url)
+    pushDeviceShareUrl(modalData.value)
   } catch (err) {
     console.error(err)
     error.value = err.message || 'Failed to load device'
@@ -419,9 +415,7 @@ function closeModal() {
   modalData.value = null
   updateBodyModalState()
 
-  const url = new URL(window.location)
-  url.searchParams.delete('device')
-  history.pushState({}, '', url)
+  pushDevicesBaseUrl()
 }
 
 function decodeLocalizedText(notes: Record<string, string> | undefined) {
@@ -458,25 +452,9 @@ onMounted(async () => {
   setupObserver()
 
   const params = new URLSearchParams(window.location.search)
-  const prefillResult = getDeviceRequestPrefillFromSearch(window.location.search)
-  requestPrefill.value = prefillResult.values
-  requestPrefillWarnings.value = prefillResult.warnings
-  pendingRequestOpen.value = params.get('requestDevice') === '1'
-  const device = params.get('device')
+  const device = getDeviceFromSharePath() || params.get('device')
   if (device) {
     await openModal(device)
-  }
-
-  if (pendingRequestOpen.value && authStatus.value === 'authenticated') {
-    openRequestModal()
-    pendingRequestOpen.value = false
-  }
-})
-
-watch(authStatus, (value) => {
-  if (value === 'authenticated' && pendingRequestOpen.value) {
-    openRequestModal()
-    pendingRequestOpen.value = false
   }
 })
 
