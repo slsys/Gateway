@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Подключение механического энкодера AB к двум дискретным входам</title>
+  <desc id="desc">Контакты A и B подключены к DIN1 и DIN2. Контакт C соединён с общей клеммой сухих входов, выбранной по маркировке контроллера. Положение контактов условное. Прямое подключение применимо только при совместимых напряжении и токе опроса входов. Отдельная кнопка энкодера не является индексом Z.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; fill: #19324d; }
+      .title { font-size: 34px; font-weight: 700; }
+      .heading { font-size: 25px; font-weight: 700; }
+      .label { font-size: 23px; }
+      .small { font-size: 20px; fill: #526b84; }
+      .wire { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .terminal { fill: #fff; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect width="1400" height="1000" fill="#fff"/>
+  <text x="40" y="56" class="title">Механический энкодер AB → два входа</text>
+  <text x="40" y="98" class="label">Пример для входов, рассчитанных на замыкание совместимых сухих контактов</text>
+  <path d="M40 128 H1360" stroke="#cddce8" stroke-width="2"/>
+
+  <rect x="40" y="172" width="450" height="470" rx="12" fill="#f3f6f9" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="68" y="218" class="heading">Механический энкодер</text>
+  <text x="68" y="252" class="small">AB · два контакта и общий</text>
+  <text x="113" y="306" class="small">Общий</text>
+  <path class="wire" stroke="#526b84" d="M140 350 V550 H490 M140 350 H285 M140 440 H285"/>
+  <circle cx="140" cy="440" r="6" fill="#526b84"/>
+  <path class="wire" stroke="#087ef5" d="M285 350 L365 322 M390 350 H490"/>
+  <circle class="terminal" cx="285" cy="350" r="6" stroke="#087ef5"/>
+  <circle class="terminal" cx="390" cy="350" r="6" stroke="#087ef5"/>
+  <text x="458" y="331" class="label" style="fill:#087ef5;font-weight:700">A</text>
+  <path class="wire" stroke="#7554ba" d="M285 440 L365 412 M390 440 H490"/>
+  <circle class="terminal" cx="285" cy="440" r="6" stroke="#7554ba"/>
+  <circle class="terminal" cx="390" cy="440" r="6" stroke="#7554ba"/>
+  <text x="458" y="421" class="label" style="fill:#7554ba;font-weight:700">B</text>
+  <text x="458" y="531" class="label" style="fill:#526b84;font-weight:700">C</text>
+  <text x="68" y="598" class="small">Контакты замыкаются при вращении</text>
+
+  <rect x="840" y="172" width="520" height="470" rx="12" fill="#f7faff" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="870" y="218" class="heading">Контроллер</text>
+  <text x="870" y="252" class="small">Дискретные входы</text>
+  <text x="870" y="358" class="label" style="fill:#087ef5;font-weight:700">DIN1 · канал A</text>
+  <text x="870" y="448" class="label" style="fill:#7554ba;font-weight:700">DIN2 · канал B</text>
+  <text x="870" y="543" class="label" style="font-weight:600">Общий сухих входов</text>
+  <text x="870" y="575" class="small">По маркировке контроллера</text>
+
+  <path class="wire" stroke="#087ef5" d="M490 350 H840"/>
+  <path class="wire" stroke="#7554ba" d="M490 440 H840"/>
+  <path class="wire" stroke="#526b84" d="M490 550 H840"/>
+  <circle class="terminal" cx="490" cy="350" r="7" stroke="#087ef5"/>
+  <circle class="terminal" cx="840" cy="350" r="7" stroke="#087ef5"/>
+  <circle class="terminal" cx="490" cy="440" r="7" stroke="#7554ba"/>
+  <circle class="terminal" cx="840" cy="440" r="7" stroke="#7554ba"/>
+  <circle class="terminal" cx="490" cy="550" r="7" stroke="#526b84"/>
+  <circle class="terminal" cx="840" cy="550" r="7" stroke="#526b84"/>
+
+  <rect x="40" y="686" width="640" height="148" rx="12" fill="#eaf4ff" stroke="#bfdcff"/>
+  <text x="64" y="728" class="heading" style="fill:#087ef5">В настройках энкодера</text>
+  <text x="64" y="769" class="label">Канал A: DIN1 · канал B: DIN2</text>
+  <text x="64" y="807" class="small">Выбирайте два свободных дискретных входа</text>
+  <rect x="710" y="686" width="650" height="148" rx="12" fill="#f3effa" stroke="#d7c9ed"/>
+  <text x="734" y="728" class="heading" style="fill:#7554ba">Кнопка на валу — отдельный контакт</text>
+  <text x="734" y="769" class="label">При необходимости подключается отдельно</text>
+  <text x="734" y="807" class="small">Кнопка не является индексным каналом Z</text>
+
+  <path d="M40 870 H1360" stroke="#cddce8" stroke-width="2"/>
+  <text x="40" y="910" class="small">Напряжение и ток опроса входов должны соответствовать допустимым значениям контактов энкодера.</text>
+  <text x="40" y="947" class="small">Порядок A/B/C условный. Общую клемму и распиновку сверяйте с маркировкой и паспортами устройств.</text>
+</svg>

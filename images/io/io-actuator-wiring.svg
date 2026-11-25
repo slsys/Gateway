@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Подключение трёхпозиционного привода 24 В DC к двум релейным выходам</title>
+  <desc id="desc">Плюс источника питания подключён к COM обоих релейных выходов. NO выхода OUT1 соединён со входом движения к 100%, NO выхода OUT2 — со входом движения к 0%. Минус источника соединён непосредственно с общим проводом привода. При остановке оба реле выключены. Обозначения входов привода условные.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; fill: #19324d; }
+      .title { font-size: 34px; font-weight: 700; }
+      .heading { font-size: 25px; font-weight: 700; }
+      .label { font-size: 23px; }
+      .small { font-size: 20px; fill: #526b84; }
+      .terminal { fill: white; stroke-width: 3; }
+      .wire { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1400" height="1000" fill="white"/>
+  <text x="40" y="54" class="title">Два релейных выхода → один привод</text>
+  <text x="40" y="96" class="label" fill="#526b84">Пример: трёхпозиционный привод 24 В DC · движение в обе стороны и остановка</text>
+  <path d="M40 126 H1360" stroke="#cddce8" stroke-width="2"/>
+
+  <rect x="40" y="170" width="230" height="390" rx="12" fill="#f3f6f9" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="62" y="214" class="heading">Источник</text>
+  <text x="62" y="245" class="heading">24 В DC</text>
+  <text x="244" y="290" class="label" text-anchor="end">+24 В</text>
+  <text x="244" y="500" class="label" text-anchor="end">0 В (−)</text>
+  <text x="62" y="366" class="small">Питание</text>
+  <text x="62" y="395" class="small">привода</text>
+
+  <rect x="410" y="170" width="500" height="390" rx="12" fill="#f7faff" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="440" y="214" class="heading">Релейные выходы контроллера</text>
+  <text x="440" y="251" class="label" style="fill:#087ef5;font-weight:600">OUT1 · к 100%</text>
+  <text x="440" y="381" class="label" style="fill:#7554ba;font-weight:600">OUT2 · к 0%</text>
+  <text x="540" y="338" class="small" text-anchor="middle">COM</text>
+  <text x="700" y="338" class="small" text-anchor="middle">NO</text>
+  <text x="540" y="468" class="small" text-anchor="middle">COM</text>
+  <text x="700" y="468" class="small" text-anchor="middle">NO</text>
+  <text x="440" y="527" class="small">Контакты показаны при выключенных реле</text>
+
+  <rect x="1030" y="170" width="330" height="390" rx="12" fill="#f3f6f9" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="1054" y="214" class="heading">Привод 24 В DC</text>
+  <text x="1054" y="249" class="small" style="font-size:18px">Трёхпозиционное управление</text>
+  <text x="1054" y="307" class="label" style="fill:#087ef5;font-weight:600">К 100%</text>
+  <text x="1054" y="437" class="label" style="fill:#7554ba;font-weight:600">К 0%</text>
+  <text x="1054" y="517" class="label">Общий провод</text>
+
+  <path class="wire" stroke="#b86b22" d="M270 300 H540 M350 300 V430 H540"/>
+  <circle cx="350" cy="300" r="6" fill="#b86b22"/>
+  <circle class="terminal" cx="270" cy="300" r="6" stroke="#b86b22"/>
+  <path class="wire" stroke="#087ef5" d="M540 300 L670 270 M700 300 H1030"/>
+  <circle class="terminal" cx="540" cy="300" r="6" stroke="#087ef5"/>
+  <circle class="terminal" cx="700" cy="300" r="6" stroke="#087ef5"/>
+  <circle class="terminal" cx="1030" cy="300" r="6" stroke="#087ef5"/>
+  <path class="wire" stroke="#7554ba" d="M540 430 L670 400 M700 430 H1030"/>
+  <circle class="terminal" cx="540" cy="430" r="6" stroke="#7554ba"/>
+  <circle class="terminal" cx="700" cy="430" r="6" stroke="#7554ba"/>
+  <circle class="terminal" cx="1030" cy="430" r="6" stroke="#7554ba"/>
+  <path class="wire" stroke="#526b84" d="M270 510 H310 V608 H988 V510 H1030"/>
+  <circle class="terminal" cx="270" cy="510" r="6" stroke="#526b84"/>
+  <circle class="terminal" cx="1030" cy="510" r="6" stroke="#526b84"/>
+  <text x="630" y="640" class="small" text-anchor="middle">Общий провод идёт напрямую к приводу</text>
+
+  <rect x="40" y="682" width="420" height="150" rx="12" fill="#eaf4ff" stroke="#bfdcff"/>
+  <text x="64" y="722" class="heading" style="fill:#087ef5">Движение к 100%</text>
+  <text x="64" y="765" class="label">OUT1 включён · OUT2 выключен</text>
+  <text x="64" y="802" class="small">Штора: вверх / открыть</text>
+  <rect x="490" y="682" width="420" height="150" rx="12" fill="#f3effa" stroke="#d7c9ed"/>
+  <text x="514" y="722" class="heading" style="fill:#7554ba">Движение к 0%</text>
+  <text x="514" y="765" class="label">OUT1 выключен · OUT2 включён</text>
+  <text x="514" y="802" class="small">Штора: вниз / закрыть</text>
+  <rect x="940" y="682" width="420" height="150" rx="12" fill="#f3f6f9" stroke="#cddce8"/>
+  <text x="964" y="722" class="heading">Stop · остановка</text>
+  <text x="964" y="765" class="label">Оба выхода выключены</text>
+  <text x="964" y="802" class="small">Перед реверсом — пауза</text>
+
+  <path d="M40 870 H1360" stroke="#cddce8" stroke-width="2"/>
+  <text x="40" y="910" class="label">Используются сухие контакты COM–NO. Питание контроллера на схеме не показано.</text>
+  <text x="40" y="949" class="small">Обозначения входов условные: номера клемм, напряжение и направления сверяйте с паспортом привода.</text>
+</svg>

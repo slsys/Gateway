@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Функциональная схема подключения энкодера ABZ через согласователь сигналов</title>
+  <desc id="desc">Сигналы A, B и Z промышленного энкодера поступают в согласователь. Его совместимые выходы соединены с DIN1, DIN2 и DIN3 контроллера, общий выходов — с общим дискретных входов. Энкодер питается от источника с напряжением по паспорту. ABZ определяет формат сигналов, но не напряжение или тип электронного выхода. Для RS-422 требуется приёмник дифференциальных линий. Реальные распиновки и связь общих проводов определяются паспортами устройств.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; fill: #19324d; }
+      .title { font-size: 34px; font-weight: 700; }
+      .heading { font-size: 25px; font-weight: 700; }
+      .label { font-size: 23px; }
+      .small { font-size: 20px; fill: #526b84; }
+      .wire { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .terminal { fill: #fff; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect width="1600" height="1100" fill="#fff"/>
+  <text x="40" y="56" class="title">Промышленный энкодер ABZ → три входа</text>
+  <text x="40" y="98" class="label">Функциональный пример для подключения через согласователь сигналов</text>
+  <path d="M40 128 H1560" stroke="#cddce8" stroke-width="2"/>
+
+  <rect x="40" y="180" width="360" height="490" rx="12" fill="#f3f6f9" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="66" y="223" class="heading">Энкодер ABZ</text>
+  <text x="66" y="258" class="small">Электронные выходы</text>
+  <text x="368" y="328" class="label" text-anchor="end" style="fill:#087ef5;font-weight:700">A</text>
+  <text x="368" y="418" class="label" text-anchor="end" style="fill:#7554ba;font-weight:700">B</text>
+  <text x="368" y="508" class="label" text-anchor="end" style="fill:#008d79;font-weight:700">Z · индекс</text>
+  <text x="368" y="598" class="label" text-anchor="end">0 V</text>
+  <text x="120" y="647" class="label" text-anchor="middle" style="fill:#b86b22;font-weight:600">+V</text>
+  <text x="280" y="647" class="label" text-anchor="middle">0 V</text>
+
+  <rect x="580" y="180" width="420" height="490" rx="12" fill="#f7faff" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="605" y="223" class="heading">Согласователь сигналов</text>
+  <text x="605" y="258" class="small">Под тип выхода энкодера</text>
+  <text x="605" y="328" class="label" style="fill:#087ef5;font-weight:700">A</text>
+  <text x="605" y="418" class="label" style="fill:#7554ba;font-weight:700">B</text>
+  <text x="605" y="508" class="label" style="fill:#008d79;font-weight:700">Z</text>
+  <text x="605" y="598" class="small">Общий</text>
+  <text x="975" y="328" class="label" text-anchor="end" style="fill:#087ef5;font-weight:700">A</text>
+  <text x="975" y="418" class="label" text-anchor="end" style="fill:#7554ba;font-weight:700">B</text>
+  <text x="975" y="508" class="label" text-anchor="end" style="fill:#008d79;font-weight:700">Z</text>
+  <text x="975" y="598" class="small" text-anchor="end">Общий</text>
+  <rect x="690" y="312" width="200" height="226" rx="10" fill="#eaf4ff" stroke="#bfdcff"/>
+  <text x="790" y="367" class="small" text-anchor="middle">Преобразование</text>
+  <text x="790" y="399" class="small" text-anchor="middle">уровней</text>
+  <text x="790" y="431" class="small" text-anchor="middle">и типа выхода</text>
+  <path d="M744 477 H834 M822 468 L834 477 L822 486" class="wire" stroke="#087ef5"/>
+  <text x="790" y="642" class="small" text-anchor="middle">Выходы совместимы с DIN</text>
+
+  <rect x="1220" y="180" width="340" height="490" rx="12" fill="#f7faff" stroke="#a7bdd0" stroke-width="2"/>
+  <text x="1245" y="223" class="heading">Контроллер</text>
+  <text x="1245" y="258" class="small">Дискретные входы</text>
+  <text x="1245" y="328" class="label" style="fill:#087ef5;font-weight:700">DIN1 · A</text>
+  <text x="1245" y="418" class="label" style="fill:#7554ba;font-weight:700">DIN2 · B</text>
+  <text x="1245" y="508" class="label" style="fill:#008d79;font-weight:700">DIN3 · Z</text>
+  <text x="1245" y="583" class="label" style="font-weight:600">Общий входов</text>
+  <text x="1245" y="615" class="small">По маркировке</text>
+
+  <path class="wire" stroke="#087ef5" d="M400 320 H580 M1000 320 H1220"/>
+  <path class="wire" stroke="#7554ba" d="M400 410 H580 M1000 410 H1220"/>
+  <path class="wire" stroke="#008d79" d="M400 500 H580 M1000 500 H1220"/>
+  <path class="wire" stroke="#526b84" d="M400 590 H580 M1000 590 H1220"/>
+  <g stroke="#087ef5">
+    <circle class="terminal" cx="400" cy="320" r="7"/><circle class="terminal" cx="580" cy="320" r="7"/>
+    <circle class="terminal" cx="1000" cy="320" r="7"/><circle class="terminal" cx="1220" cy="320" r="7"/>
+  </g>
+  <g stroke="#7554ba">
+    <circle class="terminal" cx="400" cy="410" r="7"/><circle class="terminal" cx="580" cy="410" r="7"/>
+    <circle class="terminal" cx="1000" cy="410" r="7"/><circle class="terminal" cx="1220" cy="410" r="7"/>
+  </g>
+  <g stroke="#008d79">
+    <circle class="terminal" cx="400" cy="500" r="7"/><circle class="terminal" cx="580" cy="500" r="7"/>
+    <circle class="terminal" cx="1000" cy="500" r="7"/><circle class="terminal" cx="1220" cy="500" r="7"/>
+  </g>
+  <g stroke="#526b84">
+    <circle class="terminal" cx="400" cy="590" r="7"/><circle class="terminal" cx="580" cy="590" r="7"/>
+    <circle class="terminal" cx="1000" cy="590" r="7"/><circle class="terminal" cx="1220" cy="590" r="7"/>
+  </g>
+
+  <rect x="40" y="752" width="360" height="168" rx="12" fill="#fff6e9" stroke="#ead3b0"/>
+  <text x="120" y="790" class="label" text-anchor="middle" style="fill:#b86b22;font-weight:600">+V</text>
+  <text x="280" y="790" class="label" text-anchor="middle">0 V</text>
+  <text x="64" y="840" class="heading">Источник питания</text>
+  <text x="64" y="882" class="small">Напряжение — по паспорту</text>
+  <path class="wire" stroke="#b86b22" d="M120 670 V752"/>
+  <path class="wire" stroke="#526b84" d="M280 670 V752"/>
+  <circle class="terminal" cx="120" cy="670" r="7" stroke="#b86b22"/>
+  <circle class="terminal" cx="120" cy="752" r="7" stroke="#b86b22"/>
+  <circle class="terminal" cx="280" cy="670" r="7" stroke="#526b84"/>
+  <circle class="terminal" cx="280" cy="752" r="7" stroke="#526b84"/>
+
+  <rect x="440" y="752" width="1120" height="168" rx="12" fill="#eaf6f3" stroke="#b8ddd2"/>
+  <text x="466" y="794" class="heading" style="fill:#008d79">ABZ — формат сигналов, а не напряжение или тип выхода</text>
+  <text x="466" y="837" class="label">Для RS-422 нужен приёмник дифференциальных линий A±, B±, Z±.</text>
+  <text x="466" y="879" class="small">NPN, PNP и push-pull согласуют с электрическими параметрами входов контроллера.</text>
+
+  <path d="M40 956 H1560" stroke="#cddce8" stroke-width="2"/>
+  <text x="40" y="995" class="small">Обозначения функциональные: распиновку, полярность и связь общих проводов определяют паспорта устройств.</text>
+  <text x="40" y="1032" class="small">Схема не задаёт универсального прямого подключения NPN/PNP. Питание контроллера и согласователя не показано.</text>
+</svg>
